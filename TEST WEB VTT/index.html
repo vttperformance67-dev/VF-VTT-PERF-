@@ -1,0 +1,1887 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VTT Performance — Magasin & Atelier Cycles à Ingwiller</title>
+  <meta name="description" content="VTT Performance à Ingwiller — Vente, réparation, entretien et location de vélos électriques et VTT. Marques SUNN et Moustache Bikes. Prenez rendez-vous en ligne.">
+  <meta name="keywords" content="VTT, vélo électrique, SUNN, Moustache Bikes, Ingwiller, Alsace, location vélo, atelier cycles, réparation vélo">
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #080e1a;
+      --surface: #0f1b2d;
+      --card: #141f33;
+      --border: rgba(255,255,255,0.07);
+      --orange: #ff6b35;
+      --blue: #3b82f6;
+      --cyan: #06b6d4;
+      --text: #f1f5f9;
+      --muted: #64748b;
+    }
+    * { box-sizing: border-box; }
+    body { font-family:'Exo 2',sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; }
+    h1,h2,h3,h4,h5 { font-family:'Rajdhani',sans-serif; }
+    ::-webkit-scrollbar { width:6px; }
+    ::-webkit-scrollbar-track { background:var(--bg); }
+    ::-webkit-scrollbar-thumb { background:var(--blue); border-radius:3px; }
+
+    .flash-track { display:flex; width:max-content; animation:flash-scroll 40s linear infinite; }
+    @keyframes flash-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    .nav-link { position:relative; transition:color .2s; }
+    .nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:var(--orange); transition:width .3s; }
+    .nav-link:hover::after,.nav-link.active::after { width:100%; }
+    .nav-link.active { color:var(--orange); }
+
+    .hero-bg { background:linear-gradient(135deg,#080e1a 0%,#0d1f3c 50%,#0a1628 100%); position:relative; overflow:hidden; }
+    .hero-bg::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 50% at 20% 60%,rgba(255,107,53,.08) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 80% 30%,rgba(59,130,246,.1) 0%,transparent 60%); }
+
+    .btn-orange { background:linear-gradient(135deg,#ff6b35,#e85a25); color:white; font-weight:600; border-radius:.75rem; transition:all .3s; padding:.75rem 1.75rem; display:inline-flex; align-items:center; gap:.5rem; border:none; cursor:pointer; text-decoration:none; }
+    .btn-orange:hover { transform:translateY(-2px); box-shadow:0 12px 30px rgba(255,107,53,.4); }
+    .btn-outline { border:2px solid rgba(255,255,255,.2); color:white; font-weight:600; border-radius:.75rem; transition:all .3s; padding:.75rem 1.75rem; display:inline-flex; align-items:center; gap:.5rem; background:transparent; cursor:pointer; text-decoration:none; }
+    .btn-outline:hover { border-color:var(--orange); color:var(--orange); transform:translateY(-2px); }
+
+    .card { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; transition:all .3s; }
+    .card:hover { border-color:rgba(255,107,53,.3); transform:translateY(-4px); box-shadow:0 16px 48px rgba(0,0,0,.3); }
+
+    .bike-card { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; overflow:hidden; transition:all .35s cubic-bezier(.4,0,.2,1); cursor:pointer; }
+    .bike-card:hover { border-color:rgba(255,107,53,.4); transform:translateY(-6px); box-shadow:0 20px 50px rgba(0,0,0,.4); }
+
+    .bike-img-wrap { height:220px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+    .bike-carousel-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .9s ease, transform .4s ease; }
+    .bike-carousel-img.active { opacity:1; }
+    .bike-card:hover .bike-carousel-img.active { transform:scale(1.06); }
+    .carousel-dots { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); display:flex; gap:5px; z-index:3; }
+    .carousel-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.35); transition:background .3s; }
+    .carousel-dot.on { background:rgba(255,255,255,.9); }
+    .badge-promo { background:rgba(255,107,53,.2); color:#ff6b35; border:1px solid rgba(255,107,53,.4); font-size:.65rem; font-weight:700; padding:.15rem .5rem; border-radius:2rem; letter-spacing:.03em; }
+    .price-old { font-size:.8rem; text-decoration:line-through; color:var(--muted); margin-right:.3rem; }
+    .btn-fiche { display:inline-flex; align-items:center; gap:.35rem; font-size:.72rem; font-weight:600; color:var(--brand); opacity:.7; transition:opacity .2s; text-decoration:none; }
+    .btn-fiche:hover { opacity:1; }
+    .pay-opt { display:flex; flex-direction:column; gap:.3rem; align-items:center; padding:.85rem .5rem; border-radius:1rem; border:1.5px solid rgba(255,255,255,.12); background:rgba(255,255,255,.03); cursor:pointer; transition:all .2s; text-align:center; color:var(--muted); }
+    .pay-opt.selected { border-color:var(--orange); background:rgba(255,107,53,.08); color:#fff; }
+    .pay-opt:hover:not(.selected) { border-color:rgba(255,255,255,.25); color:var(--fg); }
+
+    /* ── Bannière héro plein-écran ── */
+    .hero-banner { position:relative; height:100vh; min-height:600px; overflow:hidden; }
+    .hb-slide { position:absolute; inset:0; opacity:0; transition:opacity 1.2s ease; display:flex; align-items:center; pointer-events:none; }
+    .hb-slide.hb-active { opacity:1; z-index:1; pointer-events:all; }
+    .hb-bg { position:absolute; inset:0; background-size:cover; background-position:center; transform:scale(1.05); transition:transform 7s ease; }
+    .hb-slide.hb-active .hb-bg { transform:scale(1); }
+    .hb-overlay { position:absolute; inset:0; background:linear-gradient(105deg,rgba(8,14,26,.88) 0%,rgba(8,14,26,.35) 65%,transparent 100%); }
+    .hb-overlay-r { position:absolute; inset:0; background:linear-gradient(105deg,transparent 0%,rgba(8,14,26,.35) 35%,rgba(8,14,26,.88) 100%); }
+    .hb-btn-prev,.hb-btn-next { position:absolute; top:50%; transform:translateY(-50%); z-index:10; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:50%; width:52px; height:52px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .3s; }
+    .hb-btn-prev:hover,.hb-btn-next:hover { background:var(--orange); border-color:var(--orange); }
+    .hb-btn-prev { left:2rem; } .hb-btn-next { right:2rem; }
+    .hb-dots { position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); display:flex; gap:.75rem; z-index:10; }
+    .hb-dot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.3); border:none; cursor:pointer; transition:all .35s; padding:0; }
+    .hb-dot.hb-on { background:var(--orange); width:28px; border-radius:5px; }
+    .hb-label { display:inline-block; font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; padding:.3rem .9rem; border-radius:2rem; margin-bottom:1.25rem; }
+
+    .section-hidden { display:none !important; }
+
+    .filter-btn { padding:.4rem 1rem; border-radius:2rem; font-size:.85rem; font-weight:500; border:1px solid rgba(255,255,255,.1); background:transparent; color:var(--muted); cursor:pointer; transition:all .2s; white-space:nowrap; }
+    .filter-btn:hover,.filter-btn.active { background:var(--orange); border-color:var(--orange); color:white; }
+    .filter-brand.active { background:var(--brand); border-color:var(--brand); color:#0a1628; }
+
+    .prix-table { border-collapse:collapse; width:100%; }
+    .prix-table th { background:rgba(255,107,53,.15); color:var(--orange); font-family:'Rajdhani',sans-serif; font-size:.85rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:.9rem .6rem; border:1px solid rgba(255,255,255,.06); text-align:center; }
+    .prix-table td { padding:.7rem .6rem; border:1px solid rgba(255,255,255,.06); text-align:center; font-size:.85rem; vertical-align:middle; }
+    .prix-table tr:hover td { background:rgba(255,255,255,.03); }
+    .prix-table td:first-child { text-align:left; font-weight:600; }
+
+    .inp { width:100%; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:.75rem; padding:.75rem 1rem; color:white; font-size:.95rem; font-family:'Exo 2',sans-serif; transition:border-color .2s,box-shadow .2s; }
+    .inp:focus { outline:none; border-color:var(--orange); box-shadow:0 0 0 3px rgba(255,107,53,.15); }
+    .inp option { background:#1c2438; color:white; }
+
+    .badge { display:inline-block; padding:.2rem .6rem; border-radius:2rem; font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
+    .badge-electric { background:rgba(6,182,212,.15); color:#06b6d4; border:1px solid rgba(6,182,212,.3); }
+    .badge-vtt { background:rgba(59,130,246,.15); color:#60a5fa; border:1px solid rgba(59,130,246,.3); }
+    .badge-gravel { background:rgba(139,92,246,.15); color:#a78bfa; border:1px solid rgba(139,92,246,.3); }
+    .badge-bmx { background:rgba(245,158,11,.15); color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
+    .badge-urban { background:rgba(16,185,129,.15); color:#34d399; border:1px solid rgba(16,185,129,.3); }
+    .badge-louable { background:rgba(255,107,53,.15); color:var(--orange); border:1px solid rgba(255,107,53,.3); }
+    .badge-sunn { background:rgba(255,200,0,.1); color:#fcd34d; border:1px solid rgba(255,200,0,.2); }
+    .badge-moustache { background:rgba(59,130,246,.1); color:#93c5fd; border:1px solid rgba(59,130,246,.2); }
+
+    .stock-dot { width:8px; height:8px; border-radius:50%; display:inline-block; margin-right:5px; }
+    .s-high { background:#22c55e; box-shadow:0 0 5px #22c55e; }
+    .s-medium { background:#f59e0b; box-shadow:0 0 5px #f59e0b; }
+    .s-low { background:#ef4444; box-shadow:0 0 5px #ef4444; }
+    .s-limited { background:#f59e0b; box-shadow:0 0 5px #f59e0b; }
+    .s-avail   { background:#818cf8; box-shadow:0 0 5px #818cf8; }
+    .badge-limited { background:rgba(245,158,11,.15); border:1px solid rgba(245,158,11,.35); color:#f59e0b; }
+    .badge-avail   { background:rgba(129,140,248,.15); border:1px solid rgba(129,140,248,.35); color:#818cf8; }
+    .s-none { background:#6b7280; }
+
+    .modal-overlay { position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,.75); backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:center; padding:1rem; opacity:0; transition:opacity .25s; pointer-events:none; }
+    .modal-overlay.open { opacity:1; pointer-events:all; }
+    .modal-box { background:var(--card); border:1px solid rgba(255,255,255,.1); border-radius:1.5rem; max-width:560px; width:100%; max-height:90vh; overflow-y:auto; padding:2rem; transform:translateY(20px); transition:transform .3s; }
+    .modal-overlay.open .modal-box { transform:translateY(0); }
+
+    #toast-container .toast { background:var(--card); border:1px solid rgba(255,255,255,.1); border-radius:.75rem; padding:1rem 1.5rem; display:flex; align-items:center; gap:.75rem; animation:toast-in .3s ease; max-width:340px; pointer-events:all; }
+    @keyframes toast-in { from{transform:translateX(120%);opacity:0} to{transform:translateX(0);opacity:1} }
+
+    .calendly-btn { background:linear-gradient(135deg,#ff6b35,#e85a25); color:white; font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:700; padding:.875rem 1.5rem; border-radius:3rem; border:none; cursor:pointer; display:flex; align-items:center; gap:.5rem; box-shadow:0 4px 20px rgba(255,107,53,.5); transition:all .3s; animation:pulse-btn 2.5s ease infinite; text-decoration:none; }
+    .calendly-btn:hover { transform:translateY(-3px) scale(1.03); box-shadow:0 8px 30px rgba(255,107,53,.6); }
+    @keyframes pulse-btn { 0%,100%{box-shadow:0 4px 20px rgba(255,107,53,.5)} 50%{box-shadow:0 4px 30px rgba(255,107,53,.8),0 0 0 8px rgba(255,107,53,.1)} }
+
+    .testi-track { display:flex; gap:1.5rem; width:max-content; animation:testi-scroll 35s linear infinite; }
+    .testi-track:hover { animation-play-state:paused; }
+    @keyframes testi-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    .mobile-menu { max-height:0; overflow:hidden; transition:max-height .35s ease; }
+    .mobile-menu.open { max-height:400px; }
+
+    .text-gradient { background:linear-gradient(135deg,#ff6b35,#fbbf24); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+    .sep { height:1px; background:linear-gradient(90deg,transparent,rgba(255,107,53,.3),transparent); }
+
+    .service-card { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; padding:1.75rem; transition:all .3s; position:relative; overflow:hidden; }
+    .service-card::before { content:''; position:absolute; top:0; left:0; width:4px; height:100%; background:var(--orange); transform:scaleY(0); transform-origin:bottom; transition:transform .3s; }
+    .service-card:hover::before { transform:scaleY(1); }
+    .service-card:hover { border-color:rgba(255,107,53,.2); }
+
+    .price-display { font-family:'Rajdhani',sans-serif; font-size:3rem; font-weight:700; color:var(--orange); line-height:1; }
+
+    #back-top { position:fixed; bottom:1.5rem; left:1.5rem; z-index:900; width:44px; height:44px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:0; transition:all .3s; pointer-events:none; }
+    #back-top.visible { opacity:1; pointer-events:all; }
+    #back-top:hover { background:var(--orange); border-color:var(--orange); }
+
+    .brand-label { opacity:.45; filter:grayscale(1); transition:all .3s; font-family:'Rajdhani',sans-serif; font-weight:700; text-transform:uppercase; }
+    .brand-label:hover { opacity:1; filter:grayscale(0); }
+
+    @media(max-width:768px) {
+      .prix-table th,.prix-table td { font-size:.7rem; padding:.45rem .35rem; }
+    }
+
+    /* ── SUSPENSIONS ──────────────────────────────────────── */
+    .susp-damage-card { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; overflow:hidden; transition:all .3s; }
+    .susp-damage-card:hover { border-color:rgba(239,68,68,.35); transform:translateY(-4px); }
+    .susp-damage-img { height:220px; overflow:hidden; background:#0d1520; display:flex; align-items:center; justify-content:center; }
+    .susp-damage-img img { width:100%; height:100%; object-fit:cover; transition:transform .4s; }
+    .susp-damage-card:hover .susp-damage-img img { transform:scale(1.06); }
+    .susp-stat { background:var(--card); border:1px solid var(--border); border-radius:1rem; padding:1.5rem; text-align:center; }
+    .susp-stat-num { font-family:'Rajdhani',sans-serif; font-size:2.5rem; font-weight:700; line-height:1; }
+
+    /* ── PEINTURE ─────────────────────────────────────────── */
+    .paint-gallery { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.25rem; }
+    .paint-card { position:relative; border-radius:1.25rem; overflow:hidden; aspect-ratio:4/3; cursor:pointer; }
+    .paint-card img { width:100%; height:100%; object-fit:cover; transition:transform .5s ease; }
+    .paint-card:hover img { transform:scale(1.07); }
+    .paint-card-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 50%); display:flex; flex-direction:column; justify-content:flex-end; padding:1.25rem; }
+    .paint-card-overlay h4 { font-family:'Rajdhani',sans-serif; font-weight:700; font-size:1.1rem; color:white; margin:0; line-height:1.2; }
+    .paint-card-overlay span { font-size:.8rem; color:rgba(255,255,255,.65); font-style:italic; margin-top:.2rem; }
+    .finish-chip { display:inline-flex; align-items:center; gap:.4rem; padding:.35rem .9rem; border-radius:2rem; font-size:.78rem; font-weight:600; border:1px solid; }
+    .fc-matte  { background:rgba(255,255,255,.06); color:#cbd5e1; border-color:rgba(255,255,255,.15); }
+    .fc-brillant { background:rgba(59,130,246,.1); color:#93c5fd; border-color:rgba(59,130,246,.25); }
+    .fc-satiné { background:rgba(139,92,246,.1); color:#c4b5fd; border-color:rgba(139,92,246,.25); }
+    .fc-chrome { background:rgba(148,163,184,.1); color:#e2e8f0; border-color:rgba(148,163,184,.25); }
+    .fc-marbre { background:rgba(244,114,182,.1); color:#f9a8d4; border-color:rgba(244,114,182,.25); }
+    .fc-cameleon { background:linear-gradient(90deg,rgba(168,85,247,.15),rgba(59,130,246,.15),rgba(16,185,129,.15)); color:#e2e8f0; border-color:rgba(168,85,247,.3); }
+    .avantage-paint { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; padding:1.75rem; display:flex; gap:1.25rem; align-items:flex-start; transition:all .3s; }
+    .avantage-paint:hover { border-color:rgba(255,107,53,.3); }
+    .avantage-paint .ico { width:48px; height:48px; border-radius:.875rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  </style>
+</head>
+<body>
+
+<!-- FLASH BANNER -->
+<div class="bg-orange-600 py-2 overflow-hidden">
+  <div class="flash-track text-sm font-semibold text-white">
+    <span class="flex items-center gap-10 px-6 flex-shrink-0">
+      <span>🚴 Location vélos dès 30€/jour — SUNN &amp; Moustache disponibles</span>
+      <span>🔧 Atelier expert — Réparation &amp; entretien tous types de cycles</span>
+      <span>⚡ Concessionnaire officiel SUNN &amp; Moustache Bikes</span>
+      <span>📞 09 50 32 08 29 · Mar→Ven 9h–18h30 · Sam jusqu'à 18h</span>
+      <span>🎯 Location offerte si vous achetez après votre essai !</span>
+    </span>
+    <span class="flex items-center gap-10 px-6 flex-shrink-0" aria-hidden="true">
+      <span>🚴 Location vélos dès 30€/jour — SUNN &amp; Moustache disponibles</span>
+      <span>🔧 Atelier expert — Réparation &amp; entretien tous types de cycles</span>
+      <span>⚡ Concessionnaire officiel SUNN &amp; Moustache Bikes</span>
+      <span>📞 09 50 32 08 29 · Mar→Ven 9h–18h30 · Sam jusqu'à 18h</span>
+      <span>🎯 Location offerte si vous achetez après votre essai !</span>
+    </span>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<nav id="navbar" class="sticky top-0 z-50" style="background:rgba(8,14,26,.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <button onclick="showSection('accueil')" class="flex items-center gap-3 text-left">
+        <div class="w-10 h-10 rounded-lg overflow-hidden bg-orange-600 flex items-center justify-center">
+          <img src="../VTT PERFORMANCE.png" alt="Logo" onerror="this.style.display='none'" class="w-full h-full object-contain p-1">
+        </div>
+        <div>
+          <div class="font-heading font-bold text-lg leading-none text-white">VTT Performance</div>
+          <div class="text-xs text-gray-500 leading-none mt-0.5">Ingwiller · Alsace</div>
+        </div>
+      </button>
+
+      <div class="hidden lg:flex items-center gap-8">
+        <button onclick="showSection('accueil')" class="nav-link text-sm font-medium text-gray-300 hover:text-white" data-section="accueil">Accueil</button>
+        <button onclick="showSection('catalogue')" class="nav-link text-sm font-medium text-gray-300 hover:text-white" data-section="catalogue">Catalogue</button>
+        <button onclick="showSection('location')" class="nav-link text-sm font-medium text-gray-300 hover:text-white" data-section="location">Location</button>
+        <button onclick="showSection('atelier')" class="nav-link text-sm font-medium text-gray-300 hover:text-white" data-section="atelier">Atelier</button>
+        <button onclick="showSection('suspensions')" class="nav-link text-sm font-medium text-gray-300 hover:text-white" data-section="suspensions">Suspensions</button>
+        <button onclick="showSection('peinture')" class="nav-link text-sm font-medium text-gray-300 hover:text-white" data-section="peinture">Peinture</button>
+        <button onclick="showSection('contact')" class="nav-link text-sm font-medium text-gray-300 hover:text-white" data-section="contact">Contact</button>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="tel:0950320829" class="hidden sm:flex items-center gap-2 text-sm text-gray-300 hover:text-white transition-colors">
+          <i data-lucide="phone" class="w-4 h-4 text-orange-400"></i>09 50 32 08 29
+        </a>
+        <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="hidden sm:flex btn-orange text-sm py-2 px-4">
+          <i data-lucide="calendar" class="w-4 h-4"></i>Prendre RDV
+        </a>
+        <button id="menu-btn" onclick="toggleMenu()" class="lg:hidden p-2 rounded-lg hover:bg-white/10 transition-colors">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="mobile-menu lg:hidden pb-4">
+      <div class="flex flex-col gap-1 pt-2 border-t border-white/10">
+        <button onclick="showSection('accueil');toggleMenu()" class="text-left px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Accueil</button>
+        <button onclick="showSection('catalogue');toggleMenu()" class="text-left px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Catalogue</button>
+        <button onclick="showSection('location');toggleMenu()" class="text-left px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Location</button>
+        <button onclick="showSection('atelier');toggleMenu()" class="text-left px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Atelier</button>
+        <button onclick="showSection('suspensions');toggleMenu()" class="text-left px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Suspensions</button>
+        <button onclick="showSection('peinture');toggleMenu()" class="text-left px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Peinture</button>
+        <button onclick="showSection('contact');toggleMenu()" class="text-left px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Contact</button>
+        <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="btn-orange mx-4 mt-2 justify-center text-sm">
+          <i data-lucide="calendar" class="w-4 h-4"></i>Prendre RDV
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- FLOATING CALENDLY -->
+<div class="fixed bottom-6 right-6 z-50">
+  <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="calendly-btn">
+    <i data-lucide="calendar-check" class="w-5 h-5"></i>Réserver un créneau
+  </a>
+</div>
+
+<!-- BACK TO TOP -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Retour en haut">
+  <i data-lucide="chevron-up" class="w-5 h-5"></i>
+</button>
+
+<!-- ════════════════════ ACCUEIL ════════════════════ -->
+<div id="sec-accueil">
+  <!-- Hero -->
+  <section class="hero-bg min-h-screen flex items-center relative">
+    <div class="absolute inset-0 overflow-hidden">
+      <img src="../IMAGE/2023_07_19_17_20_IMG_1373.JPG" alt="VTT en action" class="w-full h-full object-cover opacity-20" onerror="this.style.display='none'">
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium mb-6" style="background:rgba(255,107,53,.12);border:1px solid rgba(255,107,53,.25);color:#ff6b35;" data-aos="fade-up">
+          <span class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
+          Concessionnaire officiel SUNN &amp; Moustache Bikes
+        </div>
+        <h1 class="font-heading font-bold text-white mb-6 leading-tight" style="font-size:clamp(2.5rem,6vw,4.5rem);" data-aos="fade-up" data-aos-delay="100">
+          Votre expert vélo<br><span class="text-gradient">en Alsace du Nord</span>
+        </h1>
+        <p class="text-gray-300 text-lg mb-8 max-w-xl leading-relaxed" data-aos="fade-up" data-aos-delay="200">
+          Vente, location, réparation et entretien de tous types de cycles à Ingwiller.
+        
+        <div class="flex flex-wrap gap-4" data-aos="fade-up" data-aos-delay="300">
+          <button onclick="showSection('catalogue')" class="btn-orange text-base"><i data-lucide="compass" class="w-5 h-5"></i>Voir le catalogue</button>
+          <button onclick="showSection('location')" class="btn-outline text-base"><i data-lucide="bike" class="w-5 h-5"></i>Louer un vélo</button>
+        </div>
+        <div class="grid grid-cols-3 gap-6 mt-16 pt-12 border-t border-white/10" data-aos="fade-up" data-aos-delay="400">
+          <div><div class="font-heading font-bold text-3xl text-orange-400">2</div><div class="text-sm text-gray-400 mt-1">Marques exclusives</div></div>
+          <div><div class="font-heading font-bold text-3xl text-orange-400">30€</div><div class="text-sm text-gray-400 mt-1">Location dès/jour</div></div>
+          <div><div class="font-heading font-bold text-3xl text-orange-400">100%</div><div class="text-sm text-gray-400 mt-1">Expertise technique</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500 text-xs" data-aos="fade-up" data-aos-delay="600">
+      <span>Défiler</span>
+      <div style="width:1px;height:36px;background:linear-gradient(to bottom,rgba(255,107,53,.6),transparent)"></div>
+    </div>
+  </section>
+
+  <!-- ── BANNIÈRE PHARE ── -->
+  <section class="hero-banner">
+
+    <!-- Slide 1 — Location -->
+    <div class="hb-slide hb-active">
+      <div class="hb-bg" style="background-image:url('images/IMG_4869.JPEG');background-position:center 40%"></div>
+      <div class="hb-overlay"></div>
+      <div class="relative z-10 max-w-7xl mx-auto px-8 w-full">
+        <div class="max-w-xl">
+          <span class="hb-label" style="background:rgba(255,107,53,.18);color:#ff6b35;border:1px solid rgba(255,107,53,.35)">Location disponible</span>
+          <h2 class="font-heading font-bold text-white leading-tight mb-5" style="font-size:clamp(2rem,5vw,3.8rem)">Essayez avant<br>d'acheter</h2>
+          <p class="text-gray-300 text-lg mb-8 leading-relaxed">Location de VTT électrique SUNN &amp; Moustache.<br><strong class="text-white">Dès 30€/jour &mdash; offerte si vous achetez !</strong></p>
+          <button onclick="showSection('location')" class="btn-orange text-base"><i data-lucide="bike" class="w-5 h-5"></i>Voir les tarifs location</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2 — SUNN VTTAE -->
+    <div class="hb-slide">
+      <div class="hb-bg" style="background-image:url('images/IMG_4871.JPEG');background-position:center 30%"></div>
+      <div class="hb-overlay-r"></div>
+      <div class="relative z-10 max-w-7xl mx-auto px-8 w-full">
+        <div class="max-w-xl ml-auto text-right">
+          <span class="hb-label" style="background:rgba(252,211,77,.1);color:#fcd34d;border:1px solid rgba(252,211,77,.25)">SUNN &mdash; VTT Électrique</span>
+          <h2 class="font-heading font-bold text-white leading-tight mb-5" style="font-size:clamp(2rem,5vw,3.8rem)">Rage S2 &middot; Flash S2<br>Charger S2</h2>
+          <p class="text-gray-300 text-lg mb-8 leading-relaxed">Shimano EP8 85Nm &middot; Bosch Performance CX.<br>Les meilleurs VTTAE à prix concessionnaire direct.</p>
+          <button onclick="setBrand('SUNN');setCat('vttae');showSection('catalogue')" class="btn-orange text-base"><i data-lucide="compass" class="w-5 h-5"></i>Voir les SUNN VTTAE</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3 — SUNN VTCAE -->
+    <div class="hb-slide">
+      <div class="hb-bg" style="background-image:url('images/IMG_5097.JPEG');background-position:center 35%"></div>
+      <div class="hb-overlay"></div>
+      <div class="relative z-10 max-w-7xl mx-auto px-8 w-full">
+        <div class="max-w-xl">
+          <span class="hb-label" style="background:rgba(6,182,212,.12);color:#06b6d4;border:1px solid rgba(6,182,212,.3)">SUNN &mdash; VTC Électrique</span>
+          <h2 class="font-heading font-bold text-white leading-tight mb-5" style="font-size:clamp(2rem,5vw,3.8rem)">Start &middot; Skill &middot; Over<br>On &middot; Cargo</h2>
+          <p class="text-gray-300 text-lg mb-8 leading-relaxed">Moteur Shimano STEPS, discret et fiable.<br>De 1&nbsp;899€ à 3&nbsp;299€ &mdash; tous disponibles en stock.</p>
+          <button onclick="setBrand('SUNN');setCat('vtcae');showSection('catalogue')" class="btn-orange text-base"><i data-lucide="zap" class="w-5 h-5"></i>Voir les SUNN VTCAE</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4 — Moustache Trail -->
+    <div class="hb-slide">
+      <div class="hb-bg" style="background-image:url('images/IMG_5178.JPEG');background-position:center 40%"></div>
+      <div class="hb-overlay-r"></div>
+      <div class="relative z-10 max-w-7xl mx-auto px-8 w-full">
+        <div class="max-w-xl ml-auto text-right">
+          <span class="hb-label" style="background:rgba(59,130,246,.1);color:#93c5fd;border:1px solid rgba(59,130,246,.25)">Moustache &mdash; Trail Électrique</span>
+          <h2 class="font-heading font-bold text-white leading-tight mb-5" style="font-size:clamp(2rem,5vw,3.8rem)">Samedi Trail 3, 5, 7<br>Game 150 &middot; 160</h2>
+          <p class="text-gray-300 text-lg mb-8 leading-relaxed">Bosch Performance CX &middot; 625Wh.<br>Le meilleur VTTAE français pour le trail et l'enduro.</p>
+          <button onclick="setBrand('Moustache');setCat('vttae');showSection('catalogue')" class="btn-orange text-base"><i data-lucide="mountain" class="w-5 h-5"></i>Voir les Moustache</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Prev / Next -->
+    <button class="hb-btn-prev" onclick="hbNav(-1)" aria-label="Précédent"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button>
+    <button class="hb-btn-next" onclick="hbNav(1)" aria-label="Suivant"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button>
+
+    <!-- Dots -->
+    <div class="hb-dots">
+      <button class="hb-dot hb-on" onclick="hbGo(0)" aria-label="Slide 1"></button>
+      <button class="hb-dot" onclick="hbGo(1)" aria-label="Slide 2"></button>
+      <button class="hb-dot" onclick="hbGo(2)" aria-label="Slide 3"></button>
+      <button class="hb-dot" onclick="hbGo(3)" aria-label="Slide 4"></button>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="py-24 px-4" style="background:var(--surface)">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <span class="badge badge-electric">Nos services</span>
+        <h2 class="font-heading font-bold text-4xl mt-3">Tout pour votre vélo</h2>
+        <p class="text-gray-400 mt-3 max-w-xl mx-auto">Un atelier complet et un magasin spécialisé pour vous accompagner à chaque étape.</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="service-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background:rgba(255,107,53,.12)"><i data-lucide="shopping-bag" class="w-6 h-6 text-orange-400"></i></div>
+          <h3 class="font-heading font-bold text-xl mb-2">Vente</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">VTT, VAE, VTC, gravel, urbain. Neufs et occasion. SUNN, Moustache, Kona, Norco…</p>
+          <button onclick="showSection('catalogue')" class="mt-4 text-sm text-orange-400 font-medium hover:underline flex items-center gap-1">Voir le catalogue<i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="80">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background:rgba(59,130,246,.12)"><i data-lucide="wrench" class="w-6 h-6 text-blue-400"></i></div>
+          <h3 class="font-heading font-bold text-xl mb-2">Atelier</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Réparation, entretien, purge de freins, rayonnage, révision complète. Récupération à domicile possible.</p>
+          <button onclick="showSection('atelier')" class="mt-4 text-sm text-blue-400 font-medium hover:underline flex items-center gap-1">Nos prestations<i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="160">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background:rgba(6,182,212,.12)"><i data-lucide="bike" class="w-6 h-6 text-cyan-400"></i></div>
+          <h3 class="font-heading font-bold text-xl mb-2">Location</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">VTTAE Moustache &amp; SUNN, VTT, BMX. Dès 30€/jour. Location offerte si vous achetez !</p>
+          <button onclick="showSection('location')" class="mt-4 text-sm text-cyan-400 font-medium hover:underline flex items-center gap-1">Voir les tarifs<i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="240">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background:rgba(139,92,246,.12)"><i data-lucide="settings" class="w-6 h-6 text-purple-400"></i></div>
+          <h3 class="font-heading font-bold text-xl mb-2">Sur mesure</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Montage personnalisé, assemblage vélo, build complet selon votre budget.</p>
+          <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="mt-4 text-sm text-purple-400 font-medium hover:underline flex items-center gap-1">Prendre RDV<i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="320">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background:rgba(239,68,68,.12)"><i data-lucide="activity" class="w-6 h-6 text-red-400"></i></div>
+          <h3 class="font-heading font-bold text-xl mb-2">Suspensions</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Révision fourches & amortisseurs. Changement joints, purge huile, contrôle complet. Toutes marques Fox, RockShox, DVO…</p>
+          <button onclick="showSection('suspensions')" class="mt-4 text-sm text-red-400 font-medium hover:underline flex items-center gap-1">En savoir plus<i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background:rgba(244,114,182,.12)"><i data-lucide="palette" class="w-6 h-6 text-pink-400"></i></div>
+          <h3 class="font-heading font-bold text-xl mb-2">Peinture</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Personnalisation complète : matte, brillante, satinée, chromée, caméléon. Techniques carrosserie professionnelles.</p>
+          <button onclick="showSection('peinture')" class="mt-4 text-sm text-pink-400 font-medium hover:underline flex items-center gap-1">Découvrir<i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brands -->
+  <section class="py-14 px-4" style="background:var(--bg)">
+    <div class="max-w-7xl mx-auto">
+      <p class="text-center text-xs text-gray-600 uppercase tracking-widest mb-10" data-aos="fade-up">Nos marques partenaires 🚴</p>
+      <div class="flex flex-wrap items-center justify-center gap-12" data-aos="fade-up" data-aos-delay="100">
+        <span class="brand-label text-white" style="font-size:2rem;letter-spacing:.2em">SUNN</span>
+        <span class="brand-label text-white" style="font-size:2rem;letter-spacing:.2em">KONA</span>
+        <span class="brand-label text-white" style="font-size:2rem;letter-spacing:.2em">NORCO</span>
+        <span class="brand-label text-white" style="font-size:2rem;letter-spacing:.2em">FORBIDDEN</span>
+       <span class="brand-label text-white" style="font-size:2rem;letter-spacing:.2em">MOUSTACHE</span>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo gallery -->
+  <section class="py-4 px-4" style="background:var(--surface)">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3" data-aos="fade-up">
+        <div class="rounded-xl overflow-hidden h-48" style="background:var(--card)"><img src="images/IMG_3475.JPEG" alt="Magasin" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="this.parentElement.style.opacity='.3'"></div>
+        <div class="rounded-xl overflow-hidden h-48" style="background:var(--card)"><img src="images/IMG_3932.JPEG" alt="Vélos" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="this.parentElement.style.opacity='.3'"></div>
+        <div class="rounded-xl overflow-hidden h-48" style="background:var(--card)"><img src="images/IMG_5021.JPEG" alt="Atelier" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="this.parentElement.style.opacity='.3'"></div>
+        <div class="rounded-xl overflow-hidden h-48" style="background:var(--card)"><img src="images/IMG_5181.JPEG" alt="VTT" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="this.parentElement.style.opacity='.3'"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-24 px-4" style="background:var(--bg)">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-14" data-aos="fade-up">
+        <span class="badge badge-electric">Avis clients</span>
+        <h2 class="font-heading font-bold text-4xl mt-3">Ils nous font confiance ⭐</h2>
+        <div class="flex items-center justify-center gap-2 mt-4">
+          <div class="flex gap-1">
+            <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+            <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+            <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+            <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+            <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+          </div>
+          <span class="text-gray-400 text-sm">5/5 · Google Reviews</span>
+        </div>
+      </div>
+      <div class="overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+        <div class="testi-track" id="testi-wrap"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="sep"></div>
+
+<!-- ════════════════════ CATALOGUE ════════════════════ -->
+<div id="sec-catalogue" class="section-hidden">
+  <section class="py-20 px-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-12" data-aos="fade-up">
+        <span class="badge badge-electric">Catalogue</span>
+        <h2 class="font-heading font-bold text-4xl mt-3 mb-2">Nos vélos</h2>
+        <p class="text-gray-400">Gamme complète SUNN et Moustache Bikes — disponibles sur commande ou en magasin</p>
+      </div>
+      <div class="flex flex-wrap gap-3 mb-4" data-aos="fade-up" data-aos-delay="80">
+        <span class="text-xs text-gray-500 uppercase tracking-wider self-center mr-2">Marque :</span>
+        <button onclick="setBrand('all')" id="fb-all" class="filter-btn filter-brand active">Toutes</button>
+        <button onclick="setBrand('SUNN')" id="fb-sunn" class="filter-btn filter-brand">SUNN</button>
+        <button onclick="setBrand('Moustache')" id="fb-moustache" class="filter-btn filter-brand">Moustache</button>
+        <button onclick="setBrand('KONA')" id="fb-kona" class="filter-btn filter-brand">KONA</button>
+        <button onclick="setBrand('NORCO')" id="fb-norco" class="filter-btn filter-brand">NORCO</button>
+        <button onclick="setBrand('_autres')" id="fb-_autres" class="filter-btn filter-brand">Autres</button>
+      </div>
+      <div class="flex flex-wrap gap-3 mb-10" data-aos="fade-up" data-aos-delay="120">
+        <span class="text-xs text-gray-500 uppercase tracking-wider self-center mr-2">Catégorie :</span>
+        <button onclick="setCat('all')" id="fc-all" class="filter-btn active">Tous</button>
+        <button onclick="setCat('vttae')" id="fc-vttae" class="filter-btn">VTT Électrique</button>
+        <button onclick="setCat('vtcae')" id="fc-vtcae" class="filter-btn">VTC Électrique</button>
+        <button onclick="setCat('vtt')" id="fc-vtt" class="filter-btn">VTT</button>
+        <button onclick="setCat('gravel')" id="fc-gravel" class="filter-btn">Gravel</button>
+        <button onclick="setCat('bmx')" id="fc-bmx" class="filter-btn">BMX</button>
+        <button onclick="setCat('urban')" id="fc-urban" class="filter-btn">Urbain</button>
+        <button onclick="setCat('kids')" id="fc-kids" class="filter-btn">Enfants</button>
+      </div>
+      <div id="catalog-grid" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
+      <div id="catalog-empty" class="section-hidden text-center py-20">
+        <i data-lucide="search-x" class="w-12 h-12 mx-auto mb-4 text-gray-600"></i>
+        <p class="text-gray-500">Aucun modèle pour ce filtre</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════════════ LOCATION ════════════════════ -->
+<div id="sec-location" class="section-hidden">
+  <section class="py-20 px-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-12" data-aos="fade-up">
+        <span class="badge badge-electric">Location</span>
+        <h2 class="font-heading font-bold text-4xl mt-3 mb-2">Louez votre vélo à Ingwiller</h2>
+        <p class="text-gray-400 max-w-xl">Partez explorer l'Alsace du Nord sur nos vélos haut de gamme. À partir de 30€/jour.</p>
+      </div>
+
+      <!-- Offre spéciale -->
+      <div class="rounded-2xl p-6 mb-10 flex flex-col md:flex-row items-center justify-between gap-4" style="background:linear-gradient(135deg,rgba(255,107,53,.12),rgba(255,107,53,.06));border:1px solid rgba(255,107,53,.25);" data-aos="fade-up">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0"><i data-lucide="gift" class="w-6 h-6 text-white"></i></div>
+          <div>
+            <div class="font-heading font-bold text-xl text-orange-400">Offre essai → achat</div>
+            <p class="text-gray-300 text-sm">Vous achetez un vélo après votre essai ? <strong class="text-white">Votre location est remboursée ! 🎁 </strong></p>
+          </div>
+        </div>
+        <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="btn-orange text-sm flex-shrink-0"><i data-lucide="calendar" class="w-4 h-4"></i>Réserver un essai</a>
+      </div>
+
+      <!-- Tableau des prix -->
+      <div class="rounded-2xl overflow-x-auto mb-4" style="border:1px solid rgba(255,255,255,.07);" data-aos="fade-up">
+        <table class="prix-table">
+          <thead>
+            <tr>
+              <th style="text-align:left">Type de vélo</th>
+              <th>VTTAE<br><span style="font-weight:400;font-size:.72rem;color:#9ca3af">Moustache Trail 150<br>750Wh</span></th>
+              <th>VTTAE<br><span style="font-weight:400;font-size:.72rem;color:#9ca3af">SUNN Rage<br>500Wh</span></th>
+              <th>VTCAE<br><span style="font-weight:400;font-size:.72rem;color:#9ca3af">SUNN Start/Skill</span></th>
+              <th>VTT</th>
+              <th>Dirt / BMX</th>
+              <th>Équipement<br><span style="font-weight:400;font-size:.72rem;color:#9ca3af">Supplément</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>½ journée</strong> <span class="text-gray-500 text-xs">(4h)</span></td>
+              <td><span class="text-white font-semibold">50€</span><span class="text-gray-500 text-xs"> / 65€ WE</span></td>
+              <td><span class="text-white font-semibold">40€</span><span class="text-gray-500 text-xs"> / 55€ WE</span></td>
+              <td><span class="text-white font-semibold">35€</span><span class="text-gray-500 text-xs"> / 50€ WE</span></td>
+              <td><span class="text-white font-semibold">25€</span><span class="text-gray-500 text-xs"> / 40€ WE</span></td>
+              <td><span class="text-white font-semibold">15€</span><span class="text-gray-500 text-xs"> / 25€ WE</span></td>
+              <td class="text-orange-400 font-semibold">+5€</td>
+            </tr>
+            <tr>
+              <td><strong>Journée</strong> <span class="text-gray-500 text-xs">(9h–18h)</span></td>
+              <td><span class="text-white font-semibold">75€</span><span class="text-gray-500 text-xs"> / 90€ WE</span></td>
+              <td><span class="text-white font-semibold">65€</span><span class="text-gray-500 text-xs"> / 80€ WE</span></td>
+              <td><span class="text-white font-semibold">60€</span><span class="text-gray-500 text-xs"> / 75€ WE</span></td>
+              <td><span class="text-white font-semibold">50€</span><span class="text-gray-500 text-xs"> / 65€ WE</span></td>
+              <td><span class="text-white font-semibold">35€</span><span class="text-gray-500 text-xs"> / 45€ WE</span></td>
+              <td class="text-orange-400 font-semibold">+15€</td>
+            </tr>
+            <tr>
+              <td><strong>Semaine</strong> <span class="text-gray-500 text-xs">(3j min.)</span></td>
+              <td class="text-white font-semibold">70€/j</td>
+              <td class="text-white font-semibold">60€/j</td>
+              <td class="text-white font-semibold">55€/j</td>
+              <td class="text-white font-semibold">45€/j</td>
+              <td class="text-white font-semibold">30€/j</td>
+              <td class="text-orange-400 font-semibold">+10€/j</td>
+            </tr>
+            <tr>
+              <td><strong>Week-end</strong> <span class="text-gray-500 text-xs">(Sam–Dim)</span></td>
+              <td><span class="text-white font-semibold">160€</span><span class="text-gray-500 text-xs"> / 180€</span></td>
+              <td><span class="text-white font-semibold">140€</span><span class="text-gray-500 text-xs"> / 160€</span></td>
+              <td><span class="text-white font-semibold">130€</span><span class="text-gray-500 text-xs"> / 150€</span></td>
+              <td><span class="text-white font-semibold">110€</span><span class="text-gray-500 text-xs"> / 130€</span></td>
+              <td><span class="text-white font-semibold">70€</span><span class="text-gray-500 text-xs"> / 90€</span></td>
+              <td class="text-orange-400 font-semibold">+30€</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs text-gray-600 mb-12 px-1">S. = Semaine (lun–ven) · WE = Week-end &amp; jours fériés</p>
+
+      <div class="grid lg:grid-cols-2 gap-10">
+        <!-- Simulateur -->
+        <div class="card p-8" data-aos="fade-up">
+          <h3 class="font-heading font-bold text-2xl mb-6 flex items-center gap-3"><i data-lucide="calculator" class="w-6 h-6 text-orange-400"></i>Simulateur de tarif</h3>
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-2">Type de vélo</label>
+              <select id="r-type" onchange="calcRent()" class="inp">
+                <option value="moustache">VTTAE Moustache Trail 150 750Wh</option>
+                <option value="sunn_rage">VTTAE SUNN Rage 500Wh</option>
+                <option value="sunn_vtcae">VTCAE SUNN Start / Skill</option>
+                <option value="vtt">VTT</option>
+                <option value="bmx">Dirt / BMX Race</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-2">Durée</label>
+              <select id="r-dur" onchange="calcRent()" class="inp">
+                <option value="half">½ journée (4h)</option>
+                <option value="day">Journée (9h–18h)</option>
+                <option value="week">Semaine (par jour, min. 3j)</option>
+                <option value="weekend">Week-end (Sam–Dim)</option>
+              </select>
+            </div>
+            <div id="r-daytype-wrap">
+              <label class="block text-sm font-medium text-gray-300 mb-2">Type de jour</label>
+              <select id="r-daytype" onchange="calcRent()" class="inp">
+                <option value="week">Semaine (lun–ven)</option>
+                <option value="weekend">Week-end / férié</option>
+              </select>
+            </div>
+            <div class="flex items-center gap-3">
+              <input type="checkbox" id="r-equip" onchange="calcRent()" class="w-4 h-4 accent-orange-500">
+              <label for="r-equip" class="text-sm text-gray-300">Supplément équipement (casque, protections…)</label>
+            </div>
+          </div>
+          <div class="mt-8 rounded-xl p-6 text-center" style="background:rgba(255,107,53,.08);border:1px solid rgba(255,107,53,.2)">
+            <div class="text-sm text-gray-400 mb-1">Tarif estimé</div>
+            <div class="price-display" id="r-price">—</div>
+            <div class="text-xs text-gray-500 mt-2" id="r-note"></div>
+          </div>
+          <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="btn-orange w-full justify-center mt-6 text-base"><i data-lucide="calendar-check" class="w-5 h-5"></i>Réserver ce créneau</a>
+        </div>
+
+        <!-- Formulaire demande -->
+        <div class="card p-8" data-aos="fade-up" data-aos-delay="100">
+          <h3 class="font-heading font-bold text-2xl mb-6 flex items-center gap-3"><i data-lucide="mail" class="w-6 h-6 text-cyan-400"></i>Demande de location</h3>
+          <form id="rental-form" onsubmit="submitRental(event)" class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div><label class="block text-sm font-medium text-gray-300 mb-2">Prénom *</label><input type="text" id="lf-prenom" required class="inp" placeholder="Marie"></div>
+              <div><label class="block text-sm font-medium text-gray-300 mb-2">Nom *</label><input type="text" id="lf-nom" required class="inp" placeholder="Dupont"></div>
+            </div>
+            <div><label class="block text-sm font-medium text-gray-300 mb-2">Email *</label><input type="email" id="lf-email" required class="inp" placeholder="marie@email.com"></div>
+            <div><label class="block text-sm font-medium text-gray-300 mb-2">Téléphone *</label><input type="tel" id="lf-tel" required class="inp" placeholder="06 12 34 56 78"></div>
+            <div class="grid grid-cols-2 gap-4">
+              <div><label class="block text-sm font-medium text-gray-300 mb-2">Date début *</label><input type="date" id="lf-start" required class="inp"></div>
+              <div><label class="block text-sm font-medium text-gray-300 mb-2">Date fin</label><input type="date" id="lf-end" class="inp"></div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-2">Vélo souhaité</label>
+              <select id="lf-velo" class="inp">
+                <option>VTTAE Moustache Trail 150 750Wh</option>
+                <option>VTTAE SUNN Rage 500Wh</option>
+                <option>VTCAE SUNN Start / Skill</option>
+                <option>VTT</option>
+                <option>Dirt / BMX Race</option>
+              </select>
+            </div>
+            <div><label class="block text-sm font-medium text-gray-300 mb-2">Message</label><textarea id="lf-msg" rows="3" class="inp" placeholder="Taille, niveau, équipement souhaité…"></textarea></div>
+            <button type="submit" class="btn-orange w-full justify-center text-base"><i data-lucide="send" class="w-5 h-5"></i>Envoyer ma demande</button>
+            <p class="text-xs text-gray-500 text-center">Réponse en 8h sous réserve de disponibilités et infos de paiement par virement bancaire.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════════════ ATELIER ════════════════════ -->
+<div id="sec-atelier" class="section-hidden">
+  <section class="py-20 px-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-14" data-aos="fade-up">
+        <span class="badge badge-vtt">Atelier</span>
+        <h2 class="font-heading font-bold text-4xl mt-3 mb-2">Atelier &amp; Réparation</h2>
+        <p class="text-gray-400 max-w-xl">Notre atelier prend en charge tous types de cycles, classiques et électriques. Diagnostic sur RDV.</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
+        <div class="service-card" data-aos="fade-up" data-aos-delay="0">
+          <i data-lucide="alert-triangle" class="w-8 h-8 text-red-400 mb-4"></i>
+          <h3 class="font-heading font-bold text-xl mb-2">Freinage</h3>
+          <ul class="text-gray-400 text-sm space-y-1.5">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Purge de freins hydrauliques</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Remplacement de plaquettes</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Réglage étriers</li>
+          </ul>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="60">
+          <i data-lucide="circle" class="w-8 h-8 text-blue-400 mb-4"></i>
+          <h3 class="font-heading font-bold text-xl mb-2">Roues &amp; Pneus</h3>
+          <ul class="text-gray-400 text-sm space-y-1.5">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Rayonnage et voilage</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Montage pneus tubeless</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Remplacement jantes</li>
+          </ul>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="120">
+          <i data-lucide="zap" class="w-8 h-8 text-yellow-400 mb-4"></i>
+          <h3 class="font-heading font-bold text-xl mb-2">Transmission</h3>
+          <ul class="text-gray-400 text-sm space-y-1.5">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Révision chaîne / cassette</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Réglage dérailleurs</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Remplacement pédalier, câbles</li>
+          </ul>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="180">
+          <i data-lucide="arrow-up-down" class="w-8 h-8 text-purple-400 mb-4"></i>
+          <h3 class="font-heading font-bold text-xl mb-2">Suspensions</h3>
+          <ul class="text-gray-400 text-sm space-y-1.5">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Révision fourche &amp; amortisseur</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Remplacement cartouche</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Réglage SAG / rebond</li>
+          </ul>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="240">
+          <i data-lucide="cpu" class="w-8 h-8 text-cyan-400 mb-4"></i>
+          <h3 class="font-heading font-bold text-xl mb-2">Cadre &amp; Roulements</h3>
+          <ul class="text-gray-400 text-sm space-y-1.5">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Changement roulements de cadre</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Boîtier de pédalier</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Peinture &amp; finitions</li>
+          </ul>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+          <i data-lucide="package" class="w-8 h-8 text-orange-400 mb-4"></i>
+          <h3 class="font-heading font-bold text-xl mb-2">Services avancés</h3>
+          <ul class="text-gray-400 text-sm space-y-1.5">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Montage vélo personnalisé</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Assemblage vélo acheté en ligne</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400 flex-shrink-0"></i>Récupération à domicile</li>
+          </ul>
+        </div>
+      </div>
+      <div class="rounded-2xl p-10 text-center" style="background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(6,182,212,.06));border:1px solid rgba(59,130,246,.2)" data-aos="fade-up">
+        <h3 class="font-heading font-bold text-3xl mb-3">Besoin d'une réparation ?</h3>
+        <p class="text-gray-400 mb-8 max-w-lg mx-auto">Prenez rendez-vous en ligne ou appelez-nous. Récupération à domicile possible.</p>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="btn-orange text-base"><i data-lucide="calendar" class="w-5 h-5"></i>Prendre RDV en ligne</a>
+          <a href="tel:0950320829" class="btn-outline text-base"><i data-lucide="phone" class="w-5 h-5"></i>09 50 32 08 29</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════════════ CONTACT ════════════════════ -->
+<div id="sec-contact" class="section-hidden">
+  <section class="py-20 px-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-14" data-aos="fade-up">
+        <span class="badge badge-urban">Contact</span>
+        <h2 class="font-heading font-bold text-4xl mt-3 mb-2">Nous trouver</h2>
+        <p class="text-gray-400">Venez nous rendre visite à Ingwiller ou contactez-nous directement.</p>
+      </div>
+      <div class="grid lg:grid-cols-3 gap-8 mb-10">
+        <div class="space-y-5" data-aos="fade-up">
+          <div class="card p-6"><div class="flex items-start gap-4"><div class="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center flex-shrink-0"><i data-lucide="map-pin" class="w-5 h-5 text-orange-400"></i></div><div><div class="font-semibold mb-1">Adresse</div><div class="text-sm text-gray-400">32 Faubourg du Général Philippot<br>67340 Ingwiller</div></div></div></div>
+          <div class="card p-6"><div class="flex items-start gap-4"><div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0"><i data-lucide="clock" class="w-5 h-5 text-blue-400"></i></div><div class="w-full"><div class="font-semibold mb-3">Horaires</div><div class="text-sm space-y-1.5"><div class="flex justify-between"><span class="text-gray-400">Lundi</span><span class="text-red-400">Fermé</span></div><div class="flex justify-between"><span class="text-gray-400">Mar → Ven</span><span>9h–12h · 14h–18h30</span></div><div class="flex justify-between"><span class="text-gray-400">Samedi</span><span>9h–18h</span></div><div class="flex justify-between"><span class="text-gray-400">Dimanche</span><span class="text-red-400">Fermé</span></div></div></div></div></div>
+          <div class="card p-6"><div class="flex items-start gap-4"><div class="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0"><i data-lucide="phone" class="w-5 h-5 text-cyan-400"></i></div><div><div class="font-semibold mb-1">Contact</div><a href="tel:0950320829" class="text-sm text-cyan-400 hover:underline block">09 50 32 08 29</a><a href="mailto:vttperformance67@gmail.com" class="text-sm text-gray-400 hover:text-white transition-colors block mt-1">vttperformance67@gmail.com</a></div></div></div>
+          <div class="card p-6"><div class="font-semibold mb-3">Réseaux sociaux</div><div class="flex gap-3"><a href="https://www.instagram.com/vttperformance67/" target="_blank" rel="noopener" class="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)"><i data-lucide="instagram" class="w-4 h-4"></i>Instagram</a><a href="https://www.facebook.com/61577356443323/" target="_blank" rel="noopener" class="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)"><i data-lucide="facebook" class="w-4 h-4"></i>Facebook</a></div></div>
+        </div>
+        <div class="lg:col-span-2" data-aos="fade-up" data-aos-delay="100">
+          <div class="card overflow-hidden" style="height:400px">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2630.9!2d7.4664!3d48.875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4796ee!2s32%20Faubourg%20du%20G%C3%A9n%C3%A9ral%20Philippot%2C%2067340%20Ingwiller!5e0!3m2!1sfr!2sfr!4v1699999999999!5m2!1sfr!2sfr" width="100%" height="100%" style="border:0;filter:invert(90%) hue-rotate(180deg)" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Carte VTT Performance"></iframe>
+          </div>
+        </div>
+      </div>
+      <div class="card p-8" data-aos="fade-up">
+        <h3 class="font-heading font-bold text-2xl mb-6 flex items-center gap-3"><i data-lucide="message-square" class="w-6 h-6 text-orange-400"></i>Envoyez-nous un message</h3>
+        <form id="contact-form" onsubmit="submitContact(event)" class="grid md:grid-cols-2 gap-5">
+          <div><label class="block text-sm font-medium text-gray-300 mb-2">Nom complet *</label><input type="text" id="c-nom" required class="inp" placeholder="Jean Dupont"></div>
+          <div><label class="block text-sm font-medium text-gray-300 mb-2">Email *</label><input type="email" id="c-email" required class="inp" placeholder="jean@email.com"></div>
+          <div><label class="block text-sm font-medium text-gray-300 mb-2">Téléphone</label><input type="tel" id="c-tel" class="inp" placeholder="06 12 34 56 78"></div>
+          <div><label class="block text-sm font-medium text-gray-300 mb-2">Sujet *</label><select id="c-sujet" required class="inp"><option value="">Choisir…</option><option>Renseignement vélo</option><option>Devis réparation</option><option>Location</option><option>Commande</option><option>Autre</option></select></div>
+          <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-300 mb-2">Message *</label><textarea id="c-msg" required rows="4" class="inp" placeholder="Votre message…"></textarea></div>
+          <div class="md:col-span-2"><button type="submit" class="btn-orange text-base"><i data-lucide="send" class="w-5 h-5"></i>Envoyer le message</button></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</div><!-- /sec-contact -->
+
+<!-- ══════════════════════════════ SUSPENSIONS ════════════════════════════ -->
+  <div id="sec-suspensions" class="section-hidden">
+
+    <!-- Hero -->
+    <div style="position:relative;overflow:hidden;min-height:420px;display:flex;align-items:center">
+      <div style="position:absolute;inset:0;background-image:url('images/IMG_3016.JPEG');background-size:cover;background-position:center;filter:brightness(.35)"></div>
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(8,14,26,.85) 0%,rgba(30,0,0,.6) 100%)"></div>
+      <div class="relative max-w-7xl mx-auto px-6 py-20 w-full">
+        <div class="max-w-2xl" data-aos="fade-up">
+          <span class="badge mb-5" style="background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3)">Service Suspensions</span>
+          <h1 class="font-heading font-bold text-white mb-5" style="font-size:clamp(2.2rem,5vw,4rem);line-height:1.1">Révision de<br><span style="background:linear-gradient(135deg,#ef4444,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">vos suspensions</span></h1>
+          <p class="text-gray-300 text-lg leading-relaxed mb-8">Fourches et amortisseurs nécessitent un entretien permanent.<br>Toutes marques : Fox, RockShox, DVO, Manitou, Öhlins…</p>
+          <div class="flex flex-wrap gap-3">
+            <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="btn-orange text-base"><i data-lucide="calendar" class="w-5 h-5"></i>Prendre rendez-vous</a>
+            <a href="tel:0950320829" class="btn-outline text-base"><i data-lucide="phone" class="w-5 h-5"></i>09 50 32 08 29</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chiffres clés -->
+    <section class="py-12 px-4" style="background:var(--surface)">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4" data-aos="fade-up">
+          <div class="susp-stat">
+            <div class="susp-stat-num" style="color:#ef4444">1x/an</div>
+            <div class="text-gray-400 text-sm mt-1">Révision recommandée</div>
+          </div>
+          <div class="susp-stat">
+            <div class="susp-stat-num" style="color:#f97316">×10</div>
+            <div class="text-gray-400 text-sm mt-1">Remplacement vs révision</div>
+          </div>
+          <div class="susp-stat">
+            <div class="susp-stat-num" style="color:#22c55e">100%</div>
+            <div class="text-gray-400 text-sm mt-1">Pièces contrôlées</div>
+          </div>
+          <div class="susp-stat">
+            <div class="susp-stat-num" style="color:#3b82f6">Toutes</div>
+            <div class="text-gray-400 text-sm mt-1">Marques acceptées</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Texte principal -->
+    <section class="py-20 px-4" style="background:var(--bg)">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div data-aos="fade-right">
+            <span class="badge badge-electric mb-4">Pourquoi réviser ?</span>
+            <h2 class="font-heading font-bold text-3xl mb-6">Entretien tous types<br>de suspensions</h2>
+            <div class="space-y-5 text-gray-300 leading-relaxed">
+              <p>Faire réviser les suspensions de son VTT est essentiel pour garantir une performance et une sécurité optimale. Avec le temps, les suspensions s'usent, perdent de leur efficacité et peuvent être amenées à fuir, compromettant ainsi le contrôle du vélo et la sécurité.</p>
+              <p>Une révision annuelle permet de détecter l'usure des joints, des composants, des huiles, et de les remplacer préventivement. En résumé, entretenir fourches et amortisseurs régulièrement est indispensable pour avoir un VTT performant tout en ayant l'assurance de ne pas rencontrer de problèmes dus au manque d'entretien — parfois <strong class="text-white">irréversible</strong>.</p>
+              <p>Il est donc préférable de payer une révision complète comportant le changement des joints, la purge de toutes les huiles et graisses ainsi que le contrôle total de toutes les pièces et de leur bon fonctionnement.</p>
+              <div class="card p-5" style="border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.05)">
+                <p class="font-semibold text-white flex items-start gap-3"><i data-lucide="alert-triangle" class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5"></i>Le tarif pour un remplacement de fourche ou d'amortisseur de grande marque peut coûter jusqu'à <span class="text-red-400">10 fois plus cher</span> que le tarif d'une révision — ce qui équivaut à 10 ans de révisions avec des suspensions qui fonctionnent comme au premier jour !</p>
+              </div>
+            </div>
+          </div>
+          <div data-aos="fade-left">
+            <div class="rounded-2xl overflow-hidden" style="height:420px;background:var(--card)">
+              <img src="images/IMG_3110.PNG" alt="Atelier révision suspensions VTT Performance" class="w-full h-full object-cover">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ce qui est inclus -->
+    <section class="py-20 px-4" style="background:var(--surface)">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12" data-aos="fade-up">
+          <h2 class="font-heading font-bold text-3xl">Ce que comprend une révision complète</h2>
+          <p class="text-gray-400 mt-2">Chaque intervention suit un protocole rigoureux pour garantir la longévité de vos suspensions.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div class="avantage-paint" data-aos="fade-up" data-aos-delay="0">
+            <div class="ico" style="background:rgba(239,68,68,.12)"><i data-lucide="settings-2" class="w-5 h-5 text-red-400"></i></div>
+            <div><h3 class="font-heading font-bold text-lg mb-1">Démontage complet</h3><p class="text-gray-400 text-sm">Désassemblage total de la fourche ou de l'amortisseur, nettoyage de chaque pièce.</p></div>
+          </div>
+          <div class="avantage-paint" data-aos="fade-up" data-aos-delay="60">
+            <div class="ico" style="background:rgba(239,68,68,.12)"><i data-lucide="droplet" class="w-5 h-5 text-red-400"></i></div>
+            <div><h3 class="font-heading font-bold text-lg mb-1">Purge des huiles</h3><p class="text-gray-400 text-sm">Vidange et remplacement de toutes les huiles de fourche et d'amortisseur avec produits constructeur.</p></div>
+          </div>
+          <div class="avantage-paint" data-aos="fade-up" data-aos-delay="120">
+            <div class="ico" style="background:rgba(239,68,68,.12)"><i data-lucide="shield" class="w-5 h-5 text-red-400"></i></div>
+            <div><h3 class="font-heading font-bold text-lg mb-1">Changement des joints</h3><p class="text-gray-400 text-sm">Remplacement systématique des joints d'étanchéité, bagues de guidage et caches-poussière.</p></div>
+          </div>
+          <div class="avantage-paint" data-aos="fade-up" data-aos-delay="180">
+            <div class="ico" style="background:rgba(239,68,68,.12)"><i data-lucide="search" class="w-5 h-5 text-red-400"></i></div>
+            <div><h3 class="font-heading font-bold text-lg mb-1">Contrôle des pièces</h3><p class="text-gray-400 text-sm">Inspection de la cartouche, des tubes, des axes et de tous les composants mobiles.</p></div>
+          </div>
+          <div class="avantage-paint" data-aos="fade-up" data-aos-delay="240">
+            <div class="ico" style="background:rgba(239,68,68,.12)"><i data-lucide="gauge" class="w-5 h-5 text-red-400"></i></div>
+            <div><h3 class="font-heading font-bold text-lg mb-1">Réglage & pression</h3><p class="text-gray-400 text-sm">Regonflage air, réglage de la précharge, rebond et compression selon votre poids et pratique.</p></div>
+          </div>
+          <div class="avantage-paint" data-aos="fade-up" data-aos-delay="300">
+            <div class="ico" style="background:rgba(239,68,68,.12)"><i data-lucide="check-circle" class="w-5 h-5 text-red-400"></i></div>
+            <div><h3 class="font-heading font-bold text-lg mb-1">Test final</h3><p class="text-gray-400 text-sm">Vérification sur le vélo, test de fonctionnement et validation avant restitution.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exemples manque d'entretien -->
+    <section class="py-20 px-4" style="background:var(--bg)">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12" data-aos="fade-up">
+          <span class="badge mb-3" style="background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.25)">Attention</span>
+          <h2 class="font-heading font-bold text-3xl">Quelques exemples de manque d'entretien</h2>
+          <p class="text-gray-400 mt-2 max-w-xl mx-auto">Ces dégradations sont évitables avec une révision annuelle. Sans intervention, elles peuvent devenir irréparables.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+
+          <div class="susp-damage-card" data-aos="fade-up" data-aos-delay="0">
+            <div class="susp-damage-img">
+              <img src="images/susp-bagues.jpeg" alt="Usure bagues de guidage" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1a0808,#2a1010)'">
+            </div>
+            <div class="p-5">
+              <h3 class="font-heading font-bold text-lg mb-1 text-red-400">Usure bagues de guidage</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">Les bagues de guidage usées provoquent du jeu dans les tubes de fourche. Résultat : imprécision directionnelle, bruit et risque de fissure.</p>
+            </div>
+          </div>
+
+          <div class="susp-damage-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="susp-damage-img">
+              <img src="images/susp-cartouche.jpeg" alt="Cartouche hydraulique fissurée" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0a1020,#0d1a30)'">
+            </div>
+            <div class="p-5">
+              <h3 class="font-heading font-bold text-lg mb-1 text-red-400">Cartouche hydraulique fissurée</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">Une cartouche fissurée par manque de lubrification ou de purge entraîne une perte totale d'amortissement. Pièce irréparable, remplacement obligatoire.</p>
+            </div>
+          </div>
+
+          <div class="susp-damage-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="susp-damage-img">
+              <img src="images/susp-joints.jpeg" alt="Joints secs" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#151005,#201800)'">
+            </div>
+            <div class="p-5">
+              <h3 class="font-heading font-bold text-lg mb-1 text-red-400">Joints secs</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">Des joints asséchés laissent entrer la poussière et l'eau dans les tubes. L'huile se contamine, la fourche racle et les tubes se rayent définitivement.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 px-4" style="background:var(--surface)">
+      <div class="max-w-3xl mx-auto text-center" data-aos="fade-up">
+        <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background:rgba(239,68,68,.12)"><i data-lucide="activity" class="w-8 h-8 text-red-400"></i></div>
+        <h2 class="font-heading font-bold text-3xl mb-4">Faites réviser vos suspensions</h2>
+        <p class="text-gray-400 text-lg leading-relaxed mb-8">Apportez votre fourche ou votre vélo complet. Devis gratuit sur place. Délai moyen : 3 à 7 jours selon la pièce et la disponibilité des joints.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="btn-orange text-base"><i data-lucide="calendar" class="w-5 h-5"></i>Prendre rendez-vous</a>
+          <a href="tel:0950320829" class="btn-outline text-base"><i data-lucide="phone" class="w-5 h-5"></i>09 50 32 08 29</a>
+        </div>
+        <p class="text-sm text-gray-600 mt-8">Mar → Ven 9h–18h30 · Sam jusqu'à 18h · 32 Fb. du Gal Philippot, 67340 Ingwiller</p>
+      </div>
+    </section>
+
+  </div><!-- /sec-suspensions -->
+
+  <!-- ═══════════════════════════════ PEINTURE ═══════════════════════════════ -->
+  <div id="sec-peinture" class="section-hidden">
+
+    <!-- Hero peinture -->
+    <div style="position:relative;overflow:hidden;min-height:420px;display:flex;align-items:center;background:linear-gradient(135deg,#0d0118 0%,#1a0533 40%,#0a0f1e 100%)">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 20% 50%,rgba(244,114,182,.12) 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 80% 30%,rgba(139,92,246,.1) 0%,transparent 60%)"></div>
+      <div class="relative max-w-7xl mx-auto px-6 py-20 w-full">
+        <div class="max-w-2xl" data-aos="fade-up">
+          <span class="badge mb-5" style="background:rgba(244,114,182,.15);color:#f472b6;border:1px solid rgba(244,114,182,.3)">Service Peinture</span>
+          <h1 class="font-heading font-bold text-white mb-5" style="font-size:clamp(2.2rem,5vw,4rem);line-height:1.1">Transformez votre vélo<br><span style="background:linear-gradient(135deg,#f472b6,#a855f7,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">en œuvre d'art</span></h1>
+          <p class="text-gray-300 text-lg leading-relaxed mb-8">Peinture sur mesure avec les techniques de la carrosserie professionnelle.<br>Finition matte, brillante, satinée, effet chromé, caméléon ou marbre — votre vélo, votre style.</p>
+          <div class="flex flex-wrap gap-3">
+            <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="btn-orange text-base"><i data-lucide="calendar" class="w-5 h-5"></i>Demander un devis</a>
+            <a href="mailto:vttperformance67@gmail.com" class="btn-outline text-base"><i data-lucide="mail" class="w-5 h-5"></i>Envoyer des photos</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Finitions disponibles -->
+    <section class="py-16 px-4" style="background:var(--surface)">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-10" data-aos="fade-up">
+          <h2 class="font-heading font-bold text-3xl">Finitions disponibles</h2>
+          <p class="text-gray-400 mt-2">Chaque cadre est préparé, poncé et apprêté avant application pour une tenue maximale.</p>
+        </div>
+        <div class="flex flex-wrap justify-center gap-3 mb-14" data-aos="fade-up" data-aos-delay="100">
+          <span class="finish-chip fc-matte"><i data-lucide="circle" class="w-3 h-3"></i>Matte</span>
+          <span class="finish-chip fc-brillant"><i data-lucide="sun" class="w-3 h-3"></i>Brillante</span>
+          <span class="finish-chip fc-satiné"><i data-lucide="droplets" class="w-3 h-3"></i>Satinée</span>
+          <span class="finish-chip fc-chrome"><i data-lucide="sparkles" class="w-3 h-3"></i>Effet chromé</span>
+          <span class="finish-chip fc-marbre"><i data-lucide="layers" class="w-3 h-3"></i>Effet marbre</span>
+          <span class="finish-chip fc-cameleon"><i data-lucide="eye" class="w-3 h-3"></i>Caméléon</span>
+          <span class="finish-chip" style="background:rgba(255,107,53,.1);color:#fb923c;border:1px solid rgba(255,107,53,.25)"><i data-lucide="shield" class="w-3 h-3"></i>Clear protect</span>
+          <span class="finish-chip" style="background:rgba(20,184,166,.1);color:#2dd4bf;border:1px solid rgba(20,184,166,.25)"><i data-lucide="tag" class="w-3 h-3"></i>Vinyles & logos</span>
+        </div>
+
+        <!-- Avantages -->
+        <div class="grid md:grid-cols-2 gap-5">
+          <div class="avantage-paint" data-aos="fade-up" data-aos-delay="0">
+            <div class="ico" style="background:rgba(244,114,182,.12)"><i data-lucide="palette" class="w-5 h-5 text-pink-400"></i></div>
+            <div>
+              <h3 class="font-heading font-bold text-lg mb-1">Personnalisation totale</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">Exprimez votre style avec des designs exclusifs. Gamme variée de motifs, effets et couleurs — aucune limite créative.</p>
+            </div>
+          </div>
+          <div class="avantage-paint" data-aos="fade-up" data-aos-delay="80">
+            <div class="ico" style="background:rgba(59,130,246,.12)"><i data-lucide="award" class="w-5 h-5 text-blue-400"></i></div>
+            <div>
+              <h3 class="font-heading font-bold text-lg mb-1">Qualité carrosserie</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">Mêmes techniques et produits qu'en carrosserie automobile. Préparation, apprêt, peinture, vernis — finition durable et résistante.</p>
+            </div>
+          </div>
+          <div class="avantage-paint" data-aos="fade-up" data-aos-delay="160">
+            <div class="ico" style="background:rgba(16,185,129,.12)"><i data-lucide="refresh-cw" class="w-5 h-5 text-emerald-400"></i></div>
+            <div>
+              <h3 class="font-heading font-bold text-lg mb-1">Restauration & réparation</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">Cadre usé, rayé ou abîmé ? Nous réparons les imperfections et redonnons une seconde vie à votre vélo. Comme neuf.</p>
+            </div>
+          </div>
+          <div class="avantage-paint" data-aos="fade-up" data-aos-delay="240">
+            <div class="ico" style="background:rgba(139,92,246,.12)"><i data-lucide="shield-check" class="w-5 h-5 text-purple-400"></i></div>
+            <div>
+              <h3 class="font-heading font-bold text-lg mb-1">Protection sur mesure</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">Clear protect invisible, vinyles décoratifs, logos personnalisés. Protection complète adaptée à l'usage trail, enduro ou urbain.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Galerie réalisations -->
+    <section class="py-20 px-4" style="background:var(--bg)">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12" data-aos="fade-up">
+          <span class="badge mb-3" style="background:rgba(244,114,182,.12);color:#f472b6;border:1px solid rgba(244,114,182,.25)">Galerie</span>
+          <h2 class="font-heading font-bold text-3xl">Réalisations de l'atelier</h2>
+          <p class="text-gray-400 mt-2 max-w-xl mx-auto">Quelques exemples de peintures effectuées chez nous. Chaque projet est unique.</p>
+        </div>
+        <div class="paint-gallery" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="paint-card" style="background:linear-gradient(135deg,#071528,#0a2952,#1a4080)">
+            <img src="images/paint-furious-bleu.jpeg" alt="Commencal Furious Bleu Alpine" onerror="this.style.display='none'">
+            <div class="paint-card-overlay">
+              <h4>Commencal Furious</h4>
+              <span>"Bleu alpine"</span>
+            </div>
+            <span class="finish-chip fc-brillant" style="position:absolute;top:.8rem;right:.8rem;font-size:.7rem;padding:.2rem .7rem">Brillante</span>
+          </div>
+
+          <div class="paint-card" style="background:linear-gradient(135deg,#1c1c1c,#2e2e2e,#444)">
+            <img src="images/paint-mondraker-blanc.jpeg" alt="Mondraker Summum Blanc effet usé" onerror="this.style.display='none'">
+            <div class="paint-card-overlay">
+              <h4>Mondraker Summum</h4>
+              <span>"Blanc effet usé"</span>
+            </div>
+            <span class="finish-chip fc-matte" style="position:absolute;top:.8rem;right:.8rem;font-size:.7rem;padding:.2rem .7rem">Matte</span>
+          </div>
+
+          <div class="paint-card" style="background:linear-gradient(135deg,#111,#222,#303030)">
+            <img src="images/paint-meta-gris.jpeg" alt="Commencal Meta Gris métallisé" onerror="this.style.display='none'">
+            <div class="paint-card-overlay">
+              <h4>Commencal Meta</h4>
+              <span>"Gris métallisé"</span>
+            </div>
+            <span class="finish-chip fc-satiné" style="position:absolute;top:.8rem;right:.8rem;font-size:.7rem;padding:.2rem .7rem">Satinée</span>
+          </div>
+
+          <div class="paint-card" style="background:linear-gradient(135deg,#111,#1a1a1a,#252520)">
+            <img src="images/paint-scott-gambler.jpeg" alt="Scott Gambler" onerror="this.style.display='none'">
+            <div class="paint-card-overlay">
+              <h4>Scott Gambler</h4>
+              <span>"Gris, Orange, Bleu métallisé"</span>
+            </div>
+            <span class="finish-chip fc-brillant" style="position:absolute;top:.8rem;right:.8rem;font-size:.7rem;padding:.2rem .7rem">Brillante</span>
+          </div>
+
+          <div class="paint-card" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a,#3a3a3a)">
+            <img src="images/paint-demo8-chrome.jpeg" alt="Spécialized Démo 8 Chromé" onerror="this.style.display='none'">
+            <div class="paint-card-overlay">
+              <h4>Specialized Démo 8</h4>
+              <span>"Chromé"</span>
+            </div>
+            <span class="finish-chip fc-chrome" style="position:absolute;top:.8rem;right:.8rem;font-size:.7rem;padding:.2rem .7rem">Chromé</span>
+          </div>
+
+          <div class="paint-card" style="background:linear-gradient(135deg,#2a0000,#500010,#3a0008)">
+            <img src="images/paint-supreme-rouge.jpeg" alt="Commencal Suprême V4 Rouge marbre" onerror="this.style.display='none'">
+            <div class="paint-card-overlay">
+              <h4>Commencal Suprême V4</h4>
+              <span>"Rouge marbre"</span>
+            </div>
+            <span class="finish-chip fc-marbre" style="position:absolute;top:.8rem;right:.8rem;font-size:.7rem;padding:.2rem .7rem">Marbre</span>
+          </div>
+
+          <div class="paint-card" style="background:linear-gradient(135deg,#141414,#1e1e1e,#282828)">
+            <img src="images/paint-giant-gris.jpeg" alt="Giant Gris métallisé" onerror="this.style.display='none'">
+            <div class="paint-card-overlay">
+              <h4>Giant</h4>
+              <span>"Gris métallisé"</span>
+            </div>
+            <span class="finish-chip fc-satiné" style="position:absolute;top:.8rem;right:.8rem;font-size:.7rem;padding:.2rem .7rem">Satinée</span>
+          </div>
+
+          <div class="paint-card" style="background:linear-gradient(135deg,#0d001a,#1a0035,#001a10)">
+            <img src="images/paint-furious-cameleon.jpeg" alt="Commencal Furious Caméléon" onerror="this.style.display='none'">
+            <div class="paint-card-overlay">
+              <h4>Commencal Furious</h4>
+              <span>"Caméléon"</span>
+            </div>
+            <span class="finish-chip fc-cameleon" style="position:absolute;top:.8rem;right:.8rem;font-size:.7rem;padding:.2rem .7rem">Caméléon</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Grille tarifaire ── -->
+    <section class="py-20 px-4" style="background:var(--surface)">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-14" data-aos="fade-up">
+          <span class="badge mb-3" style="background:rgba(244,114,182,.12);color:#f472b6;border:1px solid rgba(244,114,182,.25)">Tarifs 2025</span>
+          <h2 class="font-heading font-bold text-3xl">Tarif peintures VTT Performance</h2>
+          <p class="text-gray-400 mt-2">Tous les tarifs sont indicatifs — le devis définitif est établi après examen du vélo.</p>
+        </div>
+
+        <!-- Préparation -->
+        <div class="mb-8" data-aos="fade-up">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:rgba(251,191,36,.12)"><i data-lucide="tool" class="w-4 h-4 text-yellow-400"></i></div>
+            <h3 class="font-heading font-bold text-xl text-yellow-400">Préparation du vélo</h3>
+          </div>
+          <div class="space-y-2">
+            <div class="card p-4 flex justify-between items-center gap-4"><span class="text-gray-300 text-sm">Démontage vélo complet + nettoyage / dégraissage en profondeur</span><span class="font-heading font-bold text-white whitespace-nowrap">≈ 99€</span></div>
+            <div class="card p-4 flex justify-between items-center gap-4"><span class="text-gray-300 text-sm">Préparation cadre seul (ponçage / lissage gros grain + apprêt + ponçage à l'eau)</span><span class="font-heading font-bold text-white whitespace-nowrap">≈ 119€</span></div>
+            <div class="card p-4 flex justify-between items-center gap-4"><span class="text-gray-300 text-sm">Supplément retouche mastic</span><span class="font-heading font-bold text-white whitespace-nowrap">≈ 49€</span></div>
+          </div>
+        </div>
+
+        <!-- Peinture -->
+        <div class="mb-8" data-aos="fade-up">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:rgba(244,114,182,.12)"><i data-lucide="palette" class="w-4 h-4 text-pink-400"></i></div>
+            <h3 class="font-heading font-bold text-xl text-pink-400">Peinture</h3>
+          </div>
+          <div class="space-y-2">
+            <div class="card p-4 flex justify-between items-center gap-4"><span class="text-gray-300 text-sm">Sous-couche / primaire + masquage</span><span class="font-heading font-bold text-white whitespace-nowrap">≈ 99€</span></div>
+            <div class="card p-4 flex justify-between items-center gap-4"><span class="text-gray-300 text-sm">Mise en peinture cadre + vernis finition matte, satinée ou brillante</span><span class="font-heading font-bold text-white whitespace-nowrap">≈ 249€</span></div>
+            <div class="card p-4 flex justify-between items-center gap-4"><span class="text-gray-300 text-sm">Peinture fourche avec vernis + révision (changements joints, purge cartouche, stickers)</span><span class="font-heading font-bold text-white whitespace-nowrap">≈ 299€</span></div>
+          </div>
+        </div>
+
+        <!-- Finitions -->
+        <div class="mb-10" data-aos="fade-up">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:rgba(139,92,246,.12)"><i data-lucide="sparkles" class="w-4 h-4 text-purple-400"></i></div>
+            <h3 class="font-heading font-bold text-xl text-purple-400">Finitions</h3>
+          </div>
+          <div class="space-y-2">
+            <div class="card p-4 flex justify-between items-center gap-4"><span class="text-gray-300 text-sm">Commande + montage kit roulements générique <span class="text-gray-500 text-xs">(ou sur devis : dimensions spéciales / roulements céramiques)</span></span><span class="font-heading font-bold text-white whitespace-nowrap">≈ 149€</span></div>
+            <div class="card p-4 flex justify-between items-center gap-4"><span class="text-gray-300 text-sm">Modélisation + impression + pose stickers cadre</span><span class="font-heading font-bold text-white whitespace-nowrap">≈ 99€</span></div>
+            <div class="card p-4 flex justify-between items-center gap-4"><span class="text-gray-300 text-sm">Découpe + pose clear protect base avant + arrière + fourche (finition matte ou brillante)</span><span class="font-heading font-bold text-white whitespace-nowrap">≈ 99€</span></div>
+            <div class="card p-4 flex justify-between items-center gap-4"><span class="text-gray-300 text-sm">Montage / re-montage vélo complet</span><span class="font-heading font-bold text-white whitespace-nowrap">≈ 149€</span></div>
+          </div>
+        </div>
+
+        <!-- Packs -->
+        <div class="mb-10" data-aos="fade-up">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:rgba(34,197,94,.12)"><i data-lucide="package" class="w-4 h-4 text-green-400"></i></div>
+            <h3 class="font-heading font-bold text-xl text-green-400">Packs tout compris</h3>
+          </div>
+          <div class="grid md:grid-cols-3 gap-5">
+            <div class="card p-6" style="border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.04)">
+              <div class="font-heading font-bold text-lg text-green-400 mb-2">Pack Éco</div>
+              <p class="text-gray-400 text-xs leading-relaxed mb-4">Préparation du vélo + peinture cadre couleur unie + vernis simple + re-montage</p>
+              <div class="flex items-baseline gap-2"><span class="font-heading font-bold text-2xl text-white">498€</span><span class="text-gray-500 text-sm line-through">714€</span></div>
+            </div>
+            <div class="card p-6" style="border-color:rgba(244,114,182,.3);background:rgba(244,114,182,.05)">
+              <div class="font-heading font-bold text-lg text-pink-400 mb-2">Pack Confort</div>
+              <p class="text-gray-400 text-xs leading-relaxed mb-4">Préparation + peinture bicolore cadre et fourreaux + révision fourche + vernis simple + re-montage</p>
+              <div class="flex items-baseline gap-2"><span class="font-heading font-bold text-2xl text-white">715€</span><span class="text-gray-500 text-sm line-through">848€</span></div>
+            </div>
+            <div class="card p-6" style="border-color:rgba(168,85,247,.35);background:rgba(168,85,247,.06)">
+              <div class="font-heading font-bold text-lg text-purple-400 mb-2">Pack Premium</div>
+              <p class="text-gray-400 text-xs leading-relaxed mb-4">Préparation + peinture tricolore + révision fourche + vernis/candy + kit roulements + stickers + clear protect sur mesure + montage complet</p>
+              <div class="flex items-baseline gap-2"><span class="font-heading font-bold text-2xl text-white">999€</span><span class="text-gray-500 text-sm line-through">1260€</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Infos pro -->
+        <div class="grid md:grid-cols-2 gap-5 mb-10" data-aos="fade-up">
+          <div class="card p-5">
+            <h4 class="font-heading font-bold text-base mb-3 flex items-center gap-2"><i data-lucide="info" class="w-4 h-4 text-blue-400"></i>Infos produits</h4>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>Peinture solvantée professionnelle pour carrosserie</li>
+              <li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>Peint à Obermodern</li>
+              <li class="flex items-start gap-2"><i data-lucide="tag" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>Vinyles locaux</li>
+              <li class="flex items-start gap-2"><i data-lucide="home" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>Préparé, monté, conçu et assemblé à Ingwiller</li>
+              <li class="flex items-start gap-2"><i data-lucide="shield-check" class="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5"></i><strong class="text-white">Garantie 2 ans</strong> (éclats, gondolage, bulles dans le vernis)</li>
+            </ul>
+          </div>
+          <div class="card p-5" style="border-color:rgba(239,68,68,.2);background:rgba(239,68,68,.04)">
+            <h4 class="font-heading font-bold text-base mb-3 flex items-center gap-2"><i data-lucide="alert-triangle" class="w-4 h-4 text-red-400"></i>Points importants</h4>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li class="flex items-start gap-2"><i data-lucide="alert-triangle" class="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5"></i>Peut nuire à la garantie constructeur du vélo</li>
+              <li class="flex items-start gap-2"><i data-lucide="alert-triangle" class="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5"></i>Sensibilité aux rayures si non protégé</li>
+              <li class="flex items-start gap-2"><i data-lucide="x-circle" class="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5"></i>Magasin non responsable en cas de dommages causés par un mauvais montage client</li>
+              <li class="flex items-start gap-2"><i data-lucide="x-circle" class="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5"></i>Pas de soudures ou masquage de dommages sécuritaires</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Process -->
+        <div data-aos="fade-up">
+          <h3 class="font-heading font-bold text-xl mb-5 text-center">Les étapes de votre projet</h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="card p-4 text-center"><div class="font-heading font-bold text-2xl text-pink-400 mb-1">01</div><div class="text-xs text-gray-400">Nettoyage + mise à nu du cadre</div></div>
+            <div class="card p-4 text-center"><div class="font-heading font-bold text-2xl text-pink-400 mb-1">02</div><div class="text-xs text-gray-400">Ponçage, aplanissement, suppression imperfections</div></div>
+            <div class="card p-4 text-center"><div class="font-heading font-bold text-2xl text-pink-400 mb-1">03</div><div class="text-xs text-gray-400">Couche d'apprêt + ponçage à l'eau</div></div>
+            <div class="card p-4 text-center"><div class="font-heading font-bold text-2xl text-pink-400 mb-1">04</div><div class="text-xs text-gray-400">Primaire + peinture bi/tricolore + vernis bi-composant</div></div>
+            <div class="card p-4 text-center"><div class="font-heading font-bold text-2xl text-purple-400 mb-1">05</div><div class="text-xs text-gray-400">Révision fourche + remontage cadre + roulements</div></div>
+            <div class="card p-4 text-center"><div class="font-heading font-bold text-2xl text-purple-400 mb-1">06</div><div class="text-xs text-gray-400">Stickers + clear protect + lustrage</div></div>
+            <div class="card p-4 text-center"><div class="font-heading font-bold text-2xl text-purple-400 mb-1">07</div><div class="text-xs text-gray-400">Remontage vélo complet</div></div>
+            <div class="card p-4 text-center" style="border-color:rgba(244,114,182,.3)"><div class="font-heading font-bold text-2xl text-green-400 mb-1">✓</div><div class="text-xs text-gray-400">Livraison + garantie 2 ans</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Simulateur de devis ── -->
+    <section class="py-20 px-4" style="background:var(--bg)">
+      <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-10" data-aos="fade-up">
+          <span class="badge mb-3" style="background:rgba(244,114,182,.12);color:#f472b6;border:1px solid rgba(244,114,182,.25)">Simulateur</span>
+          <h2 class="font-heading font-bold text-3xl">Estimez votre devis</h2>
+          <p class="text-gray-400 mt-2">Sélectionnez les prestations souhaitées — le total se calcule automatiquement.<br><span class="text-xs">Prix indicatifs susceptibles de varier après examen du vélo.</span></p>
+        </div>
+        <div class="card p-8" data-aos="fade-up">
+
+          <!-- Préparation -->
+          <div class="mb-6">
+            <h4 class="font-heading font-bold text-base text-yellow-400 mb-3 flex items-center gap-2"><i data-lucide="tool" class="w-4 h-4"></i>Préparation</h4>
+            <div class="space-y-2">
+              <label class="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/5 transition" style="border:1px solid rgba(255,255,255,.07)"><span class="flex items-center gap-3"><input type="checkbox" class="devis-cb w-4 h-4 accent-orange-500" data-price="99" onchange="calcDevis()"><span class="text-sm text-gray-300">Démontage complet + nettoyage / dégraissage</span></span><span class="text-sm font-semibold text-white">99€</span></label>
+              <label class="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/5 transition" style="border:1px solid rgba(255,255,255,.07)"><span class="flex items-center gap-3"><input type="checkbox" class="devis-cb w-4 h-4 accent-orange-500" data-price="119" onchange="calcDevis()"><span class="text-sm text-gray-300">Préparation cadre (ponçage + apprêt)</span></span><span class="text-sm font-semibold text-white">119€</span></label>
+              <label class="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/5 transition" style="border:1px solid rgba(255,255,255,.07)"><span class="flex items-center gap-3"><input type="checkbox" class="devis-cb w-4 h-4 accent-orange-500" data-price="49" onchange="calcDevis()"><span class="text-sm text-gray-300">Supplément retouche mastic</span></span><span class="text-sm font-semibold text-white">49€</span></label>
+            </div>
+          </div>
+
+          <!-- Peinture -->
+          <div class="mb-6">
+            <h4 class="font-heading font-bold text-base text-pink-400 mb-3 flex items-center gap-2"><i data-lucide="palette" class="w-4 h-4"></i>Peinture</h4>
+            <div class="space-y-2">
+              <label class="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/5 transition" style="border:1px solid rgba(255,255,255,.07)"><span class="flex items-center gap-3"><input type="checkbox" class="devis-cb w-4 h-4 accent-orange-500" data-price="99" onchange="calcDevis()"><span class="text-sm text-gray-300">Sous-couche / primaire + masquage</span></span><span class="text-sm font-semibold text-white">99€</span></label>
+              <label class="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/5 transition" style="border:1px solid rgba(255,255,255,.07)"><span class="flex items-center gap-3"><input type="checkbox" class="devis-cb w-4 h-4 accent-orange-500" data-price="249" onchange="calcDevis()"><span class="text-sm text-gray-300">Peinture cadre + vernis (matte / satinée / brillante)</span></span><span class="text-sm font-semibold text-white">249€</span></label>
+              <label class="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/5 transition" style="border:1px solid rgba(255,255,255,.07)"><span class="flex items-center gap-3"><input type="checkbox" class="devis-cb w-4 h-4 accent-orange-500" data-price="299" onchange="calcDevis()"><span class="text-sm text-gray-300">Peinture fourche avec vernis + révision fourche</span></span><span class="text-sm font-semibold text-white">299€</span></label>
+            </div>
+          </div>
+
+          <!-- Finitions -->
+          <div class="mb-6">
+            <h4 class="font-heading font-bold text-base text-purple-400 mb-3 flex items-center gap-2"><i data-lucide="sparkles" class="w-4 h-4"></i>Finitions</h4>
+            <div class="space-y-2">
+              <label class="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/5 transition" style="border:1px solid rgba(255,255,255,.07)"><span class="flex items-center gap-3"><input type="checkbox" class="devis-cb w-4 h-4 accent-orange-500" data-price="149" onchange="calcDevis()"><span class="text-sm text-gray-300">Kit roulements générique (commande + montage)</span></span><span class="text-sm font-semibold text-white">149€</span></label>
+              <label class="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/5 transition" style="border:1px solid rgba(255,255,255,.07)"><span class="flex items-center gap-3"><input type="checkbox" class="devis-cb w-4 h-4 accent-orange-500" data-price="99" onchange="calcDevis()"><span class="text-sm text-gray-300">Modélisation + impression + pose stickers cadre</span></span><span class="text-sm font-semibold text-white">99€</span></label>
+              <label class="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/5 transition" style="border:1px solid rgba(255,255,255,.07)"><span class="flex items-center gap-3"><input type="checkbox" class="devis-cb w-4 h-4 accent-orange-500" data-price="99" onchange="calcDevis()"><span class="text-sm text-gray-300">Clear protect (avant + arrière + fourche)</span></span><span class="text-sm font-semibold text-white">99€</span></label>
+              <label class="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/5 transition" style="border:1px solid rgba(255,255,255,.07)"><span class="flex items-center gap-3"><input type="checkbox" class="devis-cb w-4 h-4 accent-orange-500" data-price="149" onchange="calcDevis()"><span class="text-sm text-gray-300">Montage / re-montage vélo complet</span></span><span class="text-sm font-semibold text-white">149€</span></label>
+            </div>
+          </div>
+
+          <!-- Résultat -->
+          <div id="devis-result" class="rounded-xl p-5 mt-4" style="background:rgba(244,114,182,.07);border:1px solid rgba(244,114,182,.2)">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-gray-300 font-medium">Estimation indicative</span>
+              <span id="devis-total" class="font-heading font-bold text-3xl text-white">0€</span>
+            </div>
+            <p class="text-xs text-gray-500 mb-4">Tarifs ≈ indicatifs — devis définitif après examen du vélo en atelier.</p>
+            <a id="devis-rdv-btn" href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="btn-orange text-sm w-full justify-center"><i data-lucide="calendar" class="w-4 h-4"></i>Prendre RDV pour valider ce devis</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /sec-peinture -->
+
+<!-- FOOTER -->
+<footer style="background:#040810;border-top:1px solid rgba(255,255,255,.06)">
+  <div class="max-w-7xl mx-auto px-4 py-14">
+    <div class="grid md:grid-cols-3 gap-10 mb-10">
+      <div>
+        <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-lg overflow-hidden bg-orange-600 flex items-center justify-center"><img src="../VTT PERFORMANCE.png" alt="Logo" class="w-full h-full object-contain p-1" onerror="this.style.display='none'"></div><div><div class="font-heading font-bold text-lg text-white">VTT Performance</div><div class="text-xs text-gray-600">Ingwiller · Alsace</div></div></div>
+        <p class="text-sm text-gray-500 leading-relaxed">Atelier et magasin de cycles spécialisé. Concessionnaire officiel SUNN &amp; Moustache Bikes. Vente, location, réparation.</p>
+      </div>
+      <div>
+        <h4 class="font-heading font-bold text-sm uppercase tracking-wider text-gray-400 mb-4">Navigation</h4>
+        <div class="space-y-2">
+          <button onclick="showSection('accueil')" class="block text-sm text-gray-500 hover:text-white transition-colors">Accueil</button>
+          <button onclick="showSection('catalogue')" class="block text-sm text-gray-500 hover:text-white transition-colors">Catalogue</button>
+          <button onclick="showSection('location')" class="block text-sm text-gray-500 hover:text-white transition-colors">Location</button>
+          <button onclick="showSection('atelier')" class="block text-sm text-gray-500 hover:text-white transition-colors">Atelier</button>
+          <button onclick="showSection('suspensions')" class="block text-sm text-gray-500 hover:text-white transition-colors">Suspensions</button>
+          <button onclick="showSection('peinture')" class="block text-sm text-gray-500 hover:text-white transition-colors">Peinture</button>
+          <button onclick="showSection('contact')" class="block text-sm text-gray-500 hover:text-white transition-colors">Contact</button>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-heading font-bold text-sm uppercase tracking-wider text-gray-400 mb-4">Contact</h4>
+        <div class="space-y-2 text-sm text-gray-500">
+          <div class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-orange-400"></i>32 Fb. du Gal Philippot, 67340 Ingwiller</div>
+          <div class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-orange-400"></i><a href="tel:0950320829" class="hover:text-white">09 50 32 08 29</a></div>
+          <div class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-orange-400"></i><a href="mailto:vttperformance67@gmail.com" class="hover:text-white">vttperformance67@gmail.com</a></div>
+        </div>
+        <div class="flex gap-3 mt-5">
+          <a href="https://www.instagram.com/vttperformance67/" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/10 transition-all" style="border:1px solid rgba(255,255,255,.08)"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+          <a href="https://www.facebook.com/61577356443323/" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/10 transition-all" style="border:1px solid rgba(255,255,255,.08)"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-gray-600">
+      <span>© 2026 VTT Performance · SARL · SIRET 941 614 653 00017</span>
+      <span>32 Faubourg du Général Philippot · 67340 Ingwiller</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ORDER MODAL -->
+<div id="order-modal" class="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="flex items-start justify-between mb-6">
+      <div><h3 id="m-title" class="font-heading font-bold text-2xl">Commander</h3><p class="text-sm text-gray-400 mt-1" id="m-sub"></p></div>
+      <button onclick="closeModal()" class="p-2 rounded-lg hover:bg-white/10 transition-colors text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <form id="order-form" onsubmit="submitOrder(event)" class="space-y-4">
+      <input type="hidden" id="o-bike">
+      <div class="grid grid-cols-2 gap-4">
+        <div><label class="block text-sm font-medium text-gray-300 mb-2">Prénom *</label><input type="text" id="o-prenom" required class="inp" placeholder="Jean"></div>
+        <div><label class="block text-sm font-medium text-gray-300 mb-2">Nom *</label><input type="text" id="o-nom" required class="inp" placeholder="Dupont"></div>
+      </div>
+      <div><label class="block text-sm font-medium text-gray-300 mb-2">Email *</label><input type="email" id="o-email" required class="inp" placeholder="jean@email.com"></div>
+      <div><label class="block text-sm font-medium text-gray-300 mb-2">Téléphone *</label><input type="tel" id="o-tel" required class="inp" placeholder="06 12 34 56 78"></div>
+      <div><label class="block text-sm font-medium text-gray-300 mb-2">Message / options</label><textarea id="o-msg" rows="3" class="inp" placeholder="Taille, coloris, options souhaitées…"></textarea></div>
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-2">Mode de paiement *</label>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="pay-opt selected" onclick="selectPay(this,'virement')">
+            <input type="radio" name="o-pay" value="virement" checked class="sr-only">
+            <i data-lucide="landmark" class="w-5 h-5"></i>
+            <span class="font-semibold text-sm">Virement bancaire</span>
+            <span class="text-xs opacity-60">RIB envoyé par email</span>
+          </div>
+          <div class="pay-opt" onclick="selectPay(this,'magasin')">
+            <input type="radio" name="o-pay" value="magasin" class="sr-only">
+            <i data-lucide="store" class="w-5 h-5"></i>
+            <span class="font-semibold text-sm">En magasin</span>
+            <span class="text-xs opacity-60">Espèces / CB au retrait</span>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn-orange w-full justify-center text-base"><i data-lucide="send" class="w-5 h-5"></i>Envoyer ma demande</button>
+      <p class="text-xs text-gray-500 text-center" id="pay-note">Confirmation par email avec RIB pour le virement.</p>
+    </form>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toasts" class="fixed bottom-24 right-4 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+<!-- ════════════════════ JS ════════════════════ -->
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────
+const BIKES = [
+  // ── SUNN VTTAE ────────────────────────────────────────────────────────
+  {brand:'SUNN',name:'Rage S2',cat:'vttae',type:'All Mountain Elec.',price:2899,motor:'Shimano EP8 85Nm',bat:'500Wh',tag:'Louable',url:'https://www.sunn.fr/fr/rage-s2/'},
+  {brand:'SUNN',name:'Rage S1',cat:'vttae',type:'All Mountain Elec.',price:3199,motor:'Shimano EP8 85Nm',bat:'625Wh',tag:'Louable',url:'https://www.sunn.fr/fr/rage-s1/'},
+  {brand:'SUNN',name:'Charger S2',cat:'vttae',type:'All Mountain Elec.',price:4199,motor:'Bosch Perf. CX 85Nm',bat:'625Wh',avail:'Avril 2025',url:'https://www.sunn.fr/fr/charger-s2/'},
+  {brand:'SUNN',name:'Charger S1',cat:'vttae',type:'All Mountain Elec.',price:4799,motor:'Bosch Perf. CX 85Nm',bat:'625Wh',url:'https://www.sunn.fr/fr/charger-s1/'},
+  {brand:'SUNN',name:'Charger Finest',cat:'vttae',type:'All Mountain Elec.',price:5599,motor:'Bosch Perf. CX 85Nm',bat:'750Wh',url:'https://www.sunn.fr/fr/charger-finest/'},
+  {brand:'SUNN',name:'One S2',cat:'vttae',type:'Enduro Elec.',price:5999,motor:'Shimano EP8 85Nm',bat:'630Wh',url:'https://www.sunn.fr/fr/one-s2/'},
+  {brand:'SUNN',name:'One S1',cat:'vttae',type:'Enduro Elec.',price:6599,motor:'Shimano EP8 85Nm',bat:'750Wh',url:'https://www.sunn.fr/fr/one-s1/'},
+  {brand:'SUNN',name:'One Finest',cat:'vttae',type:'Enduro Elec.',price:7999,motor:'Shimano EP8 85Nm',bat:'750Wh',url:'https://www.sunn.fr/fr/one-finest/'},
+  {brand:'SUNN',name:'One Factory',cat:'vttae',type:'Enduro Carbone Elec.',price:9499,motor:'Shimano EP8 85Nm',bat:'750Wh',tag:'Top gamme',url:'https://www.sunn.fr/fr/one-factory/'},
+  // ── SUNN VTT ─────────────────────────────────────────────────────────
+  {brand:'SUNN',name:'Royal',cat:'vtt',type:'XC Hardtail',price:556,url:'https://www.sunn.fr/'},
+  {brand:'SUNN',name:'Exact S3',cat:'vtt',type:'XC Sport',price:656,url:'https://www.sunn.fr/fr/exact-s3/'},
+  {brand:'SUNN',name:'Exact S2',cat:'vtt',type:'XC Sport',price:812,url:'https://www.sunn.fr/fr/exact-s2-yg/'},
+  {brand:'SUNN',name:'Exact S1',cat:'vtt',type:'XC Sport',price:912,url:'https://www.sunn.fr/fr/exact-s1-yg/'},
+  {brand:'SUNN',name:'Exact Finest',cat:'vtt',type:'XC Sport',price:1212,url:'https://www.sunn.fr/fr/exact-finest/'},
+  {brand:'SUNN',name:'Royal Factory',cat:'vtt',type:'Trail Carbone',price:2032,url:'https://www.sunn.fr/'},
+  {brand:'SUNN',name:'Kern S2',cat:'vtt',type:'All Mountain',price:2232,url:'https://www.sunn.fr/fr/kern-am-s2-new/'},
+  {brand:'SUNN',name:'Kern S1',cat:'vtt',type:'All Mountain',price:3032,url:'https://www.sunn.fr/fr/kerne-am-s1/'},
+  {brand:'SUNN',name:'Kern Finest',cat:'vtt',type:'All Mountain',price:3832,url:'https://www.sunn.fr/fr/kern-am-finest/'},
+  {brand:'SUNN',name:'Shamann DC S2',cat:'vtt',type:'Down-Country',price:3232,url:'https://www.sunn.fr/fr/shamann-dc-s2/'},
+  {brand:'SUNN',name:'Shamann DC S1',cat:'vtt',type:'Down-Country',price:4132,url:'https://www.sunn.fr/fr/shamann-dc-s1/'},
+  {brand:'SUNN',name:'Shamann XC S2',cat:'vtt',type:'XCO',price:2832,url:'https://www.sunn.fr/fr/shamann-xc-s2/'},
+  {brand:'SUNN',name:'Shamann XC S1',cat:'vtt',type:'XCO',price:3732,url:'https://www.sunn.fr/fr/shamann-xc-s1/'},
+  {brand:'SUNN',name:'Shamann XC Finest',cat:'vtt',type:'XCO',price:5632,url:'https://www.sunn.fr/fr/shamann-xc-finest/'},
+  {brand:'SUNN',name:'Rage',cat:'vtt',type:'All Mountain',price:3399,url:'https://www.sunn.fr/'},
+  {brand:'SUNN',name:'Radical S1',cat:'vtt',type:'Enduro',price:4032,url:'https://www.sunn.fr/fr/radical-s1/'},
+  {brand:'SUNN',name:'Radical Finest',cat:'vtt',type:'Enduro',price:5632,url:'https://www.sunn.fr/fr/radical-finest/'},
+  {brand:'SUNN',name:'Radical Factory',cat:'vtt',type:'Enduro Carbone',price:7032,tag:'Top gamme',avail:'Avril 2025',url:'https://www.sunn.fr/fr/radical-factory/'},
+  {brand:'SUNN',name:'Prim Factory',cat:'vtt',type:'Enduro Carbone',price:3532,url:'https://www.sunn.fr/'},
+  // ── SUNN Gravel ──────────────────────────────────────────────────────
+  {brand:'SUNN',name:'Venture S2',cat:'gravel',type:'Gravel',price:null,url:'https://www.sunn.fr/fr/venture-s2/'},
+  {brand:'SUNN',name:'Venture S1 Mono',cat:'gravel',type:'Gravel',price:null,url:'https://www.sunn.fr/fr/venture-s1-mono/'},
+  {brand:'SUNN',name:'Venture Finest',cat:'gravel',type:'Gravel',price:null,url:'https://www.sunn.fr/fr/venture-finest/'},
+  // ── SUNN VTCAE ───────────────────────────────────────────────────────
+  {brand:'SUNN',name:'Start S2',cat:'vtcae',type:'Urbain Elec.',price:2099,motor:'Shimano EP6',bat:'400Wh',tag:'Louable',url:'https://www.sunn.fr/fr/start-s2/'},
+  {brand:'SUNN',name:'Start S1',cat:'vtcae',type:'Urbain Elec.',price:2399,motor:'Shimano EP6',bat:'400Wh',tag:'Louable',url:'https://www.sunn.fr/fr/start-s1/'},
+  {brand:'SUNN',name:'Start Finest',cat:'vtcae',type:'Urbain Elec.',price:2650,motor:'Shimano EP6',bat:'500Wh',url:'https://www.sunn.fr/fr/start-finest/'},
+  {brand:'SUNN',name:'Start Allroad',cat:'vtcae',type:'Allroad Elec.',price:2699,motor:'Shimano EP6',bat:'500Wh',url:'https://www.sunn.fr/fr/start-allroad/'},
+  {brand:'SUNN',name:'Skill S2',cat:'vtcae',type:'Urbain Elec.',price:2599,motor:'Shimano EP8',bat:'500Wh',url:'https://www.sunn.fr/fr/skill-s2/'},
+  {brand:'SUNN',name:'Skill S1',cat:'vtcae',type:'Urbain Elec.',price:2899,motor:'Shimano EP8',bat:'500Wh',url:'https://www.sunn.fr/fr/skill-s1/'},
+  {brand:'SUNN',name:'Skill Allroad',cat:'vtcae',type:'Allroad Elec.',price:2899,motor:'Shimano EP8',bat:'500Wh',url:'https://www.sunn.fr/fr/skill-allroad/'},
+  {brand:'SUNN',name:'Rage Allroad S2',cat:'vtcae',type:'Allroad Elec.',price:2899,motor:'Shimano EP8',bat:'630Wh',url:'https://www.sunn.fr/fr/rage-allroad-s2/'},
+  {brand:'SUNN',name:'Rage Allroad S2 Low',cat:'vtcae',type:'Allroad Elec. (Low)',price:2899,motor:'Shimano EP8',bat:'630Wh',url:'https://www.sunn.fr/fr/rage-allroad-s2/'},
+  {brand:'SUNN',name:'Rage Allroad S1',cat:'vtcae',type:'Allroad Elec.',price:3099,motor:'Shimano EP8',bat:'630Wh',url:'https://www.sunn.fr/fr/rage-allroad-s1/'},
+  {brand:'SUNN',name:'Rage Allroad S1 Low',cat:'vtcae',type:'Allroad Elec. (Low)',price:3099,motor:'Shimano EP8',bat:'630Wh',url:'https://www.sunn.fr/fr/rage-allroad-s1/'},
+  {brand:'SUNN',name:'Cargo x Douze',cat:'vtcae',type:'Cargo Elec.',price:5799,motor:'Shimano EP8',bat:'630Wh',url:'https://www.sunn.fr/fr/cargo-sunn/'},
+  // ── SUNN Enfants ─────────────────────────────────────────────────────
+  {brand:'SUNN',name:'GP S2',cat:'kids',type:'Junior XC',price:436,url:'https://www.sunn.fr/'},
+  {brand:'SUNN',name:'Tox 2.0',cat:'kids',type:'Junior Trail',price:486,url:'https://www.sunn.fr/'},
+  {brand:'SUNN',name:'Tox 2.4',cat:'kids',type:'Junior Trail',price:486,avail:'Mars 2025',url:'https://www.sunn.fr/'},
+  {brand:'SUNN',name:'Tox 2.6',cat:'kids',type:'Junior Trail',price:556,url:'https://www.sunn.fr/'},
+  // ── Moustache VTTAE ──────────────────────────────────────────────────
+  {brand:'Moustache',name:'Samedi 29 Trail 3',cat:'vttae',type:'VTTAE Trail',price:3999,motor:'Bosch Perf. CX',bat:'625Wh',url:'https://moustachebikes.com/fr/'},
+  {brand:'Moustache',name:'Samedi 29 Trail 5',cat:'vttae',type:'VTTAE Trail',price:4999,motor:'Bosch Perf. CX',bat:'625Wh',tag:'Populaire',url:'https://moustachebikes.com/fr/'},
+  {brand:'Moustache',name:'Samedi 29 Trail 7',cat:'vttae',type:'VTTAE Trail',price:5999,motor:'Bosch Perf. CX',bat:'750Wh',url:'https://moustachebikes.com/fr/'},
+  {brand:'Moustache',name:'Samedi 29 Trail 9',cat:'vttae',type:'VTTAE Trail',price:7999,motor:'Bosch Perf. CX',bat:'750Wh',tag:'Top gamme',url:'https://moustachebikes.com/fr/'},
+  {brand:'Moustache',name:'Game 150.8',cat:'vttae',type:'Enduro Elec.',price:null,motor:'Bosch Perf. CX',bat:'750Wh',url:'https://moustachebikes.com/fr/'},
+  {brand:'Moustache',name:'Game 160.8',cat:'vttae',type:'Enduro Elec.',price:null,motor:'Bosch Perf. CX',bat:'750Wh',url:'https://moustachebikes.com/fr/'},
+  // ── Moustache VTCAE ──────────────────────────────────────────────────
+  {brand:'Moustache',name:'Samedi 27 Xroad',cat:'vtcae',type:'Allroad Elec.',price:null,motor:'Bosch Active Line+',bat:'500Wh',url:'https://moustachebikes.com/fr/'},
+  {brand:'Moustache',name:'Samedi 28.1',cat:'vtcae',type:'Trekking Elec.',price:null,motor:'Bosch Active Line+',bat:'500Wh',url:'https://moustachebikes.com/fr/'},
+  {brand:'Moustache',name:'Dimanche 28',cat:'gravel',type:'Gravel Elec.',price:null,motor:'Bosch Perf. CX',bat:'500Wh',url:'https://moustachebikes.com/fr/'},
+  {brand:'Moustache',name:'Lundi 20 Cargo',cat:'vtcae',type:'Cargo Elec.',price:null,motor:'Bosch Cargo Line',bat:'625Wh',url:'https://moustachebikes.com/fr/'},
+  // ── KONA ─────────────────────────────────────────────────────────────
+  {brand:'KONA',name:'Process 153 CR',cat:'vtt',type:'Enduro Carbone',price:4299,oldprice:5999,url:'https://konaworld.com/'},
+  {brand:'KONA',name:'Process 134',cat:'vtt',type:'Trail / All Mountain',price:2650,oldprice:2699,url:'https://konaworld.com/'},
+  {brand:'KONA',name:'Fire Mountain',cat:'vtt',type:'XC Sport',price:499,oldprice:699,url:'https://konaworld.com/'},
+  {brand:'KONA',name:'Splice',cat:'gravel',type:'Gravel',price:949,oldprice:1099,url:'https://konaworld.com/'},
+  {brand:'KONA',name:'Rove AL/DL',cat:'gravel',type:'Gravel',price:1799,oldprice:1899,url:'https://konaworld.com/'},
+  {brand:'KONA',name:'Rove NRB',cat:'gravel',type:'Gravel Carbone',price:2999,oldprice:3999,url:'https://konaworld.com/'},
+  {brand:'KONA',name:'Ouroboros CR',cat:'gravel',type:'Gravel Carbone',price:3299,oldprice:3450,url:'https://konaworld.com/'},
+  {brand:'KONA',name:'Coco HD',cat:'vtcae',type:'Urbain Elec.',price:1259,oldprice:1799,url:'https://konaworld.com/'},
+  {brand:'KONA',name:'E-Coco',cat:'vtcae',type:'Urbain Elec.',price:1750,oldprice:2700,url:'https://konaworld.com/'},
+  {brand:'KONA',name:'Coco',cat:'urban',type:'Urbain',price:499,oldprice:699,url:'https://konaworld.com/'},
+  {brand:'KONA',name:'Dew',cat:'urban',type:'Urbain',price:449,oldprice:599,url:'https://konaworld.com/'},
+  // ── NORCO ────────────────────────────────────────────────────────────
+  {brand:'NORCO',name:'Fluid VLT C3',cat:'vttae',type:'Trail Elec.',price:3999,oldprice:5999,motor:'Shimano EP8',bat:'630Wh',url:'https://www.norco.com/'},
+  {brand:'NORCO',name:'Shore',cat:'vtt',type:'Enduro / Park',price:2900,url:'https://www.norco.com/'},
+  {brand:'NORCO',name:'Fluid FS 3',cat:'vtt',type:'Trail',price:4999,oldprice:5999,url:'https://www.norco.com/'},
+  {brand:'NORCO',name:'Sight C3',cat:'vtt',type:'All Mountain',price:3999,url:'https://www.norco.com/'},
+  // ── Autres ───────────────────────────────────────────────────────────
+  {brand:'PIVOT',name:'Firebird',cat:'vtt',type:'Enduro Carbone',price:6999,oldprice:8099,url:'https://www.pivotcycles.com/'},
+  {brand:'FORBIDDEN',name:'Dreadnought V2',cat:'vtt',type:'Enduro',price:2999,url:'https://www.forbiddenbike.com/'},
+];
+
+const STOCK = [
+  // SUNN VTTAE
+  {brand:'SUNN',name:'Rage S2',qty:1},
+  {brand:'SUNN',name:'Rage S1',qty:1},
+  {brand:'SUNN',name:'Charger S2',qty:0,avail:'Avril 2025'},
+  {brand:'SUNN',name:'Charger S1',qty:1},
+  {brand:'SUNN',name:'Charger Finest',qty:1},
+  {brand:'SUNN',name:'One S2',qty:1,limited:true},
+  // SUNN VTT
+  {brand:'SUNN',name:'Royal',qty:1},
+  {brand:'SUNN',name:'Exact S3',qty:1},
+  {brand:'SUNN',name:'Exact S2',qty:1},
+  {brand:'SUNN',name:'Royal Factory',qty:1,limited:true},
+  {brand:'SUNN',name:'Rage',qty:1},
+  {brand:'SUNN',name:'Radical Finest',qty:1,limited:true},
+  {brand:'SUNN',name:'Radical Factory',qty:0,avail:'Avril 2025'},
+  {brand:'SUNN',name:'Prim Factory',qty:1},
+  // SUNN VTCAE
+  {brand:'SUNN',name:'Start S2',qty:1},
+  {brand:'SUNN',name:'Start S1',qty:1},
+  {brand:'SUNN',name:'Start Finest',qty:1},
+  {brand:'SUNN',name:'Rage Allroad S2',qty:1},
+  {brand:'SUNN',name:'Rage Allroad S2 Low',qty:1},
+  {brand:'SUNN',name:'Rage Allroad S1',qty:1},
+  {brand:'SUNN',name:'Rage Allroad S1 Low',qty:1},
+  // SUNN Kids
+  {brand:'SUNN',name:'GP S2',qty:0},
+  {brand:'SUNN',name:'Tox 2.0',qty:0},
+  {brand:'SUNN',name:'Tox 2.4',qty:0,avail:'Mars 2025'},
+  {brand:'SUNN',name:'Tox 2.6',qty:0},
+  // NORCO
+  {brand:'NORCO',name:'Fluid VLT C3',qty:1},
+  {brand:'NORCO',name:'Fluid FS 3',qty:1},
+  {brand:'NORCO',name:'Sight C3',qty:1},
+  {brand:'NORCO',name:'Shore',qty:0},
+  // KONA
+  {brand:'KONA',name:'Process 153 CR',qty:1},
+  {brand:'KONA',name:'Process 134',qty:1},
+  {brand:'KONA',name:'Fire Mountain',qty:1},
+  {brand:'KONA',name:'Splice',qty:1},
+  {brand:'KONA',name:'Rove AL/DL',qty:1},
+  {brand:'KONA',name:'Rove NRB',qty:1},
+  {brand:'KONA',name:'Ouroboros CR',qty:1},
+  {brand:'KONA',name:'Coco HD',qty:1},
+  {brand:'KONA',name:'E-Coco',qty:1},
+  {brand:'KONA',name:'Coco',qty:1},
+  {brand:'KONA',name:'Dew',qty:1},
+  // Autres
+  {brand:'PIVOT',name:'Firebird',qty:1},
+  {brand:'FORBIDDEN',name:'Dreadnought V2',qty:0},
+];
+
+const REVIEWS = [
+  {name:'Thomas R.',stars:5,date:'Jan. 2025',text:'Magasin au top ! Très compétent et passionné. J\'ai acheté mon VTTAE Moustache et le service était impeccable.'},
+  {name:'Sophie M.',stars:5,date:'Déc. 2024',text:'Super expérience de location ! Les vélos sont en parfait état et les conseils pour les itinéraires en Alsace sont précieux.'},
+  {name:'Marc L.',stars:5,date:'Nov. 2024',text:'Réparation rapide et efficace. Ma fourche était HS, ils l\'ont révisée en 2 jours. Prix honnête, je recommande vivement.'},
+  {name:'Julie K.',stars:5,date:'Oct. 2024',text:'J\'ai loué un BMX pour mon fils pour le week-end. Vélo nickel, accueil chaleureux. On reviendra pour sûr !'},
+  {name:'Pierre D.',stars:5,date:'Sept. 2024',text:'Achat d\'un SUNN Rage, le gérant m\'a accompagné dans mon choix avec pédagogie. RDV pour l\'entretien déjà pris !'},
+  {name:'Claire B.',stars:4,date:'Août 2024',text:'Très bon atelier. Assemblage de mon vélo acheté en ligne parfaitement réalisé, avec tous les réglages.'},
+  {name:'Alexis F.',stars:5,date:'Juil. 2024',text:'Le top en Alsace du Nord pour le VTT. Sélection SUNN impressionnante, essai sur place possible.'},
+];
+
+const RENT = {
+  moustache: {half:[50,65],day:[75,90],week:70,weekend:[160,180]},
+  sunn_rage:  {half:[40,55],day:[65,80],week:60,weekend:[140,160]},
+  sunn_vtcae: {half:[35,50],day:[60,75],week:55,weekend:[130,150]},
+  vtt:        {half:[25,40],day:[50,65],week:45,weekend:[110,130]},
+  bmx:        {half:[15,25],day:[35,45],week:30,weekend:[70,90]},
+};
+const EQUIP = {half:5,day:15,week:10,weekend:30};
+
+// ── STATE ─────────────────────────────────────────────────────────────
+let aBrand = 'all', aCat = 'all';
+
+// ── IMAGES VÉLOS (carousel multi-angles — URLs officielles sunn.fr) ───
+var S = 'https://www.sunn.fr/';
+const BIKE_IMGS = {
+  // VTTAE — images 3 angles extraites des fiches produit
+  'SUNN_Flash S2'         :[S+'1681-home_default/flash-s2-29.jpg',S+'1682-home_default/flash-s2-29.jpg'],
+  'SUNN_Flash S1'         :[S+'1678-home_default/flash-s1.jpg',S+'1679-home_default/flash-s1.jpg'],
+  'SUNN_Rage S2'          :[S+'1820/rage-s2.jpg',S+'1821/rage-s2.jpg',S+'1822/rage-s2.jpg'],
+  'SUNN_Rage S1'          :[S+'1817-home_default/rage-s1.jpg',S+'1818-home_default/rage-s1.jpg'],
+  'SUNN_Charger S2'       :[S+'1814/charger-s2.jpg',S+'1815/charger-s2.jpg',S+'1816/charger-s2.jpg'],
+  'SUNN_Charger S1'       :[S+'1810-home_default/charger.jpg',S+'1808-home_default/charger.jpg'],
+  'SUNN_Charger Finest'   :[S+'1811-home_default/charger-finest.jpg',S+'1812-home_default/charger-finest.jpg'],
+  'SUNN_One S2'           :[S+'1897/one-s2.jpg',S+'1898/one-s2.jpg'],
+  'SUNN_One S1'           :[S+'1896-home_default/one-s1.jpg',S+'1895-home_default/one-finest.jpg'],
+  'SUNN_One Finest'       :[S+'1895-home_default/one-finest.jpg',S+'1894-home_default/one-factory.jpg'],
+  'SUNN_One Factory'      :[S+'1894-home_default/one-factory.jpg'],
+  // VTT
+  'SUNN_Kern S2'          :[S+'1730/kern-s2.jpg',S+'1731/kern-s2.jpg',S+'1732/kern-s2.jpg'],
+  'SUNN_Kern S1'          :[S+'1482-home_default/kern-s1.jpg',S+'1480-home_default/kern-s1.jpg'],
+  'SUNN_Kern Finest'      :[S+'1717-home_default/kern-finest.jpg',S+'1714-home_default/kern-finest.jpg'],
+  'SUNN_Shamann DC S2'    :[S+'1665/shamann-dc-s2.jpg',S+'1664/shamann-dc-s2.jpg',S+'1663/shamann-dc-s2.jpg'],
+  'SUNN_Shamann DC S1'    :[S+'1662-home_default/shamann-dc-s1.jpg',S+'1661-home_default/shamann-dc-s1.jpg'],
+  'SUNN_Shamann XC S2'    :[S+'1659-home_default/shamann-xc-s2.jpg'],
+  'SUNN_Shamann XC S1'    :[S+'1656-home_default/shamann-xc-s1.jpg'],
+  'SUNN_Shamann XC Finest':[S+'1675-home_default/shamann-xc-finest.jpg'],
+  'SUNN_Radical S1'       :[S+'1835-home_default/radical-s1.jpg',S+'1836-home_default/radical-s1.jpg'],
+  'SUNN_Radical Finest'   :[S+'1832-home_default/radical-finest.jpg',S+'1833-home_default/radical-finest.jpg'],
+  'SUNN_Radical Factory'  :[S+'1829/radical-factory.jpg',S+'1830/radical-factory.jpg',S+'1831/radical-factory.jpg'],
+  'SUNN_Exact S3'         :[S+'1770-home_default/exact-s3.jpg'],
+  'SUNN_Exact S2'         :[S+'1767-home_default/exact-s2.jpg'],
+  'SUNN_Exact S1'         :[S+'1764-home_default/exact-s1.jpg'],
+  'SUNN_Exact Finest'     :[S+'1854-home_default/exact-finest.jpg'],
+  // VTCAE / Urbain E
+  'SUNN_Start S2'         :[S+'1970/start.jpg',S+'1971/start.jpg',S+'1972/start.jpg'],
+  'SUNN_Start S1'         :[S+'1851/start-s1.jpg',S+'1794/start-s1.jpg',S+'1795/start-s1.jpg'],
+  'SUNN_Start Finest'     :[S+'1848-home_default/start-finest.jpg',S+'1849-home_default/start-finest.jpg'],
+  'SUNN_Start Allroad'    :[S+'1967-home_default/start-allroad.jpg'],
+  'SUNN_Skill 400'        :[S+'1853-home_default/skill-400.jpg',S+'1456-home_default/skill-400.jpg'],
+  'SUNN_Skill 500'        :[S+'1852-home_default/skill-500.jpg',S+'1451-home_default/skill-500.jpg'],
+  'SUNN_Skill S2'         :[S+'1862-home_default/skill-s2.jpg',S+'1864-home_default/skill-s2.jpg'],
+  'SUNN_Skill S1'         :[S+'1784-home_default/skill-s1.jpg',S+'1785-home_default/skill-s1.jpg'],
+  'SUNN_Skill Allroad'    :[S+'1873-home_default/skill-allroad.jpg'],
+  'SUNN_On'               :[S+'1843-home_default/on.jpg',S+'1841-home_default/on.jpg'],
+  'SUNN_Over'             :[S+'1640-home_default/over.jpg'],
+  'SUNN_Rage Allroad S2'  :[S+'1802-home_default/rage-allroad-s2.jpg'],
+  'SUNN_Rage Allroad S1'  :[S+'1796-home_default/rage-allroad-s1.jpg'],
+  'SUNN_Cargo x Douze'    :[S+'1893-home_default/cargo-sunn.jpg',S+'1891-home_default/cargo-sunn.jpg'],
+};
+
+// ── NAV ───────────────────────────────────────────────────────────────
+function showSection(id) {
+  ['accueil','catalogue','location','atelier','suspensions','peinture','contact'].forEach(s => {
+    document.getElementById('sec-'+s).classList.toggle('section-hidden', s !== id);
+  });
+  document.querySelectorAll('.nav-link[data-section]').forEach(el =>
+    el.classList.toggle('active', el.dataset.section === id));
+  window.scrollTo({top:0, behavior:'smooth'});
+  if (id === 'catalogue') renderCatalog();
+  AOS.refresh();
+}
+
+// ── DEVIS PEINTURE ────────────────────────────────────────
+function calcDevis() {
+  var total = 0;
+  document.querySelectorAll('.devis-cb').forEach(function(cb) {
+    if (cb.checked) total += parseInt(cb.dataset.price, 10);
+  });
+  document.getElementById('devis-total').textContent = total + '\u20ac';
+  var btn = document.getElementById('devis-rdv-btn');
+  var items = [];
+  document.querySelectorAll('.devis-cb:checked').forEach(function(cb) {
+    items.push(cb.parentElement.querySelector('span.text-sm').textContent.trim());
+  });
+  var subject = encodeURIComponent('Devis peinture VTT Performance - Estimation ' + total + '\u20ac');
+  var body = encodeURIComponent('Bonjour,\n\nVoici mon estimation de devis :\n\n' + items.join('\n') + '\n\nTotal indicatif : ' + total + '\u20ac\n\nMerci de confirmer ce devis.');
+  btn.href = total > 0
+    ? 'mailto:vttperformance67@gmail.com?subject=' + subject + '&body=' + body
+    : 'https://calendly.com/vttperformance67/30min';
+  btn.innerHTML = total > 0
+    ? '<i data-lucide="mail" class="w-4 h-4"></i>Envoyer ce devis par email'
+    : '<i data-lucide="calendar" class="w-4 h-4"></i>Prendre RDV pour un devis';
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
+function toggleMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+
+// ── CATALOG ───────────────────────────────────────────────────────────
+const BADGE_CAT = {VTTAE:'badge-electric',VTCAE:'badge-electric',VTT:'badge-vtt',Gravel:'badge-gravel',BMX:'badge-bmx',Urban:'badge-urban',Kids:'badge-vtt'};
+const BRAND_B = {SUNN:'badge-sunn',Moustache:'badge-moustache',KONA:'',NORCO:'',PIVOT:'',FORBIDDEN:''};
+const GRAD = {
+  SUNN:     'background:linear-gradient(135deg,#0d1500,#1c2a00)',
+  Moustache:'background:linear-gradient(135deg,#000d1a,#001a2d)',
+  KONA:     'background:linear-gradient(135deg,#1a0505,#2d0a0a)',
+  NORCO:    'background:linear-gradient(135deg,#05101a,#0a1e30)',
+  PIVOT:    'background:linear-gradient(135deg,#0a0a1a,#10102d)',
+  FORBIDDEN:'background:linear-gradient(135deg,#1a0a00,#2d1500)',
+};
+const AUTRES = ['PIVOT','FORBIDDEN'];
+
+function getQty(brand, name) {
+  const s = STOCK.find(s => s.brand===brand && s.name===name);
+  return s ? s.qty : null;
+}
+
+function setBrand(b) {
+  aBrand = b;
+  document.querySelectorAll('.filter-brand').forEach(el=>el.classList.remove('active'));
+  var btnId = b==='all'?'fb-all':'fb-'+b.toLowerCase().replace(/\s+/g,'');
+  var btnEl = document.getElementById(btnId);
+  if (btnEl) btnEl.classList.add('active');
+  renderCatalog();
+}
+
+function setCat(c) {
+  aCat = c;
+  document.querySelectorAll('[id^="fc-"]').forEach(el=>el.classList.remove('active'));
+  document.getElementById('fc-'+c).classList.add('active');
+  renderCatalog();
+}
+
+// -- CAROUSEL JS -------------------------------------------------------
+function initCarousels() {
+  document.querySelectorAll('.bike-img-wrap').forEach(function(wrap) {
+    var imgs = wrap.querySelectorAll('.bike-carousel-img');
+    var dots = wrap.querySelectorAll('.carousel-dot');
+    if (imgs.length < 2) return;
+    var cur = 0;
+    setInterval(function() {
+      imgs[cur].classList.remove('active');
+      if (dots[cur]) dots[cur].classList.remove('on');
+      cur = (cur + 1) % imgs.length;
+      imgs[cur].classList.add('active');
+      if (dots[cur]) dots[cur].classList.add('on');
+    }, 3200);
+  });
+}
+function renderCatalog() {
+  const bikes = BIKES.filter(b => {
+    const brandOk = aBrand==='all' || b.brand===aBrand || (aBrand==='_autres' && AUTRES.includes(b.brand));
+    const catOk = aCat==='all' || b.cat===aCat;
+    return brandOk && catOk;
+  });
+  const grid = document.getElementById('catalog-grid');
+  const empty = document.getElementById('catalog-empty');
+  if (!bikes.length) { grid.innerHTML=''; empty.classList.remove('section-hidden'); return; }
+  empty.classList.add('section-hidden');
+
+  grid.innerHTML = bikes.map((bike,idx) => {
+    const se = STOCK.find(s => s.brand===bike.brand && s.name===bike.name);
+    const qty = se ? se.qty : null;
+    const limited = se && se.limited;
+    const avail = bike.avail || (se && se.avail);
+    const stockCls = avail ? 's-avail' : (qty===null ? '' : qty===0 ? 's-low' : limited ? 's-limited' : 's-high');
+    const dotStyle = qty===null && !avail ? ' style="background:#6b7280"' : '';
+    const stockTxt = avail ? ('Dispo. '+avail) : (qty===null ? 'Sur commande' : qty===0 ? 'Indisponible' : limited ? 'Stock limité' : 'En stock');
+    const stockDot = '<span class="stock-dot '+stockCls+'"'+dotStyle+'></span>'+stockTxt;
+    const limitedBadge = limited ? '<span class="badge badge-limited" style="font-size:.6rem;padding:.15rem .5rem">STOCK LIMITÉ</span>' : '';
+    const availBadge = avail ? '<span class="badge badge-avail" style="font-size:.6rem;padding:.15rem .5rem">'+avail+'</span>' : '';
+
+    const priceHtml = bike.price
+      ? (bike.oldprice?'<span class="price-old">'+bike.oldprice.toLocaleString('fr-FR')+' &euro;</span> ':'')
+        +'<span class="font-heading font-bold text-xl text-white">'+bike.price.toLocaleString('fr-FR')+' &euro;</span>'
+        +(bike.oldprice?' <span class="badge-promo">PROMO</span>':'')
+      : '<span class="text-sm text-gray-400 italic">Prix en magasin</span>';
+
+    const tagMap = {Louable:'badge-louable','Top gamme':'badge-moustache'};
+    const tagHtml = bike.tag ? '<span class="badge '+(tagMap[bike.tag]||'badge-electric')+'">'+bike.tag+'</span>' : '';
+    const specs = (bike.motor||bike.bat)
+      ? '<div class="flex flex-wrap gap-3 mt-2 text-xs text-gray-500">'
+        +(bike.motor?'<span>&#9889; '+bike.motor+'</span>':'')
+        +(bike.bat?'<span style="color:#0891b2">&#9642; '+bike.bat+'</span>':'')
+        +'</div>' : '';
+
+    const imgs = BIKE_IMGS[bike.brand+'_'+bike.name] || [];
+    const cid = 'car-'+idx;
+    const imgHtml = imgs.length
+      ? imgs.map(function(u,i){return '<img src="'+u+'" alt="'+bike.name+'" class="bike-carousel-img'+(i===0?' active':'')+'" loading="lazy" onerror="this.remove()">';}).join('')
+      : '<div class="flex flex-col items-center gap-2 opacity-25"><i data-lucide="bike" class="w-12 h-12 text-gray-300"></i><span class="text-xs text-gray-400 font-medium tracking-widest uppercase">'+bike.brand+'</span></div>';
+    const dots = imgs.length>1
+      ? '<div class="carousel-dots">'+imgs.map(function(_,i){return '<div class="carousel-dot'+(i===0?' on':'')+'" data-car="'+cid+'" data-i="'+i+'"></div>';}).join('')+'</div>'
+      : '';
+    const ficheLink = bike.url
+      ? '<a href="'+bike.url+'" target="_blank" rel="noopener" class="btn-fiche"><i data-lucide="external-link" class="w-3 h-3"></i>Fiche officielle</a>'
+      : '';
+    const bb = BRAND_B[bike.brand];
+    const brandStyle = (bb===undefined||bb==='')?'style="background:rgba(255,255,255,.1);color:#e2e8f0;border-color:rgba(255,255,255,.15)"':'';
+
+    return '<div class="bike-card">'
+      +'<div class="bike-img-wrap" id="'+cid+'" style="'+(GRAD[bike.brand]||GRAD.SUNN)+'">'
+      +imgHtml+dots
+      +'<div class="absolute top-3 left-3 flex gap-1.5 flex-wrap">'
+      +'<span class="badge '+(bb||'')+'" '+brandStyle+'>'+bike.brand+'</span>'+tagHtml+limitedBadge+availBadge
+      +'</div>'
+      +'<div class="absolute top-3 right-3"><span class="badge '+(BADGE_CAT[bike.cat]||'badge-vtt')+'">'+(bike.type||bike.cat.toUpperCase())+'</span></div>'
+      +'</div>'
+      +'<div class="p-4">'
+      +'<div class="flex items-start justify-between gap-2 mb-0.5">'
+      +'<h3 class="font-heading font-bold text-lg leading-tight">'+bike.name+'</h3>'
+      +ficheLink
+      +'</div>'
+      +'<p class="text-xs text-gray-500">'+(bike.type||'')+'</p>'
+      +specs
+      +'<div class="flex items-center justify-between mt-4 pt-4" style="border-top:1px solid rgba(255,255,255,.06)">'
+      +'<div class="flex items-baseline gap-1 flex-wrap">'+priceHtml+'</div>'
+      +'<span class="text-xs text-gray-500 flex items-center gap-1">'+stockDot+'</span>'
+      +'</div>'
+      +'<button onclick="openModal('+JSON.stringify(bike.brand+' '+bike.name)+')"'
+      +' class="mt-3 w-full py-2.5 rounded-xl text-sm font-semibold transition-all"'
+      +' style="background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.25);color:#ff6b35;"'
+      +' onmouseover="this.style.background=\'rgba(255,107,53,.2)\'"'
+      +' onmouseout="this.style.background=\'rgba(255,107,53,.1)\'">'
+      +(avail ? ('Précommander — '+avail) : qty > 0 ? 'Commander / Demander un essai' : 'Commander / Sur commande')
+      +'</button>'
+      +'</div></div>';
+  }).join('');
+  lucide.createIcons();
+  initCarousels();
+}
+
+function selectPay(el, val) {
+  document.querySelectorAll('.pay-opt').forEach(o => { o.classList.remove('selected'); o.querySelector('input').checked = false; });
+  el.classList.add('selected');
+  el.querySelector('input').checked = true;
+  document.getElementById('pay-note').textContent = val === 'virement'
+    ? 'Confirmation par email avec RIB pour le virement.'
+    : 'Paiement sur place à la réception du vélo (espèces ou CB).';
+}
+function openModal(bike) {
+  document.getElementById('m-title').textContent = bike;
+  document.getElementById('m-sub').textContent = 'Réponse sous 24h — choisissez votre mode de paiement';
+  document.getElementById('o-bike').value = bike;
+  document.getElementById('order-modal').classList.add('open');
+}
+function closeModal() { document.getElementById('order-modal').classList.remove('open'); }
+
+function submitOrder(e) {
+  e.preventDefault();
+  const bike = document.getElementById('o-bike').value;
+  const payVal = (document.querySelector('input[name="o-pay"]:checked') || {}).value || 'virement';
+  const payLabel = payVal === 'virement' ? 'Virement bancaire (RIB demandé par email)' : 'Paiement en magasin (espèces / CB au retrait)';
+  const body = encodeURIComponent(`Bonjour,\n\nJe souhaite commander / essayer :\n${bike}\n\nNom : ${document.getElementById('o-prenom').value} ${document.getElementById('o-nom').value}\nTél : ${document.getElementById('o-tel').value}\nPaiement souhaité : ${payLabel}\n\n${document.getElementById('o-msg').value}\n\nMerci !`);
+  window.location.href = `mailto:vttperformance67@gmail.com?subject=${encodeURIComponent('Commande : '+bike)}&body=${body}`;
+  closeModal();
+  document.getElementById('order-form').reset();
+  // reset sélection paiement sur virement par défaut
+  document.querySelectorAll('.pay-opt').forEach((o,i) => { o.classList.toggle('selected',i===0); o.querySelector('input').checked = (i===0); });
+  document.getElementById('pay-note').textContent = 'Confirmation par email avec RIB pour le virement.';
+  toast('Demande envoyée ! Nous vous répondrons sous 24h.', 'ok');
+}
+
+// ── RENTAL CALC ───────────────────────────────────────────────────────
+function calcRent() {
+  const type = document.getElementById('r-type').value;
+  const dur  = document.getElementById('r-dur').value;
+  const day  = document.getElementById('r-daytype').value;
+  const eq   = document.getElementById('r-equip').checked;
+  document.getElementById('r-daytype-wrap').style.display = (dur==='half'||dur==='day') ? 'block' : 'none';
+  const p = RENT[type];
+  let price = 0, note = '';
+  if (dur==='half')    { price=p.half[day==='weekend'?1:0]; note='pour ½ journée'; }
+  else if (dur==='day')    { price=p.day[day==='weekend'?1:0];  note='pour la journée'; }
+  else if (dur==='week')   { price=p.week; note='par jour (min. 3j)'; }
+  else if (dur==='weekend'){ price=p.weekend[0]; note='le week-end'; }
+  if (eq) price += EQUIP[dur];
+  document.getElementById('r-price').textContent = price+'€';
+  document.getElementById('r-note').textContent  = note+(eq?' · incl. équipement':'');
+}
+
+// ── RENTAL FORM ───────────────────────────────────────────────────────
+function submitRental(e) {
+  e.preventDefault();
+  const velo  = document.getElementById('lf-velo').value;
+  const start = document.getElementById('lf-start').value;
+  const end   = document.getElementById('lf-end').value;
+  const body  = encodeURIComponent(`Demande de location\n\nVélo : ${velo}\nDu : ${start}${end?' au '+end:''}\nNom : ${document.getElementById('lf-prenom').value} ${document.getElementById('lf-nom').value}\nTél : ${document.getElementById('lf-tel').value}\n\n${document.getElementById('lf-msg').value}`);
+  window.location.href = `mailto:vttperformance67@gmail.com?subject=${encodeURIComponent('Location : '+velo)}&body=${body}`;
+  document.getElementById('rental-form').reset();
+  toast('Demande envoyée ! Réponse sous 24h avec infos de paiement.', 'ok');
+}
+
+// ── CONTACT FORM ──────────────────────────────────────────────────────
+function submitContact(e) {
+  e.preventDefault();
+  const body = encodeURIComponent(`De : ${document.getElementById('c-nom').value}\nTél : ${document.getElementById('c-tel').value}\n\n${document.getElementById('c-msg').value}`);
+  window.location.href = `mailto:vttperformance67@gmail.com?subject=${encodeURIComponent(document.getElementById('c-sujet').value)}&body=${body}`;
+  document.getElementById('contact-form').reset();
+  toast('Message envoyé ! Nous vous répondrons très vite.', 'ok');
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────
+function toast(msg, type='ok') {
+  const c = document.getElementById('toasts');
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.innerHTML = `<i data-lucide="${type==='ok'?'check-circle':'alert-circle'}" class="w-5 h-5 ${type==='ok'?'text-green-400':'text-red-400'} flex-shrink-0"></i><span class="text-sm">${msg}</span>`;
+  c.appendChild(t); lucide.createIcons({el:t});
+  setTimeout(()=>t.remove(), 4500);
+}
+
+// ── TESTIMONIALS ──────────────────────────────────────────────────────
+function renderReviews() {
+  const make = () => REVIEWS.map(r => {
+    const stars = [1,2,3,4,5].map(i=>`<i data-lucide="star" class="w-4 h-4 ${i<=r.stars?'text-yellow-400 fill-yellow-400':'text-gray-700'}"></i>`).join('');
+    return `<div class="flex-shrink-0 w-72 p-6 rounded-2xl" style="background:var(--card);border:1px solid rgba(255,255,255,.06)">
+      <div class="flex gap-1 mb-3">${stars}</div>
+      <p class="text-sm text-gray-300 leading-relaxed mb-4">"${r.text}"</p>
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white" style="background:linear-gradient(135deg,#ff6b35,#e85a25)">${r.name[0]}</div>
+        <div><div class="text-sm font-semibold">${r.name}</div><div class="text-xs text-gray-500">${r.date}</div></div>
+      </div></div>`;
+  }).join('');
+  const w = document.getElementById('testi-wrap');
+  if (w) { w.innerHTML = `<div class="flex gap-5">${make()}</div><div class="flex gap-5">${make()}</div>`; lucide.createIcons(); }
+}
+
+// ── BANNIÈRE HÉRO ─────────────────────────────────────────────────────
+(function(){
+  var slides = document.querySelectorAll('.hb-slide');
+  var dots   = document.querySelectorAll('.hb-dot');
+  var cur = 0, n = slides.length, timer;
+  function go(idx) {
+    slides[cur].classList.remove('hb-active');
+    dots[cur].classList.remove('hb-on');
+    cur = (idx + n) % n;
+    slides[cur].classList.add('hb-active');
+    dots[cur].classList.add('hb-on');
+  }
+  window.hbGo  = go;
+  window.hbNav = function(dir) { clearInterval(timer); go(cur + dir); timer = setInterval(function(){ go(cur + 1); }, 5500); };
+  timer = setInterval(function(){ go(cur + 1); }, 5500);
+})();
+
+// ── SCROLL ────────────────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('back-top').classList.toggle('visible', window.scrollY > 400);
+});
+
+// ── INIT ──────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  AOS.init({duration:700, once:true, easing:'ease-out-cubic'});
+  lucide.createIcons();
+  renderReviews();
+  calcRent();
+});
+</script>
+</body>
+</html>

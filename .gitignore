@@ -1,0 +1,11 @@
+# Téléchargements partiels
+*.crdownload
+*.tmp
+
+# Fichiers système
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# Fichiers ZIP (trop lourds pour git — gardés en local)
+*.zip

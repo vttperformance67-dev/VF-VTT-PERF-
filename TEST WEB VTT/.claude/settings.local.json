@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(dir \"c:\\\\Users\\\\Utilisateur\\\\Desktop\\\\WEB VTT PERFORMANCE\\\\TEST WEB VTT\"\" /a)",
+      "WebFetch(domain:sites.google.com)",
+      "WebFetch(domain:www.sunn.fr)",
+      "WebFetch(domain:moustachebikes.com)",
+      "Bash(python3 -:*)",
+      "Bash(node -e \":*)",
+      "Bash(powershell -Command \":*)",
+      "Bash(powershell -Command \"Copy-Item ''C:\\\\Users\\\\Utilisateur\\\\AppData\\\\Roaming\\\\Code\\\\User\\\\History\\\\-488e8846\\\\ouUc.html'' ''c:\\\\Users\\\\Utilisateur\\\\Desktop\\\\WEB VTT PERFORMANCE\\\\TEST WEB VTT\\\\index.html'' -Force; Write-Host ''Restored:'' \\([System.IO.FileInfo]''c:\\\\Users\\\\Utilisateur\\\\Desktop\\\\WEB VTT PERFORMANCE\\\\TEST WEB VTT\\\\index.html''\\).Length\")",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"c:\\\\Users\\\\Utilisateur\\\\Desktop\\\\WEB VTT PERFORMANCE\\\\TEST WEB VTT\\\\_patch.ps1\")",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"c:\\\\Users\\\\Utilisateur\\\\Desktop\\\\WEB VTT PERFORMANCE\\\\TEST WEB VTT\\\\_verify.ps1\")",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"c:\\\\Users\\\\Utilisateur\\\\Desktop\\\\WEB VTT PERFORMANCE\\\\TEST WEB VTT\\\\_patch2.ps1\")",
+      "Bash(powershell -Command \"Remove-Item ''c:\\\\Users\\\\Utilisateur\\\\Desktop\\\\WEB VTT PERFORMANCE\\\\TEST WEB VTT\\\\_rc_new.js'',''c:\\\\Users\\\\Utilisateur\\\\Desktop\\\\WEB VTT PERFORMANCE\\\\TEST WEB VTT\\\\_patch.ps1'',''c:\\\\Users\\\\Utilisateur\\\\Desktop\\\\WEB VTT PERFORMANCE\\\\TEST WEB VTT\\\\_patch2.ps1'',''c:\\\\Users\\\\Utilisateur\\\\Desktop\\\\WEB VTT PERFORMANCE\\\\TEST WEB VTT\\\\_verify.ps1'' -Force; Write-Host ''Cleaned''\")",
+      "Bash(sort -k9)",
+      "Bash(git -C \"c:/Users/Utilisateur/Desktop/WEB VTT PERFORMANCE\" status)"
+    ]
+  }
+}
