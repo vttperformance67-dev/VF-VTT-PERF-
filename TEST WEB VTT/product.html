@@ -1,0 +1,2224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Fiche produit — VTT Performance</title>
+  <meta name="description" id="meta-desc" content="Fiche produit détaillée — VTT Performance, concessionnaire officiel SUNN & Moustache Bikes à Ingwiller.">
+  <meta property="og:title" id="og-title" content="Fiche produit — VTT Performance">
+  <meta property="og:description" id="og-desc" content="VTT Performance Ingwiller — concessionnaire officiel SUNN & Moustache.">
+  <meta property="og:image" id="og-image" content="">
+  <meta property="og:type" content="product">
+  <meta property="og:site_name" content="VTT Performance Ingwiller">
+  <script type="application/ld+json" id="product-jsonld">{}</script>
+
+  <!-- Preconnect CDN pour paralléliser les connexions -->
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+  <!-- Tailwind CDN : doit rester synchrone (JIT runtime scanne le DOM) -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+
+  <!-- AOS CSS : preload pour éviter le FOUC -->
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"></noscript>
+
+  <!-- Lucide + AOS JS : defer = non bloquants -->
+  <script defer src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <!-- Google Fonts : font-display=swap évite le texte invisible -->
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Exo+2:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #080e1a;
+      --surface: #0f1b2d;
+      --card: #141f33;
+      --border: rgba(255,255,255,0.07);
+      --orange: #ff6b35;
+      --blue: #3b82f6;
+      --cyan: #06b6d4;
+      --text: #f1f5f9;
+      --muted: #64748b;
+    }
+    * { box-sizing: border-box; }
+    body { font-family: 'Exo 2', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+    h1,h2,h3,h4,h5 { font-family: 'Rajdhani', sans-serif; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+
+    .flash-track { display:flex; width:max-content; animation:flash-scroll 40s linear infinite; }
+    @keyframes flash-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    .nav-link { position:relative; transition:color .2s; }
+    .nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:var(--orange); transition:width .3s; }
+    .nav-link:hover::after { width:100%; }
+    .nav-link:hover { color: white; }
+
+    .btn-orange { background:linear-gradient(135deg,#ff6b35,#e85a25); color:white; font-weight:600; border-radius:.75rem; transition:all .3s; padding:.75rem 1.75rem; display:inline-flex; align-items:center; gap:.5rem; border:none; cursor:pointer; text-decoration:none; }
+    .btn-orange:hover { transform:translateY(-2px); box-shadow:0 12px 30px rgba(255,107,53,.4); }
+    .btn-outline { border:2px solid rgba(255,255,255,.2); color:white; font-weight:600; border-radius:.75rem; transition:all .3s; padding:.75rem 1.75rem; display:inline-flex; align-items:center; gap:.5rem; background:transparent; cursor:pointer; text-decoration:none; }
+    .btn-outline:hover { border-color:var(--orange); color:var(--orange); transform:translateY(-2px); }
+
+    .card { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; transition:all .3s; }
+
+    .inp { width:100%; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.12); border-radius:.75rem; padding:.65rem .9rem; color:var(--text); font-family:'Exo 2',sans-serif; font-size:.9rem; transition:border-color .2s; outline:none; }
+    .inp:focus { border-color:var(--orange); background:rgba(255,107,53,.04); }
+    label { display:block; font-size:.82rem; font-weight:600; color:#94a3b8; margin-bottom:.35rem; margin-top:.75rem; text-transform:uppercase; letter-spacing:.04em; }
+
+    .mobile-menu { max-height:0; overflow:hidden; transition:max-height .35s ease; }
+    .mobile-menu.open { max-height:500px; }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb { display:flex; align-items:center; gap:.4rem; font-size:.8rem; flex-wrap:wrap; }
+    .breadcrumb a { color:var(--muted); text-decoration:none; transition:color .2s; }
+    .breadcrumb a:hover { color:white; }
+    .breadcrumb-sep { color:rgba(255,255,255,.2); }
+    .breadcrumb-cur { color:var(--text); font-weight:600; }
+
+    /* ── Hero ── */
+    .product-hero { position:relative; min-height:70vh; overflow:hidden; display:flex; align-items:flex-end; }
+    .hero-bg-blur { position:absolute; inset:0; background-size:cover; background-position:center; filter:blur(3px) brightness(.28); transform:scale(1.06); transition:background-image .5s; }
+    .hero-overlay { position:absolute; inset:0; background:linear-gradient(105deg,rgba(8,14,26,.95) 0%,rgba(8,14,26,.6) 55%,rgba(8,14,26,.2) 100%); }
+    .hero-content { position:relative; z-index:10; width:100%; }
+
+    @keyframes stock-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+    .stock-pulse { width:9px; height:9px; border-radius:50%; display:inline-block; animation:stock-pulse 2s ease-in-out infinite; flex-shrink:0; }
+    .stock-pulse.green { background:#22c55e; box-shadow:0 0 0 3px rgba(34,197,94,.25); }
+    .stock-pulse.orange { background:#f97316; box-shadow:0 0 0 3px rgba(249,115,22,.25); }
+    .stock-pulse.red { background:#ef4444; box-shadow:0 0 0 3px rgba(239,68,68,.25); }
+
+    /* ── Enhanced stock badge ── */
+    .stock-badge-wrap { display:inline-flex; align-items:center; gap:.6rem; padding:.5rem 1rem; border-radius:2rem; font-size:.88rem; font-weight:700; }
+    .stock-badge-wrap.instock { background:rgba(34,197,94,.12); border:1.5px solid rgba(34,197,94,.3); color:#4ade80; }
+    .stock-badge-wrap.limited { background:rgba(249,115,22,.12); border:1.5px solid rgba(249,115,22,.3); color:#fb923c; }
+    .stock-badge-wrap.outstock { background:rgba(239,68,68,.1); border:1.5px solid rgba(239,68,68,.25); color:#f87171; }
+    .stock-badge-wrap.onorder { background:rgba(129,140,248,.1); border:1.5px solid rgba(129,140,248,.25); color:#a5b4fc; }
+
+    /* ── Financing calculator ── */
+    .fin-calc-wrap { background:rgba(255,107,53,.05); border:1px solid rgba(255,107,53,.2); border-radius:1rem; padding:1.25rem; margin-top:1.5rem; }
+    .fin-slider { -webkit-appearance:none; appearance:none; width:100%; height:5px; border-radius:3px; background:rgba(255,107,53,.3); outline:none; cursor:pointer; }
+    .fin-slider::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--orange); cursor:pointer; box-shadow:0 0 0 4px rgba(255,107,53,.2); }
+    .fin-monthly { font-size:2rem; font-weight:800; color:var(--orange); font-family:'Rajdhani',sans-serif; line-height:1; }
+
+    /* ── Spec table icons ── */
+    .spec-icon-cell { display:flex; align-items:center; gap:.6rem; }
+    .spec-icon-wrap { width:28px; height:28px; border-radius:.5rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; background:rgba(255,107,53,.1); }
+
+    .trust-badge { display:flex; align-items:center; gap:.5rem; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:.75rem; padding:.5rem .85rem; font-size:.78rem; font-weight:600; }
+
+    /* ── Tabs ── */
+    .tab-nav { display:flex; gap:0; overflow-x:auto; scrollbar-width:none; }
+    .tab-nav::-webkit-scrollbar { display:none; }
+    .tab-btn { padding:.9rem 1.4rem; font-size:.85rem; font-weight:600; background:transparent; border:none; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; transition:all .2s; white-space:nowrap; font-family:'Exo 2',sans-serif; display:flex; align-items:center; gap:.4rem; }
+    .tab-btn:hover { color:var(--text); }
+    .tab-btn.active { color:var(--orange); border-bottom-color:var(--orange); }
+    .tab-panel { display:none; }
+    .tab-panel.active { display:block; }
+
+    /* ── Gallery ── */
+    .gallery-main { width:100%; height:420px; object-fit:cover; border-radius:1.2rem; border:1px solid rgba(255,255,255,.1); cursor:zoom-in; transition:transform .3s; }
+    .gallery-main:hover { transform:scale(1.01); }
+    .gallery-thumbs { display:flex; gap:.6rem; margin-top:.7rem; overflow-x:auto; padding-bottom:.3rem; scrollbar-width:thin; scrollbar-color:var(--blue) transparent; }
+    .gallery-thumb { width:88px; height:64px; object-fit:cover; border-radius:.65rem; border:2px solid rgba(255,255,255,.1); cursor:pointer; transition:all .2s; flex-shrink:0; }
+    .gallery-thumb:hover { border-color:rgba(255,255,255,.4); transform:scale(1.05); }
+    .gallery-thumb.active { border-color:var(--orange); box-shadow:0 0 0 2px rgba(255,107,53,.3); }
+
+    /* ── Lightbox ── */
+    .lightbox-overlay { position:fixed; inset:0; z-index:2000; background:rgba(0,0,0,.96); display:flex; align-items:center; justify-content:center; }
+    .lightbox-overlay.hidden { display:none; }
+    .lightbox-img { max-width:90vw; max-height:88vh; border-radius:1rem; object-fit:contain; }
+    .lightbox-close { position:absolute; top:1.25rem; right:1.25rem; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); border-radius:.65rem; padding:.55rem; cursor:pointer; color:white; transition:.2s; display:flex; }
+    .lightbox-close:hover { background:var(--orange); border-color:var(--orange); }
+    .lightbox-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:50%; width:52px; height:52px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:white; transition:.3s; }
+    .lightbox-nav:hover { background:var(--orange); border-color:var(--orange); }
+    .lightbox-prev { left:1.25rem; }
+    .lightbox-next { right:1.25rem; }
+    .lightbox-counter { position:absolute; bottom:1.25rem; left:50%; transform:translateX(-50%); font-size:.8rem; color:rgba(255,255,255,.5); background:rgba(0,0,0,.5); padding:.3rem .8rem; border-radius:2rem; }
+
+    /* ── Spec table ── */
+    .spec-table { width:100%; border-collapse:collapse; }
+    .spec-table tr { border-bottom:1px solid rgba(255,255,255,.05); }
+    .spec-table tr:last-child { border-bottom:none; }
+    .spec-table td { padding:.75rem .5rem; font-size:.875rem; vertical-align:top; }
+    .spec-table td:first-child { width:40%; color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.04em; font-weight:600; padding-right:1rem; }
+    .spec-table td:last-child { color:var(--text); font-weight:500; }
+
+    /* ── Feature strip ── */
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:1rem; padding:1.2rem 1rem; text-align:center; transition:all .3s; }
+    .feature-card:hover { border-color:rgba(255,107,53,.3); transform:translateY(-3px); }
+    .feature-icon-wrap { width:48px; height:48px; border-radius:.85rem; background:rgba(255,107,53,.12); display:flex; align-items:center; justify-content:center; margin:0 auto .75rem; }
+
+    /* ── Config / Options ── */
+    .color-swatch { width:36px; height:36px; border-radius:50%; border:3px solid transparent; cursor:pointer; transition:all .2s; flex-shrink:0; position:relative; }
+    .color-swatch:hover { transform:scale(1.15); }
+    .color-swatch.selected { border-color:var(--orange); box-shadow:0 0 0 3px rgba(255,107,53,.35); transform:scale(1.1); }
+    .size-btn { border:1.5px solid rgba(255,255,255,.18); border-radius:.65rem; padding:.5rem .85rem; background:rgba(255,255,255,.03); color:#f8fafc; cursor:pointer; text-align:center; font-weight:700; font-size:.9rem; transition:.2s; font-family:'Exo 2',sans-serif; }
+    .size-btn:hover { border-color:rgba(255,255,255,.4); background:rgba(255,255,255,.07); }
+    .size-btn.selected { border-color:var(--orange); background:rgba(255,107,53,.18); color:white; }
+    .battery-btn { border:1.5px solid rgba(255,255,255,.18); border-radius:.75rem; padding:.55rem 1rem; background:rgba(255,255,255,.03); color:#f8fafc; cursor:pointer; text-align:center; font-weight:600; font-size:.88rem; transition:.2s; font-family:'Exo 2',sans-serif; }
+    .battery-btn:hover { border-color:rgba(6,182,212,.5); background:rgba(6,182,212,.07); }
+    .battery-btn.selected { border-color:var(--cyan); background:rgba(6,182,212,.15); color:white; }
+    .accessory-row { display:flex; align-items:center; gap:.75rem; padding:.75rem; border-radius:.75rem; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); cursor:pointer; transition:.2s; }
+    .accessory-row:hover { background:rgba(255,255,255,.06); }
+    .accessory-row input[type="checkbox"] { accent-color:var(--orange); width:16px; height:16px; flex-shrink:0; }
+
+    /* ── Pay opt ── */
+    .pay-opt { display:flex; flex-direction:column; gap:.3rem; align-items:center; padding:.75rem .5rem; border-radius:1rem; border:1.5px solid rgba(255,255,255,.12); background:rgba(255,255,255,.03); cursor:pointer; transition:all .2s; text-align:center; color:var(--muted); }
+    .pay-opt.selected { border-color:var(--orange); background:rgba(255,107,53,.08); color:#fff; }
+    .pay-opt:hover:not(.selected) { border-color:rgba(255,255,255,.25); color:var(--text); }
+
+    /* ── Review ── */
+    .review-card { background:var(--card); border:1px solid var(--border); border-radius:1.2rem; padding:1.4rem; }
+    .avg-score-big { font-size:4rem; font-weight:800; color:var(--orange); font-family:'Rajdhani',sans-serif; line-height:1; }
+    .star-filled { color:#f59e0b; }
+    .star-empty { color:rgba(255,255,255,.2); }
+
+    /* ── Related ── */
+    .related-card { background:var(--card); border:1px solid var(--border); border-radius:1.2rem; overflow:hidden; transition:all .3s; cursor:pointer; text-decoration:none; display:block; }
+    .related-card:hover { border-color:rgba(255,107,53,.3); transform:translateY(-4px); box-shadow:0 16px 48px rgba(0,0,0,.3); }
+    .related-img { width:100%; height:160px; object-fit:cover; }
+
+    /* ── Badges ── */
+    .badge { font-size:.65rem; font-weight:700; padding:.2rem .6rem; border-radius:2rem; letter-spacing:.04em; }
+    .badge-electric { background:rgba(6,182,212,.15); color:#67e8f9; border:1px solid rgba(6,182,212,.3); }
+    .badge-brand { background:rgba(255,107,53,.15); color:#ff6b35; border:1px solid rgba(255,107,53,.3); }
+    .badge-promo { background:rgba(239,68,68,.15); color:#fca5a5; border:1px solid rgba(239,68,68,.3); }
+    .badge-top { background:rgba(234,179,8,.15); color:#fde047; border:1px solid rgba(234,179,8,.3); }
+    .badge-pop { background:rgba(168,85,247,.15); color:#d8b4fe; border:1px solid rgba(168,85,247,.3); }
+
+    /* ── Vue 360° ── */
+    .p360-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,200,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,200,.03) 1px,transparent 1px);background-size:55px 55px;pointer-events:none;}
+    .p360-nebula-1{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,255,200,.07) 0%,transparent 65%);top:-200px;left:-150px;pointer-events:none;animation:p360nf 14s ease-in-out infinite alternate;}
+    .p360-nebula-2{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,53,.05) 0%,transparent 65%);bottom:-150px;right:-100px;pointer-events:none;animation:p360nf 18s ease-in-out infinite alternate-reverse;}
+    @keyframes p360nf{0%{transform:scale(1)}100%{transform:scale(1.2)}}
+    .p360-wrap{position:relative;width:520px;height:520px;max-width:90vw;border-radius:50%;background:radial-gradient(circle at 50% 45%,rgba(0,255,200,.05) 0%,rgba(1,10,20,.9) 65%);border:1px solid rgba(0,255,200,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    @media(max-width:640px){.p360-wrap{width:310px;height:310px;}}
+    .p360-orbit{position:absolute;border-radius:50%;pointer-events:none;}
+    .p360-o1{inset:-22px;background:conic-gradient(from 0deg,transparent 75%,rgba(0,255,200,.5) 100%);animation:p360cw 18s linear infinite;}
+    .p360-o2{inset:-44px;background:conic-gradient(from 180deg,transparent 80%,rgba(255,107,53,.35) 100%);animation:p360ccw 28s linear infinite;}
+    .p360-o3{inset:18px;border:1px dashed rgba(0,255,200,.07);animation:p360cw 9s linear infinite;}
+    @keyframes p360cw{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+    @keyframes p360ccw{from{transform:rotate(0)}to{transform:rotate(-360deg)}}
+    .p360-corner{position:absolute;width:24px;height:24px;border-style:solid;border-color:rgba(0,255,200,.45);pointer-events:none;}
+    .p360-tl{top:24px;left:24px;border-width:2px 0 0 2px;}
+    .p360-tr{top:24px;right:24px;border-width:2px 2px 0 0;}
+    .p360-bl{bottom:24px;left:24px;border-width:0 0 2px 2px;}
+    .p360-br{bottom:24px;right:24px;border-width:0 2px 2px 0;}
+    #p360-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;border-radius:50%;}
+    .p360-persp{perspective:1200px;width:82%;height:82%;display:flex;align-items:center;justify-content:center;}
+    #p360-stage{width:100%;height:100%;display:flex;align-items:center;justify-content:center;cursor:grab;transform-style:preserve-3d;}
+    #p360-stage:active{cursor:grabbing;}
+    .p360-bike-img{max-width:92%;max-height:92%;object-fit:contain;pointer-events:none;user-select:none;filter:drop-shadow(0 0 30px rgba(0,255,200,.18)) drop-shadow(0 20px 40px rgba(0,0,0,.85));}
+    .p360-scan-wrap{position:absolute;inset:0;overflow:hidden;border-radius:50%;pointer-events:none;}
+    .p360-scanline{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(0,255,200,.7),transparent);box-shadow:0 0 14px rgba(0,255,200,.45);animation:p360scan 2.8s ease-in-out infinite;}
+    @keyframes p360scan{0%{top:8%;opacity:0}10%{opacity:1}88%{opacity:1}100%{top:92%;opacity:0}}
+    .p360-floor{position:absolute;bottom:-8px;left:18%;right:18%;height:28px;background:radial-gradient(ellipse,rgba(0,255,200,.22) 0%,transparent 70%);pointer-events:none;animation:p360fp 2s ease-in-out infinite;}
+    @keyframes p360fp{0%,100%{opacity:.45}50%{opacity:.9}}
+    .p360-angle{position:absolute;bottom:22px;right:22px;background:rgba(0,0,0,.65);border:1px solid rgba(0,255,200,.3);border-radius:.5rem;padding:.22rem .65rem;font-size:.72rem;font-weight:700;color:#00ffcc;font-family:'Rajdhani',sans-serif;letter-spacing:.06em;pointer-events:none;backdrop-filter:blur(6px);}
+    .p360-hint{position:absolute;top:20px;left:50%;transform:translateX(-50%);font-size:.62rem;color:rgba(0,255,200,.4);white-space:nowrap;pointer-events:none;letter-spacing:.05em;animation:p360hint 5s ease forwards 3s;}
+    @keyframes p360hint{0%{opacity:1}100%{opacity:0}}
+    .p360-ctrl-btn{background:rgba(0,255,200,.07);border:1px solid rgba(0,255,200,.2);color:#00ffcc;font-weight:700;font-size:.78rem;padding:.38rem .9rem;border-radius:.75rem;cursor:pointer;transition:all .2s;font-family:'Exo 2',sans-serif;white-space:nowrap;}
+    .p360-ctrl-btn:hover{background:rgba(0,255,200,.14);border-color:rgba(0,255,200,.45);}
+    .p360-speed-slider{appearance:none;width:100%;height:3px;background:rgba(0,255,200,.2);border-radius:2px;cursor:pointer;outline:none;}
+    .p360-speed-slider::-webkit-slider-thumb{appearance:none;width:12px;height:12px;border-radius:50%;background:#00ffcc;cursor:pointer;}
+    .p360-dot{width:11px;height:11px;border-radius:50%;border:none;cursor:pointer;transition:all .25s;padding:0;background:rgba(0,255,200,.2);}
+    .p360-dot.active{background:#00ffcc;box-shadow:0 0 10px rgba(0,255,200,.6);transform:scale(1.35);}
+
+    /* ── Nav dropdown ── */
+    .nav-dropdown:hover .nav-dropdown-menu { display:block !important; }
+    .nav-dropdown:hover .nav-dropdown-btn svg { transform:rotate(180deg); }
+    .nav-dd-item:hover { background:rgba(255,107,53,.1); color:white !important; }
+
+    /* ── Comparison table ── */
+    .cmp-table { width:100%; border-collapse:collapse; }
+    .cmp-table th { padding:.7rem 1rem; font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); text-align:left; border-bottom:2px solid rgba(255,255,255,.08); }
+    .cmp-table td { padding:.65rem 1rem; font-size:.85rem; border-bottom:1px solid rgba(255,255,255,.05); vertical-align:middle; }
+    .cmp-table tr:last-child td { border-bottom:none; }
+    .cmp-table td:first-child { color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.03em; font-weight:600; width:35%; }
+    .cmp-table td.highlight-col { color:var(--orange); font-weight:700; }
+    .cmp-val-better { color:#4ade80; }
+    .cmp-val-worse  { color:#f87171; }
+
+    /* ── Service timeline ── */
+    .svc-step { display:flex; gap:1rem; align-items:flex-start; }
+    .svc-dot { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:1rem; }
+    .svc-line { width:2px; background:rgba(255,255,255,.07); flex-grow:1; margin:0 auto; }
+
+    /* ── Print ── */
+    @media print {
+      .no-print, nav, #back-top, #floatbtn, .flash-track, .tab-nav { display:none!important; }
+      body { background:white!important; color:#111!important; }
+      .product-hero { min-height:auto!important; padding:1rem 0!important; }
+      .hero-bg-blur, .hero-overlay { display:none!important; }
+      .hero-content { color:#111!important; }
+      .tab-panel { display:block!important; }
+      .card { border:1px solid #ddd!important; background:white!important; break-inside:avoid; }
+      a { color:#2563eb!important; }
+    }
+
+    @keyframes skeleton-pulse { 0%,100%{opacity:.4} 50%{opacity:.8} }
+    @keyframes skeleton-bar { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+    /* ── Misc ── */
+    .sep { height:1px; background:rgba(255,255,255,.06); }
+    .financing-chip { display:inline-flex; align-items:center; gap:.4rem; background:rgba(255,107,53,.1); border:1px solid rgba(255,107,53,.25); border-radius:.65rem; padding:.4rem .85rem; font-size:.82rem; font-weight:600; color:#ff9066; }
+    .price-big { font-size:2.5rem; font-weight:800; color:white; font-family:'Rajdhani',sans-serif; line-height:1.1; }
+    .price-old { font-size:.95rem; text-decoration:line-through; color:var(--muted); }
+    .size-guide-cell { text-align:center; padding:.5rem .25rem; font-size:.78rem; border-radius:.5rem; background:rgba(255,255,255,.04); }
+    .size-guide-cell .sz { font-weight:700; font-size:.9rem; color:var(--text); }
+    .size-guide-cell .ht { color:var(--muted); font-size:.72rem; margin-top:.15rem; }
+  </style>
+</head>
+<body>
+
+<!-- FLASH BANNER -->
+<div class="bg-orange-600 py-2 overflow-hidden">
+  <div class="flash-track text-sm font-semibold text-white">
+    <span class="flex items-center gap-10 px-6 flex-shrink-0">
+      <span>🚴 Location vélos dès 30€/jour — SUNN &amp; Moustache disponibles</span>
+      <span>🔧 Atelier expert — Réparation &amp; entretien tous types de cycles</span>
+      <span>⚡ Concessionnaire officiel SUNN &amp; Moustache Bikes</span>
+      <span>📞 09 50 32 08 29 · Mar→Ven 9h–18h30 · Sam jusqu'à 18h</span>
+      <span>🎯 Location offerte si vous achetez après votre essai !</span>
+    </span>
+    <span class="flex items-center gap-10 px-6 flex-shrink-0" aria-hidden="true">
+      <span>🚴 Location vélos dès 30€/jour — SUNN &amp; Moustache disponibles</span>
+      <span>🔧 Atelier expert — Réparation &amp; entretien tous types de cycles</span>
+      <span>⚡ Concessionnaire officiel SUNN &amp; Moustache Bikes</span>
+      <span>📞 09 50 32 08 29 · Mar→Ven 9h–18h30 · Sam jusqu'à 18h</span>
+      <span>🎯 Location offerte si vous achetez après votre essai !</span>
+    </span>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<nav id="navbar" class="sticky top-0 z-50" style="background:rgba(8,14,26,.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-3 text-left">
+        <div class="w-10 h-10 rounded-lg overflow-hidden bg-orange-600 flex items-center justify-center">
+          <img src="../VTT PERFORMANCE.png" alt="Logo" onerror="this.style.display='none'" class="w-full h-full object-contain p-1">
+        </div>
+        <div>
+          <div class="font-heading font-bold text-lg leading-none text-white" style="font-family:'Rajdhani',sans-serif;">VTT Performance</div>
+          <div class="text-xs text-gray-500 leading-none mt-0.5">Ingwiller · Alsace</div>
+        </div>
+      </a>
+      <div class="hidden lg:flex items-center gap-6">
+        <a href="index.html" class="nav-link text-sm font-medium text-gray-300">Accueil</a>
+        <a href="index.html#catalogue" class="nav-link text-sm font-medium text-gray-300">Catalogue</a>
+        <a href="index.html#location" class="nav-link text-sm font-medium text-gray-300">Location</a>
+        <div class="nav-dropdown" style="position:relative;">
+          <a href="index.html#atelier" class="nav-dropdown-btn nav-link text-sm font-medium text-gray-300" style="display:flex;align-items:center;gap:.3rem;cursor:pointer;">
+            Atelier
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" style="transition:transform .25s;opacity:.6;"><path d="M6 8L1 3h10z"/></svg>
+          </a>
+          <div class="nav-dropdown-menu" style="display:none;position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%);background:rgba(10,16,28,.97);border:1px solid rgba(255,255,255,.1);border-radius:1rem;padding:.5rem;min-width:200px;z-index:100;box-shadow:0 20px 60px rgba(0,0,0,.5);">
+            <a href="index.html#atelier" class="nav-dd-item" style="display:flex;align-items:center;gap:.6rem;width:100%;padding:.55rem .85rem;border-radius:.6rem;color:#cbd5e1;text-decoration:none;font-size:.83rem;transition:all .2s;">🔧 Révision &amp; réparation</a>
+            <a href="index.html#suspensions" class="nav-dd-item" style="display:flex;align-items:center;gap:.6rem;width:100%;padding:.55rem .85rem;border-radius:.6rem;color:#cbd5e1;text-decoration:none;font-size:.83rem;transition:all .2s;">⚙️ Suspensions</a>
+            <a href="index.html#peinture" class="nav-dd-item" style="display:flex;align-items:center;gap:.6rem;width:100%;padding:.55rem .85rem;border-radius:.6rem;color:#cbd5e1;text-decoration:none;font-size:.83rem;transition:all .2s;">🎨 Peinture personnalisée</a>
+            <div style="height:1px;background:rgba(255,255,255,.07);margin:.3rem .5rem;"></div>
+            <a href="index.html#reprise" class="nav-dd-item" style="display:flex;align-items:center;gap:.6rem;width:100%;padding:.55rem .85rem;border-radius:.6rem;color:#cbd5e1;text-decoration:none;font-size:.83rem;transition:all .2s;">🔄 Reprise de vélo</a>
+            <a href="index.html#histoire" class="nav-dd-item" style="display:flex;align-items:center;gap:.6rem;width:100%;padding:.55rem .85rem;border-radius:.6rem;color:#cbd5e1;text-decoration:none;font-size:.83rem;transition:all .2s;">🏪 Notre histoire</a>
+            <a href="index.html#faq" class="nav-dd-item" style="display:flex;align-items:center;gap:.6rem;width:100%;padding:.55rem .85rem;border-radius:.6rem;color:#cbd5e1;text-decoration:none;font-size:.83rem;transition:all .2s;">❓ FAQ</a>
+            <a href="index.html#blog" class="nav-dd-item" style="display:flex;align-items:center;gap:.6rem;width:100%;padding:.55rem .85rem;border-radius:.6rem;color:#cbd5e1;text-decoration:none;font-size:.83rem;transition:all .2s;">📰 Blog</a>
+          </div>
+        </div>
+        <a href="index.html#contact" class="nav-link text-sm font-medium text-gray-300">Contact</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="tel:0950320829" class="hidden sm:flex items-center gap-2 text-sm text-gray-300 hover:text-white transition-colors">
+          <i data-lucide="phone" class="w-4 h-4 text-orange-400"></i>09 50 32 08 29
+        </a>
+        <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="hidden sm:flex btn-orange text-sm py-2 px-4">
+          <i data-lucide="calendar" class="w-4 h-4"></i>Prendre RDV
+        </a>
+        <button id="menu-btn" onclick="toggleMenu()" class="lg:hidden p-2 rounded-lg hover:bg-white/10 transition-colors">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="mobile-menu lg:hidden pb-4">
+      <div class="flex flex-col gap-1 pt-2 border-t border-white/10">
+        <a href="index.html" class="text-left px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Accueil</a>
+        <a href="index.html#catalogue" class="text-left px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Catalogue</a>
+        <a href="index.html#location" class="text-left px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Location</a>
+        <a href="index.html#atelier" class="text-left px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">🔧 Atelier &amp; réparation</a>
+        <a href="index.html#suspensions" class="text-left px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg pl-8">⚙️ Suspensions</a>
+        <a href="index.html#peinture" class="text-left px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg pl-8">🎨 Peinture</a>
+        <a href="index.html#reprise" class="text-left px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg pl-8">🔄 Reprise</a>
+        <a href="index.html#contact" class="text-left px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Contact</a>
+        <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="btn-orange mx-4 mt-2 justify-center text-sm">
+          <i data-lucide="calendar" class="w-4 h-4"></i>Prendre RDV
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- SKELETON LOADER -->
+<div id="page-skeleton" style="display:block;">
+  <div style="height:4px;background:linear-gradient(90deg,#ff6b35,#3b82f6,#ff6b35);background-size:200% 100%;animation:skeleton-bar 1.5s ease-in-out infinite;"></div>
+  <div style="height:60vh;background:var(--surface);display:flex;align-items:center;justify-content:center;padding:2rem;">
+    <div style="width:100%;max-width:900px;">
+      <div style="height:14px;width:200px;border-radius:8px;background:rgba(255,255,255,.07);animation:skeleton-pulse 1.5s ease-in-out infinite;margin-bottom:1.5rem;"></div>
+      <div style="height:40px;width:60%;border-radius:10px;background:rgba(255,255,255,.09);animation:skeleton-pulse 1.5s ease-in-out infinite;margin-bottom:1rem;"></div>
+      <div style="height:20px;width:45%;border-radius:8px;background:rgba(255,255,255,.06);animation:skeleton-pulse 1.5s ease-in-out infinite;margin-bottom:2rem;"></div>
+      <div style="display:flex;gap:1rem;">
+        <div style="height:52px;width:160px;border-radius:12px;background:rgba(255,107,53,.2);animation:skeleton-pulse 1.5s ease-in-out infinite;"></div>
+        <div style="height:52px;width:130px;border-radius:12px;background:rgba(255,255,255,.07);animation:skeleton-pulse 1.5s ease-in-out infinite;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div style="background:rgba(8,14,26,.8);border-bottom:1px solid rgba(255,255,255,.05);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3">
+    <div class="flex items-center justify-between gap-4">
+      <nav class="breadcrumb">
+        <a href="index.html"><i data-lucide="home" class="w-3.5 h-3.5 inline -mt-0.5"></i> Accueil</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="index.html#catalogue">Catalogue</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-cur" id="bc-brand">—</span>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-cur" id="bc-model">Chargement…</span>
+      </nav>
+      <button onclick="window.print()" title="Imprimer la fiche" class="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg no-print" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--muted);transition:.2s;" onmouseenter="this.style.color='white'" onmouseleave="this.style.color='var(--muted)'">
+        <i data-lucide="printer" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Imprimer</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="product-hero" id="product-hero">
+  <div class="hero-bg-blur" id="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-14 pt-12">
+      <div class="flex flex-col lg:flex-row items-end gap-10">
+        <!-- Left text block -->
+        <div class="flex-1 min-w-0">
+          <div class="flex flex-wrap gap-2 mb-4" id="hero-badges"></div>
+          <h1 id="hero-title" class="text-white font-bold mb-2" style="font-family:'Rajdhani',sans-serif;font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;">Chargement…</h1>
+          <p id="hero-tagline" class="text-gray-300 text-lg mb-5 max-w-xl leading-relaxed"></p>
+          <div class="flex flex-wrap items-baseline gap-3 mb-4" id="hero-price-block">
+            <span class="price-big" id="hero-price">—</span>
+            <span class="price-old hidden" id="hero-oldprice"></span>
+            <span class="financing-chip hidden" id="hero-financing"></span>
+          </div>
+          <div class="flex items-center gap-2 mb-6" id="hero-stock"></div>
+          <div class="flex flex-wrap gap-3 mb-7">
+            <button onclick="scrollToOrder()" class="btn-orange text-base" aria-label="Commander ce vélo">
+              <i data-lucide="shopping-cart" class="w-5 h-5"></i>Commander
+            </button>
+            <a id="hero-official" href="#" target="_blank" rel="noopener" class="btn-outline text-base hidden">
+              <i data-lucide="external-link" class="w-4 h-4"></i>Fiche officielle
+            </a>
+            <a id="hero-vitrine-360" href="index.html#vitrine" class="btn-outline text-base" style="border-color:rgba(0,255,200,.4);color:#00ffcc;" title="Voir en Vitrine 360°">
+              <span style="font-size:1.1rem;line-height:1;">↻</span>Vitrine 360°
+            </a>
+            <a id="hero-whatsapp" href="#" target="_blank" rel="noopener" class="btn-outline text-base" style="border-color:rgba(37,211,102,.3);color:#25d366;" title="Partager sur WhatsApp">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </a>
+            <button id="hero-copy" onclick="copyPageLink()" class="btn-outline text-base" style="border-color:rgba(255,255,255,.15);" title="Copier le lien">
+              <i data-lucide="link" class="w-4 h-4"></i><span class="hidden sm:inline text-sm">Copier lien</span>
+            </button>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <div class="trust-badge"><i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i><span>Expert local certifié</span></div>
+            <div class="trust-badge"><i data-lucide="award" class="w-4 h-4 text-yellow-400"></i><span>Garantie 2 ans</span></div>
+            <div class="trust-badge"><i data-lucide="bike" class="w-4 h-4 text-cyan-400"></i><span>Essai gratuit</span></div>
+            <div class="trust-badge"><i data-lucide="refresh-cw" class="w-4 h-4 text-orange-400"></i><span>Reprise vélo</span></div>
+          </div>
+        </div>
+        <!-- Right hero image -->
+        <div class="hidden lg:flex w-5/12 justify-center items-end">
+          <img id="hero-img" src="" alt="" class="max-w-full rounded-2xl shadow-2xl" style="max-height:400px;object-fit:contain;filter:drop-shadow(0 20px 60px rgba(0,0,0,.6));" loading="eager" onerror="this.style.opacity='0'">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POURQUOI NOUS CHOISIR -->
+<section class="py-8 px-4" style="background:rgba(15,27,45,.8);border-bottom:1px solid rgba(255,255,255,.06);">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="flex items-center gap-3 p-4 rounded-xl" style="background:rgba(255,107,53,.06);border:1px solid rgba(255,107,53,.15);">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(255,107,53,.15)"><i data-lucide="shield-check" class="w-5 h-5 text-orange-400"></i></div>
+        <div><div class="font-heading font-bold text-white text-sm leading-tight">Garantie 2 ans</div><div class="text-xs text-gray-500 mt-0.5">Fabricant + atelier</div></div>
+      </div>
+      <div class="flex items-center gap-3 p-4 rounded-xl" style="background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(59,130,246,.15)"><i data-lucide="bike" class="w-5 h-5 text-blue-400"></i></div>
+        <div><div class="font-heading font-bold text-white text-sm leading-tight">Essai gratuit</div><div class="text-xs text-gray-500 mt-0.5">Location déduite si achat</div></div>
+      </div>
+      <div class="flex items-center gap-3 p-4 rounded-xl" style="background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.15);">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(6,182,212,.15)"><i data-lucide="award" class="w-5 h-5 text-cyan-400"></i></div>
+        <div><div class="font-heading font-bold text-white text-sm leading-tight">Expert certifié</div><div class="text-xs text-gray-500 mt-0.5">Bosch &amp; Shimano EP8</div></div>
+      </div>
+      <div class="flex items-center gap-3 p-4 rounded-xl" style="background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.15);">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(139,92,246,.15)"><i data-lucide="rotate-ccw" class="w-5 h-5 text-purple-400"></i></div>
+        <div><div class="font-heading font-bold text-white text-sm leading-tight">Reprise vélo</div><div class="text-xs text-gray-500 mt-0.5">Estimation en magasin</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB BAR (sticky below nav) -->
+<div class="sticky z-40" style="top:64px;background:rgba(8,14,26,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="tab-nav" role="tablist">
+      <button class="tab-btn active" data-tab="photos" onclick="switchTab('photos')">
+        <i data-lucide="image" class="w-4 h-4"></i><span class="hidden sm:inline">Photos<span id="photo-count-badge" class="ml-1 text-xs opacity-60"></span></span><span class="sm:hidden">📷</span>
+      </button>
+      <button class="tab-btn" data-tab="specs" onclick="switchTab('specs')">
+        <i data-lucide="list" class="w-4 h-4"></i><span class="hidden sm:inline">Fiche technique</span><span class="sm:hidden">📋</span>
+      </button>
+      <button class="tab-btn" data-tab="config" onclick="switchTab('config')">
+        <i data-lucide="settings" class="w-4 h-4"></i><span class="hidden sm:inline">Configurer &amp; Commander</span><span class="sm:hidden">⚙️</span>
+      </button>
+      <button class="tab-btn" data-tab="reviews" onclick="switchTab('reviews')">
+        <i data-lucide="star" class="w-4 h-4"></i><span class="hidden sm:inline">Avis clients</span><span class="sm:hidden">⭐</span>
+      </button>
+      <button class="tab-btn" data-tab="360" id="tab-btn-360" onclick="switchTab('360')" style="color:#00ffcc;">
+        <span style="font-size:1rem;line-height:1;">↻</span><span class="hidden sm:inline ml-1">Vue 360°</span>
+      </button>
+      <button class="tab-btn" data-tab="finance" onclick="switchTab('finance')">
+        <span style="font-size:.95rem;line-height:1;">💳</span><span class="hidden sm:inline ml-1">Financement</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TAB: PHOTOS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="tab-photos" class="tab-panel active">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+    <div class="grid lg:grid-cols-3 gap-8">
+      <!-- Gallery -->
+      <div class="lg:col-span-2">
+        <div class="relative">
+          <img id="gallery-main-img" class="gallery-main" src="" alt="" onclick="openLightbox(currentGalleryIdx)">
+          <button onclick="openLightbox(currentGalleryIdx)" class="absolute top-3 right-3 flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg" style="background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.15);color:white;backdrop-filter:blur(8px);">
+            <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>Agrandir
+          </button>
+          <button onclick="galleryNav(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center" style="background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.15);color:white;">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+          </button>
+          <button onclick="galleryNav(1)" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center" style="background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.15);color:white;">
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div class="gallery-thumbs" id="gallery-thumbs"></div>
+        <p class="text-xs text-gray-500 mt-2 text-center" id="gallery-counter"></p>
+      </div>
+      <!-- Sidebar quick specs -->
+      <div>
+        <div class="card p-6" data-aos="fade-left">
+          <h3 class="font-bold text-lg mb-4" style="font-family:'Rajdhani',sans-serif;">Points clés</h3>
+          <div id="specs-sidebar" class="space-y-3"></div>
+          <div class="mt-5 pt-5" style="border-top:1px solid rgba(255,255,255,.07);">
+            <a id="official-link-sidebar" href="#" target="_blank" rel="noopener" class="btn-outline w-full justify-center text-sm hidden">
+              <i data-lucide="external-link" class="w-4 h-4"></i>Fiche fabricant
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TAB: FICHE TECHNIQUE -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="tab-specs" class="tab-panel">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+
+    <!-- Quick-spec strip -->
+    <div class="rounded-2xl p-5 mb-8 grid grid-cols-2 sm:grid-cols-4 gap-4" id="specs-quickstrip" style="background:rgba(255,107,53,.04);border:1px solid rgba(255,107,53,.15);">
+      <!-- Populated by JS -->
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6" id="specs-grid">
+      <!-- Populated by JS -->
+    </div>
+    <div class="mt-8 flex justify-center gap-4 flex-wrap" id="spec-official-wrap">
+      <a id="spec-official-link" href="#" target="_blank" rel="noopener" class="btn-outline hidden">
+        <i data-lucide="external-link" class="w-4 h-4"></i>Fiche officielle du fabricant
+      </a>
+      <button onclick="window.print()" class="btn-outline hidden" id="spec-print-btn">
+        <i data-lucide="printer" class="w-4 h-4"></i>Imprimer la fiche
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TAB: CONFIGURER & COMMANDER -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="tab-config" class="tab-panel">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10" id="order-anchor">
+    <div class="grid lg:grid-cols-5 gap-8">
+      <!-- Config options (3/5) -->
+      <div class="lg:col-span-3 space-y-6">
+        <!-- Coloris -->
+        <div class="card p-6" id="block-colors" data-aos="fade-up">
+          <h3 class="font-bold text-xl mb-4" style="font-family:'Rajdhani',sans-serif;"><i data-lucide="palette" class="w-5 h-5 inline mr-2 text-orange-400"></i>Coloris disponibles</h3>
+          <div class="flex flex-wrap gap-3" id="color-swatches"></div>
+          <p class="text-sm mt-3" id="color-label" style="color:var(--muted);">Sélectionnez un coloris</p>
+        </div>
+        <!-- Taille -->
+        <div class="card p-6" data-aos="fade-up" data-aos-delay="50">
+          <h3 class="font-bold text-xl mb-3" style="font-family:'Rajdhani',sans-serif;"><i data-lucide="ruler" class="w-5 h-5 inline mr-2 text-blue-400"></i>Taille de cadre</h3>
+          <div class="flex flex-wrap gap-2" id="size-buttons"></div>
+          <div class="mt-4 rounded-xl p-4" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);">
+            <p class="text-xs mb-3" style="color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600;">Guide des tailles</p>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="size-guide-grid"></div>
+          </div>
+        </div>
+        <!-- Batterie -->
+        <div class="card p-6 hidden" id="block-battery" data-aos="fade-up" data-aos-delay="100">
+          <h3 class="font-bold text-xl mb-4" style="font-family:'Rajdhani',sans-serif;"><i data-lucide="battery-charging" class="w-5 h-5 inline mr-2 text-cyan-400"></i>Capacité de batterie</h3>
+          <div class="flex flex-wrap gap-3" id="battery-buttons"></div>
+          <p class="text-xs mt-3" style="color:var(--muted);">Une plus grande capacité = une plus grande autonomie</p>
+        </div>
+        <!-- Accessoires -->
+        <div class="card p-6" data-aos="fade-up" data-aos-delay="150">
+          <h3 class="font-bold text-xl mb-4" style="font-family:'Rajdhani',sans-serif;"><i data-lucide="package" class="w-5 h-5 inline mr-2 text-purple-400"></i>Accessoires</h3>
+          <div class="space-y-2.5" id="accessory-list">
+            <label class="accessory-row" for="acc1">
+              <input type="checkbox" id="acc1" class="accessory-cb" data-name="Porte-bidon" data-price="7.9">
+              <span class="flex-1 text-sm font-medium">Porte-bidon aluminium</span>
+              <span class="text-orange-400 font-bold text-sm">+ 7,90 €</span>
+            </label>
+            <label class="accessory-row" for="acc2">
+              <input type="checkbox" id="acc2" class="accessory-cb" data-name="Sac à dos 17L" data-price="119">
+              <span class="flex-1 text-sm font-medium">Sac à dos hydratation 17L</span>
+              <span class="text-orange-400 font-bold text-sm">+ 119 €</span>
+            </label>
+            <label class="accessory-row" for="acc3">
+              <input type="checkbox" id="acc3" class="accessory-cb" data-name="Double sacoche MIK 41L" data-price="189">
+              <span class="flex-1 text-sm font-medium">Double sacoche MIK 41L</span>
+              <span class="text-orange-400 font-bold text-sm">+ 189 €</span>
+            </label>
+            <label class="accessory-row" for="acc4">
+              <input type="checkbox" id="acc4" class="accessory-cb" data-name="Siège enfant 22kg" data-price="99">
+              <span class="flex-1 text-sm font-medium">Siège enfant 22 kg</span>
+              <span class="text-orange-400 font-bold text-sm">+ 99 €</span>
+            </label>
+            <label class="accessory-row" for="acc5">
+              <input type="checkbox" id="acc5" class="accessory-cb" data-name="Kit protection casque+genouillères" data-price="149">
+              <span class="flex-1 text-sm font-medium">Kit protection casque + genouillères</span>
+              <span class="text-orange-400 font-bold text-sm">+ 149 €</span>
+            </label>
+            <label class="accessory-row" for="acc6">
+              <input type="checkbox" id="acc6" class="accessory-cb" data-name="Antivol U-lock" data-price="39">
+              <span class="flex-1 text-sm font-medium">Antivol U-lock premium</span>
+              <span class="text-orange-400 font-bold text-sm">+ 39 €</span>
+            </label>
+          </div>
+        </div>
+        <!-- Calculateur de financement -->
+        <div class="card p-6" data-aos="fade-up" data-aos-delay="180">
+          <h3 class="font-bold text-xl mb-4" style="font-family:'Rajdhani',sans-serif;"><i data-lucide="calculator" class="w-5 h-5 inline mr-2 text-green-400"></i>Calculateur de financement</h3>
+          <div class="rounded-xl p-4 mb-4" style="background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.15);">
+            <div class="flex items-center gap-2 text-green-400 text-sm font-semibold mb-1">
+              <i data-lucide="percent" class="w-4 h-4"></i>Taux 0% — simulation indicative
+            </div>
+            <p class="text-xs text-gray-500">Exemple de mensualités sans frais. Virement bancaire ou organisme de crédit selon votre banque.</p>
+          </div>
+          <div class="mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-sm font-semibold text-gray-300">Durée de remboursement</label>
+              <span class="font-bold text-orange-400" id="fin-months-label">24 mois</span>
+            </div>
+            <input type="range" id="fin-duration-slider" min="0" max="4" step="1" value="1" class="fin-slider" oninput="updateFinCalc()">
+            <div class="flex justify-between text-xs text-gray-600 mt-1.5">
+              <span>12 mois</span><span>24 mois</span><span>36 mois</span><span>48 mois</span><span>60 mois</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 text-center" style="background:rgba(255,107,53,.08);border:1px solid rgba(255,107,53,.2);">
+            <div class="text-xs text-gray-400 mb-1 uppercase tracking-wider">Mensualité estimée</div>
+            <div class="fin-monthly" id="fin-monthly-display">—</div>
+            <div class="text-xs text-gray-500 mt-1.5" id="fin-total-display"></div>
+          </div>
+          <p class="text-xs text-gray-600 mt-3 text-center">Simulation non contractuelle — pour un financement officiel, contactez-nous</p>
+        </div>
+
+        <!-- Notes de configuration -->
+        <div class="card p-5" style="background:rgba(255,107,53,.04);border-color:rgba(255,107,53,.15);" data-aos="fade-up" data-aos-delay="200">
+          <div class="flex gap-3 items-start">
+            <i data-lucide="info" class="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5"></i>
+            <div class="text-sm" style="color:#cbd5e1;">
+              <strong class="text-white">Configuration personnalisée possible</strong><br>
+              Contactez-nous pour toute demande spéciale : montage sur mesure, composants alternatifs, peinture personnalisée, tailles hors standard.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order form sticky (2/5) -->
+      <div class="lg:col-span-2">
+        <div class="card p-6 lg:sticky" style="top:80px;" data-aos="fade-left">
+          <!-- Price summary -->
+          <div class="mb-5 pb-5" style="border-bottom:1px solid rgba(255,255,255,.08);">
+            <div class="flex items-start justify-between gap-2 mb-1">
+              <span class="text-sm font-semibold" style="color:var(--muted);">Prix total estimé</span>
+              <div class="text-right">
+                <div class="price-big text-2xl" id="order-price-display">—</div>
+                <div class="price-old text-xs" id="order-oldprice-display" style="display:none;"></div>
+              </div>
+            </div>
+            <div id="financing-display" class="text-sm mt-1" style="color:#f97316;"></div>
+            <div id="accessories-total" class="text-xs mt-1" style="color:var(--muted);"></div>
+            <div class="grid grid-cols-2 gap-2 mt-4">
+              <div class="pay-opt selected" id="pay-virement" onclick="selectPay('virement')">
+                <input type="radio" name="o-pay" value="virement" id="pay-r-virement" checked class="sr-only">
+                <i data-lucide="landmark" class="w-5 h-5"></i>
+                <span class="font-semibold text-sm">Virement</span>
+                <span class="text-xs opacity-60">RIB par email</span>
+              </div>
+              <div class="pay-opt" id="pay-magasin" onclick="selectPay('magasin')">
+                <input type="radio" name="o-pay" value="magasin" id="pay-r-magasin" class="sr-only">
+                <i data-lucide="store" class="w-5 h-5"></i>
+                <span class="font-semibold text-sm">En magasin</span>
+                <span class="text-xs opacity-60">CB / Espèces</span>
+              </div>
+            </div>
+          </div>
+          <!-- Form -->
+          <form id="buy-form" onsubmit="buyBike(event)" class="space-y-1">
+            <input type="hidden" id="h-color" name="color">
+            <input type="hidden" id="h-size" name="size">
+            <input type="hidden" id="h-battery" name="battery">
+            <label for="f-qty">Quantité</label>
+            <select id="f-qty" name="qty" class="inp">
+              <option value="1">1 vélo</option>
+              <option value="2">2 vélos</option>
+              <option value="3">3 vélos</option>
+            </select>
+            <label for="f-prenom">Prénom & Nom *</label>
+            <input type="text" id="f-customer" name="customer" class="inp" placeholder="Votre nom complet" required>
+            <label for="f-email">Email *</label>
+            <input type="email" id="f-email" name="email" class="inp" placeholder="votre@email.com" required>
+            <label for="f-phone">Téléphone *</label>
+            <input type="tel" id="f-phone" name="phone" class="inp" placeholder="06 12 34 56 78" required>
+            <label for="f-msg">Message / Demandes particulières</label>
+            <textarea id="f-msg" name="message" rows="3" class="inp" placeholder="Date souhaitée, livraison, essai, questions…"></textarea>
+            <div class="flex items-center gap-2 pt-1">
+              <input type="checkbox" id="f-news" class="accent-orange-500 w-4 h-4">
+              <label for="f-news" style="margin:0;text-transform:none;letter-spacing:0;font-size:.8rem;color:var(--muted);">Je souhaite recevoir les offres VTT Performance</label>
+            </div>
+            <button type="submit" class="btn-orange w-full justify-center text-base mt-3" style="padding:.85rem;">
+              <i data-lucide="send" class="w-5 h-5"></i>Envoyer ma commande
+            </button>
+          </form>
+          <p class="text-xs text-center mt-3 flex items-center justify-center gap-1" style="color:var(--muted);">
+            <i data-lucide="lock" class="w-3.5 h-3.5"></i>Réponse garantie sous 24h ouvrées
+          </p>
+          <!-- Config email -->
+          <div class="mt-4 pt-4" style="border-top:1px solid rgba(255,255,255,.07);">
+            <p class="text-xs font-semibold mb-2" style="color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Recevoir ma config par email</p>
+            <div class="flex gap-2">
+              <input type="email" id="config-email" class="inp flex-1 text-sm" placeholder="Email" style="padding:.5rem .75rem;">
+              <button onclick="sendConfig()" class="btn-outline text-xs px-3 py-1.5" style="white-space:nowrap;">Envoyer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TAB: AVIS CLIENTS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="tab-reviews" class="tab-panel">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+    <!-- Score summary -->
+    <div class="card p-8 mb-8 flex flex-col md:flex-row items-center gap-8" data-aos="fade-up">
+      <div class="text-center flex-shrink-0">
+        <div class="avg-score-big" id="avg-score">5.0</div>
+        <div class="flex justify-center gap-0.5 my-2" id="avg-stars"></div>
+        <p class="text-sm" style="color:var(--muted);" id="review-count">7 avis vérifiés</p>
+      </div>
+      <div class="flex-1 w-full space-y-2" id="star-bars"></div>
+    </div>
+    <!-- Reviews grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5" id="reviews-grid"></div>
+    <div class="mt-10 text-center" data-aos="fade-up">
+      <p class="text-sm mb-3" style="color:var(--muted);">Partagez votre expérience avec VTT Performance</p>
+      <a href="mailto:vttperformance67@gmail.com?subject=Avis client VTT Performance" class="btn-outline text-sm">
+        <i data-lucide="message-square" class="w-4 h-4"></i>Laisser un avis
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TAB: VUE 360° -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="tab-360" class="tab-panel" style="background:#010a14;">
+  <div style="position:relative;overflow:hidden;min-height:75vh;">
+    <div class="p360-grid-bg"></div>
+    <div class="p360-nebula-1"></div>
+    <div class="p360-nebula-2"></div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 relative" style="z-index:10;">
+
+      <!-- Header -->
+      <div class="text-center mb-10">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-3" style="background:rgba(0,255,200,.07);border:1px solid rgba(0,255,200,.2);">
+          <span style="color:#00ffcc;font-size:.68rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;">↻ Vue Interactive</span>
+        </div>
+        <h2 id="p360-title" class="font-bold mb-2" style="font-family:'Rajdhani',sans-serif;font-size:clamp(2rem,4vw,3rem);background:linear-gradient(135deg,#fff 20%,#00e5cc 60%,#ff6b35 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Rotation 360°</h2>
+        <p class="text-sm" style="color:#64748b;">Faites glisser le viewer ou utilisez les boutons pour explorer toutes les faces</p>
+      </div>
+
+      <!-- Layout -->
+      <div class="flex flex-col lg:flex-row gap-10 items-center lg:items-start justify-center">
+
+        <!-- Viewer -->
+        <div class="p360-wrap" id="p360-wrap">
+          <div class="p360-orbit p360-o1"></div>
+          <div class="p360-orbit p360-o2"></div>
+          <div class="p360-orbit p360-o3"></div>
+          <div class="p360-corner p360-tl"></div>
+          <div class="p360-corner p360-tr"></div>
+          <div class="p360-corner p360-bl"></div>
+          <div class="p360-corner p360-br"></div>
+          <canvas id="p360-canvas"></canvas>
+          <div class="p360-persp">
+            <div id="p360-stage">
+              <img id="p360-img" class="p360-bike-img" src="" alt="">
+            </div>
+          </div>
+          <div class="p360-scan-wrap"><div class="p360-scanline"></div></div>
+          <div class="p360-floor"></div>
+          <div class="p360-angle">↻ <span id="p360-angle-val">0°</span></div>
+          <div class="p360-hint">◁ Glisser pour faire pivoter ▷</div>
+        </div>
+
+        <!-- Side panel -->
+        <div style="min-width:260px;max-width:340px;width:100%;">
+
+          <!-- Vues disponibles -->
+          <div style="margin-bottom:1.5rem;padding:1.25rem;background:rgba(0,255,200,.04);border:1px solid rgba(0,255,200,.1);border-radius:1.25rem;">
+            <div style="font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.15em;color:rgba(0,255,200,.45);margin-bottom:.85rem;">Vues disponibles</div>
+            <div id="p360-dots" style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;"></div>
+            <div id="p360-counter" style="margin-top:.75rem;font-size:.72rem;color:rgba(0,255,200,.4);font-family:'Rajdhani',sans-serif;"></div>
+          </div>
+
+          <!-- Contrôles -->
+          <div style="display:flex;align-items:center;gap:.85rem;padding:.85rem 1rem;background:rgba(0,0,0,.4);border:1px solid rgba(0,255,200,.1);border-radius:1rem;flex-wrap:wrap;margin-bottom:1.25rem;">
+            <button id="p360-play-btn" class="p360-ctrl-btn" onclick="prod360TogglePause()">
+              <span id="p360-play-icon">⏸</span> <span id="p360-play-text">Pause</span>
+            </button>
+            <div style="flex:1;min-width:80px;">
+              <div style="font-size:.62rem;color:#64748b;margin-bottom:.25rem;">Vitesse</div>
+              <input type="range" id="p360-speed-input" min="5" max="150" value="40" class="p360-speed-slider" oninput="prod360.speed=+this.value/100">
+            </div>
+          </div>
+
+          <!-- Navigation images -->
+          <div style="display:flex;gap:.75rem;margin-bottom:1.5rem;">
+            <button onclick="prod360NavImg(-1)" style="flex:1;padding:.6rem;background:rgba(0,255,200,.06);border:1px solid rgba(0,255,200,.15);color:#00ffcc;border-radius:.75rem;cursor:pointer;font-size:.82rem;font-weight:700;font-family:'Exo 2',sans-serif;transition:all .2s;" onmouseover="this.style.background='rgba(0,255,200,.12)'" onmouseout="this.style.background='rgba(0,255,200,.06)'">◀ Précédente</button>
+            <button onclick="prod360NavImg(1)"  style="flex:1;padding:.6rem;background:rgba(0,255,200,.06);border:1px solid rgba(0,255,200,.15);color:#00ffcc;border-radius:.75rem;cursor:pointer;font-size:.82rem;font-weight:700;font-family:'Exo 2',sans-serif;transition:all .2s;" onmouseover="this.style.background='rgba(0,255,200,.12)'" onmouseout="this.style.background='rgba(0,255,200,.06)'">Suivante ▶</button>
+          </div>
+
+          <!-- Guide -->
+          <div style="padding:1.1rem 1.25rem;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:1rem;">
+            <div style="font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#94a3b8;margin-bottom:.6rem;">Guide</div>
+            <ul style="font-size:.82rem;color:#64748b;line-height:2;list-style:none;padding:0;margin:0;">
+              <li style="color:#94a3b8;">↻ &nbsp;Rotation automatique</li>
+              <li>◁▷ &nbsp;Glisser pour tourner</li>
+              <li>· &nbsp;&nbsp;Cliquer les points de vue</li>
+              <li>⏸ &nbsp;Pause sur un angle précis</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TAB: FINANCEMENT -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="tab-finance" class="tab-panel">
+  <div class="p-6">
+    <h3 class="font-heading font-bold text-xl mb-5 text-white">Simulateur de financement</h3>
+    <div class="grid sm:grid-cols-2 gap-6">
+      <!-- Left: inputs -->
+      <div class="space-y-4">
+        <div>
+          <label style="display:block;font-size:.8rem;font-weight:600;color:#94a3b8;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.04em;">Montant financé (€)</label>
+          <input type="number" id="fin-amount" class="inp" value="" placeholder="Prix du vélo" oninput="calcFinancement()">
+        </div>
+        <div>
+          <label style="display:block;font-size:.8rem;font-weight:600;color:#94a3b8;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.04em;">Apport (€)</label>
+          <input type="number" id="fin-apport" class="inp" value="0" placeholder="0" oninput="calcFinancement()">
+        </div>
+        <div>
+          <label style="display:block;font-size:.8rem;font-weight:600;color:#94a3b8;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.04em;">Durée</label>
+          <div class="grid grid-cols-4 gap-2" id="fin-dur-btns">
+            <button class="fin-dur-btn p-2 rounded-lg text-sm font-semibold cursor-pointer transition-all" style="background:rgba(255,107,53,.12);border:1px solid rgba(255,107,53,.35);color:#ff6b35;" onclick="selectFinDur(this,12)">12 mois</button>
+            <button class="fin-dur-btn p-2 rounded-lg text-sm font-semibold cursor-pointer transition-all" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:#9ca3af;" onclick="selectFinDur(this,24)">24 mois</button>
+            <button class="fin-dur-btn p-2 rounded-lg text-sm font-semibold cursor-pointer transition-all" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:#9ca3af;" onclick="selectFinDur(this,36)">36 mois</button>
+            <button class="fin-dur-btn p-2 rounded-lg text-sm font-semibold cursor-pointer transition-all" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:#9ca3af;" onclick="selectFinDur(this,48)">48 mois</button>
+          </div>
+        </div>
+        <div>
+          <label style="display:block;font-size:.8rem;font-weight:600;color:#94a3b8;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.04em;">Taux annuel (%) : <span id="fin-taux-label">4.9</span></label>
+          <input type="range" id="fin-taux" min="0" max="12" step="0.1" value="4.9" class="w-full" style="accent-color:#ff6b35;" oninput="document.getElementById('fin-taux-label').textContent=parseFloat(this.value).toFixed(1);calcFinancement()">
+        </div>
+      </div>
+      <!-- Right: result -->
+      <div class="rounded-2xl p-6 text-center" style="background:linear-gradient(135deg,rgba(255,107,53,.08),rgba(59,130,246,.06));border:1px solid rgba(255,107,53,.2);">
+        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Mensualité estimée</div>
+        <div class="font-heading font-bold text-white mb-1" style="font-size:3rem;" id="fin-mensualite">—</div>
+        <div class="text-sm text-gray-400 mb-6">/mois</div>
+        <div class="grid grid-cols-2 gap-3 text-left mb-6">
+          <div class="p-3 rounded-xl" style="background:rgba(255,255,255,.04)"><div class="text-xs text-gray-500 mb-1">Coût total</div><div class="text-sm font-bold text-white" id="fin-total">—</div></div>
+          <div class="p-3 rounded-xl" style="background:rgba(255,255,255,.04)"><div class="text-xs text-gray-500 mb-1">Coût du crédit</div><div class="text-sm font-bold text-orange-400" id="fin-cout">—</div></div>
+        </div>
+        <a href="https://calendly.com/vttperformance67/30min" target="_blank" class="btn-orange w-full justify-center text-sm">Demander un financement →</a>
+        <p class="text-xs text-gray-600 mt-3">Simulation non contractuelle — sous réserve d'acceptation du dossier</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- POINTS FORTS (always visible) -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-12" id="features-section">
+  <div class="sep mb-10"></div>
+  <h2 class="font-bold text-2xl mb-6" style="font-family:'Rajdhani',sans-serif;">Points forts du modèle</h2>
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4" id="features-strip"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- LIVRAISON & SERVICE -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="px-4 py-14" style="background:var(--surface);" id="service-section">
+  <div class="max-w-7xl mx-auto">
+    <div class="sep mb-10"></div>
+    <div class="grid lg:grid-cols-2 gap-12 items-start">
+
+      <!-- Livraison -->
+      <div data-aos="fade-right">
+        <h2 class="font-bold text-2xl mb-6" style="font-family:'Rajdhani',sans-serif;">
+          <i data-lucide="truck" class="w-6 h-6 inline mr-2 text-orange-400"></i>Livraison &amp; récupération
+        </h2>
+        <div class="space-y-4">
+          <div class="flex gap-4 p-4 rounded-xl" style="background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.15);">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(34,197,94,.12);"><i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i></div>
+            <div>
+              <div class="font-semibold text-white text-sm mb-1">Livraison gratuite dès 600€ — vélos &amp; accessoires</div>
+              <p class="text-xs text-gray-400 leading-relaxed">Livraison à domicile offerte en France métropolitaine pour tout achat ≥ 600€ (vélo ou accessoires). Vélo assemblé et réglé à la livraison.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 p-4 rounded-xl" style="background:rgba(59,130,246,.05);border:1px solid rgba(59,130,246,.12);">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(59,130,246,.12);"><i data-lucide="store" class="w-5 h-5 text-blue-400"></i></div>
+            <div>
+              <div class="font-semibold text-white text-sm mb-1">Retrait en magasin — Ingwiller (67)</div>
+              <p class="text-xs text-gray-400 leading-relaxed">Venez récupérer votre vélo en magasin. Réglages personnalisés inclus, position, transmission, freins.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 p-4 rounded-xl" style="background:rgba(255,107,53,.05);border:1px solid rgba(255,107,53,.12);">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(255,107,53,.12);"><i data-lucide="bike" class="w-5 h-5 text-orange-400"></i></div>
+            <div>
+              <div class="font-semibold text-white text-sm mb-1">Essai gratuit déduit de l'achat</div>
+              <p class="text-xs text-gray-400 leading-relaxed">Location d'une journée déduite du prix d'achat si vous commandez dans les 30 jours. Testez avant de vous engager.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SAV & Suivi -->
+      <div data-aos="fade-left">
+        <h2 class="font-bold text-2xl mb-6" style="font-family:'Rajdhani',sans-serif;">
+          <i data-lucide="shield-check" class="w-6 h-6 inline mr-2 text-cyan-400"></i>Service après-vente
+        </h2>
+        <div class="space-y-3">
+          <div class="svc-step">
+            <div class="svc-dot" style="background:rgba(255,107,53,.12);border:1px solid rgba(255,107,53,.3);">🔧</div>
+            <div class="flex-1 pb-4" style="border-bottom:1px solid rgba(255,255,255,.05);">
+              <div class="font-semibold text-sm text-white mb-0.5">Révision gratuite à 3 mois</div>
+              <p class="text-xs text-gray-400">Première révision complète offerte : réglages freins, transmission, suspension après rodage.</p>
+            </div>
+          </div>
+          <div class="svc-step">
+            <div class="svc-dot" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);">✅</div>
+            <div class="flex-1 pb-4" style="border-bottom:1px solid rgba(255,255,255,.05);">
+              <div class="font-semibold text-sm text-white mb-0.5">Garantie 2 ans fabricant</div>
+              <p class="text-xs text-gray-400">Cadre, fourche, amortisseur et composants couverts. Prise en charge directe en magasin.</p>
+            </div>
+          </div>
+          <div class="svc-step">
+            <div class="svc-dot" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);">⚡</div>
+            <div class="flex-1 pb-4" style="border-bottom:1px solid rgba(255,255,255,.05);">
+              <div class="font-semibold text-sm text-white mb-0.5">Expert Bosch &amp; Shimano EP8 certifié</div>
+              <p class="text-xs text-gray-400">Diagnostic moteur/batterie, mise à jour firmware, recalibrage — intervention atelier agréé.</p>
+            </div>
+          </div>
+          <div class="svc-step">
+            <div class="svc-dot" style="background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.25);">🔄</div>
+            <div class="flex-1">
+              <div class="font-semibold text-sm text-white mb-0.5">Reprise de votre ancien vélo</div>
+              <p class="text-xs text-gray-400">Évaluation gratuite en magasin. Bon de reprise déduit du prix du neuf.</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6 flex gap-3 flex-wrap">
+          <a href="tel:0950320829" class="flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl" style="background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.25);color:#ff8c5a;">
+            <i data-lucide="phone" class="w-4 h-4"></i>09 50 32 08 29
+          </a>
+          <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="btn-orange text-sm">
+            <i data-lucide="calendar" class="w-4 h-4"></i>Prendre RDV SAV
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- COMPARAISON RAPIDE -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-12" id="compare-section">
+  <div class="sep mb-10"></div>
+  <h2 class="font-bold text-2xl mb-2" style="font-family:'Rajdhani',sans-serif;">
+    <i data-lucide="git-compare" class="w-6 h-6 inline mr-2 text-orange-400"></i>Comparer avec un autre modèle
+  </h2>
+  <p class="text-sm text-gray-500 mb-6">Sélectionnez un modèle similaire pour comparer les caractéristiques clés</p>
+  <div class="grid lg:grid-cols-3 gap-6 items-start">
+    <div class="lg:col-span-1">
+      <label class="block text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">Modèle à comparer</label>
+      <select id="cmp-select" class="inp" onchange="renderComparison()">
+        <option value="">— Choisir un modèle —</option>
+      </select>
+      <p class="text-xs text-gray-600 mt-3">Les modèles affichés sont de la même catégorie</p>
+    </div>
+    <div class="lg:col-span-2">
+      <div id="cmp-table-wrap" class="card p-4 hidden">
+        <table class="cmp-table" id="cmp-table"></table>
+      </div>
+      <div id="cmp-placeholder" class="card p-8 text-center text-gray-600 text-sm">
+        <i data-lucide="git-compare" class="w-10 h-10 mx-auto mb-3 opacity-30"></i>
+        Sélectionnez un modèle ci-contre pour afficher la comparaison
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- VÉLOS SIMILAIRES -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-10 pb-16" id="related-section">
+  <div class="sep mb-10"></div>
+  <h2 class="font-bold text-2xl mb-6" style="font-family:'Rajdhani',sans-serif;">Autres modèles <span id="related-brand-label" class="text-orange-400"></span></h2>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="related-grid"></div>
+  <div class="mt-8 text-center">
+    <a href="index.html#catalogue" class="btn-outline text-sm">
+      <i data-lucide="grid" class="w-4 h-4"></i>Voir tout le catalogue
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:#040810;border-top:1px solid rgba(255,255,255,.06)">
+  <div class="max-w-7xl mx-auto px-4 py-14">
+    <div class="grid md:grid-cols-3 gap-10 mb-10">
+      <div>
+        <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-lg overflow-hidden bg-orange-600 flex items-center justify-center"><img src="../VTT PERFORMANCE.png" alt="Logo" class="w-full h-full object-contain p-1" onerror="this.style.display='none'"></div><div><div class="font-bold text-lg text-white" style="font-family:'Rajdhani',sans-serif;">VTT Performance</div><div class="text-xs text-gray-600">Ingwiller · Alsace</div></div></div>
+        <p class="text-sm text-gray-500 leading-relaxed">Atelier et magasin de cycles spécialisé. Concessionnaire officiel SUNN &amp; Moustache Bikes. Vente, location, réparation.</p>
+      </div>
+      <div>
+        <h4 class="font-bold text-sm uppercase tracking-wider text-gray-400 mb-4" style="font-family:'Rajdhani',sans-serif;">Navigation</h4>
+        <div class="space-y-2">
+          <a href="index.html" class="block text-sm text-gray-500 hover:text-white transition-colors">Accueil</a>
+          <a href="index.html#catalogue" class="block text-sm text-gray-500 hover:text-white transition-colors">Catalogue</a>
+          <a href="index.html#location" class="block text-sm text-gray-500 hover:text-white transition-colors">Location</a>
+          <a href="index.html#atelier" class="block text-sm text-gray-500 hover:text-white transition-colors">Atelier</a>
+          <a href="index.html#suspensions" class="block text-sm text-gray-500 hover:text-white transition-colors">Suspensions</a>
+          <a href="index.html#peinture" class="block text-sm text-gray-500 hover:text-white transition-colors">Peinture</a>
+          <a href="index.html#contact" class="block text-sm text-gray-500 hover:text-white transition-colors">Contact</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-bold text-sm uppercase tracking-wider text-gray-400 mb-4" style="font-family:'Rajdhani',sans-serif;">Contact</h4>
+        <div class="space-y-2 text-sm text-gray-500">
+          <div class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-orange-400"></i>32 Fb. du Gal Philippot, 67340 Ingwiller</div>
+          <div class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-orange-400"></i><a href="tel:0950320829" class="hover:text-white">09 50 32 08 29</a></div>
+          <div class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-orange-400"></i><a href="mailto:vttperformance67@gmail.com" class="hover:text-white">vttperformance67@gmail.com</a></div>
+          <div class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-orange-400"></i><span>Mar→Ven 9h–18h30 · Sam jusqu'à 18h</span></div>
+        </div>
+        <div class="flex gap-3 mt-5">
+          <a href="https://www.instagram.com/vttperformance67/" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/10 transition-all" style="border:1px solid rgba(255,255,255,.08)"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+          <a href="https://www.facebook.com/61577356443323/" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/10 transition-all" style="border:1px solid rgba(255,255,255,.08)"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-gray-600">
+      <span>© 2026 VTT Performance · SARL · SIRET 941 614 653 00017</span>
+      <span>32 Faubourg du Général Philippot · 67340 Ingwiller</span>
+    </div>
+  </div>
+</footer>
+
+<!-- STICKY BOTTOM BAR -->
+<div id="sticky-bar" class="fixed bottom-0 left-0 right-0 z-40 no-print" style="background:rgba(8,14,26,.97);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.08);transform:translateY(100%);transition:transform .35s ease;">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3 min-w-0">
+      <img id="sticky-img" src="" alt="" class="w-10 h-10 rounded-lg object-cover flex-shrink-0" style="background:var(--surface);" onerror="this.style.display='none'">
+      <div class="min-w-0">
+        <div class="font-bold text-sm truncate" id="sticky-name">—</div>
+        <div class="text-orange-400 font-bold" id="sticky-price" style="font-family:'Rajdhani',sans-serif;font-size:1.1rem;"></div>
+      </div>
+    </div>
+    <button onclick="scrollToOrder()" class="btn-orange text-sm flex-shrink-0" style="padding:.55rem 1.2rem;">
+      <i data-lucide="shopping-cart" class="w-4 h-4"></i>Commander
+    </button>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox-overlay hidden" onclick="if(event.target===this)closeLightbox()">
+  <button class="lightbox-nav lightbox-prev" onclick="lightboxNav(-1)"><i data-lucide="chevron-left" class="w-6 h-6"></i></button>
+  <img id="lightbox-img" class="lightbox-img" src="" alt="">
+  <button class="lightbox-nav lightbox-next" onclick="lightboxNav(1)"><i data-lucide="chevron-right" class="w-6 h-6"></i></button>
+  <button class="lightbox-close" onclick="closeLightbox()"><i data-lucide="x" class="w-5 h-5"></i></button>
+  <div class="lightbox-counter" id="lightbox-counter"></div>
+</div>
+
+<!-- TOAST -->
+<div id="toasts" class="fixed bottom-28 right-4 z-50 flex flex-col gap-3 pointer-events-none" style="max-width:320px;"></div>
+
+<!-- FLOATING RDV -->
+<div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 no-print">
+  <a href="tel:0950320829" class="flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-full shadow-2xl" style="background:#064e3b;border:1px solid rgba(52,211,153,.3);color:#34d399;" title="Appeler VTT Performance">
+    <i data-lucide="phone" class="w-4 h-4"></i><span class="hidden md:inline">09 50 32 08 29</span>
+  </a>
+  <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="btn-orange shadow-2xl text-sm">
+    <i data-lucide="calendar-check" class="w-5 h-5"></i><span class="hidden md:inline">Réserver un créneau</span>
+  </a>
+</div>
+
+<!-- BACK TO TOP -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 left-6 z-50 w-10 h-10 rounded-full flex items-center justify-center transition-all" style="background:rgba(255,107,53,.15);border:1px solid rgba(255,107,53,.3);color:#ff6b35;opacity:0;pointer-events:none;" aria-label="Retour en haut">
+  <i data-lucide="arrow-up" class="w-5 h-5"></i>
+</button>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<script>
+// ── STATE ─────────────────────────────────────────────────────────────
+let currentBike = null;
+let currentDetails = {};
+let currentPhotos = [];
+let currentGalleryIdx = 0;
+let allBikes = [];
+let allReviews = [];
+let selectedColor = null;
+let selectedSize = null;
+let selectedBattery = null;
+
+// ── UTILS ─────────────────────────────────────────────────────────────
+function getParam(name) {
+  return new URLSearchParams(window.location.search).get(name);
+}
+function formatPrice(p) {
+  if (p === null || p === undefined) return 'Prix en magasin';
+  if (typeof p !== 'number') return p;
+  return p.toLocaleString('fr-FR') + ' €';
+}
+function calcFinancing(p) {
+  if (!p || typeof p !== 'number') return '';
+  return 'À partir de ' + Math.ceil(p / 36).toLocaleString('fr-FR') + ' €/mois';
+}
+
+// ── FINANCING CALCULATOR ──────────────────────────────────────────────
+const FIN_MONTHS = [12, 24, 36, 48, 60];
+function updateFinCalc() {
+  const slider = document.getElementById('fin-duration-slider');
+  if (!slider) return;
+  const idx = parseInt(slider.value, 10);
+  const months = FIN_MONTHS[idx] || 36;
+  document.getElementById('fin-months-label').textContent = months + ' mois';
+  const price = currentBike ? currentBike.price : null;
+  const monthly = document.getElementById('fin-monthly-display');
+  const totalEl = document.getElementById('fin-total-display');
+  if (price && monthly) {
+    const m = Math.ceil(price / months);
+    monthly.textContent = m.toLocaleString('fr-FR') + ' €/mois';
+    if (totalEl) totalEl.textContent = 'Total : ' + price.toLocaleString('fr-FR') + ' € · ' + months + ' mensualités de ' + m.toLocaleString('fr-FR') + ' €';
+  } else {
+    if (monthly) monthly.textContent = '—';
+    if (totalEl) totalEl.textContent = 'Renseignez-vous en magasin';
+  }
+}
+function renderStars(n, size) {
+  size = size || 'w-4 h-4';
+  let s = '';
+  for (let i = 1; i <= 5; i++) {
+    if (i <= n) s += '<svg class="'+size+' star-filled inline" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>';
+    else s += '<svg class="'+size+' star-empty inline" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>';
+  }
+  return s;
+}
+function showToast(msg, type) {
+  const el = document.createElement('div');
+  el.className = 'pointer-events-auto text-sm font-medium px-4 py-3 rounded-xl shadow-xl';
+  el.style.cssText = 'background:'+(type==='ok'?'#064e3b':'#7c2d12')+';color:'+(type==='ok'?'#a7f3d0':'#fed7aa')+';border:1px solid '+(type==='ok'?'rgba(52,211,153,.3)':'rgba(251,146,60,.3)')+';animation:toast-in .3s ease';
+  el.textContent = msg;
+  document.getElementById('toasts').appendChild(el);
+  setTimeout(() => el.remove(), 3500);
+}
+
+function copyPageLink() {
+  const url = window.location.href;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => showToast('Lien copié dans le presse-papier !', 'ok'));
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = url;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('Lien copié !', 'ok');
+  }
+}
+
+// ── FINANCING SIMULATOR (new tab) ─────────────────────────────────────
+var finDur = 12;
+function selectFinDur(btn, months) {
+  finDur = months;
+  document.querySelectorAll('.fin-dur-btn').forEach(function(b){ b.style.background='rgba(255,255,255,.04)'; b.style.borderColor='rgba(255,255,255,.1)'; b.style.color='#9ca3af'; });
+  btn.style.background = 'rgba(255,107,53,.12)';
+  btn.style.borderColor = 'rgba(255,107,53,.35)';
+  btn.style.color = '#ff6b35';
+  calcFinancement();
+}
+function calcFinancement() {
+  var price = parseFloat(document.getElementById('fin-amount').value) || 0;
+  var apport = parseFloat(document.getElementById('fin-apport').value) || 0;
+  var taux = parseFloat(document.getElementById('fin-taux').value) / 100;
+  var capital = Math.max(0, price - apport);
+  if (capital <= 0 || finDur <= 0) {
+    document.getElementById('fin-mensualite').textContent = '—';
+    document.getElementById('fin-total').textContent = '—';
+    document.getElementById('fin-cout').textContent = '—';
+    return;
+  }
+  var r = taux / 12;
+  var mensualite = r === 0 ? capital / finDur : capital * r / (1 - Math.pow(1+r, -finDur));
+  var total = mensualite * finDur + apport;
+  var cout = total - price;
+  document.getElementById('fin-mensualite').textContent = mensualite.toFixed(0) + ' €';
+  document.getElementById('fin-total').textContent = total.toFixed(0) + ' €';
+  document.getElementById('fin-cout').textContent = '+' + cout.toFixed(0) + ' €';
+}
+
+// ── DATA PARSING ──────────────────────────────────────────────────────
+function parseCatalog(content, key) {
+  const regex = new RegExp('const\\s+' + key + '\\s*=\\s*\\[([\\s\\S]*?)\\];', 'm');
+  const m = content.match(regex);
+  if (!m) return [];
+  try { return Function('return [' + m[1] + ']')(); } catch(e) { return []; }
+}
+function parseDetailsObject(content, key) {
+  const regex = new RegExp('const\\s+' + key + '\\s*=\\s*\\{([\\s\\S]*?)\\};\\s*\\n', 'm');
+  const m = content.match(regex);
+  if (!m) return {};
+  // Extract any var/const/let declarations before this key that might be referenced inside
+  // (e.g. var S = 'https://...' used in BIKE_IMGS values)
+  const keyIdx = content.indexOf('const ' + key + ' =');
+  const before = content.substring(0, keyIdx);
+  const varMatches = [...before.matchAll(/(?:var|const|let)\s+(\w+)\s*=\s*'([^']+)'/g)];
+  const preamble = varMatches.map(vm => 'var ' + vm[1] + ' = \'' + vm[2] + '\';').join('');
+  try { return Function(preamble + 'return {' + m[1] + '}')(); } catch(e) { return {}; }
+}
+function getStock(bike, stockArr) {
+  return (stockArr || []).find(s => s.brand === bike.brand && s.name === bike.name) || null;
+}
+
+// ── NAV / MENU ────────────────────────────────────────────────────────
+function toggleMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tabId).classList.add('active');
+  document.querySelector('[data-tab="' + tabId + '"]').classList.add('active');
+  if (tabId === 'config') {
+    setTimeout(() => document.getElementById('order-anchor').scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+  }
+  if (tabId === '360' && !prod360.raf) {
+    prod360InitDrag();
+    prod360InitParticles();
+    prod360.raf = requestAnimationFrame(prod360Frame);
+  }
+  if (tabId === 'finance') {
+    var priceEl = document.getElementById('hero-price');
+    var finAmt = document.getElementById('fin-amount');
+    if (priceEl && finAmt && !finAmt.value) {
+      var p = parseFloat((priceEl.textContent || '').replace(/[^0-9.]/g,''));
+      if (p > 0) { finAmt.value = p; calcFinancement(); }
+    }
+  }
+}
+function scrollToOrder() {
+  switchTab('config');
+}
+
+// ── GALLERY ───────────────────────────────────────────────────────────
+function setGalleryMain(idx) {
+  if (!currentPhotos.length) return;
+  currentGalleryIdx = (idx + currentPhotos.length) % currentPhotos.length;
+  const mainImg = document.getElementById('gallery-main-img');
+  mainImg.style.opacity = '0';
+  setTimeout(() => {
+    mainImg.src = currentPhotos[currentGalleryIdx];
+    mainImg.style.opacity = '1';
+  }, 120);
+  document.querySelectorAll('.gallery-thumb').forEach((t, i) => t.classList.toggle('active', i === currentGalleryIdx));
+  document.getElementById('gallery-counter').textContent = (currentGalleryIdx + 1) + ' / ' + currentPhotos.length;
+  document.getElementById('hero-img').src = currentPhotos[0];
+  document.getElementById('hero-bg').style.backgroundImage = 'url(' + currentPhotos[0] + ')';
+  mainImg.style.transition = 'opacity .25s';
+}
+function galleryNav(dir) { setGalleryMain(currentGalleryIdx + dir); }
+
+// ── LIGHTBOX ──────────────────────────────────────────────────────────
+function openLightbox(idx) {
+  currentGalleryIdx = (idx + currentPhotos.length) % currentPhotos.length;
+  document.getElementById('lightbox-img').src = currentPhotos[currentGalleryIdx];
+  document.getElementById('lightbox-counter').textContent = (currentGalleryIdx + 1) + ' / ' + currentPhotos.length;
+  document.getElementById('lightbox').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+function lightboxNav(dir) {
+  currentGalleryIdx = (currentGalleryIdx + dir + currentPhotos.length) % currentPhotos.length;
+  document.getElementById('lightbox-img').src = currentPhotos[currentGalleryIdx];
+  document.getElementById('lightbox-counter').textContent = (currentGalleryIdx + 1) + ' / ' + currentPhotos.length;
+}
+document.addEventListener('keydown', function(e) {
+  if (document.getElementById('lightbox').classList.contains('hidden')) return;
+  if (e.key === 'ArrowLeft') lightboxNav(-1);
+  if (e.key === 'ArrowRight') lightboxNav(1);
+  if (e.key === 'Escape') closeLightbox();
+});
+
+window.addEventListener('scroll', function() {
+  const btn = document.getElementById('back-top');
+  if (btn) {
+    if (window.scrollY > 400) { btn.style.opacity = '1'; btn.style.pointerEvents = 'auto'; }
+    else { btn.style.opacity = '0'; btn.style.pointerEvents = 'none'; }
+  }
+  const sbar = document.getElementById('sticky-bar');
+  if (sbar) {
+    const hero = document.getElementById('product-hero');
+    const heroBottom = hero ? hero.offsetTop + hero.offsetHeight : 500;
+    sbar.style.transform = window.scrollY > heroBottom - 100 ? 'translateY(0)' : 'translateY(100%)';
+  }
+});
+
+// ── CONFIG SELECTION ──────────────────────────────────────────────────
+function selectColor(idx) {
+  const colors = currentDetails.colors || [];
+  selectedColor = colors[idx] || null;
+  document.getElementById('h-color').value = selectedColor || '';
+  document.getElementById('color-label').textContent = selectedColor ? ('✓ ' + selectedColor) : 'Sélectionnez un coloris';
+  document.getElementById('color-label').style.color = selectedColor ? 'var(--orange)' : 'var(--muted)';
+  document.querySelectorAll('.color-swatch').forEach((s, i) => s.classList.toggle('selected', i === idx));
+}
+function selectSize(size) {
+  selectedSize = size;
+  document.getElementById('h-size').value = size;
+  document.querySelectorAll('.size-btn').forEach(b => b.classList.toggle('selected', b.dataset.size === size));
+  updatePriceDisplay();
+}
+function selectBattery(bat) {
+  selectedBattery = bat;
+  document.getElementById('h-battery').value = bat;
+  document.querySelectorAll('.battery-btn').forEach(b => b.classList.toggle('selected', b.dataset.bat === bat));
+}
+function selectPay(val) {
+  ['virement','magasin'].forEach(v => {
+    const el = document.getElementById('pay-' + v);
+    const radio = document.getElementById('pay-r-' + v);
+    if (el) el.classList.toggle('selected', v === val);
+    if (radio) radio.checked = (v === val);
+  });
+}
+
+// ── ACCESSORIES TOTAL ─────────────────────────────────────────────────
+function getAccessoriesTotal() {
+  let t = 0;
+  document.querySelectorAll('.accessory-cb:checked').forEach(cb => { t += parseFloat(cb.dataset.price || 0); });
+  return t;
+}
+function updatePriceDisplay() {
+  const basePrice = currentBike ? currentBike.price : null;
+  const accTotal = getAccessoriesTotal();
+  const total = (basePrice || 0) + accTotal;
+  const display = document.getElementById('order-price-display');
+  const finDisplay = document.getElementById('financing-display');
+  const accDisplay = document.getElementById('accessories-total');
+  if (!basePrice) {
+    if (display) display.textContent = 'Prix en magasin';
+    if (finDisplay) finDisplay.textContent = '';
+    if (accDisplay) accDisplay.textContent = '';
+  } else {
+    if (display) display.textContent = formatPrice(total);
+    if (finDisplay) finDisplay.textContent = calcFinancing(total);
+    if (accTotal > 0 && accDisplay) accDisplay.textContent = 'Dont ' + formatPrice(accTotal) + ' d\'accessoires';
+    else if (accDisplay) accDisplay.textContent = '';
+  }
+}
+
+// ── CONFIG EMAIL ──────────────────────────────────────────────────────
+function sendConfig() {
+  const email = document.getElementById('config-email').value;
+  if (!email || !currentBike) { showToast('Saisissez un email valide.', 'err'); return; }
+  const accs = [...document.querySelectorAll('.accessory-cb:checked')].map(c => c.dataset.name).join(', ') || 'Aucun';
+  const body = encodeURIComponent(
+    'Ma configuration VTT Performance :\n\n' +
+    'Modèle : ' + currentBike.brand + ' ' + currentBike.name + '\n' +
+    'Coloris : ' + (selectedColor || 'À définir') + '\n' +
+    'Taille : ' + (selectedSize || 'À définir') + '\n' +
+    'Batterie : ' + (selectedBattery || '-') + '\n' +
+    'Accessoires : ' + accs + '\n\n' +
+    'Pour toute question : 09 50 32 08 29\nvttperformance67@gmail.com'
+  );
+  window.location.href = 'mailto:' + email + '?subject=' + encodeURIComponent('Ma config — ' + currentBike.brand + ' ' + currentBike.name) + '&body=' + body;
+  showToast('Email de configuration ouvert !', 'ok');
+}
+
+// ── BUY FORM ──────────────────────────────────────────────────────────
+function buyBike(event) {
+  event.preventDefault();
+  const f = event.target;
+  if (!selectedColor) { showToast('Veuillez sélectionner un coloris.', 'err'); switchTab('config'); return; }
+  if (!selectedSize) { showToast('Veuillez sélectionner une taille.', 'err'); switchTab('config'); return; }
+  const accs = [...document.querySelectorAll('.accessory-cb:checked')].map(c => c.dataset.name + ' (' + c.dataset.price + ' €)').join('\n- ') || 'Aucun';
+  const payEl = document.querySelector('input[name="o-pay"]:checked');
+  const payLabel = payEl && payEl.value === 'magasin' ? 'Paiement en magasin (CB/Espèces)' : 'Virement bancaire (RIB envoyé par email)';
+  const accTotal = getAccessoriesTotal();
+  const total = (currentBike.price || 0) + accTotal;
+  const body = encodeURIComponent(
+    'Bonjour,\n\nJe souhaite commander le vélo suivant :\n\n' +
+    '═══════════════════════════════════\n' +
+    'MODÈLE  : ' + currentBike.brand + ' ' + currentBike.name + '\n' +
+    'COLORIS : ' + selectedColor + '\n' +
+    'TAILLE  : ' + selectedSize + '\n' +
+    (selectedBattery ? 'BATTERIE: ' + selectedBattery + '\n' : '') +
+    'QUANTITÉ: ' + f.qty.value + '\n' +
+    '═══════════════════════════════════\n' +
+    'PRIX VÉLO : ' + formatPrice(currentBike.price) + '\n' +
+    (accTotal > 0 ? 'ACCESSOIRES : ' + formatPrice(accTotal) + '\n' : '') +
+    (currentBike.price ? 'TOTAL ESTIMÉ : ' + formatPrice(total) + '\n' : '') +
+    '═══════════════════════════════════\n' +
+    'MODE PAIEMENT : ' + payLabel + '\n\n' +
+    (accs !== 'Aucun' ? 'ACCESSOIRES SOUHAITÉS :\n- ' + accs + '\n\n' : '') +
+    'MES COORDONNÉES :\n' +
+    'Nom    : ' + f.customer.value + '\n' +
+    'Email  : ' + f.email.value + '\n' +
+    'Tél.   : ' + f.phone.value + '\n' +
+    (f.message.value ? 'Message: ' + f.message.value + '\n' : '') +
+    '\nMerci de confirmer la disponibilité et le délai.'
+  );
+  window.location.href = 'mailto:vttperformance67@gmail.com?subject=' + encodeURIComponent('Commande : ' + currentBike.brand + ' ' + currentBike.name) + '&body=' + body;
+  showToast('Email de commande prêt à envoyer !', 'ok');
+}
+
+// ── RENDER FUNCTIONS ──────────────────────────────────────────────────
+
+function renderHero(bike, stock) {
+  const pageTitle = bike.brand + ' ' + bike.name + ' — VTT Performance';
+  document.getElementById('page-title').textContent = pageTitle;
+  document.getElementById('bc-brand').textContent = bike.brand;
+  document.getElementById('bc-model').textContent = bike.name;
+  document.getElementById('hero-title').textContent = bike.brand + ' ' + bike.name;
+  const tagline = bike.description || (bike.type + ' — ' + bike.brand);
+  document.getElementById('hero-tagline').textContent = tagline;
+
+  // Dynamic meta / OG tags
+  const descContent = (bike.description || (bike.brand + ' ' + bike.name)) + ' — ' + (bike.price ? formatPrice(bike.price) + ' — ' : '') + 'VTT Performance Ingwiller.';
+  const metaDesc = document.getElementById('meta-desc');
+  if (metaDesc) metaDesc.setAttribute('content', descContent);
+  const ogTitle = document.getElementById('og-title');
+  if (ogTitle) ogTitle.setAttribute('content', pageTitle);
+  const ogDesc = document.getElementById('og-desc');
+  if (ogDesc) ogDesc.setAttribute('content', descContent);
+
+  // Badges
+  let badges = '<span class="badge badge-brand">' + bike.brand + '</span>';
+  if (bike.cat) badges += '<span class="badge badge-electric">' + bike.cat.toUpperCase() + '</span>';
+  if (bike.type) badges += '<span class="badge" style="background:rgba(255,255,255,.07);color:#cbd5e1;border:1px solid rgba(255,255,255,.12);">' + bike.type + '</span>';
+  if (bike.tag === 'Promo') badges += '<span class="badge badge-promo">PROMO</span>';
+  if (bike.tag === 'Top gamme') badges += '<span class="badge badge-top">TOP GAMME</span>';
+  if (bike.tag === 'Populaire') badges += '<span class="badge badge-pop">POPULAIRE</span>';
+  document.getElementById('hero-badges').innerHTML = badges;
+
+  // Price
+  document.getElementById('hero-price').textContent = formatPrice(bike.price);
+  const oldEl = document.getElementById('hero-oldprice');
+  if (bike.oldprice) { oldEl.textContent = formatPrice(bike.oldprice); oldEl.classList.remove('hidden'); }
+  const finEl = document.getElementById('hero-financing');
+  const fin = calcFinancing(bike.price);
+  if (fin) { finEl.innerHTML = '<i data-lucide="credit-card" class="w-3.5 h-3.5"></i>' + fin; finEl.classList.remove('hidden'); }
+  // Delivery chip
+  if (bike.price >= 600) {
+    const delChip = document.createElement('span');
+    delChip.style.cssText = 'background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:#4ade80;font-size:.75rem;font-weight:700;padding:.2rem .6rem;border-radius:.5rem;display:inline-flex;align-items:center;gap:.3rem;';
+    delChip.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>Livraison offerte';
+    document.getElementById('hero-price-block').appendChild(delChip);
+  }
+  // Reprise du Printemps Moustache chip
+  if (bike.brand === 'Moustache' && bike.price >= 3000 && !bike.oldprice) {
+    const repriseBonus = bike.price >= 5000 ? 500 : bike.price >= 4000 ? 400 : 300;
+    const repChip = document.createElement('a');
+    repChip.href = 'https://moustachebikes.com/fr/offre-de-reprise';
+    repChip.target = '_blank';
+    repChip.rel = 'noopener';
+    repChip.style.cssText = 'background:linear-gradient(135deg,rgba(236,72,153,.15),rgba(139,92,246,.12));border:1px solid rgba(236,72,153,.4);color:#f9a8d4;font-size:.75rem;font-weight:700;padding:.2rem .6rem;border-radius:.5rem;display:inline-flex;align-items:center;gap:.3rem;text-decoration:none;cursor:pointer;transition:background .2s;';
+    repChip.innerHTML = '🌸 –' + repriseBonus + '€ Reprise du Printemps';
+    repChip.title = 'Offre valable jusqu\'au 25 avril 2026 — cliquez pour les détails';
+    repChip.onmouseover = function(){ this.style.background = 'linear-gradient(135deg,rgba(236,72,153,.25),rgba(139,92,246,.2))'; };
+    repChip.onmouseout = function(){ this.style.background = 'linear-gradient(135deg,rgba(236,72,153,.15),rgba(139,92,246,.12))'; };
+    document.getElementById('hero-price-block').appendChild(repChip);
+  }
+
+  // Stock — enhanced badge
+  const stockMeta = (stock && stock.qty > 0 && (stock.sizes || stock.color))
+    ? '<div class="flex flex-wrap gap-1.5 mt-2">'
+      + (stock.sizes ? stock.sizes.map(function(sz){ return '<span style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#cbd5e1;font-size:.72rem;font-weight:700;padding:.15rem .5rem;border-radius:.4rem;">' + sz + '</span>'; }).join('') : '')
+      + (stock.color ? '<span style="background:rgba(255,107,53,.08);border:1px solid rgba(255,107,53,.25);color:#fca47a;font-size:.72rem;padding:.15rem .5rem;border-radius:.4rem;">' + stock.color + '</span>' : '')
+      + '</div>'
+    : '';
+  let stockHtml = '';
+  if (stock) {
+    if (stock.qty > 1) {
+      stockHtml = '<div class="flex flex-col gap-1"><div class="stock-badge-wrap instock"><span class="stock-pulse green"></span><span>Disponible en stock</span><span class="text-xs opacity-70 ml-1">(' + stock.qty + ' unités)</span></div>' + stockMeta + '</div>';
+    } else if (stock.qty === 1) {
+      stockHtml = '<div class="flex flex-col gap-1"><div class="stock-badge-wrap limited"><span class="stock-pulse orange"></span><span>Dernier exemplaire !</span></div>' + stockMeta + '</div>';
+    } else if (stock.limited) {
+      stockHtml = '<div class="stock-badge-wrap limited"><span class="stock-pulse orange"></span><span>Stock limité — dépêchez-vous</span></div>';
+    } else {
+      stockHtml = '<div class="stock-badge-wrap outstock"><span class="stock-pulse red"></span><span>' + (stock.avail ? 'Disponible ' + stock.avail : 'Indisponible') + '</span></div>';
+    }
+  } else {
+    stockHtml = '<div class="stock-badge-wrap onorder"><span class="stock-pulse orange"></span><span>Sur commande — délai à confirmer</span></div>';
+  }
+  document.getElementById('hero-stock').innerHTML = stockHtml;
+
+  // Official link
+  if (bike.url) {
+    const a = document.getElementById('hero-official');
+    a.href = bike.url;
+    a.classList.remove('hidden');
+  }
+
+  // Sticky bar
+  const stickyName = document.getElementById('sticky-name');
+  if (stickyName) stickyName.textContent = bike.brand + ' ' + bike.name;
+  const stickyPrice = document.getElementById('sticky-price');
+  if (stickyPrice) stickyPrice.textContent = bike.price ? formatPrice(bike.price) : 'Prix en magasin';
+
+  // WhatsApp share
+  const waEl = document.getElementById('hero-whatsapp');
+  if (waEl) {
+    const waText = encodeURIComponent(bike.brand + ' ' + bike.name + ' — ' + formatPrice(bike.price) + '\nVTT Performance Ingwiller\n' + window.location.href);
+    waEl.href = 'https://wa.me/?text=' + waText;
+  }
+}
+
+function renderGallery(photos) {
+  const placeholder = 'https://placehold.co/860x520/0f1b2d/ff6b35?text=' + encodeURIComponent(currentBike.brand + '%0A' + currentBike.name);
+  currentPhotos = photos.length ? photos : [placeholder];
+  const mainImg = document.getElementById('gallery-main-img');
+  mainImg.src = currentPhotos[0];
+  mainImg.alt = currentBike.brand + ' ' + currentBike.name;
+  mainImg.onerror = function() { this.src = placeholder; this.onerror = null; };
+
+  document.getElementById('hero-img').src = currentPhotos[0];
+  document.getElementById('hero-bg').style.backgroundImage = 'url(' + currentPhotos[0] + ')';
+
+  const thumbsEl = document.getElementById('gallery-thumbs');
+  thumbsEl.innerHTML = currentPhotos.map((src, i) =>
+    '<img src="' + src + '" alt="Photo ' + (i+1) + '" class="gallery-thumb' + (i===0?' active':'') + '" onclick="setGalleryMain(' + i + ')" loading="lazy" onerror="this.style.display=\'none\'">'
+  ).join('');
+  document.getElementById('gallery-counter').textContent = '1 / ' + currentPhotos.length;
+  const badge = document.getElementById('photo-count-badge');
+  if (badge) badge.textContent = '(' + currentPhotos.length + ')';
+
+  // Sticky bar image
+  const stickyImg = document.getElementById('sticky-img');
+  if (stickyImg && currentPhotos[0]) stickyImg.src = currentPhotos[0];
+
+  // OG image for sharing
+  const ogImg = document.getElementById('og-image');
+  if (ogImg && currentPhotos[0] && !currentPhotos[0].includes('placeholder')) ogImg.setAttribute('content', currentPhotos[0]);
+
+  // Official link sidebar
+  if (currentBike.url) {
+    const sl = document.getElementById('official-link-sidebar');
+    sl.href = currentBike.url;
+    sl.classList.remove('hidden');
+  }
+}
+
+function renderSpecsSidebar(bike, details) {
+  const rows = [];
+  if (bike.motor || details.motorModel) rows.push(['Moteur', details.motorModel || bike.motor, 'zap', '#67e8f9']);
+  if (bike.bat || details.batteries) rows.push(['Batterie', bike.bat || (details.batteries||[]).join(' / '), 'battery-charging', '#86efac']);
+  if (details.fork) rows.push(['Fourche', details.fork, 'arrow-up-down', '#c4b5fd']);
+  if (details.weight) rows.push(['Poids', details.weight, 'scale', '#fde68a']);
+  if (details.range) rows.push(['Autonomie', details.range, 'map-pin', '#fb923c']);
+  if (details.frame) rows.push(['Cadre', details.frame, 'square', '#94a3b8']);
+  if (details.drivetrain) rows.push(['Transmission', details.drivetrain, 'cog', '#6ee7f7']);
+  if (details.brakes) rows.push(['Freins', details.brakes, 'disc', '#fca5a5']);
+
+  document.getElementById('specs-sidebar').innerHTML = rows.map(([k, v, icon, color]) =>
+    '<div class="flex items-start gap-3 py-2" style="border-bottom:1px solid rgba(255,255,255,.05);">' +
+    '<div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(255,255,255,.05);">' +
+    '<i data-lucide="' + icon + '" class="w-4 h-4" style="color:' + color + ';"></i></div>' +
+    '<div><div class="text-xs font-semibold uppercase tracking-wide" style="color:var(--muted);">' + k + '</div>' +
+    '<div class="text-sm font-medium mt-0.5">' + v + '</div></div></div>'
+  ).join('');
+}
+
+function renderSpecs(bike, details) {
+  const isElec = !!(bike.motor || details.motorModel);
+  let html = '';
+
+  // Quick-strip
+  const qs = document.getElementById('specs-quickstrip');
+  if (qs) {
+    const qItems = [
+      details.weight ? { icon:'scale', label:'Poids', val:details.weight, color:'#fde68a' } : null,
+      (bike.bat||details.batteries) ? { icon:'battery-charging', label:'Batterie', val:bike.bat||(details.batteries||[]).join(' / '), color:'#86efac' } : null,
+      details.fork ? { icon:'arrow-up-down', label:'Fourche', val:details.fork.split(' ').slice(0,3).join(' '), color:'#c4b5fd' } : null,
+      details.range ? { icon:'map', label:'Autonomie', val:details.range, color:'#67e8f9' } : null,
+      details.drivetrain ? { icon:'cog', label:'Transmission', val:details.drivetrain.split(' ').slice(0,3).join(' '), color:'#fb923c' } : null,
+      bike.price ? { icon:'tag', label:'Prix', val:bike.price.toLocaleString('fr-FR')+'€', color:'#ff6b35' } : null,
+    ].filter(Boolean).slice(0, 4);
+    if (qItems.length) {
+      qs.innerHTML = qItems.map(q =>
+        '<div class="flex items-center gap-3 p-3 rounded-xl" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);">' +
+        '<div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(255,107,53,.1);">' +
+        '<i data-lucide="'+q.icon+'" class="w-5 h-5" style="color:'+q.color+';"></i></div>' +
+        '<div><div class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted);">'+q.label+'</div>' +
+        '<div class="text-sm font-bold text-white mt-0.5">'+q.val+'</div></div></div>'
+      ).join('');
+    } else {
+      qs.style.display = 'none';
+    }
+  }
+
+  // Show print btn
+  const pb = document.getElementById('spec-print-btn');
+  if (pb) pb.classList.remove('hidden');
+
+  // Motor block (electric only)
+  if (isElec) {
+    const motorRows = [];
+    if (details.motorModel || bike.motor) motorRows.push(['Moteur', details.motorModel || bike.motor]);
+    if (details.motorPower || bike.motor) motorRows.push(['Couple max.', details.motorPower || '85Nm']);
+    if (bike.bat || details.batteries) motorRows.push(['Batterie', bike.bat || (details.batteries||[]).join(' / ')]);
+    if (details.chargeTime) motorRows.push(['Temps de charge', details.chargeTime]);
+    if (details.range) motorRows.push(['Autonomie estimée', details.range]);
+    html += specCard('Motorisation', 'zap', '#67e8f9', motorRows);
+  }
+
+  // Frame block
+  const frameRows = [];
+  if (details.frame) frameRows.push(['Cadre', details.frame]);
+  if (details.weight) frameRows.push(['Poids total', details.weight]);
+  if (details.wheels) frameRows.push(['Roues', details.wheels]);
+  if (details.sizes) frameRows.push(['Tailles dispo.', details.sizes.join(', ')]);
+  if (bike.avail) frameRows.push(['Disponibilité', bike.avail]);
+  if (frameRows.length) html += specCard('Cadre & Géométrie', 'square', '#fb923c', frameRows);
+
+  // Drivetrain block
+  const driveRows = [];
+  if (details.drivetrain) driveRows.push(['Transmission', details.drivetrain]);
+  if (details.brakes) driveRows.push(['Freins', details.brakes]);
+  if (details.tires) driveRows.push(['Pneus', details.tires]);
+  if (driveRows.length) html += specCard('Transmission & Freins', 'cog', '#818cf8', driveRows);
+
+  // Suspension block
+  const suspRows = [];
+  if (details.fork) suspRows.push(['Fourche avant', details.fork]);
+  if (details.rearShock) suspRows.push(['Amortisseur arrière', details.rearShock]);
+  if (!details.rearShock && details.fork) suspRows.push(['Arrière', 'Rigide (hardtail)']);
+  if (suspRows.length) html += specCard('Suspensions', 'arrow-up-down', '#c4b5fd', suspRows);
+
+  // Notes block
+  if (details.notes) {
+    html += '<div class="card p-6 md:col-span-2" style="background:rgba(255,107,53,.04);border-color:rgba(255,107,53,.15);">' +
+    '<div class="flex gap-3 items-start">' +
+    '<i data-lucide="info" class="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5"></i>' +
+    '<div><h3 class="font-bold text-base mb-1" style="font-family:\'Rajdhani\',sans-serif;">Notes & informations</h3>' +
+    '<p class="text-sm" style="color:#cbd5e1;">' + details.notes + '</p></div></div></div>';
+  }
+
+  // Bonus / reprise block
+  if (details.bonus) {
+    html += '<div class="card p-5 md:col-span-2 flex items-center gap-4" style="background:rgba(234,179,8,.06);border-color:rgba(234,179,8,.25);">' +
+    '<div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(234,179,8,.12);">' +
+    '<i data-lucide="gift" class="w-5 h-5 text-yellow-400"></i></div>' +
+    '<div><div class="font-bold text-yellow-400 text-sm">' + details.bonus + '</div>' +
+    '<div class="text-xs mt-0.5" style="color:var(--muted);">Offre valable en magasin, sous conditions. Demandez à notre équipe.</div>' +
+    '</div></div>';
+  }
+
+  // No specs fallback
+  if (!html) {
+    html = '<div class="card p-8 md:col-span-2 text-center" style="color:var(--muted);">' +
+    '<i data-lucide="clipboard-list" class="w-8 h-8 mx-auto mb-3" style="color:var(--muted);"></i>' +
+    '<p class="text-sm">Fiche technique complète disponible en magasin ou sur le site officiel.</p>' +
+    (bike.url ? '<a href="' + bike.url + '" target="_blank" class="inline-flex items-center gap-2 mt-3 text-sm font-semibold" style="color:var(--blue);">Voir la fiche officielle <i data-lucide="external-link" class="w-3.5 h-3.5"></i></a>' : '') +
+    '</div>';
+  }
+
+  document.getElementById('specs-grid').innerHTML = html;
+
+  // Official link
+  if (bike.url) {
+    const sl = document.getElementById('spec-official-link');
+    sl.href = bike.url;
+    sl.classList.remove('hidden');
+  }
+}
+
+function specCard(title, icon, iconColor, rows) {
+  if (!rows.length) return '';
+  return '<div class="card p-6" data-aos="fade-up">' +
+    '<h3 class="font-bold text-xl mb-5 flex items-center gap-2" style="font-family:\'Rajdhani\',sans-serif;">' +
+    '<div style="width:32px;height:32px;border-radius:.6rem;background:' + iconColor.replace('#','rgba(') + ',0.12' + ');display:flex;align-items:center;justify-content:center;">' +
+    '<i data-lucide="' + icon + '" class="w-4 h-4" style="color:' + iconColor + ';"></i></div>' + title + '</h3>' +
+    '<div class="space-y-1">' +
+    rows.map(([k, v]) =>
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;padding:.7rem .5rem;border-bottom:1px solid rgba(255,255,255,.05);">' +
+      '<span style="font-size:.76rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;min-width:110px;margin-right:.75rem;">' + k + '</span>' +
+      '<span style="font-size:.875rem;font-weight:500;color:#f1f5f9;text-align:right;flex:1;">' + v + '</span>' +
+      '</div>'
+    ).join('') +
+    '</div></div>';
+}
+
+function renderConfig(bike, details) {
+  // Colors
+  const colors = details.colors || ['Couleur standard'];
+  const codes = details.colorCodes || ['#4a5568'];
+  const swatchEl = document.getElementById('color-swatches');
+  swatchEl.innerHTML = colors.map((c, i) =>
+    '<div class="flex flex-col items-center gap-1.5">' +
+    '<button class="color-swatch" style="background:' + (codes[i] || '#4a5568') + ';" onclick="selectColor(' + i + ')" title="' + c + '"></button>' +
+    '<span class="text-xs text-center" style="color:var(--muted);max-width:70px;line-height:1.2;">' + c.split(' ').slice(0,2).join(' ') + '</span>' +
+    '</div>'
+  ).join('');
+
+  // Sizes
+  const sizes = details.sizes || ['S', 'M', 'L', 'XL'];
+  document.getElementById('size-buttons').innerHTML = sizes.map(s =>
+    '<button class="size-btn" data-size="' + s + '" onclick="selectSize(\'' + s + '\')">' + s + '</button>'
+  ).join('');
+
+  // Size guide
+  const guide = details.sizeGuide || { S:'155-170cm', M:'168-180cm', L:'178-190cm', XL:'188-200cm' };
+  document.getElementById('size-guide-grid').innerHTML = Object.entries(guide).map(([sz, ht]) =>
+    '<div class="size-guide-cell"><div class="sz">' + sz + '</div><div class="ht">' + ht + '</div></div>'
+  ).join('');
+
+  // Battery (electric only)
+  const batteries = details.batteries;
+  if (batteries && batteries.length && (bike.motor || details.motorModel)) {
+    document.getElementById('block-battery').classList.remove('hidden');
+    document.getElementById('battery-buttons').innerHTML = batteries.map(b =>
+      '<button class="battery-btn" data-bat="' + b + '" onclick="selectBattery(\'' + b + '\')">' +
+      '<i data-lucide="battery-charging" class="w-4 h-4 inline mr-1.5 text-cyan-400"></i>' + b + '</button>'
+    ).join('');
+    // Select first by default
+    selectBattery(batteries[0]);
+  }
+
+  // Price display
+  updatePriceDisplay();
+  document.getElementById('order-price-display').textContent = formatPrice(bike.price);
+  if (bike.oldprice) {
+    const op = document.getElementById('order-oldprice-display');
+    op.textContent = formatPrice(bike.oldprice);
+    op.style.display = 'block';
+  }
+  const fin = calcFinancing(bike.price);
+  if (fin) document.getElementById('financing-display').textContent = fin;
+
+  // Auto-select first color and size
+  if (colors.length) selectColor(0);
+  if (sizes.length) selectSize(sizes[0]);
+
+  // Wire accessory checkboxes
+  document.querySelectorAll('.accessory-cb').forEach(cb => {
+    cb.addEventListener('change', updatePriceDisplay);
+  });
+  // Init financing calculator
+  setTimeout(updateFinCalc, 100);
+}
+
+function renderFeatures(bike, details) {
+  const features = details.features || [
+    bike.motor ? ('Moteur ' + bike.motor) : null,
+    bike.bat ? ('Batterie ' + bike.bat) : null,
+    details.fork || null,
+    details.weight ? ('Poids ' + details.weight) : null,
+    bike.type || null,
+    details.range ? ('Autonomie ' + details.range) : null,
+  ].filter(Boolean);
+
+  const icons = ['zap','battery-charging','arrow-up-down','scale','map','map-pin','cog','shield-check','award','star'];
+  const colors = ['#67e8f9','#86efac','#c4b5fd','#fde68a','#fb923c','#f472b6','#818cf8','#34d399','#fbbf24','#ff6b35'];
+
+  document.getElementById('features-strip').innerHTML = features.slice(0, 6).map((f, i) =>
+    '<div class="feature-card" data-aos="fade-up" data-aos-delay="' + (i * 60) + '">' +
+    '<div class="feature-icon-wrap"><i data-lucide="' + icons[i % icons.length] + '" class="w-6 h-6" style="color:' + colors[i % colors.length] + ';"></i></div>' +
+    '<p class="text-sm font-semibold leading-snug">' + f + '</p></div>'
+  ).join('');
+}
+
+function renderReviews(reviews) {
+  if (!reviews || !reviews.length) {
+    document.getElementById('tab-reviews').innerHTML = '<div class="max-w-7xl mx-auto px-4 py-20 text-center text-gray-500">Aucun avis disponible pour le moment.</div>';
+    return;
+  }
+  const avg = reviews.reduce((s, r) => s + r.stars, 0) / reviews.length;
+  document.getElementById('avg-score').textContent = avg.toFixed(1);
+  document.getElementById('avg-stars').innerHTML = renderStars(Math.round(avg), 'w-6 h-6');
+  document.getElementById('review-count').textContent = reviews.length + ' avis vérifiés';
+
+  // Star distribution bars
+  const dist = [5,4,3,2,1].map(n => ({ n, cnt: reviews.filter(r => r.stars === n).length }));
+  document.getElementById('star-bars').innerHTML = dist.map(d =>
+    '<div class="flex items-center gap-3 text-sm">' +
+    '<span class="w-4 text-right font-bold text-yellow-400">' + d.n + '</span>' +
+    '<svg class="w-4 h-4 text-yellow-400" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>' +
+    '<div class="flex-1 h-2 rounded-full" style="background:rgba(255,255,255,.07);">' +
+    '<div class="h-2 rounded-full bg-yellow-400 transition-all" style="width:' + (reviews.length ? d.cnt / reviews.length * 100 : 0) + '%;"></div></div>' +
+    '<span class="w-6 text-gray-500 text-xs">' + d.cnt + '</span></div>'
+  ).join('');
+
+  document.getElementById('reviews-grid').innerHTML = reviews.map(r =>
+    '<div class="review-card" data-aos="fade-up">' +
+    '<div class="flex items-start justify-between mb-3">' +
+    '<div><div class="font-bold">' + r.name + '</div><div class="text-xs mt-0.5" style="color:var(--muted);">' + r.date + '</div></div>' +
+    '<div>' + renderStars(r.stars, 'w-4 h-4') + '</div></div>' +
+    '<p class="text-sm leading-relaxed" style="color:#cbd5e1;">"' + r.text + '"</p></div>'
+  ).join('');
+}
+
+function renderRelated(bike, allBikesList, bikeImgs) {
+  document.getElementById('related-brand-label').textContent = bike.brand;
+  // Improved similarity: same brand first, then same category, then price ±30%
+  const priceLow = bike.price ? bike.price * 0.7 : 0;
+  const priceHigh = bike.price ? bike.price * 1.3 : Infinity;
+  let related = allBikesList
+    .filter(b => b.name !== bike.name)
+    .map(b => {
+      let score = 0;
+      if (b.brand === bike.brand) score += 4;
+      if (b.cat === bike.cat) score += 3;
+      if (b.price && b.price >= priceLow && b.price <= priceHigh) score += 2;
+      if (b.type === bike.type) score += 1;
+      return { bike: b, score };
+    })
+    .filter(x => x.score >= 2)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
+    .map(x => x.bike);
+  // Fallback to same brand
+  if (!related.length) related = allBikesList.filter(b => b.brand === bike.brand && b.name !== bike.name).slice(0, 3);
+  if (!related.length) { document.getElementById('related-section').style.display = 'none'; return; }
+
+  document.getElementById('related-grid').innerHTML = related.map(b => {
+    const imgs = bikeImgs[b.brand + '_' + b.name] || [];
+    const img = imgs[0] || '';
+    const p = formatPrice(b.price);
+    const discPct = b.oldprice && b.price ? Math.round((1 - b.price / b.oldprice) * 100) : 0;
+    return '<a class="related-card" href="product.html?bike=' + encodeURIComponent(b.brand + ' ' + b.name) + '">' +
+      '<div style="position:relative;">' +
+      (img ? '<img class="related-img" src="' + img + '" alt="' + b.name + '" loading="lazy" onerror="this.src=\'https://placehold.co/400x160/0f1b2d/ff6b35?text=' + encodeURIComponent(b.name) + '\'">' :
+        '<div class="related-img flex items-center justify-center" style="background:var(--surface);"><span class="text-sm font-bold text-gray-500">' + b.name + '</span></div>') +
+      (discPct > 0 ? '<span style="position:absolute;top:.5rem;left:.5rem;background:#ef4444;color:white;font-size:.65rem;font-weight:700;padding:.15rem .5rem;border-radius:2rem;">-' + discPct + '%</span>' : '') +
+      '</div>' +
+      '<div class="p-4">' +
+      '<div class="text-xs mb-1" style="color:var(--muted);">' + (b.type || b.cat) + '</div>' +
+      '<div class="font-bold text-base">' + b.name + '</div>' +
+      '<div class="flex items-baseline gap-2 mt-1">' +
+      '<span class="text-orange-400 font-bold">' + p + '</span>' +
+      (b.oldprice ? '<span style="font-size:.75rem;text-decoration:line-through;color:var(--muted);">' + formatPrice(b.oldprice) + '</span>' : '') +
+      '</div>' +
+      '</div></a>';
+  }).join('');
+
+  // "Voir tous" link
+  const grid = document.getElementById('related-grid');
+  const totalBrand = allBikesList.filter(b => b.brand === bike.brand).length;
+  if (totalBrand > 3) {
+    grid.insertAdjacentHTML('afterend',
+      '<div class="mt-6 text-center"><a href="index.html#catalogue" class="btn-outline text-sm" style="display:inline-flex;">' +
+      '<i data-lucide="layout-grid" class="w-4 h-4"></i>Voir tous les ' + bike.brand + ' (' + totalBrand + ' modèles)</a></div>'
+    );
+  }
+}
+
+// ── COMPARISON ────────────────────────────────────────────────────────
+function initComparison(bike, allBikesList, allDetails) {
+  const sel = document.getElementById('cmp-select');
+  if (!sel) return;
+  // Populate with same category bikes
+  const candidates = allBikesList.filter(b => b.name !== bike.name && (b.cat === bike.cat || b.brand === bike.brand));
+  sel.innerHTML = '<option value="">— Choisir un modèle —</option>' +
+    candidates.map(b => '<option value="' + b.brand + '_' + b.name + '">' + b.brand + ' ' + b.name + (b.price ? ' — ' + b.price.toLocaleString('fr-FR') + '€' : '') + '</option>').join('');
+
+  window._cmpBike = bike;
+  window._cmpAllBikes = allBikesList;
+  window._cmpAllDetails = allDetails;
+}
+
+function renderComparison() {
+  const sel = document.getElementById('cmp-select');
+  const key = sel.value;
+  const wrap = document.getElementById('cmp-table-wrap');
+  const placeholder = document.getElementById('cmp-placeholder');
+  if (!key) { wrap.classList.add('hidden'); placeholder.classList.remove('hidden'); return; }
+
+  const b1 = window._cmpBike;
+  const b2 = (window._cmpAllBikes || []).find(b => (b.brand + '_' + b.name) === key);
+  if (!b1 || !b2) return;
+  const d1 = (window._cmpAllDetails || {})[b1.brand + '_' + b1.name] || {};
+  const d2 = (window._cmpAllDetails || {})[b2.brand + '_' + b2.name] || {};
+
+  const rows = [
+    ['Prix', b1.price ? b1.price.toLocaleString('fr-FR') + ' €' : 'Sur devis', b2.price ? b2.price.toLocaleString('fr-FR') + ' €' : 'Sur devis'],
+    ['Type', b1.type || '—', b2.type || '—'],
+    ['Cadre', d1.frame || '—', d2.frame || '—'],
+    ['Fourche', d1.fork || b1.motor ? (d1.fork || '—') : '—', d2.fork || b2.motor ? (d2.fork || '—') : '—'],
+    ['Transmission', d1.drivetrain || '—', d2.drivetrain || '—'],
+    ['Freins', d1.brakes || '—', d2.brakes || '—'],
+    ['Poids', d1.weight || '—', d2.weight || '—'],
+    b1.motor ? ['Moteur', b1.motor || '—', b2.motor || '—'] : null,
+    b1.bat || b2.bat ? ['Batterie', b1.bat || '—', b2.bat || '—'] : null,
+    b1.motor ? ['Autonomie', d1.range || '—', d2.range || '—'] : null,
+  ].filter(Boolean);
+
+  wrap.classList.remove('hidden');
+  placeholder.classList.add('hidden');
+  document.getElementById('cmp-table').innerHTML =
+    '<thead><tr>' +
+    '<th>Caractéristique</th>' +
+    '<th style="color:var(--orange);">' + b1.brand + ' ' + b1.name + '</th>' +
+    '<th>' + b2.brand + ' ' + b2.name + '</th>' +
+    '</tr></thead><tbody>' +
+    rows.map(([label, v1, v2]) => {
+      const p1 = b1.price, p2 = b2.price;
+      let cls1 = 'highlight-col', cls2 = '';
+      if (label === 'Prix' && p1 && p2) {
+        cls1 = p1 <= p2 ? 'highlight-col cmp-val-better' : 'highlight-col cmp-val-worse';
+        cls2 = p2 <= p1 ? 'cmp-val-better' : 'cmp-val-worse';
+      }
+      return '<tr><td>' + label + '</td><td class="' + cls1 + '">' + v1 + '</td><td class="' + cls2 + '">' + v2 + '</td></tr>';
+    }).join('') +
+    '</tbody>';
+  lucide.createIcons();
+}
+
+// ── MAIN ORCHESTRATION ────────────────────────────────────────────────
+function renderBike(bike, stock, details, photos, reviews, bikesList, bikeImgs) {
+  currentBike = bike;
+  currentDetails = details;
+
+  renderHero(bike, stock);
+  renderGallery(photos);
+  renderSpecsSidebar(bike, details);
+  renderSpecs(bike, details);
+  renderFeatures(bike, details);
+  renderConfig(bike, details);
+  renderReviews(reviews);
+  renderRelated(bike, bikesList, bikeImgs);
+  init360Viewer(photos, bike);
+  initComparison(bike, bikesList, window._allBikeDetails || {});
+
+  // Structured data (JSON-LD)
+  const jsonldEl = document.getElementById('product-jsonld');
+  if (jsonldEl) {
+    const ld = {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: bike.brand + ' ' + bike.name,
+      description: bike.description || (bike.type + ' — ' + bike.brand),
+      brand: { '@type': 'Brand', name: bike.brand },
+      offers: {
+        '@type': 'Offer',
+        priceCurrency: 'EUR',
+        price: bike.price || 0,
+        availability: stock && stock.qty > 0 ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder',
+        seller: { '@type': 'LocalBusiness', name: 'VTT Performance', address: 'Ingwiller, Alsace, France' }
+      }
+    };
+    if (photos && photos.length) ld.image = photos[0];
+    jsonldEl.textContent = JSON.stringify(ld);
+  }
+
+  // Hide skeleton loader once content is ready
+  const skel = document.getElementById('page-skeleton');
+  if (skel) skel.style.display = 'none';
+
+  // Re-init icons & AOS after render
+  lucide.createIcons();
+  if (window.AOS) AOS.refreshHard();
+}
+
+// ── VUE 360° ──────────────────────────────────────────────────────────
+const prod360 = {
+  imgs:[], imgIdx:0, angle:0, speed:0.4,
+  paused:false, dragging:false, dragStartX:0, dragStartAngle:0,
+  lastSwapZone:0, raf:null
+};
+
+function init360Viewer(photos, bike) {
+  const tabBtn = document.getElementById('tab-btn-360');
+  if (!photos || !photos.length) {
+    if (tabBtn) tabBtn.style.display = 'none';
+    return;
+  }
+  if (tabBtn) tabBtn.style.display = '';
+  prod360.imgs = photos;
+  prod360.imgIdx = 0;
+  prod360.angle = 0;
+  prod360.lastSwapZone = 0;
+  const img = document.getElementById('p360-img');
+  if (img) { img.src = photos[0]; img.alt = bike ? (bike.brand + ' ' + bike.name) : ''; }
+  const title = document.getElementById('p360-title');
+  if (title && bike) title.textContent = bike.brand + ' ' + bike.name + ' — 360°';
+  prod360UpdateDots();
+}
+
+function prod360UpdateDots() {
+  const el = document.getElementById('p360-dots');
+  if (!el) return;
+  el.innerHTML = prod360.imgs.map(function(_, i) {
+    return '<button class="p360-dot' + (i === prod360.imgIdx ? ' active' : '') +
+      '" onclick="prod360JumpImg(' + i + ')" title="Vue ' + (i+1) + '"></button>';
+  }).join('');
+  const ctr = document.getElementById('p360-counter');
+  if (ctr) ctr.textContent = 'Vue ' + (prod360.imgIdx + 1) + ' sur ' + prod360.imgs.length;
+}
+
+function prod360JumpImg(i) {
+  prod360.imgIdx = i;
+  const img = document.getElementById('p360-img');
+  if (img) img.src = prod360.imgs[i];
+  prod360.angle = (360 / Math.max(prod360.imgs.length, 1)) * i;
+  prod360.lastSwapZone = i;
+  prod360UpdateDots();
+}
+
+function prod360NavImg(dir) {
+  prod360JumpImg((prod360.imgIdx + dir + prod360.imgs.length) % prod360.imgs.length);
+}
+
+function prod360TogglePause() {
+  prod360.paused = !prod360.paused;
+  document.getElementById('p360-play-icon').textContent = prod360.paused ? '▶' : '⏸';
+  document.getElementById('p360-play-text').textContent = prod360.paused ? 'Reprendre' : 'Pause';
+}
+
+function prod360Frame() {
+  if (!prod360.paused) {
+    prod360.angle = (prod360.angle + prod360.speed) % 360;
+    if (prod360.imgs.length > 1) {
+      var n = prod360.imgs.length;
+      var zone = Math.floor(prod360.angle / (360 / n)) % n;
+      if (zone !== prod360.lastSwapZone) {
+        prod360.lastSwapZone = zone;
+        prod360.imgIdx = zone;
+        var img = document.getElementById('p360-img');
+        if (img) img.src = prod360.imgs[zone];
+        prod360UpdateDots();
+      }
+    }
+    var stage = document.getElementById('p360-stage');
+    if (stage) stage.style.transform = 'rotateY(' + prod360.angle + 'deg)';
+    var av = document.getElementById('p360-angle-val');
+    if (av) av.textContent = Math.round(prod360.angle) + '°';
+  }
+  prod360.raf = requestAnimationFrame(prod360Frame);
+}
+
+function prod360InitDrag() {
+  var wrap = document.getElementById('p360-wrap');
+  if (!wrap || wrap._dragInit) return;
+  wrap._dragInit = true;
+  var onDown = function(e) {
+    prod360.dragging = true;
+    prod360.dragStartX = e.touches ? e.touches[0].clientX : e.clientX;
+    prod360.dragStartAngle = prod360.angle;
+    if (!prod360.paused) {
+      prod360.paused = true;
+      document.getElementById('p360-play-icon').textContent = '▶';
+      document.getElementById('p360-play-text').textContent = 'Reprendre';
+    }
+  };
+  var onMove = function(e) {
+    if (!prod360.dragging) return;
+    var x = e.touches ? e.touches[0].clientX : e.clientX;
+    prod360.angle = ((prod360.dragStartAngle + (x - prod360.dragStartX) * 0.55) % 360 + 360) % 360;
+    if (prod360.imgs.length > 1) {
+      var n = prod360.imgs.length;
+      var zone = Math.floor(prod360.angle / (360 / n)) % n;
+      if (zone !== prod360.lastSwapZone) {
+        prod360.lastSwapZone = zone;
+        prod360.imgIdx = zone;
+        var img = document.getElementById('p360-img');
+        if (img) img.src = prod360.imgs[zone];
+        prod360UpdateDots();
+      }
+    }
+    var stage = document.getElementById('p360-stage');
+    if (stage) stage.style.transform = 'rotateY(' + prod360.angle + 'deg)';
+    var av = document.getElementById('p360-angle-val');
+    if (av) av.textContent = Math.round(prod360.angle) + '°';
+  };
+  var onUp = function() { prod360.dragging = false; };
+  wrap.addEventListener('mousedown', onDown);
+  wrap.addEventListener('touchstart', onDown, {passive:true});
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('touchmove', onMove, {passive:false});
+  document.addEventListener('mouseup', onUp);
+  document.addEventListener('touchend', onUp);
+}
+
+function prod360InitParticles() {
+  var canvas = document.getElementById('p360-canvas');
+  if (!canvas || canvas._ptInit) return;
+  canvas._ptInit = true;
+  var wrap = canvas.parentElement;
+  var size = wrap.offsetWidth || 520;
+  canvas.width = size; canvas.height = size;
+  var ctx = canvas.getContext('2d');
+  var cx = size/2, cy = size/2, r = size/2;
+  var pts = Array.from({length:32}, function() {
+    var a = Math.random()*Math.PI*2, d = Math.random()*r*0.38 + r*0.62;
+    return { x:cx+Math.cos(a)*d, y:cy+Math.sin(a)*d,
+      vx:(Math.random()-.5)*.25, vy:(Math.random()-.5)*.25,
+      rad:Math.random()*1.8+.4, alpha:Math.random()*.5+.1,
+      da:(Math.random()-.5)*.008, col:Math.random()>.5?'0,255,200':'255,107,53' };
+  });
+  (function tick() {
+    ctx.clearRect(0,0,size,size);
+    pts.forEach(function(p) {
+      p.x=(p.x+p.vx+size)%size; p.y=(p.y+p.vy+size)%size;
+      p.alpha=Math.max(.05,Math.min(.75,p.alpha+p.da));
+      if(p.alpha>=.75||p.alpha<=.05) p.da*=-1;
+      var dx=p.x-cx, dy=p.y-cy;
+      if(dx*dx+dy*dy<(r*.35)*(r*.35)) return;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.rad,0,Math.PI*2);
+      ctx.fillStyle='rgba('+p.col+','+p.alpha+')'; ctx.fill();
+    });
+    requestAnimationFrame(tick);
+  })();
+}
+
+// ── CATALOG CACHE ─────────────────────────────────────────────────────
+function loadCatalogData() {
+  const CACHE_KEY = 'vtp_catalog_v2';
+  const cached = sessionStorage.getItem(CACHE_KEY);
+  if (cached) {
+    try { return Promise.resolve(JSON.parse(cached)); } catch(e) {}
+  }
+  return fetch('index.html')
+    .then(r => r.text())
+    .then(html => {
+      const data = {
+        bikes: parseCatalog(html, 'BIKES'),
+        stock: parseCatalog(html, 'STOCK'),
+        details: parseDetailsObject(html, 'BIKE_DETAILS'),
+        bikeImgs: parseDetailsObject(html, 'BIKE_IMGS'),
+        reviews: parseCatalog(html, 'REVIEWS')
+      };
+      try { sessionStorage.setItem(CACHE_KEY, JSON.stringify(data)); } catch(e) {}
+      return data;
+    });
+}
+
+// ── BOOT ──────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  AOS.init({ duration: 650, once: true, easing: 'ease-out-cubic' });
+  lucide.createIcons();
+
+  const bikeParam = getParam('bike');
+  if (!bikeParam) {
+    document.getElementById('hero-title').textContent = 'Aucun vélo sélectionné';
+    document.getElementById('hero-tagline').textContent = 'Retournez au catalogue pour choisir un modèle.';
+    return;
+  }
+  const cleaned = decodeURIComponent(bikeParam).trim();
+
+  loadCatalogData()
+    .then(({ bikes, stock, details: detailsObj, bikeImgs: bikeImgsObj, reviews }) => {
+      const bike = bikes.find(b => (b.brand + ' ' + b.name) === cleaned);
+      if (!bike) {
+        document.getElementById('hero-title').textContent = 'Vélo introuvable';
+        document.getElementById('hero-tagline').textContent = cleaned;
+        return;
+      }
+
+      allBikes = bikes;
+      allReviews = reviews;
+      window._allBikeDetails = detailsObj;
+
+      const bikeStock = stock.find(s => s.brand === bike.brand && s.name === bike.name) || null;
+      const bikeDetails = detailsObj[bike.brand + '_' + bike.name] || {};
+      const photos = bikeImgsObj[bike.brand + '_' + bike.name] || [];
+
+      renderBike(bike, bikeStock, bikeDetails, photos, reviews, bikes, bikeImgsObj);
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById('hero-title').textContent = 'Erreur de chargement';
+      document.getElementById('hero-tagline').textContent = 'Impossible de charger le catalogue. Vérifiez la connexion.';
+    });
+});
+</script>
+
+<style>
+@keyframes toast-in { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+</style>
+</body>
+</html>
