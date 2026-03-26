@@ -1086,7 +1086,7 @@
 
         <div class="service-card has-photo" data-aos="fade-up" data-aos-delay="320">
           <div class="svc-photo-wrap">
-            <img src="images/IMG_3111.PNG" alt="Révision suspensions" loading="lazy" style="object-position:center 20%">
+            <img src="images/IMG_5347.JPEG" alt="Révision suspensions" loading="lazy" style="object-position:center 30%">
           </div>
           <div class="svc-body">
             <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style="background:rgba(239,68,68,.12)"><i data-lucide="activity" class="w-5 h-5 text-red-400"></i></div>
@@ -2445,7 +2445,7 @@
           </div>
           <div data-aos="fade-left">
             <div class="rounded-2xl overflow-hidden" style="height:420px;background:var(--card)">
-              <img src="images/IMG_3110.PNG" alt="Atelier révision suspensions VTT Performance" class="w-full h-full object-cover">
+              <img src="images/IMG_5347.JPEG" alt="Atelier révision suspensions VTT Performance" class="w-full h-full object-cover">
             </div>
           </div>
         </div>
@@ -3503,8 +3503,8 @@
 
       <div class="text-center mb-10">
         <span class="badge badge-electric">Reprise</span>
-        <h2 class="font-heading font-bold text-4xl mt-3 mb-2">Estimez votre vélo</h2>
-        <p class="text-gray-400">Obtenez une estimation de reprise en quelques secondes. Résultat immédiat, sans engagement.</p>
+        <h2 class="font-heading font-bold text-4xl mt-3 mb-2">Estimez votre VAE</h2>
+        <p class="text-gray-400">Estimation de reprise réservée aux <strong class="text-white">vélos à assistance électrique</strong> (VTTAE, VTC électrique). Résultat immédiat, sans engagement.</p>
       </div>
       <div class="card p-8" style="background:var(--card);">
         <!-- Step 1 -->
@@ -3518,7 +3518,11 @@
             <button class="rep-type-btn p-4 rounded-xl text-center transition-all cursor-pointer" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);" onclick="selectRepType(this,'BMX')"><span style="font-size:2rem;display:block;margin-bottom:.5rem;">🏁</span><span class="text-sm font-semibold">BMX</span></button>
             <button class="rep-type-btn p-4 rounded-xl text-center transition-all cursor-pointer" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);" onclick="selectRepType(this,'Autre')"><span style="font-size:2rem;display:block;margin-bottom:.5rem;">🔄</span><span class="text-sm font-semibold">Autre</span></button>
           </div>
-          <div class="space-y-4">
+          <div id="rep-non-vae-msg" class="hidden mb-4 p-4 rounded-xl text-center" style="background:rgba(255,107,53,.08);border:1px solid rgba(255,107,53,.2);">
+            <p class="text-sm text-orange-300 font-semibold">⚡ La reprise est réservée aux vélos électriques (VAE)</p>
+            <p class="text-xs text-gray-500 mt-1">Sélectionnez <strong>VTT Électrique</strong> ou <strong>VTC Électrique</strong> pour estimer votre vélo.</p>
+          </div>
+          <div id="rep-form-fields" class="space-y-4 hidden">
             <div><label>Marque</label><select id="rep-brand" class="inp"><option value="">Sélectionner...</option><option>SUNN</option><option>Moustache</option><option>KONA</option><option>NORCO</option><option>Trek</option><option>Specialized</option><option>Giant</option><option>Orbea</option><option>Canyon</option><option>Autre marque</option></select></div>
             <div><label>Prix d'achat neuf (€)</label><input type="number" id="rep-price" placeholder="ex: 3500" class="inp" min="200" max="15000"></div>
             <div><label>Année d'achat</label><select id="rep-year" class="inp"><option value="">Sélectionner...</option></select></div>
@@ -6375,9 +6379,12 @@ function selectRepType(btn, val) {
   btn.style.background = 'rgba(255,107,53,.12)';
   btn.style.borderColor = 'rgba(255,107,53,.4)';
   btn.style.color = '#ff6b35';
+  var isVae = (val === 'VTTAE' || val === 'VTCAE');
+  document.getElementById('rep-non-vae-msg').classList.toggle('hidden', isVae);
+  document.getElementById('rep-form-fields').classList.toggle('hidden', !isVae);
   // Affiche la section photos uniquement pour les VAE
   var photoSection = document.getElementById('rep-photos-section');
-  if (val === 'VTTAE' || val === 'VTCAE') {
+  if (isVae) {
     photoSection.classList.remove('hidden');
   } else {
     photoSection.classList.add('hidden');
@@ -6416,6 +6423,7 @@ function selectRepState(btn, val) {
   btn.style.transform = 'scale(1.04)';
 }
 function calcReprise() {
+  if (repriState.type !== 'VTTAE' && repriState.type !== 'VTCAE') { alert('La reprise est réservée aux vélos à assistance électrique (VAE).'); return; }
   var price = parseFloat(document.getElementById('rep-price').value) || 0;
   var year = parseInt(document.getElementById('rep-year').value) || new Date().getFullYear();
   var state = repriState.state || 'bon';
