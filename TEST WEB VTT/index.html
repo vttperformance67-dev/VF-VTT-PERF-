@@ -3540,6 +3540,21 @@
                 <button class="rep-state-btn p-3 rounded-lg text-sm text-center cursor-pointer transition-all" style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);color:#fcd34d;" onclick="selectRepState(this,'moyen')">🔧 À réviser</button>
               </div>
             </div>
+            <!-- Photos VAE uniquement -->
+            <div id="rep-photos-section" class="hidden mt-2">
+              <div class="p-4 rounded-xl" style="background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);">
+                <p class="text-sm font-semibold text-yellow-300 mb-1 flex items-center gap-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4 flex-shrink-0"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>📸 Joindre des photos de votre VAE</p>
+                <p class="text-xs text-gray-400 mb-3">Pour une estimation plus précise, joignez des photos du vélo (cadre, batterie, moteur, écran, kilométrage). <strong class="text-yellow-200">Uniquement pour les vélos électriques.</strong></p>
+                <label class="flex flex-col items-center justify-center gap-2 cursor-pointer rounded-xl p-5 transition-all" style="background:rgba(255,255,255,.03);border:2px dashed rgba(251,191,36,.3);" id="rep-photo-label">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-8 h-8 text-yellow-400"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  <span class="text-sm text-gray-300 font-medium">Cliquez pour ajouter des photos</span>
+                  <span class="text-xs text-gray-500">JPG, PNG · max 5 photos · 10 Mo chacune</span>
+                  <input type="file" id="rep-photos-input" accept="image/*" multiple class="hidden" onchange="updateRepPhotoLabel(this)">
+                </label>
+                <div id="rep-photos-preview" class="flex flex-wrap gap-2 mt-3 hidden"></div>
+                <p class="text-xs text-gray-500 mt-2">💡 Les photos seront envoyées par WhatsApp après l'estimation pour affiner le prix.</p>
+              </div>
+            </div>
             <button onclick="calcReprise()" class="btn-orange w-full justify-center mt-4 text-base">Calculer mon estimation →</button>
           </div>
         </div>
@@ -3558,6 +3573,15 @@
           <div class="p-4 rounded-xl mb-6 text-left" style="background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15)">
             <p class="text-sm text-blue-300 font-semibold mb-1">💡 Comment maximiser votre reprise</p>
             <ul class="text-xs text-gray-400 space-y-1 list-disc pl-4" id="rep-tips"></ul>
+          </div>
+          <!-- Bouton photos WhatsApp (VAE uniquement) -->
+          <div id="rep-whatsapp-photos" class="hidden mb-4 p-4 rounded-xl text-left" style="background:rgba(37,211,102,.07);border:1px solid rgba(37,211,102,.25);">
+            <p class="text-sm font-semibold text-green-300 mb-2">📸 Envoyez vos photos pour affiner l'estimation</p>
+            <p class="text-xs text-gray-400 mb-3">Joignez les photos de votre VAE (batterie, moteur, cadre, kilométrage) directement via WhatsApp pour recevoir une estimation personnalisée sous 24h.</p>
+            <a id="rep-whatsapp-btn" href="#" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl text-sm font-bold transition-all" style="background:rgba(37,211,102,.15);border:1px solid rgba(37,211,102,.4);color:#4ade80;">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Envoyer les photos via WhatsApp
+            </a>
           </div>
           <div class="flex gap-3 flex-wrap justify-center">
             <a href="https://calendly.com/vttperformance67/rendez-vous-presentation-ou-test-velo-clone" target="_blank" class="btn-orange">Confirmer en magasin</a>
@@ -6362,6 +6386,39 @@ function selectRepType(btn, val) {
   btn.style.background = 'rgba(255,107,53,.12)';
   btn.style.borderColor = 'rgba(255,107,53,.4)';
   btn.style.color = '#ff6b35';
+  // Affiche la section photos uniquement pour les VAE
+  var photoSection = document.getElementById('rep-photos-section');
+  if (val === 'VTTAE' || val === 'VTCAE') {
+    photoSection.classList.remove('hidden');
+  } else {
+    photoSection.classList.add('hidden');
+    document.getElementById('rep-photos-input').value = '';
+    document.getElementById('rep-photos-preview').classList.add('hidden');
+    document.getElementById('rep-photos-preview').innerHTML = '';
+  }
+}
+function updateRepPhotoLabel(input) {
+  var files = Array.from(input.files);
+  if (!files.length) return;
+  var label = document.getElementById('rep-photo-label');
+  label.style.borderColor = 'rgba(251,191,36,.7)';
+  label.style.background = 'rgba(251,191,36,.06)';
+  var preview = document.getElementById('rep-photos-preview');
+  preview.innerHTML = '';
+  files.slice(0, 5).forEach(function(f) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var img = document.createElement('img');
+      img.src = e.target.result;
+      img.className = 'w-16 h-16 object-cover rounded-lg';
+      img.style.border = '1px solid rgba(251,191,36,.3)';
+      preview.appendChild(img);
+    };
+    reader.readAsDataURL(f);
+  });
+  preview.classList.remove('hidden');
+  var span = label.querySelector('span.text-sm');
+  if (span) span.textContent = files.length + ' photo' + (files.length > 1 ? 's' : '') + ' sélectionnée' + (files.length > 1 ? 's' : '');
 }
 function selectRepState(btn, val) {
   repriState.state = val;
@@ -6392,6 +6449,20 @@ function calcReprise() {
   tips.push('La reprise est majorée de 5% si vous achetez un vélo de plus de 2000€');
   if (repriState.type === 'VTTAE') tips.push('Batterie encore sous garantie = +150€ sur l\'estimation');
   document.getElementById('rep-tips').innerHTML = tips.map(function(t){ return '<li>'+t+'</li>'; }).join('');
+  // Bouton WhatsApp photos pour VAE
+  var waBlock = document.getElementById('rep-whatsapp-photos');
+  if (repriState.type === 'VTTAE' || repriState.type === 'VTCAE') {
+    var brand = document.getElementById('rep-brand').value || 'Non précisée';
+    var waMsg = encodeURIComponent(
+      'Bonjour VTT Performance ! Je souhaite une estimation de reprise pour mon ' + repriState.type +
+      ' ' + brand + ' (' + year + '), prix d\'achat ' + price + '€, état : ' + state +
+      '. Estimation indicative : ' + mid.toLocaleString('fr-FR') + '€. Je vous envoie les photos ci-dessous.'
+    );
+    document.getElementById('rep-whatsapp-btn').href = 'https://wa.me/33950320829?text=' + waMsg;
+    waBlock.classList.remove('hidden');
+  } else {
+    waBlock.classList.add('hidden');
+  }
   document.getElementById('rep-step1').classList.add('hidden');
   document.getElementById('rep-result').classList.remove('hidden');
 }
