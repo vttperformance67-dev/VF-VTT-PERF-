@@ -855,6 +855,7 @@
             <div class="nav-dd-sep"></div>
             <button class="nav-dd-item" onclick="showSection('reprise')">🔄 Reprise de vélo</button>
             <button class="nav-dd-item" onclick="showSection('histoire')">🏪 Notre histoire</button>
+            <button class="nav-dd-item" onclick="showSection('tarifs')">💶 Tarifs & Prestations</button>
             <button class="nav-dd-item" onclick="showSection('faq')">❓ FAQ</button>
             <button class="nav-dd-item" onclick="showSection('blog')">📰 Blog</button>
           </div>
@@ -899,6 +900,7 @@
         <button onclick="showSection('peinture');toggleMenu()" class="text-left pl-8 pr-4 py-2.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg">🎨 Peinture personnalisée</button>
         <button onclick="showSection('reprise');toggleMenu()" class="text-left pl-8 pr-4 py-2.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg">🔄 Reprise de vélo</button>
         <button onclick="showSection('histoire');toggleMenu()" class="text-left pl-8 pr-4 py-2.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg">🏪 Notre histoire</button>
+        <button onclick="showSection('tarifs');toggleMenu()" class="text-left pl-8 pr-4 py-2.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg">💶 Tarifs &amp; Prestations</button>
         <button onclick="showSection('faq');toggleMenu()" class="text-left pl-8 pr-4 py-2.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg">❓ FAQ</button>
         <button onclick="showSection('blog');toggleMenu()" class="text-left pl-8 pr-4 py-2.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg">📰 Blog</button>
         <button onclick="showSection('contact');toggleMenu()" class="text-left px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Contact</button>
@@ -3118,6 +3120,217 @@
   </div>
 </div><!-- /sec-histoire -->
 
+<!-- ════════════════════ TARIFS & PRESTATIONS ════════════════════ -->
+<div id="sec-tarifs" class="section-hidden">
+
+  <!-- Hero -->
+  <div style="position:relative;overflow:hidden;min-height:320px;display:flex;align-items:center;background:linear-gradient(135deg,#060d1a 0%,#0e1f3a 50%,#0a1628 100%)">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 60%,rgba(255,107,53,.1) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 80% 30%,rgba(59,130,246,.08) 0%,transparent 60%)"></div>
+    <div class="relative max-w-4xl mx-auto px-6 py-20 w-full text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold mb-6" style="background:rgba(255,107,53,.12);border:1px solid rgba(255,107,53,.25);color:#ff6b35">
+        <span class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>Atelier VTT Performance
+      </div>
+      <h1 class="font-heading font-bold text-white mb-4" style="font-size:clamp(2.2rem,5vw,3.5rem);line-height:1.15">Tarifs &amp; Prestations</h1>
+      <p class="text-gray-400 text-base max-w-xl mx-auto">Tarifs main d'œuvre TTC — pièces détachées non incluses sauf mention. Sous réserve de modification.</p>
+    </div>
+  </div>
+
+  <div class="max-w-5xl mx-auto px-4 py-16 space-y-12">
+
+    <!-- Disclaimer -->
+    <div class="rounded-2xl p-4 flex items-start gap-3" style="background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2)">
+      <span style="font-size:1.2rem;flex-shrink:0">⚠️</span>
+      <p class="text-sm text-yellow-200/80">Tarifs indicatifs, <strong class="text-yellow-200">sous réserve de modification</strong>. Les pièces détachées sont facturées en supplément sauf mention contraire. Devis gratuit sur demande pour toute intervention complexe.</p>
+    </div>
+
+    <!-- RÉVISION -->
+    <div data-aos="fade-up">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(255,107,53,.12);border:1px solid rgba(255,107,53,.25)"><i data-lucide="wrench" class="w-5 h-5 text-orange-400"></i></div>
+        <h2 class="font-heading font-bold text-xl text-white">Révision &amp; Entretien</h2>
+      </div>
+      <div class="rounded-2xl overflow-hidden" style="border:1px solid rgba(255,255,255,.07)">
+        <table class="w-full text-sm">
+          <tbody>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Check-up</td><td class="px-5 py-3 text-right font-bold text-white">15 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Contrôle de sécurité</td><td class="px-5 py-3 text-right font-bold text-white">15 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Diagnostique vélo</td><td class="px-5 py-3 text-right font-bold text-white">35 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300 font-semibold text-orange-300">Révision standard</td><td class="px-5 py-3 text-right font-bold text-orange-300">35 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300 font-semibold text-orange-300">Révision avancée</td><td class="px-5 py-3 text-right font-bold text-orange-300">99 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300 font-semibold text-orange-300">Révision totale</td><td class="px-5 py-3 text-right font-bold text-orange-300">399 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Montage d'un vélo (neuf / commandé)</td><td class="px-5 py-3 text-right font-bold text-white">150 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Nettoyage simple</td><td class="px-5 py-3 text-right font-bold text-white">15 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Nettoyage cadre</td><td class="px-5 py-3 text-right font-bold text-white">10 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Traitement bac ultrasons</td><td class="px-5 py-3 text-right font-bold text-white">20 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Lustrage cadre</td><td class="px-5 py-3 text-right font-bold text-white">10 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Marquage anti-vol ICA-BIKE <span class="text-xs text-green-400 ml-1">(pièce incluse)</span></td><td class="px-5 py-3 text-right font-bold text-white">25 €</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- FREINAGE -->
+    <div data-aos="fade-up">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.25)"><i data-lucide="alert-triangle" class="w-5 h-5 text-red-400"></i></div>
+        <h2 class="font-heading font-bold text-xl text-white">Freinage</h2>
+      </div>
+      <div class="rounded-2xl overflow-hidden" style="border:1px solid rgba(255,255,255,.07)">
+        <table class="w-full text-sm">
+          <tbody>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Réglage d'un frein</td><td class="px-5 py-3 text-right font-bold text-white">10 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Réglage frein hydraulique</td><td class="px-5 py-3 text-right font-bold text-white">6 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Changement plaquettes + réglage</td><td class="px-5 py-3 text-right font-bold text-white">8 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Changement d'un disque de frein</td><td class="px-5 py-3 text-right font-bold text-white">10 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Dépollution disques / plaquettes</td><td class="px-5 py-3 text-right font-bold text-white">5 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Purge d'un frein hydraulique</td><td class="px-5 py-3 text-right font-bold text-white">25 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300 font-semibold text-blue-300">Pack purge 2 freins</td><td class="px-5 py-3 text-right font-bold text-blue-300">40 €</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TRANSMISSION -->
+    <div data-aos="fade-up">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.25)"><i data-lucide="settings" class="w-5 h-5 text-purple-400"></i></div>
+        <h2 class="font-heading font-bold text-xl text-white">Transmission</h2>
+      </div>
+      <div class="rounded-2xl overflow-hidden" style="border:1px solid rgba(255,255,255,.07)">
+        <table class="w-full text-sm">
+          <tbody>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Entretien transmission (nettoyage / lubrification)</td><td class="px-5 py-3 text-right font-bold text-white">5 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Montage chaîne</td><td class="px-5 py-3 text-right font-bold text-white">10 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Réglage dérailleur</td><td class="px-5 py-3 text-right font-bold text-white">15 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Réglage dérailleur électrique</td><td class="px-5 py-3 text-right font-bold text-white">15 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300 font-semibold text-blue-300">Pack réglage dérailleurs (avant + arrière)</td><td class="px-5 py-3 text-right font-bold text-blue-300">25 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Changement d'un plateau</td><td class="px-5 py-3 text-right font-bold text-white">20 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Montage / changement cassette</td><td class="px-5 py-3 text-right font-bold text-white">10 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Changement / remplacement pédalier</td><td class="px-5 py-3 text-right font-bold text-white">10 – 22 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Remplacement boitier de pédalier</td><td class="px-5 py-3 text-right font-bold text-white">25 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Remplacement transmission complète</td><td class="px-5 py-3 text-right font-bold text-white">35 €</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PNEUMATIQUES / ROUES -->
+    <div data-aos="fade-up">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25)"><i data-lucide="circle" class="w-5 h-5 text-green-400"></i></div>
+        <h2 class="font-heading font-bold text-xl text-white">Pneumatiques &amp; Roues</h2>
+      </div>
+      <div class="rounded-2xl overflow-hidden" style="border:1px solid rgba(255,255,255,.07)">
+        <table class="w-full text-sm">
+          <tbody>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Changement d'un pneu <span class="text-xs text-orange-400 ml-1">⭐ Populaire</span></td><td class="px-5 py-3 text-right font-bold text-white">10 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Changement d'une chambre à air <span class="text-xs text-orange-400 ml-1">⭐ Populaire</span></td><td class="px-5 py-3 text-right font-bold text-white">10 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Changement pneu tubeless + préventif</td><td class="px-5 py-3 text-right font-bold text-white">20 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Apport préventif tubeless <span class="text-xs text-orange-400 ml-1">⭐ Populaire</span></td><td class="px-5 py-3 text-right font-bold text-white">9 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Passage tubeless / pose fond de jante</td><td class="px-5 py-3 text-right font-bold text-white">25 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Changement obus valve</td><td class="px-5 py-3 text-right font-bold text-white">5 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Entretien roue libre / axe de roue</td><td class="px-5 py-3 text-right font-bold text-white">25 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Dévoilage simple</td><td class="px-5 py-3 text-right font-bold text-white">30 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Dévoilage important</td><td class="px-5 py-3 text-right font-bold text-white">50 €</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SUSPENSIONS -->
+    <div data-aos="fade-up">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.25)"><i data-lucide="activity" class="w-5 h-5 text-red-400"></i></div>
+        <h2 class="font-heading font-bold text-xl text-white">Suspensions</h2>
+      </div>
+      <div class="rounded-2xl overflow-hidden" style="border:1px solid rgba(255,255,255,.07)">
+        <table class="w-full text-sm">
+          <thead><tr style="background:rgba(255,255,255,.05)"><th class="px-5 py-3 text-left text-gray-500 font-medium">Prestation</th><th class="px-5 py-3 text-right text-gray-500 font-medium">Tarif MO</th></tr></thead>
+          <tbody>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Démontage / remontage + réglage (20 min)</td><td class="px-5 py-3 text-right font-bold text-white">20 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Changement d'une fourche</td><td class="px-5 py-3 text-right font-bold text-white">20 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Entretien tige de selle télescopique</td><td class="px-5 py-3 text-right font-bold text-white">60 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-400 text-xs font-semibold uppercase tracking-widest pt-4" colspan="2">Amortisseur</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Révision amortisseur 50H</td><td class="px-5 py-3 text-right font-bold text-white">49,99 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Révision amortisseur 100H</td><td class="px-5 py-3 text-right font-bold text-white">149,99 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Révision amortisseur 200H</td><td class="px-5 py-3 text-right font-bold text-white">199 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-400 text-xs font-semibold uppercase tracking-widest pt-4" colspan="2">Fourche</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Révision fourche 50H</td><td class="px-5 py-3 text-right font-bold text-white">74,99 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Révision fourche 100H</td><td class="px-5 py-3 text-right font-bold text-white">149,99 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Révision fourche 200H</td><td class="px-5 py-3 text-right font-bold text-white">199,99 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-400 text-xs font-semibold uppercase tracking-widest pt-4" colspan="2">Pack</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300 font-semibold text-blue-300">Pack révision fourche + amortisseur 100H</td><td class="px-5 py-3 text-right font-bold text-blue-300">275 €</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ÉLECTRIQUE -->
+    <div data-aos="fade-up">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.25)"><i data-lucide="zap" class="w-5 h-5 text-blue-400"></i></div>
+        <h2 class="font-heading font-bold text-xl text-white">Électrique (VAE)</h2>
+      </div>
+      <div class="rounded-2xl overflow-hidden" style="border:1px solid rgba(255,255,255,.07)">
+        <table class="w-full text-sm">
+          <tbody>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Mise à jour VAE</td><td class="px-5 py-3 text-right font-bold text-white">15 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Diagnostique problème VAE (1h)</td><td class="px-5 py-3 text-right font-bold text-white">60 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Frais de port / livraison VAE</td><td class="px-5 py-3 text-right font-bold text-white">50 €</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ACCESSOIRES & DIVERS -->
+    <div data-aos="fade-up">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.25)"><i data-lucide="tool" class="w-5 h-5 text-yellow-400"></i></div>
+        <h2 class="font-heading font-bold text-xl text-white">Accessoires &amp; Divers</h2>
+      </div>
+      <div class="rounded-2xl overflow-hidden" style="border:1px solid rgba(255,255,255,.07)">
+        <table class="w-full text-sm">
+          <tbody>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Installation accessoire</td><td class="px-5 py-3 text-right font-bold text-white">6 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Remplacement câble + gaine (passage externe)</td><td class="px-5 py-3 text-right font-bold text-white">10 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Remplacement et réglage guidon</td><td class="px-5 py-3 text-right font-bold text-white">20 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Pose d'une guidoline</td><td class="px-5 py-3 text-right font-bold text-white">10 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Réglage d'un jeu (direction, pédalier…)</td><td class="px-5 py-3 text-right font-bold text-white">25 €</td></tr>
+            <tr><td class="px-5 py-3 text-gray-300">Intervention urgente / prioritaire</td><td class="px-5 py-3 text-right font-bold text-white">15 €</td></tr>
+            <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Frais de déplacements</td><td class="px-5 py-3 text-right font-bold text-white">15 €</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- MAIN D'ŒUVRE -->
+    <div data-aos="fade-up">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(148,163,184,.1);border:1px solid rgba(148,163,184,.2)"><i data-lucide="clock" class="w-5 h-5 text-gray-400"></i></div>
+        <h2 class="font-heading font-bold text-xl text-white">Main d'œuvre horaire</h2>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+        <div class="rounded-xl p-4 text-center" style="background:var(--card);border:1px solid rgba(255,255,255,.07)"><div class="font-heading font-bold text-lg text-white">5 €</div><div class="text-xs text-gray-500 mt-1">5 min</div></div>
+        <div class="rounded-xl p-4 text-center" style="background:var(--card);border:1px solid rgba(255,255,255,.07)"><div class="font-heading font-bold text-lg text-white">10 €</div><div class="text-xs text-gray-500 mt-1">10 min</div></div>
+        <div class="rounded-xl p-4 text-center" style="background:var(--card);border:1px solid rgba(255,255,255,.07)"><div class="font-heading font-bold text-lg text-white">15 €</div><div class="text-xs text-gray-500 mt-1">15 min</div></div>
+        <div class="rounded-xl p-4 text-center" style="background:var(--card);border:1px solid rgba(255,255,255,.07)"><div class="font-heading font-bold text-lg text-white">20 €</div><div class="text-xs text-gray-500 mt-1">20 min</div></div>
+        <div class="rounded-xl p-4 text-center" style="background:var(--card);border:1px solid rgba(255,255,255,.07)"><div class="font-heading font-bold text-lg text-white">30 €</div><div class="text-xs text-gray-500 mt-1">30 min</div></div>
+        <div class="rounded-xl p-4 text-center" style="background:rgba(255,107,53,.08);border:1px solid rgba(255,107,53,.25)"><div class="font-heading font-bold text-lg text-orange-400">60 €</div><div class="text-xs text-gray-500 mt-1">1h</div></div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="rounded-2xl p-8 text-center" style="background:linear-gradient(135deg,rgba(255,107,53,.08),rgba(59,130,246,.06));border:1px solid rgba(255,107,53,.2)" data-aos="fade-up">
+      <p class="text-gray-400 text-sm mb-5">Tarifs TTC · Pièces non incluses sauf mention · <strong class="text-white">Sous réserve de modification</strong></p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="https://calendly.com/vttperformance67/rendez-vous-presentation-ou-test-velo-clone" target="_blank" rel="noopener" class="btn-orange text-sm"><i data-lucide="calendar" class="w-4 h-4"></i>Prendre rendez-vous</a>
+        <button onclick="showSection('atelier')" class="btn-outline text-sm"><i data-lucide="wrench" class="w-4 h-4"></i>Notre atelier</button>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /sec-tarifs -->
+
 <!-- ════════════════════ FAQ ════════════════════ -->
 <div id="sec-faq" class="section-hidden">
   <section class="py-20 px-4">
@@ -3704,6 +3917,7 @@
           <button onclick="showSection('suspensions')" class="block text-sm text-gray-500 hover:text-white transition-colors text-left">Suspensions</button>
           <button onclick="showSection('peinture')" class="block text-sm text-gray-500 hover:text-white transition-colors text-left">Peinture</button>
           <button onclick="showSection('histoire')" class="block text-sm text-gray-500 hover:text-white transition-colors text-left">Notre histoire</button>
+          <button onclick="showSection('tarifs')" class="block text-sm text-gray-500 hover:text-white transition-colors text-left">Tarifs &amp; Prestations</button>
           <button onclick="showSection('faq')" class="block text-sm text-gray-500 hover:text-white transition-colors text-left">FAQ</button>
           <button onclick="showSection('blog')" class="block text-sm text-gray-500 hover:text-white transition-colors text-left">Blog &amp; Actualités</button>
         </div>
@@ -4772,7 +4986,7 @@ const BIKE_IMGS = {
 
 // ── NAV ───────────────────────────────────────────────────────────────
 function showSection(id) {
-  ['accueil','catalogue','location','atelier','suspensions','peinture','contact','histoire','vitrine','faq','blog','reprise'].forEach(s => {
+  ['accueil','catalogue','location','atelier','suspensions','peinture','contact','histoire','vitrine','faq','blog','reprise','tarifs'].forEach(s => {
     var el = document.getElementById('sec-'+s);
     if (s === id) {
       el.classList.remove('section-hidden');
@@ -6550,7 +6764,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderRecentlyViewed();
   // Support navigation depuis product.html via hash
   const h = location.hash.replace('#','');
-  const valid = ['accueil','catalogue','location','atelier','suspensions','peinture','contact','histoire','vitrine','faq','blog','reprise'];
+  const valid = ['accueil','catalogue','location','atelier','suspensions','peinture','contact','histoire','vitrine','faq','blog','reprise','tarifs'];
   if (h && valid.includes(h)) showSection(h);
   // Auto-trigger counter if visible on load
   setTimeout(function(){ window.dispatchEvent(new Event('scroll')); }, 800);
