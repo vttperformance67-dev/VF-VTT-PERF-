@@ -267,6 +267,11 @@
     .testi-track:hover { animation-play-state:paused; }
     @keyframes testi-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
+    .histoire-gallery-track { display:flex; gap:1rem; width:max-content; animation:histoire-scroll 60s linear infinite; }
+    .histoire-gallery-track:hover { animation-play-state:paused; }
+    @keyframes histoire-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .histoire-gallery-img { height:220px; width:300px; object-fit:cover; border-radius:1rem; flex-shrink:0; }
+
     .mobile-menu { max-height:0; overflow:hidden; transition:max-height .35s ease; }
 
     /* ── Sentiers ── */
@@ -2972,6 +2977,51 @@
         Plus qu'un magasin,<br><span style="background:linear-gradient(135deg,#ff6b35,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">une passion partagée</span>
       </h1>
       <p class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">Chez VTT Performance, tout part d'une passion — pour le vélo, la mécanique, et surtout le travail bien fait.</p>
+    </div>
+  </div>
+
+  <!-- ── Photos défilantes du magasin ── -->
+  <div style="overflow:hidden;padding:2.5rem 0;position:relative" aria-hidden="true">
+    <div style="position:absolute;left:0;top:0;bottom:0;width:100px;z-index:2;pointer-events:none;background:linear-gradient(to right,#060d1a 30%,transparent)"></div>
+    <div style="position:absolute;right:0;top:0;bottom:0;width:100px;z-index:2;pointer-events:none;background:linear-gradient(to left,#060d1a 30%,transparent)"></div>
+    <div class="histoire-gallery-track">
+      <img class="histoire-gallery-img" src="images/65A4C10E-C4BC-4478-9A1C-1E1A150F2A48.JPEG" alt="VTT Performance magasin" loading="lazy">
+      <img class="histoire-gallery-img" src="images/AACABCB3-67FA-4C5D-8019-B6DED0895391.JPEG" alt="VTT Performance" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_3475.JPEG" alt="Atelier VTT Performance" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_3932.JPEG" alt="VTT Performance" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_4869.JPEG" alt="VTT Performance" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_4871.JPEG" alt="VTT Performance" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_5021.JPEG" alt="VTT Performance" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_5097.JPEG" alt="Magasin vélo Ingwiller" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_5178.JPEG" alt="VTT Performance" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_5179.JPEG" alt="VTT Performance" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_5180.JPEG" alt="VTT Performance" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_5181.JPEG" alt="VTT Performance" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_5347.JPEG" alt="Atelier suspensions" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_3016.JPEG" alt="VTT Performance" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_2871.JPEG" alt="Build sur mesure" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_2591.PNG" alt="VTT Performance" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_3110.PNG" alt="VTT Performance" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_3111.PNG" alt="VTT Performance" loading="lazy">
+      <!-- duplication pour boucle infinie -->
+      <img class="histoire-gallery-img" src="images/65A4C10E-C4BC-4478-9A1C-1E1A150F2A48.JPEG" alt="" loading="lazy">
+      <img class="histoire-gallery-img" src="images/AACABCB3-67FA-4C5D-8019-B6DED0895391.JPEG" alt="" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_3475.JPEG" alt="" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_3932.JPEG" alt="" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_4869.JPEG" alt="" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_4871.JPEG" alt="" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_5021.JPEG" alt="" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_5097.JPEG" alt="" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_5178.JPEG" alt="" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_5179.JPEG" alt="" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_5180.JPEG" alt="" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_5181.JPEG" alt="" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_5347.JPEG" alt="" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_3016.JPEG" alt="" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_2871.JPEG" alt="" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_2591.PNG" alt="" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_3110.PNG" alt="" loading="lazy">
+      <img class="histoire-gallery-img" src="images/IMG_3111.PNG" alt="" loading="lazy">
     </div>
   </div>
 
