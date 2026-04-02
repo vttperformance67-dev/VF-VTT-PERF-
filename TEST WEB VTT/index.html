@@ -1904,7 +1904,7 @@
             </div>
             <div class="flex items-center gap-3">
               <input type="checkbox" id="r-equip" onchange="calcRent()" class="w-4 h-4 accent-orange-500">
-              <label for="r-equip" class="text-sm text-gray-300">Supplément équipement (casque, protections…)</label>
+              <label for="r-equip" id="r-equip-label" class="text-sm text-gray-300">Supplément équipement (casque, protections — offert dès 250€)</label>
             </div>
           </div>
           <div class="mt-8 rounded-xl p-6 text-center" style="background:rgba(255,107,53,.08);border:1px solid rgba(255,107,53,.2)">
@@ -1964,8 +1964,8 @@
             <div>
               <label class="block text-sm font-medium text-gray-300 mb-2">Équipement supplémentaire</label>
               <div class="grid grid-cols-2 gap-2">
-                <label class="rental-equip-check"><input type="checkbox" name="equip" value="casque"> Casque (+5€)</label>
-                <label class="rental-equip-check"><input type="checkbox" name="equip" value="protections"> Protections (+5€)</label>
+                <label class="rental-equip-check"><input type="checkbox" name="equip" value="casque"> Casque <span class="text-gray-500 text-xs">(+5€ / offert dès 250€)</span></label>
+                <label class="rental-equip-check"><input type="checkbox" name="equip" value="protections"> Protections <span class="text-gray-500 text-xs">(+5€ / offert dès 250€)</span></label>
                 <label class="rental-equip-check"><input type="checkbox" name="equip" value="sacoche"> Sacoche de guidon (+3€)</label>
                 <label class="rental-equip-check"><input type="checkbox" name="equip" value="cadenas"> Antivol (+2€)</label>
               </div>
@@ -5462,9 +5462,15 @@ function calcRent() {
   else if (dur==='day')    { price=p.day[day==='weekend'?1:0];  note='pour la journée'; }
   else if (dur==='week')   { price=p.week; note='par jour (min. 3j)'; }
   else if (dur==='weekend'){ price=p.weekend[0]; note='le week-end'; }
-  if (eq) price += EQUIP[dur];
+  const protectFree = price >= 250;
+  if (eq && !protectFree) price += EQUIP[dur];
   document.getElementById('r-price').textContent = price+'€';
-  document.getElementById('r-note').textContent  = note+(eq?' · incl. équipement':'');
+  let noteStr = note;
+  if (protectFree) noteStr += ' · 🎁 Casque & protections offerts';
+  else if (eq) noteStr += ' · incl. équipement';
+  document.getElementById('r-note').textContent = noteStr;
+  const lbl = document.getElementById('r-equip-label');
+  if (lbl) lbl.textContent = protectFree ? 'Casque & protections (offerts pour cette location)' : 'Supplément équipement (casque, protections — offert dès 250€)';
 }
 
 // ── RENTAL FORM ───────────────────────────────────────────────────────
