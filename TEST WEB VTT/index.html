@@ -272,6 +272,12 @@
     @keyframes histoire-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
     .histoire-gallery-img { height:220px; width:300px; object-fit:cover; border-radius:1rem; flex-shrink:0; }
 
+    .location-banner-track { display:flex; gap:1.25rem; width:max-content; animation:histoire-scroll 40s linear infinite; }
+    .location-banner-track:hover { animation-play-state:paused; }
+    .location-banner-item { position:relative; height:280px; width:460px; flex-shrink:0; border-radius:1.25rem; overflow:hidden; }
+    .location-banner-img { height:100%; width:100%; object-fit:cover; border-radius:1.25rem; }
+    .location-banner-caption { position:absolute; bottom:0; left:0; right:0; padding:1.25rem 1.5rem; background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.3) 60%,transparent 100%); pointer-events:none; }
+
     .mobile-menu { max-height:0; overflow:hidden; transition:max-height .35s ease; }
 
     /* ── Sentiers ── */
@@ -1179,7 +1185,7 @@
           </div>
           <div>
             <h3 class="font-heading font-bold text-lg mb-1">Techniciens spécialisés</h3>
-            <p class="text-sm text-gray-400 leading-relaxed">Compétents sur Bosch et Shimano EP8 (sans formation officielle). Connaissances approfondies, spécialisés suspensions.</p>
+            <p class="text-sm text-gray-400 leading-relaxed">Compétents sur Bosch et Shimano (sans formation officielle). Connaissances approfondies, spécialisés suspensions.</p>
           </div>
         </div>
 
@@ -1232,12 +1238,12 @@
           <div class="flex items-center gap-2">
             <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.25)"><i data-lucide="zap" class="w-4 h-4 text-blue-400"></i></div>
             <span class="text-sm font-bold text-gray-300">Bosch eBike</span>
-            <span class="text-xs px-2 py-0.5 rounded-full" style="background:rgba(59,130,246,.12);color:#93c5fd;border:1px solid rgba(59,130,246,.25)">Formé</span>
+            <span class="text-xs px-2 py-0.5 rounded-full" style="background:rgba(34,197,94,.12);color:#4ade80;border:1px solid rgba(34,197,94,.25)">Réviseur</span>
           </div>
           <div class="flex items-center gap-2">
             <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:rgba(255,107,53,.15);border:1px solid rgba(255,107,53,.25)"><i data-lucide="settings-2" class="w-4 h-4 text-orange-400"></i></div>
-            <span class="text-sm font-bold text-gray-300">Shimano EP8</span>
-            <span class="text-xs px-2 py-0.5 rounded-full" style="background:rgba(255,107,53,.12);color:#fb923c;border:1px solid rgba(255,107,53,.25)">Formé</span>
+            <span class="text-sm font-bold text-gray-300">Shimano</span>
+            <span class="text-xs px-2 py-0.5 rounded-full" style="background:rgba(34,197,94,.12);color:#4ade80;border:1px solid rgba(34,197,94,.25)">Réviseur</span>
           </div>
           <div class="flex items-center gap-2">
             <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.25)"><i data-lucide="activity" class="w-4 h-4 text-red-400"></i></div>
@@ -1630,69 +1636,70 @@
       <div class="mb-12" data-aos="fade-up">
         <span class="badge badge-electric">Location</span>
         <h2 class="font-heading font-bold text-4xl mt-3 mb-2">Louez votre vélo à Ingwiller</h2>
-        <p class="text-gray-400 max-w-xl">Partez explorer l'Alsace du Nord sur nos vélos haut de gamme. À partir de 30€/jour.</p>
+        <p class="text-gray-400 max-w-xl">Partez explorer l'Alsace du Nord sur nos vélos haut de gamme — dernières nouveautés et modèles de l'année en cours. À partir de 30€/jour.</p>
       </div>
 
-      <!-- Galerie inspiration location -->
-      <div class="grid md:grid-cols-3 gap-5 mb-12" data-aos="fade-up">
-
-        <!-- Card 1 — Forêts & sentiers -->
-        <div class="relative rounded-2xl overflow-hidden cursor-pointer group" style="height:320px">
-          <img src="images/IMG_3475.JPEG" alt="Vélos en balade Alsace" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 35%;transition:transform .6s ease">
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.3) 50%,rgba(0,0,0,.1) 100%);transition:background .4s"></div>
-          <div style="position:absolute;top:1.25rem;right:1.25rem;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.2)">
-            <i data-lucide="trees" style="width:20px;height:20px;color:#4ade80"></i>
-          </div>
-          <div style="position:absolute;top:1.25rem;left:1.25rem;background:rgba(74,222,128,.2);border:1px solid rgba(74,222,128,.4);color:#4ade80;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;letter-spacing:.05em">ALSACE DU NORD</div>
-          <div style="position:absolute;bottom:0;padding:1.5rem">
-            <div style="font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.4rem">Forêts &amp; sentiers<br>sauvages</div>
-            <p style="color:#d1d5db;font-size:.82rem;line-height:1.5;margin-bottom:.75rem">100+ km de pistes balisées autour d'Ingwiller — grandir, glisser, s'évader.</p>
-            <div style="display:flex;gap:.75rem">
-              <span style="background:rgba(255,255,255,.1);color:#e5e7eb;font-size:.72rem;padding:.25rem .6rem;border-radius:1rem">🌲 Forêt</span>
-              <span style="background:rgba(255,255,255,.1);color:#e5e7eb;font-size:.72rem;padding:.25rem .6rem;border-radius:1rem">⛰️ Reliefs</span>
-              <span style="background:rgba(255,255,255,.1);color:#e5e7eb;font-size:.72rem;padding:.25rem .6rem;border-radius:1rem">🗺️ Balisé</span>
+      <!-- Bannière photos défilante -->
+      <div class="relative mb-12 overflow-hidden rounded-2xl" style="--mask-w:80px" data-aos="fade-up">
+        <div style="position:absolute;left:0;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;background:linear-gradient(to right,#0a1628 30%,transparent)"></div>
+        <div style="position:absolute;right:0;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;background:linear-gradient(to left,#0a1628 30%,transparent)"></div>
+        <div class="location-banner-track">
+          <!-- Photo 1 — Forêts & sentiers -->
+          <div class="location-banner-item">
+            <img class="location-banner-img" src="images/location-vtt-foret.png" alt="VTT trail en forêt Alsace" loading="lazy">
+            <div class="location-banner-caption">
+              <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Forêts &amp; sentiers sauvages</div>
+              <p style="color:#d1d5db;font-size:.78rem">Balade chemins · 100+ km balisés autour d'Ingwiller</p>
             </div>
           </div>
-        </div>
-
-        <!-- Card 2 — VTT Électrique -->
-        <div class="relative rounded-2xl overflow-hidden cursor-pointer group" style="height:320px">
-          <img src="images/65A4C10E-C4BC-4478-9A1C-1E1A150F2A48.JPEG" alt="VTTAE électrique SUNN" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%;transition:transform .6s ease">
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.3) 50%,rgba(0,0,0,.1) 100%)"></div>
-          <div style="position:absolute;top:1.25rem;right:1.25rem;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.2)">
-            <i data-lucide="zap" style="width:20px;height:20px;color:#fb923c"></i>
-          </div>
-          <div style="position:absolute;top:1.25rem;left:1.25rem;background:rgba(251,146,60,.2);border:1px solid rgba(251,146,60,.4);color:#fb923c;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;letter-spacing:.05em">VTTAE ÉLECTRIQUE</div>
-          <div style="position:absolute;bottom:0;padding:1.5rem">
-            <div style="font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.4rem">Puissance &amp;<br>sensations fortes</div>
-            <p style="color:#d1d5db;font-size:.82rem;line-height:1.5;margin-bottom:.75rem">Moustache Trail 150 &amp; SUNN Rage. Moteur Bosch, jusqu'à 750 Wh d'autonomie.</p>
-            <div style="display:flex;gap:.75rem">
-              <span style="background:rgba(255,255,255,.1);color:#e5e7eb;font-size:.72rem;padding:.25rem .6rem;border-radius:1rem">⚡ Moteur Bosch</span>
-              <span style="background:rgba(255,255,255,.1);color:#e5e7eb;font-size:.72rem;padding:.25rem .6rem;border-radius:1rem">🔋 750 Wh</span>
+          <!-- Photo 2 — Entre amis / puissance -->
+          <div class="location-banner-item">
+            <img class="location-banner-img" src="images/location-vtt-boue.png" alt="VTT entre amis sensations fortes" loading="lazy">
+            <div class="location-banner-caption">
+              <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Puissance &amp; sensations fortes</div>
+              <p style="color:#fb923c;font-size:.78rem;font-weight:700">750 Wh · 100 Nm — le plus puissant du marché ⚡</p>
             </div>
           </div>
-        </div>
-
-        <!-- Card 3 — Tous niveaux -->
-        <div class="relative rounded-2xl overflow-hidden cursor-pointer group" style="height:320px">
-          <img src="images/IMG_5181.JPEG" alt="Showroom vélos tous niveaux" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;transition:transform .6s ease">
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.3) 50%,rgba(0,0,0,.1) 100%)"></div>
-          <div style="position:absolute;top:1.25rem;right:1.25rem;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.2)">
-            <i data-lucide="users" style="width:20px;height:20px;color:#38bdf8"></i>
-          </div>
-          <div style="position:absolute;top:1.25rem;left:1.25rem;background:rgba(56,189,248,.2);border:1px solid rgba(56,189,248,.4);color:#38bdf8;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;letter-spacing:.05em">TOUS NIVEAUX</div>
-          <div style="position:absolute;bottom:0;padding:1.5rem">
-            <div style="font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.4rem">Famille, amis,<br>débutants &amp; experts</div>
-            <p style="color:#d1d5db;font-size:.82rem;line-height:1.5;margin-bottom:.75rem">VTT, BMX, VTCAE… un vélo pour chaque profil. Casque &amp; protections disponibles.</p>
-            <div style="display:flex;gap:.75rem">
-              <span style="background:rgba(255,255,255,.1);color:#e5e7eb;font-size:.72rem;padding:.25rem .6rem;border-radius:1rem">👨‍👩‍👧 Famille</span>
-              <span style="background:rgba(255,255,255,.1);color:#e5e7eb;font-size:.72rem;padding:.25rem .6rem;border-radius:1rem">🏆 Expert</span>
-              <span style="background:rgba(255,255,255,.1);color:#e5e7eb;font-size:.72rem;padding:.25rem .6rem;border-radius:1rem">🛡️ Équipé</span>
+          <!-- Photo 3 — Famille / loisir -->
+          <div class="location-banner-item">
+            <img class="location-banner-img" src="images/location-famille.png" alt="Location vélo famille piste cyclable" loading="lazy">
+            <div class="location-banner-caption">
+              <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Famille, amis, débutants &amp; experts</div>
+              <p style="color:#d1d5db;font-size:.78rem">Loisir · piste cyclable et chemins · tous profils</p>
             </div>
           </div>
+          <div class="location-banner-item"><img class="location-banner-img" src="images/IMG_4869.JPEG" alt="" loading="lazy"></div>
+          <div class="location-banner-item"><img class="location-banner-img" src="images/IMG_5181.JPEG" alt="" loading="lazy"></div>
+          <div class="location-banner-item"><img class="location-banner-img" src="images/IMG_3475.JPEG" alt="" loading="lazy"></div>
+          <div class="location-banner-item"><img class="location-banner-img" src="images/IMG_5179.JPEG" alt="" loading="lazy"></div>
+          <!-- duplication pour boucle infinie -->
+          <div class="location-banner-item">
+            <img class="location-banner-img" src="images/location-vtt-foret.png" alt="" loading="lazy">
+            <div class="location-banner-caption">
+              <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Forêts &amp; sentiers sauvages</div>
+              <p style="color:#d1d5db;font-size:.78rem">Balade chemins · 100+ km balisés autour d'Ingwiller</p>
+            </div>
+          </div>
+          <div class="location-banner-item">
+            <img class="location-banner-img" src="images/location-vtt-boue.png" alt="" loading="lazy">
+            <div class="location-banner-caption">
+              <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Puissance &amp; sensations fortes</div>
+              <p style="color:#fb923c;font-size:.78rem;font-weight:700">750 Wh · 100 Nm — le plus puissant du marché ⚡</p>
+            </div>
+          </div>
+          <div class="location-banner-item">
+            <img class="location-banner-img" src="images/location-famille.png" alt="" loading="lazy">
+            <div class="location-banner-caption">
+              <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Famille, amis, débutants &amp; experts</div>
+              <p style="color:#d1d5db;font-size:.78rem">Loisir · piste cyclable et chemins · tous profils</p>
+            </div>
+          </div>
+          <div class="location-banner-item"><img class="location-banner-img" src="images/IMG_4869.JPEG" alt="" loading="lazy"></div>
+          <div class="location-banner-item"><img class="location-banner-img" src="images/IMG_5181.JPEG" alt="" loading="lazy"></div>
+          <div class="location-banner-item"><img class="location-banner-img" src="images/IMG_3475.JPEG" alt="" loading="lazy"></div>
+          <div class="location-banner-item"><img class="location-banner-img" src="images/IMG_5179.JPEG" alt="" loading="lazy"></div>
         </div>
-
-      </div><!-- /galerie -->
+      </div><!-- /bannière -->
 
       <!-- Offre spéciale -->
       <div class="rounded-2xl p-6 mb-10 flex flex-col md:flex-row items-center justify-between gap-4" style="background:linear-gradient(135deg,rgba(255,107,53,.12),rgba(255,107,53,.06));border:1px solid rgba(255,107,53,.25);" data-aos="fade-up">
@@ -1723,44 +1730,49 @@
           <tbody>
             <tr>
               <td><strong>½ journée</strong> <span class="text-gray-500 text-xs">(4h)</span></td>
-              <td><span class="text-white font-semibold">50€</span><span class="text-gray-500 text-xs"> / 65€ WE</span></td>
-              <td><span class="text-white font-semibold">40€</span><span class="text-gray-500 text-xs"> / 55€ WE</span></td>
-              <td><span class="text-white font-semibold">35€</span><span class="text-gray-500 text-xs"> / 50€ WE</span></td>
-              <td><span class="text-white font-semibold">25€</span><span class="text-gray-500 text-xs"> / 40€ WE</span></td>
-              <td><span class="text-white font-semibold">15€</span><span class="text-gray-500 text-xs"> / 25€ WE</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">50€</span> <span class="text-gray-500 text-xs line-through">65€</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">40€</span> <span class="text-gray-500 text-xs line-through">55€</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">35€</span> <span class="text-gray-500 text-xs line-through">50€</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">25€</span> <span class="text-gray-500 text-xs line-through">40€</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">15€</span> <span class="text-gray-500 text-xs line-through">25€</span></td>
               <td class="text-orange-400 font-semibold">+5€</td>
             </tr>
             <tr>
               <td><strong>Journée</strong> <span class="text-gray-500 text-xs">(9h–18h)</span></td>
-              <td><span class="text-white font-semibold">75€</span><span class="text-gray-500 text-xs"> / 90€ WE</span></td>
-              <td><span class="text-white font-semibold">65€</span><span class="text-gray-500 text-xs"> / 80€ WE</span></td>
-              <td><span class="text-white font-semibold">60€</span><span class="text-gray-500 text-xs"> / 75€ WE</span></td>
-              <td><span class="text-white font-semibold">50€</span><span class="text-gray-500 text-xs"> / 65€ WE</span></td>
-              <td><span class="text-white font-semibold">35€</span><span class="text-gray-500 text-xs"> / 45€ WE</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">75€</span> <span class="text-gray-500 text-xs line-through">90€</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">65€</span> <span class="text-gray-500 text-xs line-through">80€</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">60€</span> <span class="text-gray-500 text-xs line-through">75€</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">50€</span> <span class="text-gray-500 text-xs line-through">65€</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">35€</span> <span class="text-gray-500 text-xs line-through">45€</span></td>
               <td class="text-orange-400 font-semibold">+15€</td>
             </tr>
             <tr>
               <td><strong>Semaine</strong> <span class="text-gray-500 text-xs">(3j min.)</span></td>
-              <td class="text-white font-semibold">70€/j</td>
-              <td class="text-white font-semibold">60€/j</td>
-              <td class="text-white font-semibold">55€/j</td>
-              <td class="text-white font-semibold">45€/j</td>
-              <td class="text-white font-semibold">30€/j</td>
+              <td><span style="color:#4ade80" class="font-semibold">70€/j</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">60€/j</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">55€/j</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">45€/j</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">30€/j</span></td>
               <td class="text-orange-400 font-semibold">+10€/j</td>
             </tr>
             <tr>
               <td><strong>Week-end</strong> <span class="text-gray-500 text-xs">(Sam–Dim)</span></td>
-              <td><span class="text-white font-semibold">160€</span><span class="text-gray-500 text-xs"> / 180€</span></td>
-              <td><span class="text-white font-semibold">140€</span><span class="text-gray-500 text-xs"> / 160€</span></td>
-              <td><span class="text-white font-semibold">130€</span><span class="text-gray-500 text-xs"> / 150€</span></td>
-              <td><span class="text-white font-semibold">110€</span><span class="text-gray-500 text-xs"> / 130€</span></td>
-              <td><span class="text-white font-semibold">70€</span><span class="text-gray-500 text-xs"> / 90€</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">160€</span> <span class="text-gray-500 text-xs line-through">180€</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">140€</span> <span class="text-gray-500 text-xs line-through">160€</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">130€</span> <span class="text-gray-500 text-xs line-through">150€</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">110€</span> <span class="text-gray-500 text-xs line-through">130€</span></td>
+              <td><span style="color:#4ade80" class="font-semibold">70€</span> <span class="text-gray-500 text-xs line-through">90€</span></td>
               <td class="text-orange-400 font-semibold">+30€</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <p class="text-xs text-gray-600 mb-12 px-1">S. = Semaine (lun–ven) · WE = Week-end &amp; jours fériés</p>
+      <p class="text-xs text-gray-600 mb-3 px-1">S. = Semaine (lun–ven) · WE = Week-end &amp; jours fériés · Prix barrés = tarif plein, prix vert = tarif remisé</p>
+      <div class="flex items-center gap-3 mb-12 px-3 py-3 rounded-xl text-sm" style="background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2)">
+        <i data-lucide="shield-check" class="w-5 h-5 flex-shrink-0" style="color:#4ade80"></i>
+        <span style="color:#4ade80" class="font-semibold">Protections offertes</span>
+        <span class="text-gray-400">— casque, genouillères &amp; coudières inclus sans supplément pour toute location de vélo à partir de <strong class="text-white">250€</strong>.</span>
+      </div>
 
       <!-- ── FLOTTE DE LOCATION ── -->
       <div class="mb-14" data-aos="fade-up">
@@ -2145,10 +2157,10 @@
         <!-- Badges certification -->
         <div class="flex flex-wrap items-center justify-center gap-3 mb-8">
           <div class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold" style="background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);color:#93c5fd;">
-            <i data-lucide="zap" class="w-4 h-4"></i>Bosch eBike Systems — Formé
+            <i data-lucide="zap" class="w-4 h-4"></i>Bosch eBike — Compétent sur
           </div>
           <div class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold" style="background:rgba(255,107,53,.12);border:1px solid rgba(255,107,53,.3);color:#fb923c;">
-            <i data-lucide="settings-2" class="w-4 h-4"></i>Shimano EP8 — Formé
+            <i data-lucide="settings-2" class="w-4 h-4"></i>Shimano — Compétent sur
           </div>
           <div class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:#f87171;">
             <i data-lucide="activity" class="w-4 h-4"></i>Fox Racing — Réviseur officiel
@@ -2236,7 +2248,7 @@
               <tr><td>Rayonnage / voilage roue</td><td class="text-white font-semibold">18€</td><td>45 min</td><td class="text-gray-500 text-xs">Remplacement rayons en sus</td></tr>
               <tr><td>Remplacement chaîne</td><td class="text-white font-semibold">15€</td><td>20 min</td><td class="text-gray-500 text-xs">Chaîne en sus · prix à partir de 18€</td></tr>
               <tr><td>Remplacement cassette + dérailleur</td><td class="text-white font-semibold">35€</td><td>1h</td><td class="text-gray-500 text-xs">Pièces non incluses</td></tr>
-              <tr><td>Diagnostic électrique VAE</td><td class="text-white font-semibold">Gratuit RDV</td><td>30 min</td><td style="color:#4ade80" class="text-xs">Bosch, Shimano EP8</td></tr>
+              <tr><td>Diagnostic électrique VAE</td><td class="text-white font-semibold">Gratuit RDV</td><td>30 min</td><td style="color:#4ade80" class="text-xs">Bosch, Shimano</td></tr>
               <tr><td>Récupération / livraison à domicile</td><td class="text-white font-semibold">Gratuit*</td><td>—</td><td class="text-gray-500 text-xs">*Rayon 30 km · interv. ≥200€</td></tr>
             </tbody>
           </table>
@@ -3780,6 +3792,8 @@
             <div><label>Marque</label><select id="rep-brand" class="inp"><option value="">Sélectionner...</option><option>SUNN</option><option>Moustache</option><option>KONA</option><option>NORCO</option><option>Trek</option><option>Specialized</option><option>Giant</option><option>Orbea</option><option>Canyon</option><option>Autre marque</option></select></div>
             <div><label>Prix d'achat neuf (€)</label><input type="number" id="rep-price" placeholder="ex: 3500" class="inp" min="200" max="15000"></div>
             <div><label>Année d'achat</label><select id="rep-year" class="inp"><option value="">Sélectionner...</option></select></div>
+            <div><label>Prix du vélo neuf envisagé (€) <span class="text-gray-500 font-normal text-xs">— pour calculer l'estimation</span></label><input type="number" id="rep-new-price" placeholder="ex: 4500" class="inp" min="500" max="20000"></div>
+            <div><label>Frais à prévoir / réparations estimées (€) <span class="text-gray-500 font-normal text-xs">— optionnel</span></label><input type="number" id="rep-repairs" placeholder="ex: 200" class="inp" min="0" max="5000"></div>
             <div><label>État général</label>
               <div class="grid grid-cols-3 gap-2 mt-2" id="rep-state-btns">
                 <button class="rep-state-btn p-3 rounded-lg text-sm text-center cursor-pointer transition-all" style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);color:#86efac;" onclick="selectRepState(this,'excellent')">⭐ Excellent</button>
@@ -6693,15 +6707,14 @@ function calcReprise() {
   var price = parseFloat(document.getElementById('rep-price').value) || 0;
   var year = parseInt(document.getElementById('rep-year').value) || new Date().getFullYear();
   var state = repriState.state || 'bon';
+  var newPrice = parseFloat(document.getElementById('rep-new-price').value) || 0;
+  var repairs = parseFloat(document.getElementById('rep-repairs').value) || 0;
   if (price < 200) { alert('Veuillez saisir un prix d\'achat valide.'); return; }
-  var age = new Date().getFullYear() - year;
-  var deprBase = repriState.type === 'VTTAE' || repriState.type === 'VTCAE' ? 0.18 : 0.22;
-  var depFactor = Math.pow(1 - deprBase, age);
-  var stateMult = state === 'excellent' ? 1.1 : state === 'bon' ? 0.92 : 0.72;
-  var mid = Math.round(price * depFactor * stateMult * 0.8 / 50) * 50;
+  if (newPrice < 500) { alert('Veuillez saisir le prix du vélo neuf envisagé (min. 500 €).'); return; }
+  var mid = Math.round(Math.max(50, (newPrice * 0.5) - repairs) / 50) * 50;
   var min = Math.round(mid * 0.85 / 50) * 50;
   var max = Math.round(mid * 1.15 / 50) * 50;
-  mid = Math.max(50, mid); min = Math.max(50, min); max = Math.max(50, max);
+  min = Math.max(50, min); max = Math.max(50, max);
   document.getElementById('rep-value-display').textContent = mid.toLocaleString('fr-FR') + ' €';
   document.getElementById('rep-min').textContent = min.toLocaleString('fr-FR') + ' €';
   document.getElementById('rep-mid').textContent = mid.toLocaleString('fr-FR') + ' €';
