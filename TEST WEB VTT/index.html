@@ -5387,33 +5387,52 @@ function initCountersObserver() {
 }
 
 // ── AVAILABILITY CALENDAR ─────────────────────────────────────────────
+// Flotte réelle de location
+var FLEET = [
+  { label:'Moustache Trail 150.2', key:'moustache',  qty:1 },
+  { label:'SUNN Rage',             key:'sunn_rage',  qty:2 },
+  { label:'SUNN Start / Skill',    key:'sunn_vtcae', qty:2 },
+  { label:'BMX / Dirt',            key:'bmx',        qty:1 }
+];
+// Correspondance option formulaire → clé flotte
+var VELO_TO_KEY = {
+  'VTTAE Moustache Trail 150.2 750Wh': 'moustache',
+  'VTTAE SUNN Rage 500Wh':             'sunn_rage',
+  'VTCAE SUNN Start / Skill':          'sunn_vtcae',
+  'Dirt / BMX Race':                   'bmx'
+};
+
+function getRentedCount(key, dateStr) {
+  var res = JSON.parse(localStorage.getItem('vtt_loc') || '[]');
+  return res.filter(function(r) {
+    return r.key === key && r.start <= dateStr && r.end >= dateStr;
+  }).length;
+}
+
+function saveRentalLocal(veloText, start, end) {
+  if (!start || !end) return;
+  var key = VELO_TO_KEY[veloText];
+  if (!key) return;
+  var res = JSON.parse(localStorage.getItem('vtt_loc') || '[]');
+  // Purge des entrées expirées (> 60 jours passés)
+  var cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 60);
+  var cutoffStr = cutoff.toISOString().split('T')[0];
+  res = res.filter(function(r){ return r.end >= cutoffStr; });
+  res.push({ key:key, start:start, end:end, velo:veloText, ts:Date.now() });
+  localStorage.setItem('vtt_loc', JSON.stringify(res));
+}
+
 function initAvailCalendar() {
-  // Simulated availability: seed is deterministic based on day-of-week + bike index
-  // Status: 'ok' = disponible, 'limit' = dernières places, 'full' = complet
-  var bikes = [
-    { label:'Moustache Trail 150.2 (×2)',  qty:2 },
-    { label:'SUNN Rage (×3)',            qty:3 },
-    { label:'SUNN Start/Skill (×4)',     qty:4 },
-    { label:'VTT (×5)',                  qty:5 },
-    { label:'BMX / Dirt (×3)',           qty:3 }
-  ];
-  // Simulated seed matrix (availability pattern per day, loops)
-  var pattern = [
-    // lun  mar  mer  jeu  ven  sam  dim
-    ['ok','ok','limit','ok','full','full','limit'],
-    ['ok','ok','ok','limit','ok','limit','full'],
-    ['ok','ok','ok','ok','ok','ok','ok'],
-    ['ok','limit','ok','ok','limit','ok','full'],
-    ['ok','ok','full','ok','ok','limit','ok']
-  ];
   var today = new Date();
   var days = [];
   for (var i = 0; i < 7; i++) {
     var d = new Date(today);
     d.setDate(today.getDate() + i);
     var dayNames = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+    var dateStr = d.toISOString().split('T')[0];
     days.push({
       label: dayNames[d.getDay()] + ' ' + d.getDate() + '/' + (d.getMonth()+1),
+      dateStr: dateStr,
       isWeekend: d.getDay() === 0 || d.getDay() === 6
     });
   }
@@ -5421,17 +5440,21 @@ function initAvailCalendar() {
   var th = '<tr><th></th>' + days.map(function(d){
     return '<th style="'+(d.isWeekend?'color:#fb923c':'')+'">'+d.label+'</th>';
   }).join('') + '</tr>';
-  var rows = bikes.map(function(b, bi){
-    var cells = days.map(function(d, di){
-      var status = pattern[bi][di];
-      return '<td class="avail-cell-'+status+'" title="'+statusLabel[status]+'">'+statusLabel[status]+'</td>';
+  var rows = FLEET.map(function(b){
+    var cells = days.map(function(d){
+      var rented    = getRentedCount(b.key, d.dateStr);
+      var remaining = b.qty - rented;
+      var status    = remaining <= 0 ? 'full' : remaining === 1 && b.qty > 1 ? 'limit' : 'ok';
+      var txt       = remaining <= 0 ? 'Complet' : remaining === 1 && b.qty > 1 ? 'Limité' : 'Disponible';
+      return '<td class="avail-cell-'+status+'" title="'+statusLabel[status]+'">'+txt+'</td>';
     }).join('');
     return '<tr><td class="avail-row-label">'+b.label+'</td>'+cells+'</tr>';
   }).join('');
   var legend = '<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:.75rem;font-size:.75rem;">'
     +'<span style="color:#4ade80">● Disponible</span>'
-    +'<span style="color:#fb923c">● Limité (1–2 restants)</span>'
+    +'<span style="color:#fb923c">● Limité (1 restant)</span>'
     +'<span style="color:#f87171">● Complet</span>'
+    +'<span style="color:#6b7280;margin-left:.5rem">· Mis à jour en temps réel selon les réservations web</span>'
     +'</div>';
   var el = document.getElementById('avail-calendar');
   if (el) {
@@ -5527,7 +5550,9 @@ function submitRental(e) {
   ];
   const body = encodeURIComponent(lines.join('\n'));
   window.location.href = 'mailto:vttperformance67@gmail.com?subject='+encodeURIComponent('Réservation location : '+velo)+'&body='+body;
+  saveRentalLocal(velo, start, end);
   document.getElementById('rental-form').reset();
+  initAvailCalendar();
   toast('Réservation envoyée ! Confirmation sous 2h en semaine.', 'ok');
 }
 
