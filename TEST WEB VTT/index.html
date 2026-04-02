@@ -757,7 +757,7 @@
         "name": "Quelle est l'autonomie d'un vélo électrique SUNN ou Moustache ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "SUNN Rage : batterie 500 Wh, autonomie 60–100 km en mode Eco. Moustache Trail 150 : batterie 750 Wh, autonomie 80–140 km. En usage intensif tout-terrain, comptez 40–60 km."
+          "text": "SUNN Rage : batterie 500 Wh, autonomie 60–100 km en mode Eco. Moustache Trail 150.2 : batterie 750 Wh, autonomie 80–140 km. En usage intensif tout-terrain, comptez 40–60 km."
         }
       },
       {
@@ -765,7 +765,7 @@
         "name": "Proposez-vous des vélos en location ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Oui ! Nous proposons la location de VTTAE Moustache Trail 150, SUNN Rage, VTCAE SUNN Start/Skill, VTT et BMX. Tarifs à partir de 15€ la demi-journée. Si vous achetez un vélo après un essai en location, votre location est remboursée."
+          "text": "Oui ! Nous proposons la location de VTTAE Moustache Trail 150.2, SUNN Rage, VTCAE SUNN Start/Skill, VTT et BMX. Tarifs à partir de 15€ la demi-journée. Si vous achetez un vélo après un essai en location, votre location est remboursée."
         }
       }
     ]
@@ -1746,7 +1746,7 @@
           <thead>
             <tr>
               <th style="text-align:left">Type de vélo</th>
-              <th>VTTAE<br><span style="font-weight:400;font-size:.72rem;color:#9ca3af">Moustache Trail 150<br>750Wh</span></th>
+              <th>VTTAE<br><span style="font-weight:400;font-size:.72rem;color:#9ca3af">Moustache Trail 150.2.2<br>750Wh</span></th>
               <th>VTTAE<br><span style="font-weight:400;font-size:.72rem;color:#9ca3af">SUNN Rage<br>500Wh</span></th>
               <th>VTCAE<br><span style="font-weight:400;font-size:.72rem;color:#9ca3af">SUNN Start/Skill</span></th>
               <th>VTT</th>
@@ -1807,23 +1807,23 @@
         <p class="text-gray-400 text-sm mb-8">Tous nos vélos de location sont révisés avant chaque sortie. Garantie pièces incluse.</p>
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" id="rental-fleet-grid">
 
-          <!-- Moustache Trail 150 -->
-          <div class="rental-bike-card" data-model="sunn_vttae_cx">
+          <!-- Moustache Trail 150.2.2 -->
+          <div class="rental-bike-card" data-model="moustache_trail150">
             <div class="rental-bike-img" style="background:linear-gradient(135deg,#0f2341 0%,#1e3a5f 100%)">
-              <img src="images/location-vtt-boue.png" alt="VTT trail engagé" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;border-radius:inherit">
+              <img src="images/location-vtt-boue.png" alt="Moustache Trail 150.2.2 location VTT électrique" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;border-radius:inherit">
               <div class="rental-bike-badge" style="background:rgba(251,146,60,.9)">VTTAE ⚡</div>
             </div>
             <div class="rental-bike-body">
-              <div class="rental-bike-title">SUNN Charger / One</div>
-              <div class="rental-bike-brand">SUNN · Bosch Performance CX · 630 Wh</div>
+              <div class="rental-bike-title">Moustache Trail 150.2.2</div>
+              <div class="rental-bike-brand">Moustache · Bosch Performance CX · 100 Nm · 750 Wh</div>
               <ul class="rental-bike-specs">
-                <li><span class="spec-dot" style="background:#fb923c"></span>Débattement 140 mm</li>
-                <li><span class="spec-dot" style="background:#fb923c"></span>Roues 27.5" / 29"</li>
-                <li><span class="spec-dot" style="background:#fb923c"></span>Tailles S/M/L/XL disponibles</li>
+                <li><span class="spec-dot" style="background:#fb923c"></span>Débattement 150 mm</li>
+                <li><span class="spec-dot" style="background:#fb923c"></span>Roues 29"</li>
+                <li><span class="spec-dot" style="background:#fb923c"></span>Taille M disponible</li>
                 <li><span class="spec-dot" style="background:#fb923c"></span>Freins hydrauliques 4 pistons</li>
               </ul>
               <div class="rental-bike-price">À partir de <strong>50€</strong>/½j</div>
-              <button class="btn-orange w-full justify-center text-sm mt-3" onclick="prefillRentalForm('VTTAE SUNN Charger / One')"><i data-lucide="calendar-plus" class="w-4 h-4"></i>Réserver ce vélo</button>
+              <button class="btn-orange w-full justify-center text-sm mt-3" onclick="prefillRentalForm('VTTAE Moustache Trail 150.2.2 750Wh')"><i data-lucide="calendar-plus" class="w-4 h-4"></i>Réserver ce vélo</button>
             </div>
           </div>
 
@@ -1908,7 +1908,7 @@
             <div>
               <label class="block text-sm font-medium text-gray-300 mb-2">Type de vélo</label>
               <select id="r-type" onchange="calcRent()" class="inp">
-                <option value="moustache">VTTAE Moustache Trail 150 750Wh</option>
+                <option value="moustache">VTTAE Moustache Trail 150.2.2 750Wh</option>
                 <option value="sunn_rage">VTTAE SUNN Rage 500Wh</option>
                 <option value="sunn_vtcae">VTCAE SUNN Start / Skill</option>
                 <option value="vtt">VTT</option>
@@ -1969,7 +1969,7 @@
                 <label class="block text-sm font-medium text-gray-300 mb-1">Vélo souhaité *</label>
                 <select id="lf-velo" required class="inp">
                   <option value="">— Choisir —</option>
-                  <option>VTTAE Moustache Trail 150 750Wh</option>
+                  <option>VTTAE Moustache Trail 150.2.2 750Wh</option>
                   <option>VTTAE SUNN Rage 500Wh</option>
                   <option>VTCAE SUNN Start / Skill</option>
                   <option>VTT</option>
@@ -3452,7 +3452,7 @@
             <span class="faq-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
           </div>
           <div class="faq-a">
-            <p class="text-sm text-gray-400 leading-relaxed">L'autonomie dépend du modèle et du mode d'assistance. <strong class="text-white">SUNN Rage :</strong> batterie 500 Wh, autonomie 60–100 km en mode Eco. <strong class="text-white">Moustache Trail 150 :</strong> batterie 750 Wh (double batterie possible), autonomie 80–140 km. En usage intensif tout-terrain, comptez 40–60 km. La température, le dénivelé et le poids du cycliste influent également.</p>
+            <p class="text-sm text-gray-400 leading-relaxed">L'autonomie dépend du modèle et du mode d'assistance. <strong class="text-white">SUNN Rage :</strong> batterie 500 Wh, autonomie 60–100 km en mode Eco. <strong class="text-white">Moustache Trail 150.2 :</strong> batterie 750 Wh (double batterie possible), autonomie 80–140 km. En usage intensif tout-terrain, comptez 40–60 km. La température, le dénivelé et le poids du cycliste influent également.</p>
           </div>
         </div>
 
@@ -5394,7 +5394,7 @@ function initAvailCalendar() {
   // Simulated availability: seed is deterministic based on day-of-week + bike index
   // Status: 'ok' = disponible, 'limit' = dernières places, 'full' = complet
   var bikes = [
-    { label:'Moustache Trail 150 (×2)',  qty:2 },
+    { label:'Moustache Trail 150.2 (×2)',  qty:2 },
     { label:'SUNN Rage (×3)',            qty:3 },
     { label:'SUNN Start/Skill (×4)',     qty:4 },
     { label:'VTT (×5)',                  qty:5 },
@@ -5651,7 +5651,7 @@ const TRAILS = [
     cat:'trail', name:'Flow Trail de la Forêt Noire',
     lieu:'Niederbronn-les-Bains', dist:'15 km', dplus:'480 m', dur:'2h',
     desc:'Pur trail technique avec descentes rapides, virages relevés et drops naturels. Boucle navette possible. Adrénaline garantie.',
-    bike:'VTTAE SUNN Rage · Moustache Trail 150', tags:['Descente','Technique','Drops','Adrénaline'],
+    bike:'VTTAE SUNN Rage · Moustache Trail 150.2', tags:['Descente','Technique','Drops','Adrénaline'],
     diff:'trail', diffLabel:'🟠 Difficile'
   },
   {
@@ -6606,7 +6606,7 @@ document.documentElement.style.scrollBehavior = 'smooth';
 function openBlogPost(slug) {
   var posts = {
     'sunn-rage-2025': { title: 'Nouveautés SUNN 2025 — Rage S1 et S2 en promo exclusive', date: '15 mars 2025', content: '<p>La gamme SUNN Rage 2025 est désormais disponible chez VTT Performance avec des évolutions majeures par rapport aux millésimes précédents.</p><h4 style="font-family:Rajdhani,sans-serif;font-size:1.3rem;font-weight:700;margin:1.25rem 0 .5rem">Ce qui change en 2025</h4><ul style="color:#94a3b8;line-height:2;list-style:disc;padding-left:1.5rem"><li>Nouveau lien de suspension 4 bielles optimisé pour plus de progressivité</li><li>Cadre en aluminium 6061 allégé (–180g par rapport au modèle 2024)</li><li>Moteur Shimano EP8 de série sur les versions S1 et S2</li><li>Batterie 630 Wh intégrée dans le downtube</li><li>Coloris inédits : Vert forêt mat, Noir volcanique, Rouge cerise</li></ul><p style="margin-top:1rem">Les modèles Rage S1 (2 999€) et S2 (3 599€) sont disponibles en promo de -12% jusqu\'au 30 mars. Stock limité à 4 unités de chaque. Venez les essayer en magasin !</p>' },
-    'vttae-alsace': { title: 'Bien choisir son VTTAE en Alsace du Nord', date: '8 mars 2025', content: '<p>L\'Alsace du Nord offre un terrain varié : chemins forestiers plats de la plaine du Rhin, montées techniques des Vosges du Nord, et singles techniques autour de Bitche. Chaque profil de terrain correspond à un type de VTTAE différent.</p><h4 style="font-family:Rajdhani,sans-serif;font-size:1.3rem;font-weight:700;margin:1.25rem 0 .5rem">Pour les chemins forestiers plats</h4><p style="color:#94a3b8">Un VTCAE comme le SUNN Start convient parfaitement. Moteur discret, batterie 400 Wh suffisante, géométrie confortable pour les longues distances.</p><h4 style="font-family:Rajdhani,sans-serif;font-size:1.3rem;font-weight:700;margin:1.25rem 0 .5rem">Pour les Vosges du Nord</h4><p style="color:#94a3b8">Les dénivelés de 200 à 600m nécessitent un moteur puissant (Bosch Performance Line CX) et une batterie d\'au moins 500 Wh. Le SUNN Rage ou le Moustache Trail 150 750 Wh sont nos recommandations.</p><p style="margin-top:1rem">Venez nous voir en magasin pour un essai personnalisé — nous adaptons nos conseils à votre morphologie et votre pratique.</p>' },
+    'vttae-alsace': { title: 'Bien choisir son VTTAE en Alsace du Nord', date: '8 mars 2025', content: '<p>L\'Alsace du Nord offre un terrain varié : chemins forestiers plats de la plaine du Rhin, montées techniques des Vosges du Nord, et singles techniques autour de Bitche. Chaque profil de terrain correspond à un type de VTTAE différent.</p><h4 style="font-family:Rajdhani,sans-serif;font-size:1.3rem;font-weight:700;margin:1.25rem 0 .5rem">Pour les chemins forestiers plats</h4><p style="color:#94a3b8">Un VTCAE comme le SUNN Start convient parfaitement. Moteur discret, batterie 400 Wh suffisante, géométrie confortable pour les longues distances.</p><h4 style="font-family:Rajdhani,sans-serif;font-size:1.3rem;font-weight:700;margin:1.25rem 0 .5rem">Pour les Vosges du Nord</h4><p style="color:#94a3b8">Les dénivelés de 200 à 600m nécessitent un moteur puissant (Bosch Performance Line CX) et une batterie d\'au moins 500 Wh. Le SUNN Rage ou le Moustache Trail 150.2 750 Wh sont nos recommandations.</p><p style="margin-top:1rem">Venez nous voir en magasin pour un essai personnalisé — nous adaptons nos conseils à votre morphologie et votre pratique.</p>' },
     'entretien-printemps': { title: 'Entretien de printemps — check-list complète', date: '1er mars 2025', content: '<h4 style="font-family:Rajdhani,sans-serif;font-size:1.3rem;font-weight:700;margin:0 0 .75rem">Check-list entretien printemps</h4><ol style="color:#94a3b8;line-height:2.2;list-style:decimal;padding-left:1.5rem"><li><strong style="color:white">Chaîne</strong> — Mesurer l\'usure avec un jaugeur. Au-delà de 0,75% d\'allongement, remplacer.</li><li><strong style="color:white">Cassette et plateaux</strong> — Inspecter les dents (pointes de requin = usure excessive).</li><li><strong style="color:white">Câbles de frein</strong> — Gainer et remplacer si effilochés ou oxydés.</li><li><strong style="color:white">Plaquettes de frein</strong> — Moins de 1,5mm de matière = remplacement nécessaire.</li><li><strong style="color:white">Pneus</strong> — Vérifier la bande de roulement et les flancs. Contrôler la pression (1,5–2,5 bars selon terrain).</li><li><strong style="color:white">Fourche</strong> — Purger les joints, vérifier la pression d\'air, nettoyer les tubes.</li><li><strong style="color:white">Amortisseur</strong> — Idem fourche. Chercher les fuites d\'huile.</li><li><strong style="color:white">Roulements de direction</strong> — Vérifier le jeu axial (tenir roue avant, freiner, bouger le guidon d\'avant en arrière).</li><li><strong style="color:white">Jantes et rayons</strong> — Contrôler le voilage, tensionner les rayons mous.</li><li><strong style="color:white">Commandes de vitesses</strong> — Dérailler sur tous les rapports, régler câbles si sauts.</li><li><strong style="color:white">Pédalier et boîtier de pédalier</strong> — Démontage et graissage annuel recommandé.</li><li><strong style="color:white">Visserie</strong> — Passer au couple recommandé (généralement 4–6 Nm pour le cockpit).</li></ol><p style="margin-top:1rem">Notre atelier réalise cette révision complète à partir de 89€. Prenez RDV en ligne.</p>' },
     'sentiers-ingwiller': { title: 'Nos 5 meilleurs sentiers autour d\'Ingwiller', date: '20 févr. 2025', content: '<h4 style="font-family:Rajdhani,sans-serif;font-size:1.3rem;font-weight:700;margin:0 0 .75rem">Top 5 parcours</h4><div style="space-y:1rem"><div style="margin-bottom:1.25rem"><strong style="color:#ff6b35">1. Forêt communale de Petersbach</strong><br><span style="color:#94a3b8">Distance : 18km · D+ 380m · Niveau : intermédiaire<br>Un classique : singles techniques, descentes ravinées, passage du Rocher des Deux Chènes.</span></div><div style="margin-bottom:1.25rem"><strong style="color:#ff6b35">2. Circuit des étangs de Hanau</strong><br><span style="color:#94a3b8">Distance : 22km · D+ 250m · Niveau : débutant/familial<br>Chemin balisé autour des étangs, idéal pour les enfants et les néophytes.</span></div><div style="margin-bottom:1.25rem"><strong style="color:#ff6b35">3. Tour du Mont Saint-Michel de Saverne</strong><br><span style="color:#94a3b8">Distance : 28km · D+ 620m · Niveau : confirmé<br>Départ gare de Saverne, montée sur crête, single en descente sur Lutzelbourg.</span></div><div style="margin-bottom:1.25rem"><strong style="color:#ff6b35">4. Piste verte d\'Ingwiller → Bouxwiller</strong><br><span style="color:#94a3b8">Distance : 14km · D+ 120m · Niveau : tous niveaux<br>Chemin VTT balisé sur l\'ancienne voie ferrée. Parfait pour une sortie famille.</span></div><div style="margin-bottom:1.25rem"><strong style="color:#ff6b35">5. Rocher de Graufthal — circuit enduro</strong><br><span style="color:#94a3b8">Distance : 16km · D+ 480m · Niveau : expert<br>Montée raide sur piste militaire, descente technique sur sentier rocheux. Recommandé en VTTAE.</span></div></div>' },
     'moustache-trail5-2026': { title: 'Moustache Samedi Trail 5 2026 — test complet', date: '10 févr. 2025', content: '<p>Nous avons reçu le Moustache Samedi Trail 5 2026 en avant-première. Après trois jours de tests sur nos sentiers habituels, voici notre verdict détaillé.</p><h4 style="font-family:Rajdhani,sans-serif;font-size:1.3rem;font-weight:700;margin:1.25rem 0 .5rem">Fiche technique</h4><ul style="color:#94a3b8;line-height:2;list-style:disc;padding-left:1.5rem"><li>Moteur : Bosch Performance Line CX (85 Nm)</li><li>Batterie : 625 Wh intégrée PowerTube</li><li>Fourche : RockShox 35 Silver 150mm</li><li>Amortisseur : RockShox Deluxe Select 160mm</li><li>Freins : Shimano MT520 4 pistons</li><li>Transmission : Shimano Deore 11V</li></ul><h4 style="font-family:Rajdhani,sans-serif;font-size:1.3rem;font-weight:700;margin:1.25rem 0 .5rem">Notre avis</h4><p style="color:#94a3b8">Le Trail 5 2026 convainc par sa polyvalence. L\'assistance Bosch reste reine en côte technique, et la nouvelle géométrie (reach allongé, offset réduit) améliore notablement la stabilité en descente. Autonomie testée : 58km avec 780m de dénivelé positif en mode eMTB.</p><p style="color:#94a3b8;margin-top:.75rem">Seul bémol : le poids de 24,1kg reste élevé pour un usage trail pur. Mais pour une randonnée technique en famille ou en groupe, c\'est un excellent choix.</p><p style="margin-top:1rem;font-weight:600;color:white">Prix : 3 299€ · Disponible sur commande chez VTT Performance</p>' },
