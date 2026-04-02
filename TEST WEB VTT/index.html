@@ -3182,7 +3182,26 @@
             <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Check-up</td><td class="px-5 py-3 text-right font-bold text-white">15 €</td></tr>
             <tr><td class="px-5 py-3 text-gray-300">Contrôle de sécurité</td><td class="px-5 py-3 text-right font-bold text-white">15 €</td></tr>
             <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Diagnostique vélo</td><td class="px-5 py-3 text-right font-bold text-white">35 €</td></tr>
-            <tr><td class="px-5 py-3 text-gray-300 font-semibold text-orange-300">Révision standard</td><td class="px-5 py-3 text-right font-bold text-orange-300">35 €</td></tr>
+            <tr style="cursor:pointer" onclick="var d=document.getElementById('rev-std-detail');d.classList.toggle('hidden');this.querySelector('.rev-toggle').textContent=d.classList.contains('hidden')?'▾ détail':'▴ masquer'">
+              <td class="px-5 py-3 text-gray-300 font-semibold text-orange-300">
+                Révision standard annuelle
+                <span class="rev-toggle text-xs text-gray-500 ml-2">▾ détail</span>
+              </td>
+              <td class="px-5 py-3 text-right font-bold text-orange-300">35 €</td>
+            </tr>
+            <tr id="rev-std-detail" class="hidden">
+              <td colspan="2" class="px-5 pb-4 pt-1" style="background:rgba(255,107,53,.04);border-top:1px solid rgba(255,107,53,.1)">
+                <ul class="text-xs text-gray-400 space-y-1">
+                  <li><span class="text-orange-400 mr-1">🔧</span>Contrôle des pièces et de leur usure</li>
+                  <li><span class="text-orange-400 mr-1">🔧</span>Vérification des serrages et jeux</li>
+                  <li><span class="text-orange-400 mr-1">🔧</span>Pression des pneus</li>
+                  <li><span class="text-orange-400 mr-1">🔧</span>Lubrification chaîne et ajustement du dérailleur</li>
+                  <li><span class="text-orange-400 mr-1">🔧</span>Réglage des freins</li>
+                  <li><span class="text-orange-400 mr-1">🔧</span>Nettoyage global du vélo</li>
+                  <li><span class="text-orange-400 mr-1">🔧</span>Fiche récapitulative 21 points de contrôle</li>
+                </ul>
+              </td>
+            </tr>
             <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300 font-semibold text-orange-300">Révision avancée</td><td class="px-5 py-3 text-right font-bold text-orange-300">99 €</td></tr>
             <tr><td class="px-5 py-3 text-gray-300 font-semibold text-orange-300">Révision totale</td><td class="px-5 py-3 text-right font-bold text-orange-300">399 €</td></tr>
             <tr style="background:rgba(255,255,255,.03)"><td class="px-5 py-3 text-gray-300">Montage d'un vélo (neuf / commandé)</td><td class="px-5 py-3 text-right font-bold text-white">150 €</td></tr>
