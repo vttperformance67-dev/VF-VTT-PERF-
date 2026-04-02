@@ -652,6 +652,35 @@
     .vit-img-dots { display:flex; gap:.4rem; align-items:center; }
     .vit-img-dot { width:7px; height:7px; border-radius:50%; background:rgba(0,255,200,.2); cursor:pointer; transition:all .25s; border:none; padding:0; }
     .vit-img-dot.active { background:#00ffcc; box-shadow:0 0 8px rgba(0,255,200,.6); }
+
+    /* ══ RESPONSIVE MOBILE ══════════════════════════════════════════════ */
+    @media(max-width:768px){
+      /* Bannière défilante location — évite le débordement horizontal */
+      .location-banner-item { width:80vw; height:230px; }
+      /* Galerie histoire */
+      .histoire-gallery-img { width:240px; height:175px; }
+      /* Compteurs stats */
+      .counter-num { font-size:1.9rem; }
+      /* Menu mobile — hauteur suffisante pour tous les items */
+      .mobile-menu.open { max-height:600px; }
+      /* Tableau tarifs location — scroll horizontal garanti */
+      .prix-table { min-width:520px; }
+      /* Évite que le contenu soit caché sous la nav fixe bas (~60px) */
+      [id^="sec-"] { padding-bottom:5rem; }
+      /* Dropdown nav — ne déborde pas à droite */
+      .nav-dropdown-menu { min-width:170px !important; }
+    }
+    @media(max-width:480px){
+      /* Location bannière encore plus compacte sur très petit écran */
+      .location-banner-item { width:90vw; height:195px; }
+      .location-banner-caption { padding:.75rem 1rem; }
+      /* Galerie histoire */
+      .histoire-gallery-img { width:195px; height:150px; }
+      /* Compteurs */
+      .counter-num { font-size:1.6rem; }
+      /* Témoignages */
+      .testi-card { min-width:calc(100vw - 3rem) !important; }
+    }
   </style>
 
   <!-- Schema.org: LocalBusiness -->
@@ -980,7 +1009,7 @@
     <div class="hb-slide hb-active">
       <div class="hb-bg" style="background-image:url('images/location-famille.png');background-position:center 40%"></div>
       <div class="hb-overlay"></div>
-      <div class="relative z-10 max-w-7xl mx-auto px-8 w-full">
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 w-full">
         <div class="max-w-xl">
           <span class="hb-label" style="background:rgba(255,107,53,.18);color:#ff6b35;border:1px solid rgba(255,107,53,.35)">📍 Location disponible à Ingwiller</span>
           <h2 class="font-heading font-bold text-white leading-tight mb-4" style="font-size:clamp(1.8rem,4vw,3.2rem)">Louez votre vélo<br><span style="color:#fb923c">à partir de 30€/jour</span></h2>
@@ -993,7 +1022,7 @@
     <div class="hb-slide">
       <div class="hb-bg" style="background-image:url('images/65A4C10E-C4BC-4478-9A1C-1E1A150F2A48.JPEG');background-position:center 25%;background-color:#0a1628"></div>
       <div class="hb-overlay-r"></div>
-      <div class="relative z-10 max-w-7xl mx-auto px-8 w-full">
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 w-full">
         <div class="max-w-xl ml-auto text-right">
           <span class="hb-label" style="background:rgba(252,211,77,.1);color:#fcd34d;border:1px solid rgba(252,211,77,.25)">⭐ Concessionnaire officiel SUNN</span>
           <h2 class="font-heading font-bold text-white leading-tight mb-4" style="font-size:clamp(1.8rem,4vw,3.2rem)">Gamme SUNN 2026<br><span style="color:#fb923c">En stock à Ingwiller</span></h2>
@@ -1006,7 +1035,7 @@
     <div class="hb-slide">
       <div class="hb-bg" style="background-image:url('images/IMG_5181.JPEG');background-position:center 40%"></div>
       <div class="hb-overlay"></div>
-      <div class="relative z-10 max-w-7xl mx-auto px-8 w-full">
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 w-full">
         <div class="max-w-xl">
           <span class="hb-label" style="background:rgba(59,130,246,.1);color:#93c5fd;border:1px solid rgba(59,130,246,.25)">🚲 181 modèles disponibles</span>
           <h2 class="font-heading font-bold text-white leading-tight mb-4" style="font-size:clamp(1.8rem,4vw,3.2rem)">Votre spécialiste vélo<br>des Vosges du Nord</h2>
@@ -1019,7 +1048,7 @@
     <div class="hb-slide">
       <div class="hb-bg" style="background-image:url('images/IMG_3016.JPEG');background-position:center 30%"></div>
       <div class="hb-overlay-r"></div>
-      <div class="relative z-10 max-w-7xl mx-auto px-8 w-full">
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 w-full">
         <div class="max-w-xl ml-auto text-right">
           <span class="hb-label" style="background:rgba(74,222,128,.1);color:#4ade80;border:1px solid rgba(74,222,128,.25)">🔧 Atelier — Révision &amp; Entretien</span>
           <h2 class="font-heading font-bold text-white leading-tight mb-4" style="font-size:clamp(1.8rem,4vw,3.2rem)">Votre vélo entre<br>de bonnes mains</h2>
