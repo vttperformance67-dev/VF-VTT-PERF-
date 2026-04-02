@@ -1644,60 +1644,58 @@
         <div style="position:absolute;left:0;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;background:linear-gradient(to right,#0a1628 30%,transparent)"></div>
         <div style="position:absolute;right:0;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;background:linear-gradient(to left,#0a1628 30%,transparent)"></div>
         <div class="location-banner-track">
-          <!-- Photo 1 — Forêts & sentiers -->
-          <div class="location-banner-item">
+          <!-- Photo 1 — Forêts & sentiers → sentiers Trail/Enduro -->
+          <a class="location-banner-item" href="#sec-location" onclick="event.preventDefault();showSection('sec-location');setTimeout(()=>filterTrails('trail'),300)" style="cursor:pointer;text-decoration:none">
             <img class="location-banner-img" src="images/location-vtt-foret.png" alt="VTT trail en forêt Alsace" loading="lazy">
             <div class="location-banner-caption">
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Forêts &amp; sentiers sauvages</div>
-              <p style="color:#d1d5db;font-size:.78rem">Balade chemins · 100+ km balisés autour d'Ingwiller</p>
+              <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">Balade chemins · 100+ km balisés autour d'Ingwiller</p>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir les sentiers Trail →</span>
             </div>
-          </div>
-          <!-- Photo 2 — Entre amis / puissance -->
-          <div class="location-banner-item">
-            <img class="location-banner-img" src="images/location-vtt-boue.png" alt="VTT entre amis sensations fortes" loading="lazy">
+          </a>
+          <!-- Photo 2 — Puissance → catalogue VTT Électrique -->
+          <a class="location-banner-item" href="#sec-catalogue" onclick="event.preventDefault();showSection('sec-catalogue');setTimeout(()=>setCat('vttae'),300)" style="cursor:pointer;text-decoration:none">
+            <img class="location-banner-img" src="images/location-vtt-boue.png" alt="VTT électrique puissance sensations fortes" loading="lazy">
             <div class="location-banner-caption">
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Puissance &amp; sensations fortes</div>
-              <p style="color:#fb923c;font-size:.78rem;font-weight:700">750 Wh · 100 Nm — le plus puissant du marché ⚡</p>
+              <p style="color:#fb923c;font-size:.78rem;font-weight:700;margin-bottom:.6rem">750 Wh · 100 Nm — le plus puissant du marché ⚡</p>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(251,146,60,.2);border:1px solid rgba(251,146,60,.5);color:#fb923c;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir les VTT Électriques →</span>
             </div>
-          </div>
-          <!-- Photo 3 — Famille / loisir -->
-          <div class="location-banner-item">
+          </a>
+          <!-- Photo 3 — Famille → sentiers Famille -->
+          <a class="location-banner-item" href="#sec-location" onclick="event.preventDefault();showSection('sec-location');setTimeout(()=>filterTrails('famille'),300)" style="cursor:pointer;text-decoration:none">
             <img class="location-banner-img" src="images/location-famille.png" alt="Location vélo famille piste cyclable" loading="lazy">
             <div class="location-banner-caption">
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Famille, amis, débutants &amp; experts</div>
-              <p style="color:#d1d5db;font-size:.78rem">Loisir · piste cyclable et chemins · tous profils</p>
+              <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">Loisir · piste cyclable et chemins · tous profils</p>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.4);color:#4ade80;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir les sentiers Famille →</span>
             </div>
-          </div>
-          <div class="location-banner-item"><img class="location-banner-img" src="images/IMG_4869.JPEG" alt="" loading="lazy"></div>
-          <div class="location-banner-item"><img class="location-banner-img" src="images/IMG_5181.JPEG" alt="" loading="lazy"></div>
-          <div class="location-banner-item"><img class="location-banner-img" src="images/IMG_3475.JPEG" alt="" loading="lazy"></div>
-          <div class="location-banner-item"><img class="location-banner-img" src="images/IMG_5179.JPEG" alt="" loading="lazy"></div>
+          </a>
           <!-- duplication pour boucle infinie -->
-          <div class="location-banner-item">
+          <a class="location-banner-item" href="#sec-location" onclick="event.preventDefault();showSection('sec-location');setTimeout(()=>filterTrails('trail'),300)" style="cursor:pointer;text-decoration:none">
             <img class="location-banner-img" src="images/location-vtt-foret.png" alt="" loading="lazy">
             <div class="location-banner-caption">
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Forêts &amp; sentiers sauvages</div>
-              <p style="color:#d1d5db;font-size:.78rem">Balade chemins · 100+ km balisés autour d'Ingwiller</p>
+              <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">Balade chemins · 100+ km balisés autour d'Ingwiller</p>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir les sentiers Trail →</span>
             </div>
-          </div>
-          <div class="location-banner-item">
+          </a>
+          <a class="location-banner-item" href="#sec-catalogue" onclick="event.preventDefault();showSection('sec-catalogue');setTimeout(()=>setCat('vttae'),300)" style="cursor:pointer;text-decoration:none">
             <img class="location-banner-img" src="images/location-vtt-boue.png" alt="" loading="lazy">
             <div class="location-banner-caption">
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Puissance &amp; sensations fortes</div>
-              <p style="color:#fb923c;font-size:.78rem;font-weight:700">750 Wh · 100 Nm — le plus puissant du marché ⚡</p>
+              <p style="color:#fb923c;font-size:.78rem;font-weight:700;margin-bottom:.6rem">750 Wh · 100 Nm — le plus puissant du marché ⚡</p>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(251,146,60,.2);border:1px solid rgba(251,146,60,.5);color:#fb923c;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir les VTT Électriques →</span>
             </div>
-          </div>
-          <div class="location-banner-item">
+          </a>
+          <a class="location-banner-item" href="#sec-location" onclick="event.preventDefault();showSection('sec-location');setTimeout(()=>filterTrails('famille'),300)" style="cursor:pointer;text-decoration:none">
             <img class="location-banner-img" src="images/location-famille.png" alt="" loading="lazy">
             <div class="location-banner-caption">
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Famille, amis, débutants &amp; experts</div>
-              <p style="color:#d1d5db;font-size:.78rem">Loisir · piste cyclable et chemins · tous profils</p>
+              <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">Loisir · piste cyclable et chemins · tous profils</p>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.4);color:#4ade80;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir les sentiers Famille →</span>
             </div>
-          </div>
-          <div class="location-banner-item"><img class="location-banner-img" src="images/IMG_4869.JPEG" alt="" loading="lazy"></div>
-          <div class="location-banner-item"><img class="location-banner-img" src="images/IMG_5181.JPEG" alt="" loading="lazy"></div>
-          <div class="location-banner-item"><img class="location-banner-img" src="images/IMG_3475.JPEG" alt="" loading="lazy"></div>
-          <div class="location-banner-item"><img class="location-banner-img" src="images/IMG_5179.JPEG" alt="" loading="lazy"></div>
+          </a>
         </div>
       </div><!-- /bannière -->
 
