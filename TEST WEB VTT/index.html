@@ -1647,6 +1647,21 @@
         <h3 class="font-heading font-bold text-xl mb-4 flex items-center gap-2"><i data-lucide="eye" class="w-5 h-5 text-gray-500"></i>Récemment vus</h3>
         <div id="recently-viewed-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3"></div>
       </div>
+      <!-- ── Bannière reprise / dépôt-vente ── -->
+      <div class="mt-14 rounded-2xl overflow-hidden" style="background:linear-gradient(135deg,rgba(255,107,53,.1) 0%,rgba(139,92,246,.08) 60%,rgba(236,72,153,.08) 100%);border:1px solid rgba(255,107,53,.25);">
+        <div class="flex flex-col sm:flex-row items-center gap-5 p-6 sm:p-8">
+          <div class="text-5xl flex-shrink-0">🔄</div>
+          <div class="flex-1 text-center sm:text-left">
+            <div class="font-heading font-bold text-xl text-white mb-1">Vous avez un vélo à vendre ?</div>
+            <p class="text-sm text-gray-400 mb-1">Nous <strong class="text-white">rachetons votre ancien vélo</strong> (électrique ou non) si l'offre convient, ou le mettons en <strong class="text-white">dépôt-vente</strong> dans notre magasin.</p>
+            <p class="text-xs text-gray-500">Estimation gratuite · Toutes marques · Réponse sous 24h</p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-2 flex-shrink-0">
+            <button onclick="showSection('reprise')" class="btn-orange text-sm whitespace-nowrap">Estimer mon VAE →</button>
+            <a href="https://wa.me/33950320829?text=Bonjour%20VTT%20Performance%20!%20Je%20souhaite%20une%20estimation%20de%20reprise%20ou%20d%C3%A9p%C3%B4t-vente%20pour%20mon%20v%C3%A9lo." target="_blank" rel="noopener" class="btn-outline text-sm whitespace-nowrap">💬 WhatsApp</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </div>
@@ -3815,9 +3830,9 @@
       <!-- ─────────────────────────────────────────────────────── -->
 
       <div class="text-center mb-10">
-        <span class="badge badge-electric">Reprise</span>
-        <h2 class="font-heading font-bold text-4xl mt-3 mb-2">Estimez votre VAE</h2>
-        <p class="text-gray-400">Estimation de reprise réservée aux <strong class="text-white">vélos à assistance électrique</strong> (VTTAE, VTC électrique). Résultat immédiat, sans engagement.</p>
+        <span class="badge badge-electric">Reprise &amp; Dépôt-vente</span>
+        <h2 class="font-heading font-bold text-4xl mt-3 mb-2">Vendez votre vélo</h2>
+        <p class="text-gray-400">Nous <strong class="text-white">rachetons</strong> votre ancien vélo (électrique ou non) si l'offre convient — sinon nous le mettons en <strong class="text-white">dépôt-vente</strong>. Estimation immédiate pour les VAE, ou contactez-nous pour les autres.</p>
       </div>
       <div class="card p-8" style="background:var(--card);">
         <!-- Step 1 -->
@@ -3831,14 +3846,16 @@
             <button class="rep-type-btn p-4 rounded-xl text-center transition-all cursor-pointer" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);" onclick="selectRepType(this,'BMX')"><span style="font-size:2rem;display:block;margin-bottom:.5rem;">🏁</span><span class="text-sm font-semibold">BMX</span></button>
             <button class="rep-type-btn p-4 rounded-xl text-center transition-all cursor-pointer" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);" onclick="selectRepType(this,'Autre')"><span style="font-size:2rem;display:block;margin-bottom:.5rem;">🔄</span><span class="text-sm font-semibold">Autre</span></button>
           </div>
-          <div id="rep-non-vae-msg" class="hidden mb-4 p-4 rounded-xl text-center" style="background:rgba(255,107,53,.08);border:1px solid rgba(255,107,53,.2);">
-            <p class="text-sm text-orange-300 font-semibold">⚡ La reprise est réservée aux vélos électriques (VAE)</p>
-            <p class="text-xs text-gray-500 mt-1">Sélectionnez <strong>VTT Électrique</strong> ou <strong>VTC Électrique</strong> pour estimer votre vélo.</p>
+          <div id="rep-non-vae-msg" class="hidden mb-4 p-4 rounded-xl text-left" style="background:rgba(255,107,53,.08);border:1px solid rgba(255,107,53,.2);">
+            <p class="text-sm text-orange-300 font-semibold mb-2">🔄 Reprise ou dépôt-vente possible</p>
+            <p class="text-xs text-gray-400 mb-3">Nous pouvons <strong class="text-white">racheter votre vélo</strong> si l'offre convient, ou le mettre en <strong class="text-white">dépôt-vente</strong> dans notre magasin. Contactez-nous pour une estimation gratuite et sans engagement.</p>
+            <a href="https://wa.me/33950320829?text=Bonjour%20VTT%20Performance%20!%20Je%20souhaite%20une%20estimation%20de%20reprise%20ou%20d%C3%A9p%C3%B4t-vente%20pour%20mon%20v%C3%A9lo." target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl text-sm font-bold transition-all" style="background:rgba(37,211,102,.15);border:1px solid rgba(37,211,102,.4);color:#4ade80;">💬 Demander une estimation par WhatsApp</a>
           </div>
           <div id="rep-form-fields" class="space-y-4 hidden">
-            <div><label>Marque</label><select id="rep-brand" class="inp"><option value="">Sélectionner...</option><option>SUNN</option><option>Moustache</option><option>KONA</option><option>NORCO</option><option>Trek</option><option>Specialized</option><option>Giant</option><option>Orbea</option><option>Canyon</option><option>Autre marque</option></select></div>
+            <div><label>Marque</label><select id="rep-brand" class="inp"><option value="">Sélectionner...</option><option>Moustache</option><option>SUNN</option><option>Haibike</option><option>Trek</option><option>Specialized</option><option>Giant</option><option>Orbea</option><option>Canyon</option><option>Cube</option><option>Scott</option><option>Lapierre</option><option>KTM</option><option>Bulls</option><option>Focus</option><option>Merida</option><option>Cannondale</option><option>Bianchi</option><option>Ghost</option><option>Riese & Müller</option><option>Kalkhoff</option><option>Gazelle</option><option>Decathlon / Rockrider</option><option>KONA</option><option>NORCO</option><option>Yamaha</option><option>Gitane</option><option>Peugeot</option><option>Autre marque</option></select></div>
             <div><label>Prix d'achat neuf (€)</label><input type="number" id="rep-price" placeholder="ex: 3500" class="inp" min="200" max="15000"></div>
             <div><label>Année d'achat</label><select id="rep-year" class="inp"><option value="">Sélectionner...</option></select></div>
+            <div><label>Kilométrage au compteur <span class="text-gray-500 font-normal text-xs">— VAE uniquement</span></label><input type="number" id="rep-km" placeholder="ex: 2500" class="inp" min="0" max="99999"></div>
             <div><label>Prix du vélo neuf envisagé (€) <span class="text-gray-500 font-normal text-xs">— pour calculer l'estimation</span></label><input type="number" id="rep-new-price" placeholder="ex: 4500" class="inp" min="500" max="20000"></div>
             <div><label>Frais à prévoir / réparations estimées (€) <span class="text-gray-500 font-normal text-xs">— optionnel</span></label><input type="number" id="rep-repairs" placeholder="ex: 200" class="inp" min="0" max="5000"></div>
             <div><label>État général</label>
@@ -6784,12 +6801,22 @@ function calcReprise() {
   if (repriState.type !== 'VTTAE' && repriState.type !== 'VTCAE') { alert('La reprise est réservée aux vélos à assistance électrique (VAE).'); return; }
   var price = parseFloat(document.getElementById('rep-price').value) || 0;
   var year = parseInt(document.getElementById('rep-year').value) || new Date().getFullYear();
+  var age = new Date().getFullYear() - year;
   var state = repriState.state || 'bon';
   var newPrice = parseFloat(document.getElementById('rep-new-price').value) || 0;
   var repairs = parseFloat(document.getElementById('rep-repairs').value) || 0;
+  var km = parseFloat(document.getElementById('rep-km').value) || 0;
   if (price < 200) { alert('Veuillez saisir un prix d\'achat valide.'); return; }
   if (newPrice < 500) { alert('Veuillez saisir le prix du vélo neuf envisagé (min. 500 €).'); return; }
-  var mid = Math.round(Math.max(50, (newPrice * 0.5) - repairs) / 50) * 50;
+  // Décote kilométrique
+  var kmMalus = 0;
+  if (km > 15000) kmMalus = 0.25;
+  else if (km > 10000) kmMalus = 0.20;
+  else if (km > 6000) kmMalus = 0.15;
+  else if (km > 3000) kmMalus = 0.10;
+  else if (km > 1000) kmMalus = 0.05;
+  var base = Math.max(50, (newPrice * 0.5) - repairs);
+  var mid = Math.round(base * (1 - kmMalus) / 50) * 50;
   var min = Math.round(mid * 0.85 / 50) * 50;
   var max = Math.round(mid * 1.15 / 50) * 50;
   min = Math.max(50, min); max = Math.max(50, max);
@@ -6800,23 +6827,21 @@ function calcReprise() {
   var tips = [];
   if (state !== 'excellent') tips.push('Faites réviser freins et transmission avant expertise — cela peut augmenter de 10-15%');
   if (age > 4) tips.push('Présentez les factures d\'entretien régulier pour valoriser l\'historique');
+  if (km > 6000) tips.push('Kilométrage élevé appliqué : ' + km.toLocaleString('fr-FR') + ' km — décote de ' + Math.round(kmMalus*100) + '% sur l\'estimation');
   tips.push('La reprise est majorée de 5% si vous achetez un vélo de plus de 2000€');
   if (repriState.type === 'VTTAE') tips.push('Batterie encore sous garantie = +150€ sur l\'estimation');
   document.getElementById('rep-tips').innerHTML = tips.map(function(t){ return '<li>'+t+'</li>'; }).join('');
   // Bouton WhatsApp photos pour VAE
   var waBlock = document.getElementById('rep-whatsapp-photos');
-  if (repriState.type === 'VTTAE' || repriState.type === 'VTCAE') {
-    var brand = document.getElementById('rep-brand').value || 'Non précisée';
-    var waMsg = encodeURIComponent(
-      'Bonjour VTT Performance ! Je souhaite une estimation de reprise pour mon ' + repriState.type +
-      ' ' + brand + ' (' + year + '), prix d\'achat ' + price + '€, état : ' + state +
-      '. Estimation indicative : ' + mid.toLocaleString('fr-FR') + '€. Je vous envoie les photos ci-dessous.'
-    );
-    document.getElementById('rep-whatsapp-btn').href = 'https://wa.me/33950320829?text=' + waMsg;
-    waBlock.classList.remove('hidden');
-  } else {
-    waBlock.classList.add('hidden');
-  }
+  var brand = document.getElementById('rep-brand').value || 'Non précisée';
+  var kmTxt = km > 0 ? ', ' + km.toLocaleString('fr-FR') + ' km' : '';
+  var waMsg = encodeURIComponent(
+    'Bonjour VTT Performance ! Je souhaite une estimation de reprise pour mon ' + repriState.type +
+    ' ' + brand + ' (' + year + ')' + kmTxt + ', prix d\'achat ' + price + '€, état : ' + state +
+    '. Estimation indicative : ' + mid.toLocaleString('fr-FR') + '€. Je vous envoie les photos ci-dessous.'
+  );
+  document.getElementById('rep-whatsapp-btn').href = 'https://wa.me/33950320829?text=' + waMsg;
+  waBlock.classList.remove('hidden');
   document.getElementById('rep-step1').classList.add('hidden');
   document.getElementById('rep-result').classList.remove('hidden');
 }
