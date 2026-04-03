@@ -490,6 +490,11 @@
     .countdown-label { font-size:.6rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:#94a3b8; margin-top:.35rem; text-align:center; }
     .countdown-sep { font-family:'Rajdhani',sans-serif; font-weight:800; font-size:2.2rem; color:rgba(255,107,53,.6); padding:0 .1rem; align-self:flex-start; padding-top:.55rem; animation:sep-blink 1s step-end infinite; }
     @keyframes sep-blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+    .terrain-sep { display:block;width:100%;height:80px;overflow:visible; }
+    @keyframes bike-ride { 0%{transform:translateX(-120px)} 100%{transform:translateX(1600px)} }
+    @keyframes wheel-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    .bike-rider { animation:bike-ride 28s linear infinite; }
+    .bike-wheel { transform-box:fill-box; transform-origin:center; animation:wheel-spin 1.4s linear infinite; }
 
     /* ── COUNT-UP STATS ─────────────────────────────────────── */
     @keyframes counter-pulse { 0%{transform:scale(1)} 50%{transform:scale(1.05)} 100%{transform:scale(1)} }
@@ -784,11 +789,11 @@
     <span class="flex items-center gap-8 px-6 flex-shrink-0">
       <button class="banner-pill" onclick="showSection('catalogue')">🚚 Livraison gratuite dès 600€ — vélos &amp; accessoires</button>
       <span class="opacity-40">·</span>
-      <button class="banner-pill" onclick="showSection('rendez-vous')">🚴 Location dès <strong>30€/jour</strong> — SUNN &amp; Moustache</button>
+      <button class="banner-pill" onclick="showSection('location')">🚴 Location dès <strong>30€/jour</strong> — SUNN &amp; Moustache</button>
       <span class="opacity-40">·</span>
-      <button class="banner-pill" onclick="showSection('reprise')">🌸 <strong>Reprise du Printemps</strong> Moustache — jusqu'à <strong>500€</strong> de bonus · Jusqu'au 25/04</button>
+      <button class="banner-pill" onclick="showSection('reprise')">🌸 <strong>Reprise du Printemps</strong> Moustache — jusqu'à <strong>500€</strong> de bonus · Jusqu'au 25 avril</button>
       <span class="opacity-40">·</span>
-      <button class="banner-pill" onclick="showSection('rendez-vous')">🎯 Location <strong>offerte</strong> si vous achetez !</button>
+      <button class="banner-pill" onclick="showSection('location')">🎯 Location <strong>déduite</strong> si vous achetez !</button>
       <span class="opacity-40">·</span>
       <button class="banner-pill" onclick="showSection('atelier')">🔧 Révision complète dès <strong>35€</strong> — Atelier expert</button>
       <span class="opacity-40">·</span>
@@ -802,11 +807,11 @@
     <span class="flex items-center gap-8 px-6 flex-shrink-0" aria-hidden="true">
       <button class="banner-pill" onclick="showSection('catalogue')">🚚 Livraison gratuite dès 600€ — vélos &amp; accessoires</button>
       <span class="opacity-40">·</span>
-      <button class="banner-pill" onclick="showSection('rendez-vous')">🚴 Location dès <strong>30€/jour</strong> — SUNN &amp; Moustache</button>
+      <button class="banner-pill" onclick="showSection('location')">🚴 Location dès <strong>30€/jour</strong> — SUNN &amp; Moustache</button>
       <span class="opacity-40">·</span>
-      <button class="banner-pill" onclick="showSection('reprise')">🌸 <strong>Reprise du Printemps</strong> Moustache — jusqu'à <strong>500€</strong> de bonus · Jusqu'au 25/04</button>
+      <button class="banner-pill" onclick="showSection('reprise')">🌸 <strong>Reprise du Printemps</strong> Moustache — jusqu'à <strong>500€</strong> de bonus · Jusqu'au 25 avril</button>
       <span class="opacity-40">·</span>
-      <button class="banner-pill" onclick="showSection('rendez-vous')">🎯 Location <strong>offerte</strong> si vous achetez !</button>
+      <button class="banner-pill" onclick="showSection('location')">🎯 Location <strong>déduite</strong> si vous achetez !</button>
       <span class="opacity-40">·</span>
       <button class="banner-pill" onclick="showSection('atelier')">🔧 Révision complète dès <strong>35€</strong> — Atelier expert</button>
       <span class="opacity-40">·</span>
@@ -1013,7 +1018,7 @@
         <div class="max-w-xl">
           <span class="hb-label" style="background:rgba(255,107,53,.18);color:#ff6b35;border:1px solid rgba(255,107,53,.35)">📍 Location disponible à Ingwiller</span>
           <h2 class="font-heading font-bold text-white leading-tight mb-4" style="font-size:clamp(1.8rem,4vw,3.2rem)">Louez votre vélo<br><span style="color:#fb923c">à partir de 30€/jour</span></h2>
-          <p class="text-gray-300 text-base mb-6 leading-relaxed">SUNN &amp; Moustache disponibles. <strong class="text-white">Location offerte si vous achetez !</strong></p>
+          <p class="text-gray-300 text-base mb-6 leading-relaxed">SUNN &amp; Moustache disponibles. <strong class="text-white">Location déduite du prix si vous achetez !</strong></p>
           <button onclick="showSection('location')" class="btn-orange"><i data-lucide="bike" class="w-5 h-5"></i>Réserver maintenant</button>
         </div>
       </div>
@@ -1068,6 +1073,57 @@
     </div>
   </section>
 
+  <!-- Terrain separator animé -->
+  <div style="position:relative;margin-top:-2px;overflow:hidden;height:80px;background:var(--surface)" aria-hidden="true">
+    <svg class="terrain-sep" viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="position:absolute;bottom:0;left:0;height:80px">
+      <defs>
+        <linearGradient id="mtn-g1" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#ff6b35;stop-opacity:.12"/>
+          <stop offset="45%" style="stop-color:#f59e0b;stop-opacity:.08"/>
+          <stop offset="100%" style="stop-color:#ff6b35;stop-opacity:.12"/>
+        </linearGradient>
+      </defs>
+      <!-- Montagne arrière-plan -->
+      <path d="M0,80 L0,52 L100,28 L240,48 L420,12 L580,38 L740,6 L900,32 L1060,16 L1220,42 L1440,20 L1440,80 Z" fill="rgba(255,107,53,.06)"/>
+      <!-- Montagne milieu -->
+      <path d="M0,80 L0,62 L160,45 L340,60 L520,30 L700,55 L880,28 L1060,50 L1240,36 L1440,46 L1440,80 Z" fill="url(#mtn-g1)"/>
+      <!-- Sol/piste -->
+      <path d="M0,80 L0,72 L1440,72 L1440,80 Z" fill="rgba(255,107,53,.08)"/>
+      <!-- VTT animé qui roule sur la piste -->
+      <g class="bike-rider">
+        <!-- Roue arrière -->
+        <g class="bike-wheel" style="transform-origin:16px 72px">
+          <circle cx="16" cy="72" r="9" fill="none" stroke="rgba(255,107,53,.85)" stroke-width="1.8"/>
+          <circle cx="16" cy="72" r="2.5" fill="rgba(255,107,53,.85)"/>
+          <line x1="16" y1="63" x2="16" y2="81" stroke="rgba(255,107,53,.5)" stroke-width="1.2"/>
+          <line x1="7"  y1="72" x2="25" y2="72" stroke="rgba(255,107,53,.5)" stroke-width="1.2"/>
+        </g>
+        <!-- Roue avant -->
+        <g class="bike-wheel" style="transform-origin:40px 72px">
+          <circle cx="40" cy="72" r="9" fill="none" stroke="rgba(255,107,53,.85)" stroke-width="1.8"/>
+          <circle cx="40" cy="72" r="2.5" fill="rgba(255,107,53,.85)"/>
+          <line x1="40" y1="63" x2="40" y2="81" stroke="rgba(255,107,53,.5)" stroke-width="1.2"/>
+          <line x1="31" y1="72" x2="49" y2="72" stroke="rgba(255,107,53,.5)" stroke-width="1.2"/>
+        </g>
+        <!-- Cadre vélo -->
+        <line x1="16" y1="72" x2="26" y2="57" stroke="rgba(255,107,53,.9)" stroke-width="1.6"/>
+        <line x1="26" y1="57" x2="40" y2="72" stroke="rgba(255,107,53,.9)" stroke-width="1.6"/>
+        <line x1="26" y1="57" x2="22" y2="72" stroke="rgba(255,107,53,.7)" stroke-width="1.2"/>
+        <line x1="26" y1="57" x2="28" y2="49" stroke="rgba(255,107,53,.9)" stroke-width="1.6"/>
+        <!-- Guidon -->
+        <line x1="36" y1="58" x2="43" y2="55" stroke="rgba(255,107,53,.9)" stroke-width="1.6"/>
+        <!-- Selle -->
+        <line x1="21" y1="51" x2="29" y2="51" stroke="rgba(255,107,53,.9)" stroke-width="1.8"/>
+        <!-- Pédalier -->
+        <circle cx="24" cy="66" r="3" fill="none" stroke="rgba(255,107,53,.6)" stroke-width="1.2"/>
+        <!-- Cycliste silhouette -->
+        <ellipse cx="28" cy="46" rx="4" ry="4.5" fill="rgba(255,107,53,.7)"/>
+        <line x1="28" y1="50" x2="26" y2="57" stroke="rgba(255,107,53,.8)" stroke-width="1.8"/>
+        <line x1="28" y1="52" x2="36" y2="55" stroke="rgba(255,107,53,.8)" stroke-width="1.5"/>
+      </g>
+    </svg>
+  </div>
+
   <!-- Services -->
   <section class="py-20 px-4" style="background:var(--surface)">
     <div class="max-w-7xl mx-auto">
@@ -1109,7 +1165,7 @@
           <div class="svc-body">
             <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style="background:rgba(6,182,212,.12)"><i data-lucide="bike" class="w-5 h-5 text-cyan-400"></i></div>
             <h3 class="font-heading font-bold text-xl mb-2">Location</h3>
-            <p class="text-gray-400 text-sm leading-relaxed">VTTAE Moustache &amp; SUNN, VTT, BMX. Dès 30€/jour. Location offerte si vous achetez !</p>
+            <p class="text-gray-400 text-sm leading-relaxed">VTTAE Moustache &amp; SUNN, VTT, BMX. Dès 30€/jour. Location déduite du prix si vous achetez !</p>
             <button onclick="showSection('location')" class="mt-4 text-sm text-cyan-400 font-medium hover:underline flex items-center gap-1">Voir les tarifs<i data-lucide="arrow-right" class="w-4 h-4"></i></button>
           </div>
         </div>
@@ -1477,7 +1533,7 @@
                 <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm" style="background:#1877f2;">🏪</div>
                 <div class="flex-1 min-w-0">
                   <div class="text-xs font-semibold text-white mb-1">VTT Performance · <span class="font-normal text-gray-500">il y a 2 j</span></div>
-                  <p class="text-xs text-gray-300 leading-relaxed">🔥 Promo spéciale sur les SUNN Rage S1 &amp; S2 ! –12% jusqu'au 30 mars. Stock très limité — passez en magasin ou appelez-nous 📞</p>
+                  <p class="text-xs text-gray-300 leading-relaxed">⚡ SUNN Rage S1 &amp; S2 disponibles en magasin — stock limité. Passez nous voir ou appelez-nous 📞</p>
                   <div class="flex items-center gap-3 mt-2 text-xs text-gray-500">
                     <span>👍 34</span><span>💬 5</span><span>↗ 8</span>
                   </div>
@@ -1749,7 +1805,7 @@
           <div class="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0"><i data-lucide="gift" class="w-6 h-6 text-white"></i></div>
           <div>
             <div class="font-heading font-bold text-xl text-orange-400">Offre essai → achat</div>
-            <p class="text-gray-300 text-sm">Vous achetez un vélo après votre essai ? <strong class="text-white">Votre location est remboursée ! 🎁 </strong></p>
+            <p class="text-gray-300 text-sm">Vous achetez un vélo après votre essai ? <strong class="text-white">Le montant est déduit du prix d'achat ! 🎁</strong></p>
           </div>
         </div>
         <a href="https://calendly.com/vttperformance67/rendez-vous-presentation-ou-test-velo-clone" target="_blank" rel="noopener" class="btn-orange text-sm flex-shrink-0"><i data-lucide="calendar" class="w-4 h-4"></i>Réserver un essai</a>
@@ -3559,7 +3615,7 @@
             <span class="faq-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
           </div>
           <div class="faq-a">
-            <p class="text-sm text-gray-400 leading-relaxed">Oui, nous proposons un <strong class="text-white">service de récupération et de livraison à domicile</strong> dans un rayon de 20 km autour d'Ingwiller. Ce service est particulièrement utile si votre vélo a une panne et que vous ne pouvez pas le transporter. Contactez-nous pour convenir d'un créneau et du tarif selon la distance.</p>
+            <p class="text-sm text-gray-400 leading-relaxed">Oui, nous proposons un <strong class="text-white">service de récupération et de livraison à domicile</strong> dans un rayon de 30 km autour d'Ingwiller. Ce service est gratuit pour toute intervention supérieure à 200€. Au-delà de 30 km, un forfait de déplacement s'applique. Contactez-nous pour convenir d'un créneau.</p>
           </div>
         </div>
 
@@ -3621,7 +3677,7 @@
               <span class="text-xs text-gray-500">15 mars 2025</span>
             </div>
             <h3 class="font-heading font-bold text-2xl text-white mb-3">Nouveautés SUNN 2025 — les Rage S1 et S2 en promo exclusive</h3>
-            <p class="text-gray-400 text-sm leading-relaxed mb-5">La gamme SUNN Rage 2025 arrive chez VTT Performance avec des évolutions majeures : nouveau lien de suspension, coloris inédits et composants Shimano EP8 de dernière génération. Disponibles en promo jusqu'au 30 mars — stock limité.</p>
+            <p class="text-gray-400 text-sm leading-relaxed mb-5">La gamme SUNN Rage 2025 arrive chez VTT Performance avec des évolutions majeures : nouveau lien de suspension, coloris inédits et composants Shimano EP8 de dernière génération. Disponibles en stock — quantités limitées.</p>
             <div class="flex items-center gap-4">
               <button onclick="openBlogPost('sunn-rage-2025')" class="btn-orange text-sm">Lire la suite →</button>
               <div class="flex items-center gap-1 text-xs text-gray-500"><i data-lucide="clock" class="w-3.5 h-3.5"></i>5 min de lecture</div>
@@ -6667,7 +6723,7 @@ document.documentElement.style.scrollBehavior = 'smooth';
 // ── BLOG MODAL ────────────────────────────────────────────────────────
 function openBlogPost(slug) {
   var posts = {
-    'sunn-rage-2025': { title: 'Nouveautés SUNN 2025 — Rage S1 et S2 en promo exclusive', date: '15 mars 2025', content: '<p>La gamme SUNN Rage 2025 est désormais disponible chez VTT Performance avec des évolutions majeures par rapport aux millésimes précédents.</p><h4 style="font-family:Rajdhani,sans-serif;font-size:1.3rem;font-weight:700;margin:1.25rem 0 .5rem">Ce qui change en 2025</h4><ul style="color:#94a3b8;line-height:2;list-style:disc;padding-left:1.5rem"><li>Nouveau lien de suspension 4 bielles optimisé pour plus de progressivité</li><li>Cadre en aluminium 6061 allégé (–180g par rapport au modèle 2024)</li><li>Moteur Shimano EP8 de série sur les versions S1 et S2</li><li>Batterie 630 Wh intégrée dans le downtube</li><li>Coloris inédits : Vert forêt mat, Noir volcanique, Rouge cerise</li></ul><p style="margin-top:1rem">Les modèles Rage S1 (2 999€) et S2 (3 599€) sont disponibles en promo de -12% jusqu\'au 30 mars. Stock limité à 4 unités de chaque. Venez les essayer en magasin !</p>' },
+    'sunn-rage-2025': { title: 'Nouveautés SUNN 2025 — Rage S1 et S2 en promo exclusive', date: '15 mars 2025', content: '<p>La gamme SUNN Rage 2025 est désormais disponible chez VTT Performance avec des évolutions majeures par rapport aux millésimes précédents.</p><h4 style="font-family:Rajdhani,sans-serif;font-size:1.3rem;font-weight:700;margin:1.25rem 0 .5rem">Ce qui change en 2025</h4><ul style="color:#94a3b8;line-height:2;list-style:disc;padding-left:1.5rem"><li>Nouveau lien de suspension 4 bielles optimisé pour plus de progressivité</li><li>Cadre en aluminium 6061 allégé (–180g par rapport au modèle 2024)</li><li>Moteur Shimano EP8 de série sur les versions S1 et S2</li><li>Batterie 630 Wh intégrée dans le downtube</li><li>Coloris inédits : Vert forêt mat, Noir volcanique, Rouge cerise</li></ul><p style="margin-top:1rem">Les modèles Rage S1 (2 999€) et S2 (2 899€) sont disponibles en magasin — stock limité. Venez les essayer !</p>' },
     'vttae-alsace': { title: 'Bien choisir son VTTAE en Alsace du Nord', date: '8 mars 2025', content: '<p>L\'Alsace du Nord offre un terrain varié : chemins forestiers plats de la plaine du Rhin, montées techniques des Vosges du Nord, et singles techniques autour de Bitche. Chaque profil de terrain correspond à un type de VTTAE différent.</p><h4 style="font-family:Rajdhani,sans-serif;font-size:1.3rem;font-weight:700;margin:1.25rem 0 .5rem">Pour les chemins forestiers plats</h4><p style="color:#94a3b8">Un VTCAE comme le SUNN Start convient parfaitement. Moteur discret, batterie 400 Wh suffisante, géométrie confortable pour les longues distances.</p><h4 style="font-family:Rajdhani,sans-serif;font-size:1.3rem;font-weight:700;margin:1.25rem 0 .5rem">Pour les Vosges du Nord</h4><p style="color:#94a3b8">Les dénivelés de 200 à 600m nécessitent un moteur puissant (Bosch Performance Line CX) et une batterie d\'au moins 500 Wh. Le SUNN Rage ou le Moustache Trail 150.2 750 Wh sont nos recommandations.</p><p style="margin-top:1rem">Venez nous voir en magasin pour un essai personnalisé — nous adaptons nos conseils à votre morphologie et votre pratique.</p>' },
     'entretien-printemps': { title: 'Entretien de printemps — check-list complète', date: '1er mars 2025', content: '<h4 style="font-family:Rajdhani,sans-serif;font-size:1.3rem;font-weight:700;margin:0 0 .75rem">Check-list entretien printemps</h4><ol style="color:#94a3b8;line-height:2.2;list-style:decimal;padding-left:1.5rem"><li><strong style="color:white">Chaîne</strong> — Mesurer l\'usure avec un jaugeur. Au-delà de 0,75% d\'allongement, remplacer.</li><li><strong style="color:white">Cassette et plateaux</strong> — Inspecter les dents (pointes de requin = usure excessive).</li><li><strong style="color:white">Câbles de frein</strong> — Gainer et remplacer si effilochés ou oxydés.</li><li><strong style="color:white">Plaquettes de frein</strong> — Moins de 1,5mm de matière = remplacement nécessaire.</li><li><strong style="color:white">Pneus</strong> — Vérifier la bande de roulement et les flancs. Contrôler la pression (1,5–2,5 bars selon terrain).</li><li><strong style="color:white">Fourche</strong> — Purger les joints, vérifier la pression d\'air, nettoyer les tubes.</li><li><strong style="color:white">Amortisseur</strong> — Idem fourche. Chercher les fuites d\'huile.</li><li><strong style="color:white">Roulements de direction</strong> — Vérifier le jeu axial (tenir roue avant, freiner, bouger le guidon d\'avant en arrière).</li><li><strong style="color:white">Jantes et rayons</strong> — Contrôler le voilage, tensionner les rayons mous.</li><li><strong style="color:white">Commandes de vitesses</strong> — Dérailler sur tous les rapports, régler câbles si sauts.</li><li><strong style="color:white">Pédalier et boîtier de pédalier</strong> — Démontage et graissage annuel recommandé.</li><li><strong style="color:white">Visserie</strong> — Passer au couple recommandé (généralement 4–6 Nm pour le cockpit).</li></ol><p style="margin-top:1rem">Notre atelier réalise cette révision complète à partir de 89€. Prenez RDV en ligne.</p>' },
     'sentiers-ingwiller': { title: 'Nos 5 meilleurs sentiers autour d\'Ingwiller', date: '20 févr. 2025', content: '<h4 style="font-family:Rajdhani,sans-serif;font-size:1.3rem;font-weight:700;margin:0 0 .75rem">Top 5 parcours</h4><div style="space-y:1rem"><div style="margin-bottom:1.25rem"><strong style="color:#ff6b35">1. Forêt communale de Petersbach</strong><br><span style="color:#94a3b8">Distance : 18km · D+ 380m · Niveau : intermédiaire<br>Un classique : singles techniques, descentes ravinées, passage du Rocher des Deux Chènes.</span></div><div style="margin-bottom:1.25rem"><strong style="color:#ff6b35">2. Circuit des étangs de Hanau</strong><br><span style="color:#94a3b8">Distance : 22km · D+ 250m · Niveau : débutant/familial<br>Chemin balisé autour des étangs, idéal pour les enfants et les néophytes.</span></div><div style="margin-bottom:1.25rem"><strong style="color:#ff6b35">3. Tour du Mont Saint-Michel de Saverne</strong><br><span style="color:#94a3b8">Distance : 28km · D+ 620m · Niveau : confirmé<br>Départ gare de Saverne, montée sur crête, single en descente sur Lutzelbourg.</span></div><div style="margin-bottom:1.25rem"><strong style="color:#ff6b35">4. Piste verte d\'Ingwiller → Bouxwiller</strong><br><span style="color:#94a3b8">Distance : 14km · D+ 120m · Niveau : tous niveaux<br>Chemin VTT balisé sur l\'ancienne voie ferrée. Parfait pour une sortie famille.</span></div><div style="margin-bottom:1.25rem"><strong style="color:#ff6b35">5. Rocher de Graufthal — circuit enduro</strong><br><span style="color:#94a3b8">Distance : 16km · D+ 480m · Niveau : expert<br>Montée raide sur piste militaire, descente technique sur sentier rocheux. Recommandé en VTTAE.</span></div></div>' },
