@@ -816,6 +816,47 @@
 <!-- SCROLL PROGRESS BAR -->
 <div id="scroll-progress" style="position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,#ff6b35,#fbbf24);z-index:9999;transition:width .1s linear;pointer-events:none;"></div>
 
+<!-- FLASH BANNER -->
+<div id="top-banner" class="bg-orange-600 py-1.5 overflow-hidden">
+  <div class="flash-track text-xs font-semibold text-white">
+    <span class="flex items-center gap-8 px-6 flex-shrink-0">
+      <button class="banner-pill" onclick="showSection('catalogue')">🚚 Livraison gratuite dès 600€ — vélos &amp; accessoires</button>
+      <span class="opacity-40">·</span>
+      <button class="banner-pill" onclick="showSection('location')">🚴 Location dès <strong>30€/jour</strong> — SUNN &amp; Moustache</button>
+      <span class="opacity-40">·</span>
+      <button class="banner-pill" onclick="showSection('reprise')">🌸 <strong>Reprise du Printemps</strong> Moustache — jusqu'à <strong>500€</strong> de bonus · Jusqu'au 25 avril</button>
+      <span class="opacity-40">·</span>
+      <button class="banner-pill" onclick="showSection('location')">🎯 Location <strong>déduite</strong> si vous achetez !</button>
+      <span class="opacity-40">·</span>
+      <button class="banner-pill" onclick="showSection('atelier')">🔧 Révision complète dès <strong>35€</strong> — Atelier expert</button>
+      <span class="opacity-40">·</span>
+      <a class="banner-pill" href="tel:0950320829">📞 09 50 32 08 29 · Mar–Ven 9h–18h30 · Sam 9h–18h</a>
+      <span class="opacity-40">·</span>
+      <button class="banner-pill" onclick="showSection('catalogue')">⚡ Concessionnaire officiel <strong>SUNN</strong> &amp; <strong>Moustache Bikes</strong></button>
+      <span class="opacity-40">·</span>
+      <button class="banner-pill" onclick="showSection('peinture')">🎨 Peinture cadre sur mesure — Devis gratuit</button>
+      <span class="opacity-40">·</span>
+    </span>
+    <span class="flex items-center gap-8 px-6 flex-shrink-0" aria-hidden="true">
+      <button class="banner-pill" onclick="showSection('catalogue')">🚚 Livraison gratuite dès 600€ — vélos &amp; accessoires</button>
+      <span class="opacity-40">·</span>
+      <button class="banner-pill" onclick="showSection('location')">🚴 Location dès <strong>30€/jour</strong> — SUNN &amp; Moustache</button>
+      <span class="opacity-40">·</span>
+      <button class="banner-pill" onclick="showSection('reprise')">🌸 <strong>Reprise du Printemps</strong> Moustache — jusqu'à <strong>500€</strong> de bonus · Jusqu'au 25 avril</button>
+      <span class="opacity-40">·</span>
+      <button class="banner-pill" onclick="showSection('location')">🎯 Location <strong>déduite</strong> si vous achetez !</button>
+      <span class="opacity-40">·</span>
+      <button class="banner-pill" onclick="showSection('atelier')">🔧 Révision complète dès <strong>35€</strong> — Atelier expert</button>
+      <span class="opacity-40">·</span>
+      <a class="banner-pill" href="tel:0950320829">📞 09 50 32 08 29 · Mar–Ven 9h–18h30 · Sam 9h–18h</a>
+      <span class="opacity-40">·</span>
+      <button class="banner-pill" onclick="showSection('catalogue')">⚡ Concessionnaire officiel <strong>SUNN</strong> &amp; <strong>Moustache Bikes</strong></button>
+      <span class="opacity-40">·</span>
+      <button class="banner-pill" onclick="showSection('peinture')">🎨 Peinture cadre sur mesure — Devis gratuit</button>
+      <span class="opacity-40">·</span>
+    </span>
+  </div>
+</div>
 
 <!-- NAVIGATION -->
 <nav id="navbar" class="fixed z-50 w-full" style="top:36px;background:rgba(8,14,26,.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);">
@@ -1001,7 +1042,7 @@
 <div id="sec-accueil">
 
   <!-- Slider pleine largeur format paysage -->
-  <section id="hero-slider" class="hero-banner" style="height:58vh;min-height:380px;max-height:560px;margin-top:64px;">
+  <section id="hero-slider" class="hero-banner" style="height:58vh;min-height:380px;max-height:560px;margin-top:calc(36px + 64px);">
 
     <div class="hb-slide hb-active">
       <div class="hb-bg" style="background-image:url('images/location-famille.png');background-position:center 40%"></div>
@@ -1080,56 +1121,6 @@
     </div>
   </section>
 
-  <!-- Terrain separator animé -->
-  <div style="position:relative;margin-top:-2px;overflow:hidden;height:80px;background:var(--surface)" aria-hidden="true">
-    <svg class="terrain-sep" viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="position:absolute;bottom:0;left:0;height:80px">
-      <defs>
-        <linearGradient id="mtn-g1" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" style="stop-color:#ff6b35;stop-opacity:.12"/>
-          <stop offset="45%" style="stop-color:#f59e0b;stop-opacity:.08"/>
-          <stop offset="100%" style="stop-color:#ff6b35;stop-opacity:.12"/>
-        </linearGradient>
-      </defs>
-      <!-- Montagne arrière-plan -->
-      <path d="M0,80 L0,52 L100,28 L240,48 L420,12 L580,38 L740,6 L900,32 L1060,16 L1220,42 L1440,20 L1440,80 Z" fill="rgba(255,107,53,.06)"/>
-      <!-- Montagne milieu -->
-      <path d="M0,80 L0,62 L160,45 L340,60 L520,30 L700,55 L880,28 L1060,50 L1240,36 L1440,46 L1440,80 Z" fill="url(#mtn-g1)"/>
-      <!-- Sol/piste -->
-      <path d="M0,80 L0,72 L1440,72 L1440,80 Z" fill="rgba(255,107,53,.08)"/>
-      <!-- VTT animé qui roule sur la piste -->
-      <g class="bike-rider">
-        <!-- Roue arrière -->
-        <g class="bike-wheel" style="transform-origin:16px 72px">
-          <circle cx="16" cy="72" r="9" fill="none" stroke="rgba(255,107,53,.85)" stroke-width="1.8"/>
-          <circle cx="16" cy="72" r="2.5" fill="rgba(255,107,53,.85)"/>
-          <line x1="16" y1="63" x2="16" y2="81" stroke="rgba(255,107,53,.5)" stroke-width="1.2"/>
-          <line x1="7"  y1="72" x2="25" y2="72" stroke="rgba(255,107,53,.5)" stroke-width="1.2"/>
-        </g>
-        <!-- Roue avant -->
-        <g class="bike-wheel" style="transform-origin:40px 72px">
-          <circle cx="40" cy="72" r="9" fill="none" stroke="rgba(255,107,53,.85)" stroke-width="1.8"/>
-          <circle cx="40" cy="72" r="2.5" fill="rgba(255,107,53,.85)"/>
-          <line x1="40" y1="63" x2="40" y2="81" stroke="rgba(255,107,53,.5)" stroke-width="1.2"/>
-          <line x1="31" y1="72" x2="49" y2="72" stroke="rgba(255,107,53,.5)" stroke-width="1.2"/>
-        </g>
-        <!-- Cadre vélo -->
-        <line x1="16" y1="72" x2="26" y2="57" stroke="rgba(255,107,53,.9)" stroke-width="1.6"/>
-        <line x1="26" y1="57" x2="40" y2="72" stroke="rgba(255,107,53,.9)" stroke-width="1.6"/>
-        <line x1="26" y1="57" x2="22" y2="72" stroke="rgba(255,107,53,.7)" stroke-width="1.2"/>
-        <line x1="26" y1="57" x2="28" y2="49" stroke="rgba(255,107,53,.9)" stroke-width="1.6"/>
-        <!-- Guidon -->
-        <line x1="36" y1="58" x2="43" y2="55" stroke="rgba(255,107,53,.9)" stroke-width="1.6"/>
-        <!-- Selle -->
-        <line x1="21" y1="51" x2="29" y2="51" stroke="rgba(255,107,53,.9)" stroke-width="1.8"/>
-        <!-- Pédalier -->
-        <circle cx="24" cy="66" r="3" fill="none" stroke="rgba(255,107,53,.6)" stroke-width="1.2"/>
-        <!-- Cycliste silhouette -->
-        <ellipse cx="28" cy="46" rx="4" ry="4.5" fill="rgba(255,107,53,.7)"/>
-        <line x1="28" y1="50" x2="26" y2="57" stroke="rgba(255,107,53,.8)" stroke-width="1.8"/>
-        <line x1="28" y1="52" x2="36" y2="55" stroke="rgba(255,107,53,.8)" stroke-width="1.5"/>
-      </g>
-    </svg>
-  </div>
 
   <!-- Services -->
   <section class="py-20 px-4" style="background:var(--surface)">
@@ -1700,8 +1691,8 @@
       <div class="promo-ribbon mb-5" data-aos="fade-up">
         <span style="font-size:1.3rem;">🔥</span>
         <div class="flex-1">
-          <span class="font-heading font-bold text-orange-400 text-base">Soldes NORCO 2023/2024 — jusqu'à -52%</span>
-          <span class="text-gray-300 text-sm ml-2">— stocks limités sur Fluid, Sight, Optic, Revolver &amp; VLT électrique</span>
+          <span class="font-heading font-bold text-orange-400 text-base">Déstockage NORCO — jusqu'à -52%</span>
+          <span class="text-gray-300 text-sm ml-2">— dernières pièces sur Fluid, Sight, Optic, Revolver &amp; VLT électrique</span>
         </div>
         <button onclick="setBrand('NORCO');setCat('all');document.getElementById('catalog-sort').value='promo';renderCatalog();showSection('catalogue')" class="text-xs font-bold px-3 py-1.5 rounded-lg flex-shrink-0" style="background:rgba(255,107,53,.2);border:1px solid rgba(255,107,53,.4);color:#ff6b35;">Voir les promos NORCO</button>
       </div>
@@ -1766,10 +1757,6 @@
         <span class="badge badge-electric">Location</span>
         <h2 class="font-heading font-bold text-4xl mt-3 mb-2">Louez votre vélo à Ingwiller</h2>
         <p class="text-gray-400 max-w-xl">Partez explorer l'Alsace du Nord sur nos vélos haut de gamme — dernières nouveautés et modèles de l'année en cours. À partir de 30€/jour.</p>
-        <!-- Visuel Canva location -->
-        <div class="mt-6 rounded-2xl overflow-hidden" style="max-height:320px;">
-          <img src="images/canva-location-banner.png" alt="Location VTT électrique SUNN Moustache Ingwiller" class="w-full object-cover" style="object-position:center" loading="lazy">
-        </div>
       </div>
 
       <!-- Bannière photos défilante -->
@@ -1804,6 +1791,15 @@
               <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.4);color:#4ade80;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir les sentiers Famille →</span>
             </div>
           </a>
+          <!-- Photo 4 — Reprise du Printemps → section reprise -->
+          <a class="location-banner-item" href="#" onclick="event.preventDefault();showSection('reprise')" style="cursor:pointer;text-decoration:none">
+            <img class="location-banner-img" src="images/sunn-reprise-printemps.jpg" alt="Reprise du Printemps — SUNN orange en forêt" loading="lazy">
+            <div class="location-banner-caption">
+              <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">🌸 Reprise du Printemps</div>
+              <p style="color:#fde68a;font-size:.78rem;font-weight:700;margin-bottom:.6rem">Jusqu'à 500€ de bonus · Toutes marques · Jusqu'au 25 avril</p>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(234,179,8,.2);border:1px solid rgba(234,179,8,.5);color:#fde68a;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Estimer ma reprise →</span>
+            </div>
+          </a>
           <!-- duplication pour boucle infinie -->
           <a class="location-banner-item" href="#sec-location" onclick="event.preventDefault();showSection('sec-location');setTimeout(()=>filterTrails('trail'),300)" style="cursor:pointer;text-decoration:none">
             <img class="location-banner-img" src="images/location-vtt-foret.png" alt="" loading="lazy">
@@ -1827,6 +1823,14 @@
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Famille, amis, débutants &amp; experts</div>
               <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">Loisir · piste cyclable et chemins · tous profils</p>
               <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.4);color:#4ade80;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir les sentiers Famille →</span>
+            </div>
+          </a>
+          <a class="location-banner-item" href="#" onclick="event.preventDefault();showSection('reprise')" style="cursor:pointer;text-decoration:none" aria-hidden="true">
+            <img class="location-banner-img" src="images/sunn-reprise-printemps.jpg" alt="" loading="lazy">
+            <div class="location-banner-caption">
+              <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">🌸 Reprise du Printemps</div>
+              <p style="color:#fde68a;font-size:.78rem;font-weight:700;margin-bottom:.6rem">Jusqu'à 500€ de bonus · Toutes marques · Jusqu'au 25 avril</p>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(234,179,8,.2);border:1px solid rgba(234,179,8,.5);color:#fde68a;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Estimer ma reprise →</span>
             </div>
           </a>
         </div>
@@ -4834,15 +4838,15 @@ const BIKE_IMGS = {
   // VTTAE — images fiches produit sunn.fr
   'SUNN_Flash S2'         :[S+'1681-home_default/flash-s2-29.jpg',S+'1682-home_default/flash-s2-29.jpg'],
   'SUNN_Flash S1'         :[S+'1678-home_default/flash-s1.jpg',S+'1679-home_default/flash-s1.jpg'],
-  'SUNN_Rage S2'          :[S+'1820-home_default/rage-s2.jpg',S+'1821-home_default/rage-s2.jpg',S+'1822-home_default/rage-s2.jpg'],
-  'SUNN_Rage S1'          :[S+'1817-home_default/rage-s1.jpg',S+'1818-home_default/rage-s1.jpg',S+'1819-home_default/rage-s1.jpg'],
-  'SUNN_Charger S2'       :[S+'1814-home_default/charger-s2.jpg',S+'1815-home_default/charger-s2.jpg',S+'1816-home_default/charger-s2.jpg'],
-  'SUNN_Charger S1'       :[S+'1810-home_default/charger-s1.jpg',S+'1808-home_default/charger-s1.jpg',S+'1809-home_default/charger-s1.jpg'],
-  'SUNN_Charger Finest'   :[S+'1811-home_default/charger-finest.jpg',S+'1812-home_default/charger-finest.jpg',S+'1813-home_default/charger-finest.jpg'],
-  'SUNN_One S2'           :[S+'1897-home_default/one-s2.jpg',S+'1898-home_default/one-s2.jpg',S+'1899-home_default/one-s2.jpg'],
-  'SUNN_One S1'           :[S+'1896-home_default/one-s1.jpg',S+'1895-home_default/one-s1.jpg'],
-  'SUNN_One Finest'       :[S+'1892-home_default/one-finest.jpg',S+'1893-home_default/one-finest.jpg'],
-  'SUNN_One Factory'      :[S+'1894-home_default/one-factory.jpg',S+'1890-home_default/one-factory.jpg'],
+  'SUNN_Rage S2'          :[S+'1820-home_default/rage-s2.jpg',S+'1821-home_default/rage-s2.jpg',S+'1822-home_default/rage-s2.jpg','images/sunn-rage-action1.jpg','images/sunn-rage-action2.jpg'],
+  'SUNN_Rage S1'          :[S+'1817-home_default/rage-s1.jpg',S+'1818-home_default/rage-s1.jpg',S+'1819-home_default/rage-s1.jpg','images/sunn-rage-action1.jpg'],
+  'SUNN_Charger S2'       :[S+'1814-home_default/charger-s2.jpg',S+'1815-home_default/charger-s2.jpg',S+'1816-home_default/charger-s2.jpg','images/sunn-charger-action1.jpg','images/sunn-charger-action2.jpg'],
+  'SUNN_Charger S1'       :[S+'1810-home_default/charger-s1.jpg',S+'1808-home_default/charger-s1.jpg',S+'1809-home_default/charger-s1.jpg','images/sunn-charger-action1.jpg'],
+  'SUNN_Charger Finest'   :[S+'1811-home_default/charger-finest.jpg',S+'1812-home_default/charger-finest.jpg',S+'1813-home_default/charger-finest.jpg','images/sunn-charger-action2.jpg'],
+  'SUNN_One S2'           :[S+'1897-home_default/one-s2.jpg',S+'1898-home_default/one-s2.jpg',S+'1899-home_default/one-s2.jpg','images/sunn-one-action1.jpg','images/sunn-one-action2.jpg'],
+  'SUNN_One S1'           :[S+'1896-home_default/one-s1.jpg',S+'1895-home_default/one-s1.jpg','images/sunn-one-action1.jpg'],
+  'SUNN_One Finest'       :[S+'1892-home_default/one-finest.jpg',S+'1893-home_default/one-finest.jpg','images/sunn-one-action2.jpg'],
+  'SUNN_One Factory'      :[S+'1894-home_default/one-factory.jpg',S+'1890-home_default/one-factory.jpg','images/sunn-one-action1.jpg'],
   // VTT
   'SUNN_Kern S2'          :[S+'1730-home_default/kern-s2.jpg',S+'1731-home_default/kern-s2.jpg',S+'1732-home_default/kern-s2.jpg'],
   'SUNN_Kern S1'          :[S+'1482-home_default/kern-s1.jpg',S+'1480-home_default/kern-s1.jpg',S+'1481-home_default/kern-s1.jpg'],
@@ -4913,12 +4917,14 @@ const BIKE_IMGS = {
   ],
   'Moustache_Game 150.8': [
     'https://moustachebikes.com/wp-content/uploads/2024/09/g58fbl600250-game-150-8-side-drivetrain-view-studio-1500x1125.jpg',
-    'https://moustachebikes.com/wp-content/uploads/2024/09/g58fbl600250-game-150-8-front-drivetrain-view-studio-1900x1425.jpg',
+    'images/moustache-game-150-action1.jpg',
+    'images/moustache-game-150-action2.jpg',
     'https://moustachebikes.com/wp-content/uploads/2024/09/g58fbl600250-game-150-8-detail-drivetrain-view-studio-1900x1425.jpg'
   ],
   'Moustache_Game 160.8': [
     'https://moustachebikes.com/wp-content/uploads/2024/09/g68frl600250-game-160-8-side-drivetrain-view-studio-1500x1125.jpg',
-    'https://moustachebikes.com/wp-content/uploads/2024/09/g68frl600250-game-160-8-front-drivetrain-view-studio-1900x1425.jpg',
+    'images/moustache-game-160-action1.jpg',
+    'images/moustache-game-160-action2.jpg',
     'https://moustachebikes.com/wp-content/uploads/2024/09/g68frl600250-game-160-8-detail-drivetrain-view-studio-1900x1425.jpg'
   ],
   'Moustache_Samedi 27 Xroad': [
@@ -4955,6 +4961,36 @@ const BIKE_IMGS = {
     'https://moustachebikes.com/wp-content/uploads/2025/04/l03ogu5e0250-lundi-20-cargo-3-ne-side-drivetrain-view-studio-1-1500x1143.jpg',
     'https://moustachebikes.com/wp-content/uploads/2025/04/l03ogu5e0250-lundi-20-cargo-3-ne-side-drivetrain-view-studio-1-1900x1448.jpg',
     'https://moustachebikes.com/wp-content/uploads/2025/04/l03ogu5e0250-lundi-20-cargo-3-vue-pilote-1900x1425.jpg'
+  ],
+  // ── Moustache 2026 — nouveaux modèles ────────────────────────────────
+  'Moustache_Xroad 2': [
+    'https://moustachebikes.com/wp-content/uploads/2025/09/xr2ogm500260-xroad-2-side-drivetrain-view-studio-1500x1125.jpg',
+    'https://moustachebikes.com/wp-content/uploads/2025/09/xr2ogm500260-xroad-2-side-drivetrain-view-studio-1900x1425.jpg',
+    'images/moustache-xroad-action.jpg'
+  ],
+  'Moustache_Xroad 4': [
+    'https://moustachebikes.com/wp-content/uploads/2025/09/xr4orm600260-xroad-4-side-drivetrain-view-studio-1500x1125.jpg',
+    'https://moustachebikes.com/wp-content/uploads/2025/09/xr4orm600260-xroad-4-front-drivetrain-view-studio-1900x1425.jpg',
+    'images/moustache-xroad-action2.jpg'
+  ],
+  'Moustache_Xroad E5': [
+    'https://moustachebikes.com/wp-content/uploads/2025/09/xr2ogm500260-xroad-2-side-drivetrain-view-studio-1500x1125.jpg',
+    'images/moustache-xroad-action.jpg',
+    'images/moustache-xroad-action2.jpg'
+  ],
+  'Moustache_Xroad FS 4': [
+    'images/moustache-xroad-fs-action.jpg',
+    'https://moustachebikes.com/wp-content/uploads/2025/09/xr4orm600260-xroad-4-side-drivetrain-view-studio-1500x1125.jpg',
+    'images/moustache-xroad-action2.jpg'
+  ],
+  'Moustache_Trail 150.2': [
+    'images/moustache-trail-action.jpg',
+    'images/moustache-trail-action2.jpg',
+    'https://moustachebikes.com/wp-content/uploads/2024/09/sa29ft542240-samedi-29-trail-5-side-drivetrain-view-studio-1500x1125.jpg'
+  ],
+  'Moustache_Mardi 27.4': [
+    'images/moustache-mardi-27-4.jpg',
+    'images/moustache-xroad-action.jpg'
   ],
   // ── KONA ──────────────────────────────────────────────────────────────
   'KONA_Process 153 CR': [
@@ -5491,15 +5527,23 @@ function submitOrder(e) {
   e.preventDefault();
   const bike = document.getElementById('o-bike').value;
   const payVal = (document.querySelector('input[name="o-pay"]:checked') || {}).value || 'virement';
-  const payLabel = payVal === 'virement' ? 'Virement bancaire (RIB demandé par email)' : 'Paiement en magasin (espèces / CB au retrait)';
-  const body = encodeURIComponent(`Bonjour,\n\nJe souhaite commander / essayer :\n${bike}\n\nNom : ${document.getElementById('o-prenom').value} ${document.getElementById('o-nom').value}\nTél : ${document.getElementById('o-tel').value}\nPaiement souhaité : ${payLabel}\n\n${document.getElementById('o-msg').value}\n\nMerci !`);
-  window.location.href = `mailto:vttperformance67@gmail.com?subject=${encodeURIComponent('Commande : '+bike)}&body=${body}`;
+  const payLabel = payVal === 'virement' ? 'Virement bancaire' : 'Paiement en magasin';
+  const msgWA = [
+    '🚴 *COMMANDE / ESSAI — VTT Performance*',
+    '',
+    '🚵 Vélo : ' + bike,
+    '💳 Paiement souhaité : ' + payLabel,
+    '',
+    '👤 ' + document.getElementById('o-prenom').value + ' ' + document.getElementById('o-nom').value,
+    '📞 ' + document.getElementById('o-tel').value,
+    document.getElementById('o-msg').value ? '\n💬 ' + document.getElementById('o-msg').value : ''
+  ].join('\n');
+  window.open('https://wa.me/33950320829?text=' + encodeURIComponent(msgWA), '_blank');
   closeModal();
   document.getElementById('order-form').reset();
-  // reset sélection paiement sur virement par défaut
   document.querySelectorAll('.pay-opt').forEach((o,i) => { o.classList.toggle('selected',i===0); o.querySelector('input').checked = (i===0); });
   document.getElementById('pay-note').textContent = 'Confirmation par email avec RIB pour le virement.';
-  toast('Demande envoyée ! Nous vous répondrons sous 24h.', 'ok');
+  toast('Demande envoyée via WhatsApp ! Réponse sous 24h.', 'ok');
 }
 
 // ── COUNT-UP ANIMATION ────────────────────────────────────────────────
@@ -5694,27 +5738,64 @@ function submitRental(e) {
   const equipEls= document.querySelectorAll('input[name="equip"]:checked');
   const equips  = Array.from(equipEls).map(function(x){ return x.value; }).join(', ') || 'Aucun';
   const assurLabels = { aucune:'Aucune', basique:'Basique (+5€/j)', complete:'Complète (+10€/j)' };
-  const lines = [
-    'RÉSERVATION LOCATION — VTT Performance Ingwiller',
+  const prenom  = document.getElementById('lf-prenom').value;
+  const nom     = document.getElementById('lf-nom').value;
+  const email   = document.getElementById('lf-email').value;
+  const tel     = document.getElementById('lf-tel').value;
+  const msg     = document.getElementById('lf-msg').value;
+  const msgWA = [
+    '🚴 *DEMANDE DE LOCATION — VTT Performance*',
     '',
-    'Vélo : '+velo,
-    'Taille : '+taille,
-    'Du : '+start+' au '+end,
-    'Équipements : '+equips,
-    'Assurance : '+(assurLabels[assur]||assur),
+    '🚵 Vélo : ' + velo + ' (' + taille + ')',
+    '📅 Dates : du ' + start + ' au ' + end,
+    '🛡 Assurance : ' + (assurLabels[assur]||assur),
+    '🎽 Équipements : ' + equips,
     '',
-    'Client : '+document.getElementById('lf-prenom').value+' '+document.getElementById('lf-nom').value,
-    'Email : '+document.getElementById('lf-email').value,
-    'Tél : '+document.getElementById('lf-tel').value,
-    '',
-    document.getElementById('lf-msg').value
-  ];
-  const body = encodeURIComponent(lines.join('\n'));
-  window.location.href = 'mailto:vttperformance67@gmail.com?subject='+encodeURIComponent('Réservation location : '+velo)+'&body='+body;
+    '👤 ' + prenom + ' ' + nom,
+    '✉️ ' + email,
+    '📞 ' + tel,
+    msg ? '\n💬 ' + msg : ''
+  ].join('\n');
+  window.open('https://wa.me/33950320829?text=' + encodeURIComponent(msgWA), '_blank');
   saveRentalLocal(velo, start, end);
-  document.getElementById('rental-form').reset();
+  // Afficher le panneau de confirmation avec Calendly + PayPal
+  const form = document.getElementById('rental-form');
+  if (form) {
+    form.style.display = 'none';
+    let conf = document.getElementById('rental-confirm-panel');
+    if (!conf) {
+      conf = document.createElement('div');
+      conf.id = 'rental-confirm-panel';
+      conf.style.cssText = 'padding:1.5rem;border-radius:1.25rem;background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.3);text-align:center;';
+      form.parentNode.insertBefore(conf, form.nextSibling);
+    }
+    conf.innerHTML = `
+      <div style="font-size:2.5rem;margin-bottom:.75rem">✅</div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:#4ade80;margin-bottom:.5rem">Demande envoyée !</div>
+      <p style="color:#d1d5db;font-size:.88rem;margin-bottom:1.25rem">Votre demande de location (<strong style="color:white">${velo}</strong>) a été transmise par WhatsApp. Nous confirmonsla disponibilité dans les <strong style="color:white">2h en semaine</strong>.</p>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:1rem;padding:1rem;margin-bottom:1rem;text-align:left;">
+        <div style="font-weight:700;color:#60a5fa;margin-bottom:.4rem;font-size:.88rem">📋 Étapes suivantes</div>
+        <ol style="color:#d1d5db;font-size:.82rem;margin:0;padding-left:1.25rem;line-height:1.9">
+          <li>Nous vérifions la disponibilité du vélo</li>
+          <li>Vous recevez une confirmation par WhatsApp/téléphone</li>
+          <li>Un lien de paiement PayPal (acompte 30%) vous est envoyé pour finaliser</li>
+          <li>Vous venez retirer le vélo au magasin à Ingwiller</li>
+        </ol>
+      </div>
+      <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;">
+        <a href="https://calendly.com/vttperformance67/rendez-vous-presentation-ou-test-velo-clone" target="_blank" rel="noopener"
+           style="display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.2rem;border-radius:2rem;background:#2563eb;color:white;font-weight:700;font-size:.83rem;text-decoration:none;">
+          📅 Réserver un créneau Calendly
+        </a>
+        <button onclick="document.getElementById('rental-confirm-panel').style.display='none';document.getElementById('rental-form').style.display='block';"
+           style="display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.2rem;border-radius:2rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#d1d5db;font-weight:700;font-size:.83rem;cursor:pointer;">
+          Nouvelle demande
+        </button>
+      </div>`;
+    conf.style.display = 'block';
+  }
   initAvailCalendar();
-  toast('Réservation envoyée ! Confirmation sous 2h en semaine.', 'ok');
+  toast('Demande envoyée via WhatsApp ! Confirmation sous 2h.', 'ok');
 }
 
 // ── CONTACT FORM ──────────────────────────────────────────────────────
