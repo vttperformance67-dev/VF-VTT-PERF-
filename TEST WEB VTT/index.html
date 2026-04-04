@@ -892,7 +892,8 @@
             <button class="nav-dd-item" onclick="setCat('kids');showSection('catalogue')">👦 Enfants</button>
             <div class="nav-dd-sep"></div>
             <button class="nav-dd-item" onclick="setBrand('SUNN');showSection('catalogue')">SUNN</button>
-            <button class="nav-dd-item" onclick="setBrand('Moustache');showSection('catalogue')">Moustache</button>
+            <button class="nav-dd-item" onclick="showSection('moustache')" style="color:#ff6b35;font-weight:700;">✦ Moustache (page dédiée)</button>
+            <button class="nav-dd-item" onclick="setBrand('Moustache');showSection('catalogue')">Moustache — catalogue</button>
             <button class="nav-dd-item" onclick="setBrand('KONA');showSection('catalogue')">KONA</button>
             <button class="nav-dd-item" onclick="setBrand('NORCO');showSection('catalogue')">NORCO</button>
             <button class="nav-dd-item" onclick="setBrand('FORBIDDEN');showSection('catalogue')">FORBIDDEN</button>
@@ -1363,7 +1364,7 @@
         <button onclick="setBrand('KONA');showSection('catalogue')" class="brand-label text-white transition-all duration-200 hover:text-orange-400 hover:scale-110 cursor-pointer bg-transparent border-0 p-0" style="font-size:2rem;letter-spacing:.2em" title="Voir les vélos KONA">KONA</button>
         <button onclick="setBrand('NORCO');showSection('catalogue')" class="brand-label text-white transition-all duration-200 hover:text-orange-400 hover:scale-110 cursor-pointer bg-transparent border-0 p-0" style="font-size:2rem;letter-spacing:.2em" title="Voir les vélos NORCO">NORCO</button>
         <button onclick="setBrand('FORBIDDEN');showSection('catalogue')" class="brand-label text-white transition-all duration-200 hover:text-orange-400 hover:scale-110 cursor-pointer bg-transparent border-0 p-0" style="font-size:2rem;letter-spacing:.2em" title="Voir les vélos FORBIDDEN">FORBIDDEN</button>
-        <button onclick="setBrand('Moustache');showSection('catalogue')" class="brand-label text-white transition-all duration-200 hover:text-orange-400 hover:scale-110 cursor-pointer bg-transparent border-0 p-0" style="font-size:2rem;letter-spacing:.2em" title="Voir les vélos Moustache">MOUSTACHE</button>
+        <button onclick="showSection('moustache')" class="brand-label text-white transition-all duration-200 hover:text-orange-400 hover:scale-110 cursor-pointer bg-transparent border-0 p-0" style="font-size:2rem;letter-spacing:.2em" title="Page Moustache — produits et galerie">MOUSTACHE</button>
       </div>
     </div>
   </section>
@@ -1800,6 +1801,24 @@
               <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(234,179,8,.2);border:1px solid rgba(234,179,8,.5);color:#fde68a;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Estimer ma reprise →</span>
             </div>
           </a>
+          <!-- Photo 5 — SUNN Charger en montagne -->
+          <a class="location-banner-item" href="#" onclick="event.preventDefault();setCat('vttae');showSection('catalogue')" style="cursor:pointer;text-decoration:none">
+            <img class="location-banner-img" src="images/sunn-charger-mountain.jpg" alt="SUNN Charger montagne Alsace" loading="lazy">
+            <div class="location-banner-caption">
+              <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">SUNN Charger — Montagne</div>
+              <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">VTTAE 750Wh · Bosch CX · Tout terrain</p>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir le Charger →</span>
+            </div>
+          </a>
+          <!-- Photo 6 — SUNN One en forêt -->
+          <a class="location-banner-item" href="#" onclick="event.preventDefault();setBrand('SUNN');showSection('catalogue')" style="cursor:pointer;text-decoration:none">
+            <img class="location-banner-img" src="images/sunn-one-forest.jpg" alt="SUNN One en forêt" loading="lazy">
+            <div class="location-banner-caption">
+              <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">SUNN One — Trail &amp; forêt</div>
+              <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">VTTAE · Bosch CX · 625–750 Wh</p>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,107,53,.2);border:1px solid rgba(255,107,53,.5);color:#fb923c;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir le One →</span>
+            </div>
+          </a>
           <!-- duplication pour boucle infinie -->
           <a class="location-banner-item" href="#sec-location" onclick="event.preventDefault();showSection('sec-location');setTimeout(()=>filterTrails('trail'),300)" style="cursor:pointer;text-decoration:none">
             <img class="location-banner-img" src="images/location-vtt-foret.png" alt="" loading="lazy">
@@ -1831,6 +1850,22 @@
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">🌸 Reprise du Printemps</div>
               <p style="color:#fde68a;font-size:.78rem;font-weight:700;margin-bottom:.6rem">Jusqu'à 500€ de bonus · Toutes marques · Jusqu'au 25 avril</p>
               <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(234,179,8,.2);border:1px solid rgba(234,179,8,.5);color:#fde68a;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Estimer ma reprise →</span>
+            </div>
+          </a>
+          <a class="location-banner-item" href="#" onclick="event.preventDefault();setCat('vttae');showSection('catalogue')" style="cursor:pointer;text-decoration:none" aria-hidden="true">
+            <img class="location-banner-img" src="images/sunn-charger-mountain.jpg" alt="" loading="lazy">
+            <div class="location-banner-caption">
+              <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">SUNN Charger — Montagne</div>
+              <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">VTTAE 750Wh · Bosch CX · Tout terrain</p>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir le Charger →</span>
+            </div>
+          </a>
+          <a class="location-banner-item" href="#" onclick="event.preventDefault();setBrand('SUNN');showSection('catalogue')" style="cursor:pointer;text-decoration:none" aria-hidden="true">
+            <img class="location-banner-img" src="images/sunn-one-forest.jpg" alt="" loading="lazy">
+            <div class="location-banner-caption">
+              <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">SUNN One — Trail &amp; forêt</div>
+              <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">VTTAE · Bosch CX · 625–750 Wh</p>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,107,53,.2);border:1px solid rgba(255,107,53,.5);color:#fb923c;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir le One →</span>
             </div>
           </a>
         </div>
@@ -4297,6 +4332,62 @@
   </div>
 </div>
 
+<!-- ════════════════════ MOUSTACHE BRAND PAGE ════════════════════ -->
+<div id="sec-moustache" class="section-hidden">
+
+  <!-- Hero plein écran -->
+  <div style="position:relative;height:520px;overflow:hidden;margin-top:0;">
+    <img src="images/moustache-game-160-action2.jpg" alt="Moustache Bikes — Ingwiller" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;" loading="eager">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,22,40,.15) 0%,rgba(10,22,40,.7) 70%,rgba(10,22,40,1) 100%);"></div>
+    <div style="position:absolute;bottom:2.5rem;left:0;right:0;text-align:center;padding:0 1rem;">
+      <div style="display:inline-block;background:rgba(255,107,53,.15);border:1px solid rgba(255,107,53,.4);border-radius:2rem;padding:.25rem 1rem;font-size:.75rem;font-weight:700;color:#ff6b35;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem;">Concessionnaire officiel · Ingwiller</div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:clamp(2.2rem,6vw,4rem);font-weight:900;color:white;letter-spacing:.12em;line-height:1;">MOUSTACHE BIKES</div>
+      <p style="color:rgba(255,255,255,.65);font-size:1rem;margin:.6rem 0 1.5rem;">Vélos électriques haut de gamme — fabriqués en France à Thaon-les-Vosges</p>
+      <!-- Gamme tabs -->
+      <div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;">
+        <button onclick="filterMoustache('all')" id="mq-all" class="mq-tab active" style="padding:.4rem 1.1rem;border-radius:2rem;font-size:.8rem;font-weight:700;font-family:'Exo 2',sans-serif;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.18);color:white;cursor:pointer;transition:all .2s;">Tous</button>
+        <button onclick="filterMoustache('trail')" id="mq-trail" class="mq-tab" style="padding:.4rem 1.1rem;border-radius:2rem;font-size:.8rem;font-weight:700;font-family:'Exo 2',sans-serif;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.65);cursor:pointer;transition:all .2s;">🏔️ Trail / Game</button>
+        <button onclick="filterMoustache('xroad')" id="mq-xroad" class="mq-tab" style="padding:.4rem 1.1rem;border-radius:2rem;font-size:.8rem;font-weight:700;font-family:'Exo 2',sans-serif;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.65);cursor:pointer;transition:all .2s;">🛤️ Xroad / Allroad</button>
+        <button onclick="filterMoustache('samedi')" id="mq-samedi" class="mq-tab" style="padding:.4rem 1.1rem;border-radius:2rem;font-size:.8rem;font-weight:700;font-family:'Exo 2',sans-serif;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.65);cursor:pointer;transition:all .2s;">🚴 Samedi / Dimanche</button>
+        <button onclick="filterMoustache('cargo')" id="mq-cargo" class="mq-tab" style="padding:.4rem 1.1rem;border-radius:2rem;font-size:.8rem;font-weight:700;font-family:'Exo 2',sans-serif;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.65);cursor:pointer;transition:all .2s;">📦 Cargo / Urbain</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grille produits Moustache -->
+  <div class="max-w-7xl mx-auto px-4 py-10">
+    <div id="moustache-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    <div class="text-center mt-8">
+      <button onclick="setBrand('Moustache');showSection('catalogue')" class="btn-outline text-sm px-6 py-3"><i data-lucide="grid" class="w-4 h-4"></i>Voir tout le catalogue Moustache</button>
+    </div>
+  </div>
+
+  <!-- Lifestyle gallery -->
+  <div style="background:var(--card);border-top:1px solid rgba(255,255,255,.07);padding:4rem 0;">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-8" data-aos="fade-up">
+        <div class="font-heading font-bold text-3xl text-white mb-2">Rouler avec Moustache</div>
+        <p class="text-gray-400 text-sm">Des vélos faits pour être utilisés — trail, gravel, quotidien, famille</p>
+      </div>
+      <!-- Masonry-style grid -->
+      <div style="columns:2;column-gap:1rem;" id="moustache-gallery-grid" data-aos="fade-up">
+        <!-- js-rendered -->
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA bottom -->
+  <div style="background:linear-gradient(135deg,rgba(255,107,53,.12),rgba(37,99,235,.08));border-top:1px solid rgba(255,107,53,.2);padding:3rem 1rem;text-align:center;">
+    <div class="font-heading font-bold text-2xl text-white mb-2">Essayez avant d'acheter</div>
+    <p class="text-gray-300 text-sm mb-5">Prenez rendez-vous pour un test en magasin — tous les modèles disponibles à Ingwiller</p>
+    <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;">
+      <a href="https://calendly.com/vttperformance67/rendez-vous-presentation-ou-test-velo-clone" target="_blank" rel="noopener" class="btn-orange px-6 py-3 text-sm"><i data-lucide="calendar" class="w-4 h-4"></i>Réserver un test</a>
+      <a href="https://wa.me/33950320829?text=Bonjour%20VTT%20Performance%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20les%20vélos%20Moustache." target="_blank" rel="noopener" class="btn-outline px-6 py-3 text-sm"><i data-lucide="message-circle" class="w-4 h-4"></i>Question WhatsApp</a>
+    </div>
+  </div>
+
+</div><!-- /sec-moustache -->
+
 <!-- ══ VITRINE 360° ══ -->
 <section id="sec-vitrine" class="section-hidden relative overflow-hidden" style="min-height:100vh;background:#010a14;padding-top:6rem;">
   <div class="vit-grid-bg"></div>
@@ -4868,8 +4959,8 @@ const BIKE_IMGS = {
   'SUNN_Start S1'         :[S+'1851-home_default/start-s1.jpg',S+'1794-home_default/start-s1.jpg',S+'1795-home_default/start-s1.jpg'],
   'SUNN_Start Finest'     :[S+'1848-home_default/start-finest.jpg',S+'1849-home_default/start-finest.jpg',S+'1850-home_default/start-finest.jpg'],
   'SUNN_Start Allroad'    :[S+'1967-home_default/start-allroad.jpg',S+'1968-home_default/start-allroad.jpg'],
-  'SUNN_Skill S2'         :[S+'1862-home_default/skill-s2.jpg',S+'1863-home_default/skill-s2.jpg',S+'1864-home_default/skill-s2.jpg'],
-  'SUNN_Skill S1'         :[S+'1784-home_default/skill-s1.jpg',S+'1785-home_default/skill-s1.jpg',S+'1786-home_default/skill-s1.jpg'],
+  'SUNN_Skill S2'         :[S+'1862-home_default/skill-s2.jpg',S+'1863-home_default/skill-s2.jpg',S+'1864-home_default/skill-s2.jpg','images/sunn-skill-action.jpg'],
+  'SUNN_Skill S1'         :[S+'1784-home_default/skill-s1.jpg',S+'1785-home_default/skill-s1.jpg',S+'1786-home_default/skill-s1.jpg','images/sunn-skill-action.jpg'],
   'SUNN_Skill Allroad'    :[S+'1873-home_default/skill-allroad.jpg',S+'1874-home_default/skill-allroad.jpg'],
   'SUNN_Rage Allroad S2'  :[S+'1802-home_default/rage-allroad-s2.jpg',S+'1800-home_default/rage-allroad-s2.jpg'],
   'SUNN_Rage Allroad S2 Low':[S+'1803-home_default/rage-allroad-s2-low.jpg',S+'1801-home_default/rage-allroad-s2-low.jpg'],
@@ -4887,9 +4978,9 @@ const BIKE_IMGS = {
   'SUNN_Tox 2.4'          :[S+'1902-home_default/tox-2-4.jpg',S+'1903-home_default/tox-2-4.jpg'],
   'SUNN_Tox 2.6'          :[S+'1904-home_default/tox-2-6.jpg',S+'1905-home_default/tox-2-6.jpg'],
   // Gravel
-  'SUNN_Venture S2'       :[S+'1910-home_default/venture-s2.jpg',S+'1911-home_default/venture-s2.jpg'],
-  'SUNN_Venture S1 Mono'  :[S+'1912-home_default/venture-s1.jpg',S+'1913-home_default/venture-s1.jpg'],
-  'SUNN_Venture Finest'   :[S+'1914-home_default/venture-finest.jpg',S+'1915-home_default/venture-finest.jpg'],
+  'SUNN_Venture S2'       :[S+'1910-home_default/venture-s2.jpg',S+'1911-home_default/venture-s2.jpg','images/sunn-venture-gravel.jpg'],
+  'SUNN_Venture S1 Mono'  :[S+'1912-home_default/venture-s1.jpg',S+'1913-home_default/venture-s1.jpg','images/sunn-venture-gravel.jpg'],
+  'SUNN_Venture Finest'   :[S+'1914-home_default/venture-finest.jpg',S+'1915-home_default/venture-finest.jpg','images/sunn-venture-gravel.jpg'],
   'Moustache_Samedi 29 Trail 3': [
     'https://moustachebikes.com/wp-content/uploads/2023/04/sa29ft342230-samedi-trail-3-side-drivetrain-view-studio-1500x1125.jpg',
     'https://moustachebikes.com/wp-content/uploads/2023/01/sa29ft342230-samedi-trail-3-front-drivetrain-view-studio-1900x1425.jpg',
@@ -5223,7 +5314,7 @@ const BIKE_IMGS = {
 
 // ── NAV ───────────────────────────────────────────────────────────────
 function showSection(id) {
-  ['accueil','catalogue','location','atelier','suspensions','peinture','contact','histoire','vitrine','faq','blog','reprise','tarifs'].forEach(s => {
+  ['accueil','catalogue','location','atelier','suspensions','peinture','contact','histoire','vitrine','faq','blog','reprise','tarifs','moustache'].forEach(s => {
     var el = document.getElementById('sec-'+s);
     if (s === id) {
       el.classList.remove('section-hidden');
@@ -5241,10 +5332,105 @@ function showSection(id) {
   document.getElementById('hero-slider').classList.toggle('section-hidden', id !== 'accueil');
   window.scrollTo({top:0, behavior:'smooth'});
   if (id === 'catalogue') renderCatalog();
+  if (id === 'moustache') renderMoustache('all');
   if (id === 'vitrine' && !vit._init) { vit._init = true; initVitrine(); }
   // Mobile bottom nav active state
   document.querySelectorAll('.mbn-btn[data-mbn]').forEach(el =>
     el.classList.toggle('active', el.dataset.mbn === id));
+  AOS.refresh();
+}
+
+// ── MOUSTACHE BRAND PAGE ─────────────────────────────────────────────
+const MOUSTACHE_LIFESTYLE = [
+  { img:'images/moustache-game-160-action1.jpg', alt:'Moustache Game 160 en descente', bike:'Game 160.8', label:'Game 160.8 — Enduro pur' },
+  { img:'images/moustache-game-150-action1.jpg', alt:'Moustache Game 150 trail', bike:'Game 150.8', label:'Game 150.8 — Trail exigeant' },
+  { img:'images/moustache-game-150-action2.jpg', alt:'Moustache Game 150 action', bike:'Game 150.8', label:'Game 150.8 — 150mm av/ar' },
+  { img:'images/moustache-game-pc-4413.jpg', alt:'Moustache Game enduro', bike:'Game 160.8', label:'Game 160.8 — Compétition' },
+  { img:'images/moustache-trail-action.jpg', alt:'Moustache Trail hiver', bike:'Trail 150.2', label:'Trail 150.2 — Toutes saisons' },
+  { img:'images/moustache-trail-action2.jpg', alt:'Moustache Trail neige', bike:'Trail 150.2', label:'Trail 150.2 — 750Wh grande autonomie' },
+  { img:'images/moustache-xroad-action.jpg', alt:'Moustache Xroad mouvement', bike:'Xroad 4', label:'Xroad 4 — Allroad polyvalent' },
+  { img:'images/moustache-xroad-action2.jpg', alt:'Moustache Xroad action', bike:'Samedi 27 Xroad 5', label:'Samedi 27 Xroad — Route et chemins' },
+  { img:'images/moustache-xroad-fs-action.jpg', alt:'Moustache Xroad FS vitesse', bike:'Xroad FS 4', label:'Xroad FS 4 — Full suspension' },
+  { img:'images/moustache-xroad-fs-action2.jpg', alt:'Moustache FS mouvement', bike:'Xroad FS 4', label:'Xroad FS — Confort maximal' },
+  { img:'images/moustache-samedi28-action.jpg', alt:'Moustache Samedi 28 ouvert', bike:'Samedi 28.3', label:'Samedi 28 — Cadre ouvert, style urbain' },
+  { img:'images/moustache-mardi-27-4.jpg', alt:'Moustache Mardi 27.4', bike:'Mardi 27.4', label:'Mardi 27.4 — Urbain 2026' },
+  { img:'images/moustache-lundi27.jpg', alt:'Moustache Lundi 27', bike:'Lundi 20 Cargo', label:'Lundi 20 Cargo — Famille' },
+  { img:'images/moustache-factory.jpg', alt:'Usine Moustache Thaon', bike:null, label:'Fabriqué à Thaon-les-Vosges, France' },
+  { img:'images/moustache-game-pc-1713.jpg', alt:'Moustache Game trail rider', bike:'Game 150.8', label:'Game 150.8 — Performance Trail' },
+  { img:'images/moustache-lifestyle-4112.jpg', alt:'Moustache ride', bike:'Samedi 29 Trail 5', label:'Samedi 29 Trail 5 — Le plus vendu' },
+];
+
+const MOUSTACHE_FILTER = {
+  all: () => true,
+  trail: b => /Trail|Game/i.test(b.name),
+  xroad: b => /Xroad|Allroad|FS/i.test(b.name),
+  samedi: b => /Samedi|Dimanche|Mardi|Vendredi/i.test(b.name),
+  cargo: b => /Cargo|Lundi|Mercredi|Urbain/i.test(b.name),
+};
+
+function filterMoustache(cat) {
+  document.querySelectorAll('.mq-tab').forEach(t => {
+    const isActive = t.id === 'mq-' + cat;
+    t.style.background = isActive ? 'rgba(255,255,255,.25)' : 'transparent';
+    t.style.color = isActive ? 'white' : 'rgba(255,255,255,.6)';
+    t.style.borderColor = isActive ? 'rgba(255,255,255,.45)' : 'rgba(255,255,255,.2)';
+  });
+  renderMoustache(cat);
+}
+
+function renderMoustache(cat) {
+  const grid = document.getElementById('moustache-grid');
+  if (!grid) return;
+  const filter = MOUSTACHE_FILTER[cat] || MOUSTACHE_FILTER.all;
+  const bikes = BIKES.filter(b => b.brand === 'Moustache' && filter(b));
+  if (!bikes.length) { grid.innerHTML = '<p class="text-gray-500 text-center col-span-3 py-10">Aucun modèle dans cette gamme.</p>'; return; }
+  grid.innerHTML = bikes.map(b => {
+    const key = b.brand + '_' + b.name;
+    const imgs = BIKE_IMGS[key] || [];
+    const imgSrc = imgs[0] || 'https://placehold.co/600x400/0f2341/afd5eb?text=' + encodeURIComponent(b.name);
+    const isNew = b.isNew ? '<span style="background:#ff6b35;color:white;font-size:.65rem;font-weight:800;padding:.15rem .55rem;border-radius:1rem;letter-spacing:.06em;text-transform:uppercase;">NOUVEAU</span>' : '';
+    const promo = b.oldPrice ? `<span style="color:#4ade80;font-weight:700">${b.price}€</span> <span style="color:#6b7280;font-size:.8rem;text-decoration:line-through;">${b.oldPrice}€</span>` : `<span style="font-weight:700;color:white">${b.price}€</span>`;
+    return `<div class="bike-card" onclick="openBikeModal('${b.brand}','${b.name.replace(/'/g,"\\'")}');" style="cursor:pointer;" data-aos="fade-up">
+      <div style="position:relative;aspect-ratio:4/3;overflow:hidden;background:#0a1628;border-radius:inherit;">
+        <img src="${imgSrc}" alt="${b.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .4s;" onerror="this.src='https://placehold.co/600x400/0f2341/afd5eb?text=${encodeURIComponent(b.name)}'">
+        <div style="position:absolute;top:.75rem;left:.75rem;display:flex;gap:.4rem;flex-wrap:wrap;">${isNew}</div>
+        ${imgs.length > 1 ? `<div style="position:absolute;bottom:.6rem;right:.6rem;background:rgba(0,0,0,.6);border-radius:1rem;padding:.15rem .55rem;font-size:.65rem;color:rgba(255,255,255,.7);">+${imgs.length-1} photos</div>` : ''}
+      </div>
+      <div style="padding:1rem;">
+        <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#ff6b35;margin-bottom:.2rem;">${b.type || b.cat}</div>
+        <div style="font-family:'Rajdhani',sans-serif;font-weight:800;font-size:1.1rem;color:white;line-height:1.2;margin-bottom:.4rem;">${b.name}</div>
+        <div style="font-size:.78rem;color:#9ca3af;margin-bottom:.75rem;">${b.motor || ''} ${b.bat ? '· ' + b.bat : ''}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          ${promo}
+          <button class="btn-orange text-xs px-3 py-1.5" onclick="event.stopPropagation();openBikeModal('${b.brand}','${b.name.replace(/'/g,"\\'")}')">Découvrir →</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  // Render gallery
+  const galleryGrid = document.getElementById('moustache-gallery-grid');
+  if (galleryGrid) {
+    galleryGrid.innerHTML = MOUSTACHE_LIFESTYLE.map((item, i) => {
+      const bikeLink = item.bike ? `onclick="event.preventDefault();openBikeModal('Moustache','${item.bike.replace(/'/g,"\\'")}');"` : '';
+      return `<div style="break-inside:avoid;margin-bottom:1rem;position:relative;border-radius:1rem;overflow:hidden;cursor:${item.bike?'pointer':'default'};" ${bikeLink} data-aos="fade-up" data-aos-delay="${(i%3)*80}">
+        <img src="${item.img}" alt="${item.alt}" loading="lazy" style="width:100%;display:block;border-radius:1rem;transition:transform .4s;" onerror="this.parentElement.style.display='none'">
+        <div class="mq-gallery-overlay" style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,22,40,.85) 0%,transparent 55%);border-radius:1rem;display:flex;flex-direction:column;justify-content:flex-end;padding:.9rem;opacity:0;transition:opacity .3s;">
+          <div style="font-family:'Rajdhani',sans-serif;font-weight:800;font-size:1rem;color:white;line-height:1.2;">${item.label}</div>
+          ${item.bike ? `<span style="display:inline-flex;align-items:center;gap:.3rem;margin-top:.4rem;font-size:.72rem;font-weight:700;color:#fbbf24;">Découvrir ce modèle →</span>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+    // Hover effect via event delegation
+    galleryGrid.addEventListener('mouseover', e => {
+      const card = e.target.closest('[data-aos]');
+      if (card) { const ov = card.querySelector('.mq-gallery-overlay'); if (ov) ov.style.opacity = '1'; }
+    });
+    galleryGrid.addEventListener('mouseout', e => {
+      const card = e.target.closest('[data-aos]');
+      if (card) { const ov = card.querySelector('.mq-gallery-overlay'); if (ov) ov.style.opacity = '0'; }
+    });
+  }
+  lucide.createIcons();
   AOS.refresh();
 }
 
