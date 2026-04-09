@@ -1754,6 +1754,19 @@
           <li><span class="text-white text-sm font-semibold">Location de vélos</span></li>
         </ol>
       </nav>
+      <!-- ⚠️ BANDEAU INDISPONIBILITÉ TEMPORAIRE -->
+      <div style="background:linear-gradient(135deg,rgba(234,179,8,.15),rgba(234,179,8,.06));border:1.5px solid rgba(234,179,8,.5);border-radius:1.25rem;padding:1.25rem 1.5rem;display:flex;align-items:flex-start;gap:1rem;margin-bottom:2rem;" data-aos="fade-up">
+        <span style="font-size:1.75rem;flex-shrink:0;line-height:1;">🔧</span>
+        <div>
+          <div style="font-family:'Rajdhani',sans-serif;font-weight:800;font-size:1.2rem;color:#fbbf24;margin-bottom:.3rem;">Location temporairement indisponible</div>
+          <p style="color:#d1d5db;font-size:.88rem;line-height:1.6;margin-bottom:.75rem;">Notre flotte de location est en cours de réassort — certains vélos ne sont pas encore disponibles. Les réservations reprendront dès que la flotte sera complète.<br>Pour connaître les disponibilités actuelles, contactez-nous directement.</p>
+          <div style="display:flex;gap:.75rem;flex-wrap:wrap;">
+            <a href="https://wa.me/33950320829?text=Bonjour%20VTT%20Performance%2C%20je%20voudrais%20connaître%20les%20disponibilités%20location." target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.5rem;padding:.45rem 1.1rem;border-radius:2rem;background:#25d366;color:white;font-weight:700;font-size:.82rem;text-decoration:none;">💬 Demander par WhatsApp</a>
+            <a href="tel:0950320829" style="display:inline-flex;align-items:center;gap:.5rem;padding:.45rem 1.1rem;border-radius:2rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#d1d5db;font-weight:700;font-size:.82rem;text-decoration:none;">📞 09 50 32 08 29</a>
+          </div>
+        </div>
+      </div>
+
       <div class="mb-12" data-aos="fade-up">
         <span class="badge badge-electric">Location</span>
         <h2 class="font-heading font-bold text-4xl mt-3 mb-2">Louez votre vélo à Ingwiller</h2>
@@ -1880,7 +1893,7 @@
             <p class="text-gray-300 text-sm">Vous achetez un vélo après votre essai ? <strong class="text-white">Le montant est déduit du prix d'achat ! 🎁</strong></p>
           </div>
         </div>
-        <a href="https://calendly.com/vttperformance67/rendez-vous-presentation-ou-test-velo-clone" target="_blank" rel="noopener" class="btn-orange text-sm flex-shrink-0"><i data-lucide="calendar" class="w-4 h-4"></i>Réserver un essai</a>
+        <span class="text-xs px-3 py-1.5 rounded-lg flex-shrink-0" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#6b7280;">🔧 Disponible bientôt</span>
       </div>
 
       <!-- Tableau des prix -->
@@ -1965,7 +1978,7 @@
                 <li><span class="spec-dot" style="background:#fb923c"></span>Taille M disponible</li>
               </ul>
               <div class="rental-bike-price">À partir de <strong>50€</strong>/½j</div>
-              <button class="btn-orange w-full justify-center text-sm mt-3" onclick="prefillRentalForm('VTTAE Moustache Trail 150.2 750Wh')"><i data-lucide="calendar-plus" class="w-4 h-4"></i>Réserver ce vélo</button>
+              <button class="w-full justify-center text-sm mt-3" disabled style="display:flex;align-items:center;gap:.5rem;padding:.55rem 1rem;border-radius:.75rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#6b7280;cursor:not-allowed;font-weight:600;">🔧 Temporairement indisponible</button>
             </div>
           </div>
 
@@ -1984,7 +1997,7 @@
                 <li><span class="spec-dot" style="background:#ef4444"></span>Tailles M &amp; L disponibles</li>
               </ul>
               <div class="rental-bike-price">À partir de <strong>40€</strong>/½j</div>
-              <button class="btn-orange w-full justify-center text-sm mt-3" onclick="prefillRentalForm('VTTAE SUNN Rage 500Wh')"><i data-lucide="calendar-plus" class="w-4 h-4"></i>Réserver ce vélo</button>
+              <button class="w-full justify-center text-sm mt-3" disabled style="display:flex;align-items:center;gap:.5rem;padding:.55rem 1rem;border-radius:.75rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#6b7280;cursor:not-allowed;font-weight:600;">🔧 Temporairement indisponible</button>
             </div>
           </div>
 
@@ -2004,7 +2017,7 @@
                 <li><span class="spec-dot" style="background:#4ade80"></span>Idéal famille &amp; rando</li>
               </ul>
               <div class="rental-bike-price">À partir de <strong>35€</strong>/½j</div>
-              <button class="btn-orange w-full justify-center text-sm mt-3" onclick="prefillRentalForm('VTCAE SUNN Start / Skill')"><i data-lucide="calendar-plus" class="w-4 h-4"></i>Réserver ce vélo</button>
+              <button class="w-full justify-center text-sm mt-3" disabled style="display:flex;align-items:center;gap:.5rem;padding:.55rem 1rem;border-radius:.75rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#6b7280;cursor:not-allowed;font-weight:600;">🔧 Temporairement indisponible</button>
             </div>
           </div>
 
@@ -2023,7 +2036,7 @@
                 <li><span class="spec-dot" style="background:#a78bfa"></span>Taille unique</li>
               </ul>
               <div class="rental-bike-price">À partir de <strong>15€</strong>/½j</div>
-              <button class="btn-orange w-full justify-center text-sm mt-3" onclick="prefillRentalForm('Dirt / BMX Race')"><i data-lucide="calendar-plus" class="w-4 h-4"></i>Réserver ce vélo</button>
+              <button class="w-full justify-center text-sm mt-3" disabled style="display:flex;align-items:center;gap:.5rem;padding:.55rem 1rem;border-radius:.75rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#6b7280;cursor:not-allowed;font-weight:600;">🔧 Temporairement indisponible</button>
             </div>
           </div>
 
@@ -2084,11 +2097,21 @@
           <a href="https://calendly.com/vttperformance67/rendez-vous-presentation-ou-test-velo-clone" target="_blank" rel="noopener" class="btn-orange w-full justify-center mt-6 text-base"><i data-lucide="calendar-check" class="w-5 h-5"></i>Réserver ce créneau</a>
         </div>
 
-        <!-- Formulaire demande -->
+        <!-- Formulaire demande — DÉSACTIVÉ TEMPORAIREMENT -->
         <div class="card p-8" data-aos="fade-up" data-aos-delay="100">
           <h3 class="font-heading font-bold text-2xl mb-1 flex items-center gap-3"><i data-lucide="mail" class="w-6 h-6 text-cyan-400"></i>Formulaire de réservation</h3>
           <p class="text-xs text-gray-500 mb-6">Remplissez le formulaire — nous confirmons sous 2h en semaine.</p>
-          <form id="rental-form" onsubmit="submitRental(event)" class="space-y-4">
+          <!-- Bannière désactivation -->
+          <div style="background:rgba(234,179,8,.1);border:1px solid rgba(234,179,8,.35);border-radius:1rem;padding:1.25rem;text-align:center;margin-bottom:1.5rem;">
+            <div style="font-size:1.75rem;margin-bottom:.5rem;">🔧</div>
+            <div style="font-family:'Rajdhani',sans-serif;font-weight:800;color:#fbbf24;font-size:1.1rem;margin-bottom:.4rem;">Réservations suspendues</div>
+            <p style="color:#9ca3af;font-size:.85rem;margin-bottom:1rem;">Notre flotte est en cours de réassort. Contactez-nous directement pour connaître les vélos disponibles.</p>
+            <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;">
+              <a href="https://wa.me/33950320829?text=Bonjour%2C%20je%20voudrais%20connaître%20les%20vélos%20disponibles%20en%20location." target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.5rem;padding:.5rem 1.25rem;border-radius:2rem;background:#25d366;color:white;font-weight:700;font-size:.82rem;text-decoration:none;">💬 WhatsApp</a>
+              <a href="tel:0950320829" style="display:inline-flex;align-items:center;gap:.5rem;padding:.5rem 1.25rem;border-radius:2rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#d1d5db;font-weight:700;font-size:.82rem;text-decoration:none;">📞 Téléphone</a>
+            </div>
+          </div>
+          <form id="rental-form" onsubmit="submitRental(event)" class="space-y-4" style="opacity:.35;pointer-events:none;user-select:none;" aria-disabled="true">
             <div class="grid grid-cols-2 gap-4">
               <div><label class="block text-sm font-medium text-gray-300 mb-1">Prénom *</label><input type="text" id="lf-prenom" required class="inp" placeholder="Marie"></div>
               <div><label class="block text-sm font-medium text-gray-300 mb-1">Nom *</label><input type="text" id="lf-nom" required class="inp" placeholder="Dupont"></div>
@@ -2189,6 +2212,45 @@
 
     </div>
   </section>
+
+  <!-- Galerie riders en action -->
+  <div style="background:var(--card);border-top:1px solid rgba(255,255,255,.07);padding:3.5rem 0;">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-8" data-aos="fade-up">
+        <div class="font-heading font-bold text-2xl text-white mb-1">Nos vélos en action</div>
+        <p class="text-gray-400 text-sm">Photos prises avec nos vélos de location — en forêt, sur les sentiers, en montagne</p>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3" data-aos="fade-up">
+        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" onclick="setCat('vttae');showSection('catalogue')" title="SUNN Charger — voir le catalogue">
+          <img src="images/sunn-charger-mountain.jpg" alt="SUNN Charger en montagne" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" onclick="setBrand('SUNN');showSection('catalogue')" title="SUNN One en forêt">
+          <img src="images/sunn-one-forest.jpg" alt="SUNN One en forêt" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" onclick="setBrand('SUNN');showSection('catalogue')" title="SUNN Kern trail">
+          <img src="images/sunn-kern-trail1.jpg" alt="SUNN Kern trail" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" onclick="setBrand('SUNN');showSection('catalogue')" title="SUNN Radical action">
+          <img src="images/sunn-radical-trail1.jpg" alt="SUNN Radical en action" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" onclick="showSection('moustache')" title="Moustache Game en trail">
+          <img src="images/moustache-game-150-action1.jpg" alt="Moustache Game trail" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" onclick="showSection('moustache')" title="Moustache Xroad allroad">
+          <img src="images/moustache-xroad-action.jpg" alt="Moustache Xroad allroad" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" onclick="setBrand('SUNN');showSection('catalogue')" title="SUNN Venture gravel">
+          <img src="images/sunn-venture-gravel.jpg" alt="SUNN Venture gravel route" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" onclick="showSection('moustache')" title="Moustache Trail 150.2 hiver">
+          <img src="images/moustache-trail-action.jpg" alt="Moustache Trail toutes saisons" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+        </div>
+      </div>
+      <div class="text-center mt-6">
+        <button onclick="setBrand('all');showSection('catalogue')" class="btn-outline text-sm px-6 py-2.5"><i data-lucide="grid" class="w-4 h-4"></i>Voir tout le catalogue</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ════════════════════ ATELIER ════════════════════ -->
@@ -4939,25 +5001,25 @@ const BIKE_IMGS = {
   'SUNN_One Finest'       :[S+'1892-home_default/one-finest.jpg',S+'1893-home_default/one-finest.jpg','images/sunn-one-action2.jpg'],
   'SUNN_One Factory'      :[S+'1894-home_default/one-factory.jpg',S+'1890-home_default/one-factory.jpg','images/sunn-one-action1.jpg'],
   // VTT
-  'SUNN_Kern S2'          :[S+'1730-home_default/kern-s2.jpg',S+'1731-home_default/kern-s2.jpg',S+'1732-home_default/kern-s2.jpg'],
-  'SUNN_Kern S1'          :[S+'1482-home_default/kern-s1.jpg',S+'1480-home_default/kern-s1.jpg',S+'1481-home_default/kern-s1.jpg'],
-  'SUNN_Kern Finest'      :[S+'1717-home_default/kern-finest.jpg',S+'1714-home_default/kern-finest.jpg',S+'1715-home_default/kern-finest.jpg'],
-  'SUNN_Shamann DC S2'    :[S+'1665-home_default/shamann-dc-s2.jpg',S+'1664-home_default/shamann-dc-s2.jpg',S+'1663-home_default/shamann-dc-s2.jpg'],
-  'SUNN_Shamann DC S1'    :[S+'1662-home_default/shamann-dc-s1.jpg',S+'1661-home_default/shamann-dc-s1.jpg'],
-  'SUNN_Shamann XC S2'    :[S+'1659-home_default/shamann-xc-s2.jpg',S+'1660-home_default/shamann-xc-s2.jpg'],
-  'SUNN_Shamann XC S1'    :[S+'1656-home_default/shamann-xc-s1.jpg',S+'1657-home_default/shamann-xc-s1.jpg'],
-  'SUNN_Shamann XC Finest':[S+'1675-home_default/shamann-xc-finest.jpg',S+'1676-home_default/shamann-xc-finest.jpg'],
-  'SUNN_Radical S1'       :[S+'1835-home_default/radical-s1.jpg',S+'1836-home_default/radical-s1.jpg',S+'1837-home_default/radical-s1.jpg'],
-  'SUNN_Radical Finest'   :[S+'1832-home_default/radical-finest.jpg',S+'1833-home_default/radical-finest.jpg',S+'1834-home_default/radical-finest.jpg'],
-  'SUNN_Radical Factory'  :[S+'1829-home_default/radical-factory.jpg',S+'1830-home_default/radical-factory.jpg',S+'1831-home_default/radical-factory.jpg'],
+  'SUNN_Kern S2'          :[S+'1730-home_default/kern-s2.jpg',S+'1731-home_default/kern-s2.jpg','images/sunn-kern-action1.jpg','images/sunn-kern-trail1.jpg','images/sunn-kern-trail2.jpg'],
+  'SUNN_Kern S1'          :[S+'1482-home_default/kern-s1.jpg',S+'1480-home_default/kern-s1.jpg','images/sunn-kern-action2.jpg','images/sunn-kern-ride1.jpg'],
+  'SUNN_Kern Finest'      :[S+'1717-home_default/kern-finest.jpg',S+'1714-home_default/kern-finest.jpg','images/sunn-kern-action1.jpg','images/sunn-kern-trail2.jpg'],
+  'SUNN_Shamann DC S2'    :[S+'1665-home_default/shamann-dc-s2.jpg',S+'1664-home_default/shamann-dc-s2.jpg','images/sunn-shamann-dc-action1.jpg','images/sunn-shamann-dc-trail1.jpg','images/sunn-shamann-dc-trail2.jpg'],
+  'SUNN_Shamann DC S1'    :[S+'1662-home_default/shamann-dc-s1.jpg',S+'1661-home_default/shamann-dc-s1.jpg','images/sunn-shamann-dc-action1.jpg','images/sunn-shamann-dc-trail2.jpg'],
+  'SUNN_Shamann XC S2'    :[S+'1659-home_default/shamann-xc-s2.jpg',S+'1660-home_default/shamann-xc-s2.jpg','images/sunn-shamann-dc-trail1.jpg'],
+  'SUNN_Shamann XC S1'    :[S+'1656-home_default/shamann-xc-s1.jpg',S+'1657-home_default/shamann-xc-s1.jpg','images/sunn-shamann-dc-trail2.jpg'],
+  'SUNN_Shamann XC Finest':[S+'1675-home_default/shamann-xc-finest.jpg',S+'1676-home_default/shamann-xc-finest.jpg','images/sunn-shamann-dc-action1.jpg'],
+  'SUNN_Radical S1'       :[S+'1835-home_default/radical-s1.jpg',S+'1836-home_default/radical-s1.jpg','images/sunn-radical-action1.jpg','images/sunn-radical-trail1.jpg','images/sunn-radical-trail2.jpg'],
+  'SUNN_Radical Finest'   :[S+'1832-home_default/radical-finest.jpg',S+'1833-home_default/radical-finest.jpg','images/sunn-radical-action2.jpg','images/sunn-radical-trail3.jpg'],
+  'SUNN_Radical Factory'  :[S+'1829-home_default/radical-factory.jpg',S+'1830-home_default/radical-factory.jpg','images/sunn-radical-action1.jpg','images/sunn-radical-trail1.jpg'],
   'SUNN_Exact S3'         :[S+'1770-home_default/exact-s3.jpg',S+'1771-home_default/exact-s3.jpg'],
   'SUNN_Exact S2'         :[S+'1767-home_default/exact-s2.jpg',S+'1768-home_default/exact-s2.jpg'],
   'SUNN_Exact S1'         :[S+'1764-home_default/exact-s1.jpg',S+'1765-home_default/exact-s1.jpg'],
   'SUNN_Exact Finest'     :[S+'1854-home_default/exact-finest.jpg',S+'1855-home_default/exact-finest.jpg'],
   // VTCAE / Urbain E
-  'SUNN_Start S2'         :[S+'1970-home_default/start-s2.jpg',S+'1971-home_default/start-s2.jpg',S+'1972-home_default/start-s2.jpg'],
-  'SUNN_Start S1'         :[S+'1851-home_default/start-s1.jpg',S+'1794-home_default/start-s1.jpg',S+'1795-home_default/start-s1.jpg'],
-  'SUNN_Start Finest'     :[S+'1848-home_default/start-finest.jpg',S+'1849-home_default/start-finest.jpg',S+'1850-home_default/start-finest.jpg'],
+  'SUNN_Start S2'         :[S+'1970-home_default/start-s2.jpg',S+'1971-home_default/start-s2.jpg','images/sunn-start-action1.jpg','images/sunn-start-trail1.jpg'],
+  'SUNN_Start S1'         :[S+'1851-home_default/start-s1.jpg',S+'1794-home_default/start-s1.jpg','images/sunn-start-action2.jpg','images/sunn-start-trail1.jpg'],
+  'SUNN_Start Finest'     :[S+'1848-home_default/start-finest.jpg',S+'1849-home_default/start-finest.jpg','images/sunn-start-action1.jpg','images/sunn-start-action2.jpg'],
   'SUNN_Start Allroad'    :[S+'1967-home_default/start-allroad.jpg',S+'1968-home_default/start-allroad.jpg'],
   'SUNN_Skill S2'         :[S+'1862-home_default/skill-s2.jpg',S+'1863-home_default/skill-s2.jpg',S+'1864-home_default/skill-s2.jpg','images/sunn-skill-action.jpg'],
   'SUNN_Skill S1'         :[S+'1784-home_default/skill-s1.jpg',S+'1785-home_default/skill-s1.jpg',S+'1786-home_default/skill-s1.jpg','images/sunn-skill-action.jpg'],
@@ -4968,8 +5030,8 @@ const BIKE_IMGS = {
   'SUNN_Rage Allroad S1 Low':[S+'1798-home_default/rage-allroad-s1-low.jpg',S+'1799-home_default/rage-allroad-s1-low.jpg'],
   'SUNN_Cargo x Douze'    :[S+'1893-home_default/cargo-sunn.jpg',S+'1891-home_default/cargo-sunn.jpg',S+'1892-home_default/cargo-sunn.jpg'],
   // VTT hardtail & trail
-  'SUNN_Royal'            :[S+'1750-home_default/royal.jpg',S+'1751-home_default/royal.jpg'],
-  'SUNN_Royal Factory'    :[S+'1752-home_default/royal-factory.jpg',S+'1753-home_default/royal-factory.jpg'],
+  'SUNN_Royal'            :[S+'1750-home_default/royal.jpg',S+'1751-home_default/royal.jpg','images/sunn-royal-action1.jpg','images/sunn-royal-trail1.jpg'],
+  'SUNN_Royal Factory'    :[S+'1752-home_default/royal-factory.jpg',S+'1753-home_default/royal-factory.jpg','images/sunn-royal-action2.jpg','images/sunn-royal-trail1.jpg'],
   'SUNN_Rage'             :[S+'1820-home_default/rage-vtt.jpg',S+'1821-home_default/rage-vtt.jpg'],
   'SUNN_Prim Factory'     :[S+'1840-home_default/prim-factory.jpg',S+'1841-home_default/prim-factory.jpg'],
   // Enfants
@@ -4978,9 +5040,9 @@ const BIKE_IMGS = {
   'SUNN_Tox 2.4'          :[S+'1902-home_default/tox-2-4.jpg',S+'1903-home_default/tox-2-4.jpg'],
   'SUNN_Tox 2.6'          :[S+'1904-home_default/tox-2-6.jpg',S+'1905-home_default/tox-2-6.jpg'],
   // Gravel
-  'SUNN_Venture S2'       :[S+'1910-home_default/venture-s2.jpg',S+'1911-home_default/venture-s2.jpg','images/sunn-venture-gravel.jpg'],
-  'SUNN_Venture S1 Mono'  :[S+'1912-home_default/venture-s1.jpg',S+'1913-home_default/venture-s1.jpg','images/sunn-venture-gravel.jpg'],
-  'SUNN_Venture Finest'   :[S+'1914-home_default/venture-finest.jpg',S+'1915-home_default/venture-finest.jpg','images/sunn-venture-gravel.jpg'],
+  'SUNN_Venture S2'       :[S+'1910-home_default/venture-s2.jpg',S+'1911-home_default/venture-s2.jpg','images/sunn-venture-gravel.jpg','images/sunn-venture-drone.jpg','images/sunn-venture-ride.jpg'],
+  'SUNN_Venture S1 Mono'  :[S+'1912-home_default/venture-s1.jpg',S+'1913-home_default/venture-s1.jpg','images/sunn-venture-gravel.jpg','images/sunn-venture-ride.jpg'],
+  'SUNN_Venture Finest'   :[S+'1914-home_default/venture-finest.jpg',S+'1915-home_default/venture-finest.jpg','images/sunn-venture-gravel.jpg','images/sunn-venture-drone.jpg'],
   'Moustache_Samedi 29 Trail 3': [
     'https://moustachebikes.com/wp-content/uploads/2023/04/sa29ft342230-samedi-trail-3-side-drivetrain-view-studio-1500x1125.jpg',
     'https://moustachebikes.com/wp-content/uploads/2023/01/sa29ft342230-samedi-trail-3-front-drivetrain-view-studio-1900x1425.jpg',
@@ -5010,13 +5072,15 @@ const BIKE_IMGS = {
     'https://moustachebikes.com/wp-content/uploads/2024/09/g58fbl600250-game-150-8-side-drivetrain-view-studio-1500x1125.jpg',
     'images/moustache-game-150-action1.jpg',
     'images/moustache-game-150-action2.jpg',
-    'https://moustachebikes.com/wp-content/uploads/2024/09/g58fbl600250-game-150-8-detail-drivetrain-view-studio-1900x1425.jpg'
+    'images/moustache-game-pc-1713.jpg',
+    'images/moustache-game-pc-1755.jpg'
   ],
   'Moustache_Game 160.8': [
     'https://moustachebikes.com/wp-content/uploads/2024/09/g68frl600250-game-160-8-side-drivetrain-view-studio-1500x1125.jpg',
     'images/moustache-game-160-action1.jpg',
     'images/moustache-game-160-action2.jpg',
-    'https://moustachebikes.com/wp-content/uploads/2024/09/g68frl600250-game-160-8-detail-drivetrain-view-studio-1900x1425.jpg'
+    'images/moustache-game-pc-4413.jpg',
+    'images/moustache-game-pc-1804.jpg'
   ],
   'Moustache_Samedi 27 Xroad': [
     'https://moustachebikes.com/wp-content/uploads/2025/09/xr2ogm500260-xroad-2-side-drivetrain-view-studio-1500x1125.jpg',
@@ -5040,7 +5104,8 @@ const BIKE_IMGS = {
   ],
   'Moustache_Samedi 28.3': [
     'https://moustachebikes.com/wp-content/uploads/2024/09/s84orm600250-samedi-28-open-4-side-drivetrain-view-studio-1500x1125.jpg',
-    'https://moustachebikes.com/wp-content/uploads/2024/09/s84orm600250-samedi-28-open-4-side-drivetrain-view-studio-1900x1425.jpg',
+    'images/moustache-samedi28-action.jpg',
+    'images/moustache-samedi28-action2.jpg',
     'https://moustachebikes.com/wp-content/uploads/2024/09/s84ovm600250-samedi-28-open-4-fork-details-view-studio-1900x1425.jpg'
   ],
   'Moustache_Dimanche 28': [
@@ -5050,7 +5115,8 @@ const BIKE_IMGS = {
   ],
   'Moustache_Lundi 20 Cargo': [
     'https://moustachebikes.com/wp-content/uploads/2025/04/l03ogu5e0250-lundi-20-cargo-3-ne-side-drivetrain-view-studio-1-1500x1143.jpg',
-    'https://moustachebikes.com/wp-content/uploads/2025/04/l03ogu5e0250-lundi-20-cargo-3-ne-side-drivetrain-view-studio-1-1900x1448.jpg',
+    'images/moustache-lundi20-presscamp.jpg',
+    'images/moustache-lundi27.jpg',
     'https://moustachebikes.com/wp-content/uploads/2025/04/l03ogu5e0250-lundi-20-cargo-3-vue-pilote-1900x1425.jpg'
   ],
   // ── Moustache 2026 — nouveaux modèles ────────────────────────────────
@@ -5358,6 +5424,10 @@ const MOUSTACHE_LIFESTYLE = [
   { img:'images/moustache-factory.jpg', alt:'Usine Moustache Thaon', bike:null, label:'Fabriqué à Thaon-les-Vosges, France' },
   { img:'images/moustache-game-pc-1713.jpg', alt:'Moustache Game trail rider', bike:'Game 150.8', label:'Game 150.8 — Performance Trail' },
   { img:'images/moustache-lifestyle-4112.jpg', alt:'Moustache ride', bike:'Samedi 29 Trail 5', label:'Samedi 29 Trail 5 — Le plus vendu' },
+  { img:'images/moustache-game-pc-1725.jpg', alt:'Moustache Game PC 2024', bike:'Game 160.8', label:'Game 160.8 — Enduro race' },
+  { img:'images/moustache-samedi28-action2.jpg', alt:'Moustache Samedi 28 ouvert action', bike:'Samedi 28.3', label:'Samedi 28 — Cadre ouvert polyvalent' },
+  { img:'images/moustache-visite-usine.jpg', alt:'Visite usine Moustache', bike:null, label:'Visite de l\'usine à Thaon — qualité française' },
+  { img:'images/moustache-lundi20-presscamp.jpg', alt:'Moustache Lundi 20 Cargo press camp', bike:'Lundi 20 Cargo', label:'Lundi 20 Cargo — Paris Press Camp' },
 ];
 
 const MOUSTACHE_FILTER = {
