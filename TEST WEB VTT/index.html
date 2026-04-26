@@ -4191,7 +4191,7 @@
 </footer>
 
 <!-- ORDER MODAL -->
-<div id="order-modal" class="modal-overlay" onclick="if(event.target===this)closeModal()">
+<div id="order-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="m-title" onclick="if(event.target===this)closeModal()">
   <div class="modal-box">
     <div class="flex items-start justify-between mb-6">
       <div><h3 id="m-title" class="font-heading font-bold text-2xl">Commander</h3><p class="text-sm text-gray-400 mt-1" id="m-sub"></p></div>
@@ -4233,7 +4233,7 @@
 <div id="toasts" class="fixed bottom-24 right-4 z-50 flex flex-col gap-3 pointer-events-none"></div>
 
 <!-- QUIZ OVERLAY -->
-<div id="quiz-overlay" class="quiz-overlay" onclick="if(event.target===this)closeQuiz()">
+<div id="quiz-overlay" class="quiz-overlay" role="dialog" aria-modal="true" aria-label="Choisir mon vélo — quiz" onclick="if(event.target===this)closeQuiz()">
   <div class="quiz-box">
     <button onclick="closeQuiz()" class="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-colors" aria-label="Fermer le quiz" style="position:absolute;top:1rem;right:1rem;">×</button>
     <div class="quiz-progress"><div class="quiz-progress-fill" id="quiz-progress-fill" style="width:0%"></div></div>
@@ -4268,7 +4268,7 @@
 </div>
 
 <!-- COMPARATOR MODAL -->
-<div id="cmp-modal" class="cmp-modal" onclick="if(event.target===this)closeCmpModal()">
+<div id="cmp-modal" class="cmp-modal" role="dialog" aria-modal="true" aria-label="Comparaison de vélos" onclick="if(event.target===this)closeCmpModal()">
   <div class="cmp-modal-box">
     <div class="flex items-center justify-between mb-6">
       <h3 class="font-heading font-bold text-2xl">Comparaison</h3>
@@ -5298,13 +5298,17 @@ const BIKE_IMGS = {
 };
 
 // ── NAV ───────────────────────────────────────────────────────────────
+var _navSections = null, _navLinks = null, _mbnBtns = null, _heroSlider = null;
 function showSection(id) {
-  ['accueil','catalogue','location','atelier','suspensions','peinture','contact','histoire','vitrine','faq','blog','reprise','tarifs','moustache'].forEach(s => {
-    var el = document.getElementById('sec-'+s);
+  if (!_navSections) _navSections = ['accueil','catalogue','location','atelier','suspensions','peinture','contact','histoire','vitrine','faq','blog','reprise','tarifs','moustache'].map(s => [s, document.getElementById('sec-'+s)]);
+  if (!_navLinks) _navLinks = Array.from(document.querySelectorAll('.nav-link[data-section]'));
+  if (!_mbnBtns) _mbnBtns = Array.from(document.querySelectorAll('.mbn-btn[data-mbn]'));
+  if (!_heroSlider) _heroSlider = document.getElementById('hero-slider');
+  _navSections.forEach(function(pair) {
+    var s = pair[0], el = pair[1];
     if (s === id) {
       el.classList.remove('section-hidden');
       el.classList.remove('section-enter');
-      // Trigger reflow for animation restart
       void el.offsetWidth;
       el.classList.add('section-enter');
     } else {
@@ -5312,16 +5316,13 @@ function showSection(id) {
       el.classList.remove('section-enter');
     }
   });
-  document.querySelectorAll('.nav-link[data-section]').forEach(el =>
-    el.classList.toggle('active', el.dataset.section === id));
-  document.getElementById('hero-slider').classList.toggle('section-hidden', id !== 'accueil');
+  _navLinks.forEach(el => el.classList.toggle('active', el.dataset.section === id));
+  _heroSlider.classList.toggle('section-hidden', id !== 'accueil');
   window.scrollTo({top:0, behavior:'smooth'});
   if (id === 'catalogue') renderCatalog();
   if (id === 'moustache') renderMoustache('all');
   if (id === 'vitrine' && !vit._init) { vit._init = true; initVitrine(); }
-  // Mobile bottom nav active state
-  document.querySelectorAll('.mbn-btn[data-mbn]').forEach(el =>
-    el.classList.toggle('active', el.dataset.mbn === id));
+  _mbnBtns.forEach(el => el.classList.toggle('active', el.dataset.mbn === id));
   AOS.refresh();
 }
 
