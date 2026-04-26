@@ -517,6 +517,8 @@
     .faq-q:hover { background:rgba(255,255,255,.05); }
     .faq-q:focus-visible { outline:2px solid var(--orange); outline-offset:-2px; border-radius:inherit; }
     [role="button"]:focus-visible { outline:2px solid var(--orange); outline-offset:2px; }
+    .skip-link { position:absolute;top:-99px;left:1rem;z-index:10000;background:var(--orange);color:white;padding:.5rem 1rem;border-radius:0 0 .5rem .5rem;font-weight:700;font-size:.9rem;text-decoration:none;transition:top .2s; }
+    .skip-link:focus { top:0; }
     .faq-icon { width:22px; height:22px; border-radius:50%; background:rgba(255,107,53,.12); border:1px solid rgba(255,107,53,.25); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:transform .3s, background .2s; }
     .faq-item.open .faq-icon { transform:rotate(45deg); background:rgba(255,107,53,.25); }
     .faq-a { max-height:0; overflow:hidden; transition:max-height .4s ease, padding .3s; padding:0 1.25rem; }
@@ -823,6 +825,8 @@
 
 </head>
 <body>
+
+<a href="#sec-accueil" class="skip-link">Aller au contenu principal</a>
 
 <!-- SCROLL PROGRESS BAR -->
 <div id="scroll-progress" style="position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,#ff6b35,#fbbf24);z-index:9999;transition:width .1s linear;pointer-events:none;"></div>
@@ -4215,13 +4219,13 @@
       <div>
         <label class="block text-sm font-medium text-gray-300 mb-2">Mode de paiement *</label>
         <div class="grid grid-cols-2 gap-3">
-          <div class="pay-opt selected" onclick="selectPay(this,'virement')">
+          <div class="pay-opt selected" tabindex="0" role="radio" aria-checked="true" onclick="selectPay(this,'virement')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectPay(this,'virement')}">
             <input type="radio" name="o-pay" value="virement" checked class="sr-only">
             <i data-lucide="landmark" class="w-5 h-5"></i>
             <span class="font-semibold text-sm">Virement bancaire</span>
             <span class="text-xs opacity-60">RIB envoyé par email</span>
           </div>
-          <div class="pay-opt" onclick="selectPay(this,'magasin')">
+          <div class="pay-opt" tabindex="0" role="radio" aria-checked="false" onclick="selectPay(this,'magasin')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectPay(this,'magasin')}">
             <input type="radio" name="o-pay" value="magasin" class="sr-only">
             <i data-lucide="store" class="w-5 h-5"></i>
             <span class="font-semibold text-sm">En magasin</span>
@@ -5697,9 +5701,10 @@ function _doRenderCatalog(searchQ, priceMax, sortVal) {
 }
 
 function selectPay(el, val) {
-  document.querySelectorAll('.pay-opt').forEach(o => { o.classList.remove('selected'); o.querySelector('input').checked = false; });
+  document.querySelectorAll('.pay-opt').forEach(o => { o.classList.remove('selected'); o.querySelector('input').checked = false; o.setAttribute('aria-checked','false'); });
   el.classList.add('selected');
   el.querySelector('input').checked = true;
+  el.setAttribute('aria-checked','true');
   document.getElementById('pay-note').textContent = val === 'virement'
     ? 'Confirmation par email avec RIB pour le virement.'
     : 'Paiement sur place à la réception du vélo (espèces ou CB).';
@@ -6755,7 +6760,7 @@ function renderQuizStep() {
   document.getElementById('quiz-step-num').textContent = (quizState.step + 1) + ' / ' + total;
   document.getElementById('quiz-question').textContent = step.question;
   document.getElementById('quiz-choices').innerHTML = step.choices.map(function(c) {
-    return '<div class="quiz-choice' + (quizState.answers[step.id] === c.val ? ' selected' : '') + '" data-val="' + c.val + '" onclick="quizAnswer(\'' + c.val + '\')">'
+    return '<div class="quiz-choice' + (quizState.answers[step.id] === c.val ? ' selected' : '') + '" data-val="' + c.val + '" tabindex="0" role="radio" aria-checked="' + (quizState.answers[step.id] === c.val ? 'true' : 'false') + '" onclick="quizAnswer(\'' + c.val + '\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();quizAnswer(\'' + c.val + '\')}">'
       + '<div class="quiz-choice-icon">' + c.icon + '</div>'
       + '<div>'
       + '<div class="font-semibold text-sm text-white">' + c.label + '</div>'
