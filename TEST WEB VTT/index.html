@@ -251,7 +251,7 @@
     .nav-dropdown-btn:hover { color:white; }
     .nav-dropdown-btn svg { transition:transform .25s; }
     .nav-dropdown:hover .nav-dropdown-btn svg { transform:rotate(180deg); }
-    .nav-dropdown-menu { display:none; position:absolute; top:calc(100% + 14px); left:50%; transform:translateX(-50%); background:rgba(10,16,28,.97); border:1px solid rgba(255,255,255,.1); border-radius:1rem; padding:.5rem; min-width:200px; backdrop-filter:blur(20px); box-shadow:0 16px 40px rgba(0,0,0,.5); z-index:200; }
+    .nav-dropdown-menu { display:none; position:absolute; top:calc(100% + 14px); left:50%; transform:translateX(-50%); background:rgba(10,16,28,.97); border:1px solid rgba(255,255,255,.1); border-radius:1rem; padding:.5rem; min-width:200px; backdrop-filter:blur(6px); box-shadow:0 16px 40px rgba(0,0,0,.5); z-index:200; }
     .nav-dropdown:hover .nav-dropdown-menu { display:block; }
     .nav-dropdown-menu::before { content:''; position:absolute; top:-6px; left:50%; transform:translateX(-50%); border:6px solid transparent; border-bottom-color:rgba(255,255,255,.1); border-top:none; }
     .nav-dd-item { display:flex; align-items:center; gap:.6rem; width:100%; padding:.55rem .85rem; border-radius:.6rem; font-size:.82rem; font-weight:500; color:#9ca3af; background:none; border:none; cursor:pointer; font-family:'Exo 2',sans-serif; text-align:left; transition:background .18s, color .18s; white-space:nowrap; }
@@ -920,7 +920,7 @@
         </div>
         <!-- Atelier dropdown -->
         <div class="nav-dropdown">
-          <button class="nav-dropdown-btn" onclick="showSection('atelier')" data-section="atelier">
+          <button class="nav-dropdown-btn" onclick="showSection('atelier')" data-section="atelier" aria-haspopup="true" aria-label="Atelier — voir le menu">
             Atelier
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
@@ -5496,7 +5496,8 @@ function initCarousels() {
     var dots = wrap.querySelectorAll('.carousel-dot');
     if (imgs.length < 2) return;
     var cur = 0;
-    setInterval(function() {
+    var id = setInterval(function() {
+      if (!document.contains(imgs[0])) { clearInterval(id); return; }
       imgs[cur].classList.remove('active');
       if (dots[cur]) dots[cur].classList.remove('on');
       cur = (cur + 1) % imgs.length;
@@ -6447,7 +6448,7 @@ function vitInitParticles() {
   });
   var particleRafId;
   (function tick() {
-    var vitSec = document.getElementById('sec-vitrine');
+    var vitSec = vit.elSec || document.getElementById('sec-vitrine');
     if (vitSec && vitSec.classList.contains('section-hidden')) {
       particleRafId = requestAnimationFrame(tick);
       return;
