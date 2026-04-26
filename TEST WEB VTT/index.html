@@ -1637,7 +1637,7 @@
           <!-- Search -->
           <div class="relative">
             <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2" style="color:#64748b;pointer-events:none;"></i>
-            <input type="text" id="catalog-search" oninput="renderCatalog()" placeholder="Rechercher..." class="text-sm pl-8 pr-3 py-1.5 rounded-lg" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:white;outline:none;width:160px;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'">
+            <input type="search" id="catalog-search" oninput="renderCatalog()" placeholder="Rechercher..." aria-label="Rechercher un vélo" autocomplete="off" class="text-sm pl-8 pr-3 py-1.5 rounded-lg" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:white;outline:none;width:160px;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'">
           </div>
           <!-- Price range -->
           <div class="price-range-wrap">
@@ -2093,12 +2093,12 @@
           </div>
           <form id="rental-form" onsubmit="submitRental(event)" class="space-y-4" style="opacity:.35;pointer-events:none;user-select:none;" aria-disabled="true">
             <div class="grid grid-cols-2 gap-4">
-              <div><label class="block text-sm font-medium text-gray-300 mb-1">Prénom *</label><input type="text" id="lf-prenom" required class="inp" placeholder="Marie"></div>
-              <div><label class="block text-sm font-medium text-gray-300 mb-1">Nom *</label><input type="text" id="lf-nom" required class="inp" placeholder="Dupont"></div>
+              <div><label class="block text-sm font-medium text-gray-300 mb-1">Prénom *</label><input type="text" id="lf-prenom" required class="inp" placeholder="Marie" autocomplete="given-name"></div>
+              <div><label class="block text-sm font-medium text-gray-300 mb-1">Nom *</label><input type="text" id="lf-nom" required class="inp" placeholder="Dupont" autocomplete="family-name"></div>
             </div>
             <div class="grid grid-cols-2 gap-4">
-              <div><label class="block text-sm font-medium text-gray-300 mb-1">Email *</label><input type="email" id="lf-email" required class="inp" placeholder="marie@email.com"></div>
-              <div><label class="block text-sm font-medium text-gray-300 mb-1">Téléphone *</label><input type="tel" id="lf-tel" required class="inp" placeholder="06 12 34 56 78"></div>
+              <div><label class="block text-sm font-medium text-gray-300 mb-1">Email *</label><input type="email" id="lf-email" required class="inp" placeholder="marie@email.com" autocomplete="email"></div>
+              <div><label class="block text-sm font-medium text-gray-300 mb-1">Téléphone *</label><input type="tel" id="lf-tel" required class="inp" placeholder="06 12 34 56 78" autocomplete="tel"></div>
             </div>
             <div class="grid grid-cols-2 gap-4">
               <div><label class="block text-sm font-medium text-gray-300 mb-1">Date de début *</label><input type="date" id="lf-start" required class="inp" onchange="updateRentalDates()"></div>
@@ -2585,14 +2585,14 @@
           <span>Nous répondons généralement sous 2h en semaine (9h–18h30)</span>
         </div>
         <form id="contact-form" onsubmit="submitContact(event)" class="grid md:grid-cols-2 gap-5">
-          <div><label class="block text-sm font-medium text-gray-300 mb-2">Nom complet *</label><input type="text" id="c-nom" required class="inp" placeholder="Jean Dupont" aria-label="Votre nom complet"></div>
+          <div><label class="block text-sm font-medium text-gray-300 mb-2">Nom complet *</label><input type="text" id="c-nom" required class="inp" placeholder="Jean Dupont" aria-label="Votre nom complet" autocomplete="name"></div>
           <div>
             <label class="block text-sm font-medium text-gray-300 mb-2">Email *</label>
-            <input type="email" id="c-email" required class="inp" placeholder="jean@email.com" aria-label="Votre adresse email">
+            <input type="email" id="c-email" required class="inp" placeholder="jean@email.com" aria-label="Votre adresse email" autocomplete="email">
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-300 mb-2">Téléphone</label>
-            <input type="tel" id="c-tel" class="inp" placeholder="06 12 34 56 78" aria-label="Votre numéro de téléphone">
+            <input type="tel" id="c-tel" class="inp" placeholder="06 12 34 56 78" aria-label="Votre numéro de téléphone" autocomplete="tel">
           </div>
           <div><label class="block text-sm font-medium text-gray-300 mb-2">Sujet *</label><select id="c-sujet" required class="inp" aria-label="Sujet de votre message"><option value="">Choisir…</option><option>Renseignement vélo</option><option>Devis réparation</option><option>Location</option><option>Commande</option><option>Peinture personnalisée</option><option>Autre</option></select></div>
           <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-300 mb-2">Message *</label><textarea id="c-msg" required rows="4" class="inp" placeholder="Votre message…" aria-label="Votre message"></textarea></div>
@@ -4232,7 +4232,7 @@
 </div>
 
 <!-- TOAST -->
-<div id="toasts" class="fixed bottom-24 right-4 z-50 flex flex-col gap-3 pointer-events-none"></div>
+<div id="toasts" class="fixed bottom-24 right-4 z-50 flex flex-col gap-3 pointer-events-none" role="status" aria-live="polite" aria-atomic="false"></div>
 
 <!-- QUIZ OVERLAY -->
 <div id="quiz-overlay" class="quiz-overlay" role="dialog" aria-modal="true" aria-label="Choisir mon vélo — quiz" onclick="if(event.target===this)closeQuiz()">
@@ -7262,6 +7262,15 @@ function downloadTarifs() {
   a.click();
   URL.revokeObjectURL(url);
 }
+
+// ── ESCAPE KEY — close any open modal ─────────────────────────────────
+document.addEventListener('keydown', function(e) {
+  if (e.key !== 'Escape') return;
+  if (document.getElementById('order-modal')?.classList.contains('open')) { closeModal(); return; }
+  if (document.getElementById('guide-modal')?.classList.contains('open')) { closeGuide(); return; }
+  if (document.getElementById('quiz-overlay')?.classList.contains('open')) { closeQuiz(); return; }
+  if (document.getElementById('cmp-modal')?.classList.contains('cmp-open')) { closeCmpModal(); return; }
+});
 
 // ── INIT ──────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
