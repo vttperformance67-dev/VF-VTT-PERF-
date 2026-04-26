@@ -274,6 +274,14 @@
     .size-guide-cell { text-align:center; padding:.5rem .25rem; font-size:.78rem; border-radius:.5rem; background:rgba(255,255,255,.04); }
     .size-guide-cell .sz { font-weight:700; font-size:.9rem; color:var(--text); }
     .size-guide-cell .ht { color:var(--muted); font-size:.72rem; margin-top:.15rem; }
+
+    /* ── Product blur effect ── */
+    .product-blur-content { filter:blur(5px); pointer-events:none; }
+    .maintenance-overlay { position:fixed; top:0; left:0; right:0; bottom:0; z-index:999; display:flex; flex-direction:column; align-items:center; justify-content:center; background:rgba(8,14,26,.88); backdrop-filter:blur(3px); width:100vw; height:100vh; animation:maintenance-fade-in .4s ease-out; }
+    @keyframes maintenance-fade-in { from{opacity:0} to{opacity:1} }
+    .maintenance-message { background:var(--card); border:1.5px solid rgba(255,107,53,.4); border-radius:1.5rem; padding:2.5rem 2rem; text-align:center; max-width:520px; box-shadow:0 20px 60px rgba(255,107,53,.2); flex-shrink:0; }
+    .maintenance-message h2 { font-size:1.75rem; font-weight:700; color:var(--orange); margin-bottom:.75rem; font-family:'Rajdhani',sans-serif; }
+    .maintenance-message p { color:rgba(241,245,249,.8); line-height:1.6; font-size:.95rem; margin:0; }
   </style>
 </head>
 <body>
@@ -297,6 +305,9 @@
     </span>
   </div>
 </div>
+
+<!-- PAGE CONTENT WRAPPER FOR BLUR EFFECT -->
+<div class="page-content">
 
 <!-- NAVIGATION -->
 <nav id="navbar" class="sticky top-0 z-50" style="background:rgba(8,14,26,.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);">
@@ -398,6 +409,9 @@
     </div>
   </div>
 </div>
+
+<!-- PRODUCT CONTENT WRAPPER FOR BLUR EFFECT -->
+<div class="product-blur-content">
 
 <!-- HERO -->
 <section class="product-hero" id="product-hero">
@@ -2216,6 +2230,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
+</div><!-- END product-blur-content -->
+
+<!-- MAINTENANCE OVERLAY -->
+<div class="maintenance-overlay">
+  <div class="maintenance-message">
+    <h2>🚧 Mise à jour en cours</h2>
+    <p>Cette page produit est actuellement en maintenance et sera mise à jour très bientôt. Nous vous remercions de votre patience !</p>
+  </div>
+</div>
 
 <style>
 @keyframes toast-in { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
