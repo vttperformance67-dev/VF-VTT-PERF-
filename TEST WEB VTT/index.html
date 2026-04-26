@@ -1013,7 +1013,7 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 0 0-1-1h-1l-3 7h9l-1-4"/><path d="M5.5 17.5l3-7 2 4h5"/></svg>Catalogue
   </button>
   <button class="mbn-btn" onclick="openQuiz()" data-mbn="quiz">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Quiz
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>Mon vélo
   </button>
   <button class="mbn-btn" onclick="showSection('location')" data-mbn="location">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Location
@@ -1702,7 +1702,7 @@
           <i data-lucide="ruler" class="w-3.5 h-3.5"></i>Guide tailles
         </button>
         <button onclick="openQuiz()" class="flex items-center gap-2 text-xs px-3 py-1.5 rounded-lg transition-all" style="background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2);color:#c4b5fd;">
-          <i data-lucide="help-circle" class="w-3.5 h-3.5"></i>Quel vélo pour moi ?
+          <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>Choisir mon vélo
         </button>
         <!-- Vue liste/grille toggle -->
         <div class="flex items-center gap-1 ml-auto" style="border:1px solid rgba(255,255,255,.1);border-radius:.65rem;padding:.2rem;">
@@ -4239,7 +4239,7 @@
     <button onclick="closeQuiz()" class="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-all" style="position:absolute;top:1rem;right:1rem;">×</button>
     <div class="quiz-progress"><div class="quiz-progress-fill" id="quiz-progress-fill" style="width:0%"></div></div>
     <div class="flex items-center justify-between mb-5">
-      <span class="badge badge-electric">Quiz vélo</span>
+      <span class="badge badge-electric">Choisir mon vélo</span>
       <span class="text-xs text-gray-500" id="quiz-step-num">1 / 5</span>
     </div>
     <div id="quiz-main">
@@ -6802,7 +6802,7 @@ function renderQuizResults() {
           + (b.price ? '<div class="text-orange-400 font-bold text-sm mt-1">' + b.price.toLocaleString('fr-FR') + ' €</div>' : '')
           + '</div></div></div>';
       }).join('')
-    + '<button onclick="closeQuiz()" class="btn-outline w-full justify-center mt-3 text-sm" style="border-radius:.875rem">Fermer le quiz</button>'
+    + '<button onclick="closeQuiz()" class="btn-outline w-full justify-center mt-3 text-sm" style="border-radius:.875rem">Fermer</button>'
     + '</div>';
 
   var main = document.getElementById('quiz-main');
