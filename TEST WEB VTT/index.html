@@ -833,8 +833,6 @@
       <span class="opacity-40">·</span>
       <button class="banner-pill" onclick="showSection('location')">🚴 Location dès <strong>30€/jour</strong> — SUNN &amp; Moustache</button>
       <span class="opacity-40">·</span>
-      <button class="banner-pill" onclick="showSection('reprise')">🌸 <strong>Reprise du Printemps</strong> Moustache — jusqu'à <strong>500€</strong> de bonus · Jusqu'au 25 avril</button>
-      <span class="opacity-40">·</span>
       <button class="banner-pill" onclick="showSection('location')">🎯 Location <strong>déduite</strong> si vous achetez !</button>
       <span class="opacity-40">·</span>
       <button class="banner-pill" onclick="showSection('atelier')">🔧 Révision complète dès <strong>35€</strong> — Atelier expert</button>
@@ -850,8 +848,6 @@
       <button class="banner-pill" onclick="showSection('catalogue')">🚚 Livraison gratuite dès 600€ — vélos &amp; accessoires</button>
       <span class="opacity-40">·</span>
       <button class="banner-pill" onclick="showSection('location')">🚴 Location dès <strong>30€/jour</strong> — SUNN &amp; Moustache</button>
-      <span class="opacity-40">·</span>
-      <button class="banner-pill" onclick="showSection('reprise')">🌸 <strong>Reprise du Printemps</strong> Moustache — jusqu'à <strong>500€</strong> de bonus · Jusqu'au 25 avril</button>
       <span class="opacity-40">·</span>
       <button class="banner-pill" onclick="showSection('location')">🎯 Location <strong>déduite</strong> si vous achetez !</button>
       <span class="opacity-40">·</span>
@@ -1106,20 +1102,6 @@
       </div>
     </div>
 
-    <!-- Slide 5 — Reprise du Printemps -->
-    <div class="hb-slide">
-      <div class="hb-bg" style="background-image:url('images/sunn-reprise-printemps.jpg');background-position:center 40%;background-size:cover"></div>
-      <div class="hb-overlay"></div>
-      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 w-full">
-        <div class="max-w-xl">
-          <span class="hb-label" style="background:rgba(236,72,153,.18);color:#f9a8d4;border:1px solid rgba(236,72,153,.35)">🌸 Offre en cours · jusqu'au 25 avril</span>
-          <h2 class="font-heading font-bold text-white leading-tight mb-4" style="font-size:clamp(1.8rem,4vw,3.2rem)">Reprise du Printemps<br><span style="color:#fb923c">Jusqu'à 500€ de bonus</span></h2>
-          <p class="text-gray-300 text-base mb-6 leading-relaxed">Toutes marques reprises · Dépôt-vente possible.<br>Pour l'achat d'un Moustache gamme 2026.</p>
-          <button onclick="showSection('reprise')" class="btn-orange"><i data-lucide="refresh-ccw" class="w-5 h-5"></i>Estimer ma reprise</button>
-        </div>
-      </div>
-    </div>
-
     <button class="hb-btn-prev" onclick="hbNav(-1)" aria-label="Précédent"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button>
     <button class="hb-btn-next" onclick="hbNav(1)" aria-label="Suivant"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button>
     <div class="hb-dots">
@@ -1127,7 +1109,6 @@
       <button class="hb-dot" onclick="hbGo(1)" aria-label="Slide 2"></button>
       <button class="hb-dot" onclick="hbGo(2)" aria-label="Slide 3"></button>
       <button class="hb-dot" onclick="hbGo(3)" aria-label="Slide 4"></button>
-      <button class="hb-dot" onclick="hbGo(4)" aria-label="Slide 5"></button>
     </div>
   </section>
 
@@ -1821,15 +1802,6 @@
               <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.4);color:#4ade80;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir les sentiers Famille →</span>
             </div>
           </a>
-          <!-- Photo 4 — Reprise du Printemps → section reprise -->
-          <a class="location-banner-item" href="#" onclick="event.preventDefault();showSection('reprise')" style="cursor:pointer;text-decoration:none">
-            <img class="location-banner-img" src="images/sunn-reprise-printemps.jpg" alt="Reprise du Printemps — SUNN orange en forêt" loading="lazy">
-            <div class="location-banner-caption">
-              <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">🌸 Reprise du Printemps</div>
-              <p style="color:#fde68a;font-size:.78rem;font-weight:700;margin-bottom:.6rem">Jusqu'à 500€ de bonus · Toutes marques · Jusqu'au 25 avril</p>
-              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(234,179,8,.2);border:1px solid rgba(234,179,8,.5);color:#fde68a;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Estimer ma reprise →</span>
-            </div>
-          </a>
           <!-- Photo 5 — SUNN Charger en montagne -->
           <a class="location-banner-item" href="#" onclick="event.preventDefault();setCat('vttae');showSection('catalogue')" style="cursor:pointer;text-decoration:none">
             <img class="location-banner-img" src="images/sunn-charger-mountain.jpg" alt="SUNN Charger montagne Alsace" loading="lazy">
@@ -1871,14 +1843,6 @@
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Famille, amis, débutants &amp; experts</div>
               <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">Loisir · piste cyclable et chemins · tous profils</p>
               <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.4);color:#4ade80;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir les sentiers Famille →</span>
-            </div>
-          </a>
-          <a class="location-banner-item" href="#" onclick="event.preventDefault();showSection('reprise')" style="cursor:pointer;text-decoration:none" aria-hidden="true">
-            <img class="location-banner-img" src="images/sunn-reprise-printemps.jpg" alt="" loading="lazy">
-            <div class="location-banner-caption">
-              <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">🌸 Reprise du Printemps</div>
-              <p style="color:#fde68a;font-size:.78rem;font-weight:700;margin-bottom:.6rem">Jusqu'à 500€ de bonus · Toutes marques · Jusqu'au 25 avril</p>
-              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(234,179,8,.2);border:1px solid rgba(234,179,8,.5);color:#fde68a;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Estimer ma reprise →</span>
             </div>
           </a>
           <a class="location-banner-item" href="#" onclick="event.preventDefault();setCat('vttae');showSection('catalogue')" style="cursor:pointer;text-decoration:none" aria-hidden="true">
@@ -2604,7 +2568,7 @@
               <span class="font-medium text-sm text-white">Est-ce que vous reprenez mon ancien vélo ?</span>
               <i data-lucide="chevron-down" class="w-4 h-4 text-gray-500 flex-shrink-0 contact-faq-icon"></i>
             </summary>
-            <p class="px-4 pt-2 pb-3 text-sm text-gray-400 leading-relaxed">Oui, nous reprenons votre ancien vélo (toutes marques) lors d'un achat. La valeur de reprise est estimée gratuitement en magasin selon l'état, l'âge et le modèle. <strong class="text-pink-300">🌸 Offre du moment :</strong> achetez un Moustache 2026 ≥ 3 000€ et bénéficiez d'un bonus reprise de 300 à 500€ — valable jusqu'au 25 avril 2026.</p>
+            <p class="px-4 pt-2 pb-3 text-sm text-gray-400 leading-relaxed">Oui, nous reprenons votre ancien vélo (toutes marques) lors d'un achat. La valeur de reprise est estimée gratuitement en magasin selon l'état, l'âge et le modèle.</p>
           </details>
         </div>
       </div>
@@ -4018,55 +3982,6 @@
     <div class="max-w-3xl mx-auto">
       <nav aria-label="breadcrumb" class="mb-8"><ol class="breadcrumb"><li><button onclick="showSection('accueil')" class="text-gray-500 hover:text-white text-sm">Accueil</button></li><li><span class="text-gray-600 mx-2">/</span></li><li><span class="text-white text-sm font-semibold">Reprise</span></li></ol></nav>
 
-      <!-- ── REPRISE DU PRINTEMPS Moustache ───────────────────── -->
-      <div class="mb-10 rounded-2xl overflow-hidden" style="background:linear-gradient(135deg,rgba(236,72,153,.13) 0%,rgba(139,92,246,.1) 60%,rgba(59,130,246,.08) 100%);border:1px solid rgba(236,72,153,.3);">
-        <div class="p-6 sm:p-8">
-          <!-- Header row -->
-          <div class="flex flex-wrap items-start justify-between gap-4 mb-5">
-            <div>
-              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold mb-3" style="background:rgba(236,72,153,.15);border:1px solid rgba(236,72,153,.35);color:#f9a8d4;">
-                <span class="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse"></span>
-                OFFRE EN COURS · jusqu'au 25 avril 2026
-              </div>
-              <h3 class="font-heading font-bold text-2xl text-white leading-tight">🌸 Reprise du Printemps</h3>
-              <p class="text-sm mt-1" style="color:#e9d5ff;">Jusqu'à <strong class="text-white">500€ de bonus</strong> pour l'achat d'un vélo Moustache gamme 2026</p>
-            </div>
-            <div id="reprise-countdown" class="text-right flex-shrink-0">
-              <div class="text-xs text-gray-400 mb-1">Fin de l'offre dans</div>
-              <div class="font-heading font-bold text-2xl text-white" id="reprise-days">—</div>
-              <div class="text-xs text-gray-500">jours</div>
-            </div>
-          </div>
-          <!-- Tier grid -->
-          <div class="grid grid-cols-3 gap-3 mb-5">
-            <div class="rounded-xl p-3 sm:p-4 text-center" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);">
-              <div class="font-heading font-bold text-2xl sm:text-3xl text-white">300€</div>
-              <div class="text-xs text-gray-400 mt-1">de bonus reprise</div>
-              <div class="text-xs font-semibold mt-2" style="color:#f9a8d4;">3 000 – 3 999€</div>
-            </div>
-            <div class="rounded-xl p-3 sm:p-4 text-center" style="background:linear-gradient(135deg,rgba(236,72,153,.18),rgba(139,92,246,.15));border:1px solid rgba(236,72,153,.4);">
-              <div class="font-heading font-bold text-2xl sm:text-3xl text-white">400€</div>
-              <div class="text-xs text-gray-400 mt-1">de bonus reprise</div>
-              <div class="text-xs font-semibold mt-2" style="color:#f9a8d4;">4 000 – 4 999€</div>
-            </div>
-            <div class="rounded-xl p-3 sm:p-4 text-center" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);">
-              <div class="font-heading font-bold text-2xl sm:text-3xl text-white">500€</div>
-              <div class="text-xs text-gray-400 mt-1">de bonus reprise</div>
-              <div class="text-xs font-semibold mt-2" style="color:#f9a8d4;">à partir de 5 000€</div>
-            </div>
-          </div>
-          <!-- Footer row -->
-          <div class="flex flex-wrap items-center justify-between gap-3">
-            <p class="text-xs text-gray-500">Toutes marques reprises · Hors modèles &lt; 3 000€ et hors remise. Reprise estimée et gérée en magasin.</p>
-            <a href="https://moustachebikes.com/fr/offre-de-reprise" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all flex-shrink-0" style="background:rgba(236,72,153,.2);border:1px solid rgba(236,72,153,.4);color:#f9a8d4;" onmouseover="this.style.background='rgba(236,72,153,.3)'" onmouseout="this.style.background='rgba(236,72,153,.2)'">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 0 2 2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              Détails sur moustachebikes.com
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- ─────────────────────────────────────────────────────── -->
-
       <div class="text-center mb-10">
         <span class="badge badge-electric">Reprise &amp; Dépôt-vente</span>
         <h2 class="font-heading font-bold text-4xl mt-3 mb-2">Vendez votre vélo</h2>
@@ -4137,16 +4052,6 @@
           <div class="p-4 rounded-xl mb-6 text-left" style="background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15)">
             <p class="text-sm text-blue-300 font-semibold mb-1">💡 Comment maximiser votre reprise</p>
             <ul class="text-xs text-gray-400 space-y-1 list-disc pl-4" id="rep-tips"></ul>
-          </div>
-          <!-- Bonus Moustache -->
-          <div class="mb-6 p-4 rounded-xl text-left" style="background:linear-gradient(135deg,rgba(236,72,153,.1),rgba(139,92,246,.08));border:1px solid rgba(236,72,153,.3)">
-            <p class="text-sm font-semibold mb-1" style="color:#f9a8d4">🌸 Bonus Reprise du Printemps Moustache</p>
-            <p class="text-xs text-gray-400 mb-3">Cumulable avec votre estimation · Valable jusqu'au <strong class="text-white">25 avril 2026</strong> pour l'achat d'un Moustache gamme 2026</p>
-            <div class="grid grid-cols-3 gap-2">
-              <div class="rounded-lg p-2 text-center" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)"><div class="font-bold text-white text-sm">+300€</div><div class="text-xs mt-0.5" style="color:#f9a8d4">3 000–3 999€</div></div>
-              <div class="rounded-lg p-2 text-center" style="background:rgba(236,72,153,.12);border:1px solid rgba(236,72,153,.35)"><div class="font-bold text-white text-sm">+400€</div><div class="text-xs mt-0.5" style="color:#f9a8d4">4 000–4 999€</div></div>
-              <div class="rounded-lg p-2 text-center" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)"><div class="font-bold text-white text-sm">+500€</div><div class="text-xs mt-0.5" style="color:#f9a8d4">≥ 5 000€</div></div>
-            </div>
           </div>
           <!-- Bouton photos WhatsApp (VAE uniquement) -->
           <div id="rep-whatsapp-photos" class="hidden mb-4 p-4 rounded-xl text-left" style="background:rgba(37,211,102,.07);border:1px solid rgba(37,211,102,.25);">
