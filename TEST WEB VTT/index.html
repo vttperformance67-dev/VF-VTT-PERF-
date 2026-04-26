@@ -253,7 +253,7 @@
     .nav-dropdown-menu { display:none; position:absolute; top:calc(100% + 14px); left:50%; transform:translateX(-50%); background:rgba(10,16,28,.97); border:1px solid rgba(255,255,255,.1); border-radius:1rem; padding:.5rem; min-width:200px; backdrop-filter:blur(20px); box-shadow:0 16px 40px rgba(0,0,0,.5); z-index:200; }
     .nav-dropdown:hover .nav-dropdown-menu { display:block; }
     .nav-dropdown-menu::before { content:''; position:absolute; top:-6px; left:50%; transform:translateX(-50%); border:6px solid transparent; border-bottom-color:rgba(255,255,255,.1); border-top:none; }
-    .nav-dd-item { display:flex; align-items:center; gap:.6rem; width:100%; padding:.55rem .85rem; border-radius:.6rem; font-size:.82rem; font-weight:500; color:#9ca3af; background:none; border:none; cursor:pointer; font-family:'Exo 2',sans-serif; text-align:left; transition:all .18s; white-space:nowrap; }
+    .nav-dd-item { display:flex; align-items:center; gap:.6rem; width:100%; padding:.55rem .85rem; border-radius:.6rem; font-size:.82rem; font-weight:500; color:#9ca3af; background:none; border:none; cursor:pointer; font-family:'Exo 2',sans-serif; text-align:left; transition:background .18s, color .18s; white-space:nowrap; }
     .nav-dd-item:hover { background:rgba(255,107,53,.1); color:white; }
     .nav-dd-sep { height:1px; background:rgba(255,255,255,.07); margin:.35rem .5rem; }
 
@@ -282,7 +282,7 @@
     .price-old { font-size:.8rem; text-decoration:line-through; color:var(--muted); margin-right:.3rem; }
     .btn-fiche { display:inline-flex; align-items:center; gap:.35rem; font-size:.72rem; font-weight:600; color:var(--brand); opacity:.7; transition:opacity .2s; text-decoration:none; }
     .btn-fiche:hover { opacity:1; }
-    .pay-opt { display:flex; flex-direction:column; gap:.3rem; align-items:center; padding:.85rem .5rem; border-radius:1rem; border:1.5px solid rgba(255,255,255,.12); background:rgba(255,255,255,.03); cursor:pointer; transition:all .2s; text-align:center; color:var(--muted); }
+    .pay-opt { display:flex; flex-direction:column; gap:.3rem; align-items:center; padding:.85rem .5rem; border-radius:1rem; border:1.5px solid rgba(255,255,255,.12); background:rgba(255,255,255,.03); cursor:pointer; transition:border-color .2s, background .2s, color .2s; text-align:center; color:var(--muted); }
     .pay-opt.selected { border-color:var(--orange); background:rgba(255,107,53,.08); color:#fff; }
     .pay-opt:hover:not(.selected) { border-color:rgba(255,255,255,.25); color:var(--fg); }
 
@@ -294,11 +294,11 @@
     .hb-slide.hb-active .hb-bg { transform:scale(1); }
     .hb-overlay { position:absolute; inset:0; background:linear-gradient(105deg,rgba(8,14,26,.88) 0%,rgba(8,14,26,.35) 65%,transparent 100%); }
     .hb-overlay-r { position:absolute; inset:0; background:linear-gradient(105deg,transparent 0%,rgba(8,14,26,.35) 35%,rgba(8,14,26,.88) 100%); }
-    .hb-btn-prev,.hb-btn-next { position:absolute; top:50%; transform:translateY(-50%); z-index:10; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:50%; width:52px; height:52px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .3s; }
+    .hb-btn-prev,.hb-btn-next { position:absolute; top:50%; transform:translateY(-50%); z-index:10; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:50%; width:52px; height:52px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background .3s, border-color .3s; }
     .hb-btn-prev:hover,.hb-btn-next:hover { background:var(--orange); border-color:var(--orange); }
     .hb-btn-prev { left:2rem; } .hb-btn-next { right:2rem; }
     .hb-dots { position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); display:flex; gap:.75rem; z-index:10; }
-    .hb-dot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.3); border:none; cursor:pointer; transition:all .35s; padding:0; }
+    .hb-dot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.3); border:none; cursor:pointer; transition:background .35s, transform .35s; padding:0; }
     .hb-dot.hb-on { background:var(--orange); width:28px; border-radius:5px; }
     .hb-label { display:inline-block; font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; padding:.3rem .9rem; border-radius:2rem; margin-bottom:1.25rem; }
 
@@ -371,7 +371,7 @@
     .mobile-menu { max-height:0; overflow:hidden; transition:max-height .35s ease; }
 
     /* ── Sentiers ── */
-    .trail-filter-btn { padding:.4rem 1.1rem; border-radius:2rem; font-size:.82rem; font-weight:600; border:1px solid rgba(255,255,255,.12); background:transparent; color:var(--muted); cursor:pointer; transition:all .2s; white-space:nowrap; }
+    .trail-filter-btn { padding:.4rem 1.1rem; border-radius:2rem; font-size:.82rem; font-weight:600; border:1px solid rgba(255,255,255,.12); background:transparent; color:var(--muted); cursor:pointer; transition:background .2s, border-color .2s, color .2s; white-space:nowrap; }
     .trail-filter-btn.active { background:var(--blue); border-color:var(--blue); color:#fff; }
     .trail-card { border-radius:1.25rem; overflow:hidden; border:1px solid rgba(255,255,255,.07); background:var(--card); transition:transform .25s, box-shadow .25s; }
     .trail-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,.4); }
@@ -394,13 +394,13 @@
     .text-gradient { background:linear-gradient(135deg,#ff6b35,#fbbf24); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 
     /* ── Blog ── */
-    .blog-card { transition:all .3s; }
+    .blog-card { transition:transform .3s, box-shadow .3s, border-color .2s; }
     .blog-card:hover { border-color:rgba(255,107,53,.35) !important; transform:translateY(-5px); box-shadow:0 18px 50px rgba(0,0,0,.35); }
-    .blog-tag { padding:.35rem .9rem; border-radius:2rem; font-size:.78rem; font-weight:600; border:1px solid rgba(255,255,255,.1); background:transparent; color:var(--muted); cursor:pointer; transition:all .2s; }
+    .blog-tag { padding:.35rem .9rem; border-radius:2rem; font-size:.78rem; font-weight:600; border:1px solid rgba(255,255,255,.1); background:transparent; color:var(--muted); cursor:pointer; transition:background .2s, border-color .2s, color .2s; }
     .blog-tag:hover,.blog-tag.active { background:var(--orange); border-color:var(--orange); color:white; }
 
     /* ── Partenaires ── */
-    .partner-logo { font-size:1.4rem; font-weight:800; letter-spacing:.12em; color:rgba(255,255,255,.25); transition:all .3s; cursor:default; text-transform:uppercase; font-family:'Rajdhani',sans-serif; padding:.5rem 1rem; border-radius:.75rem; border:1px solid transparent; }
+    .partner-logo { font-size:1.4rem; font-weight:800; letter-spacing:.12em; color:rgba(255,255,255,.25); transition:color .3s, filter .3s, opacity .3s, border-color .3s; cursor:default; text-transform:uppercase; font-family:'Rajdhani',sans-serif; padding:.5rem 1rem; border-radius:.75rem; border:1px solid transparent; }
     .partner-logo:hover { color:white; border-color:rgba(255,107,53,.3); background:rgba(255,107,53,.06); transform:scale(1.08); }
 
     /* ── Counter animation ── */
@@ -487,10 +487,10 @@
     .contact-faq-icon { transition:transform .2s; }
 
     /* ── COMPARATEUR ──────────────────────────────────────── */
-    #compare-bar { position:fixed; bottom:0; left:0; right:0; z-index:80; background:rgba(8,14,26,.97); border-top:1px solid rgba(255,107,53,.3); backdrop-filter:blur(20px); transform:translateY(100%); transition:transform .35s cubic-bezier(.4,0,.2,1); padding:1rem 1.5rem; }
+    #compare-bar { position:fixed; bottom:0; left:0; right:0; z-index:80; background:rgba(8,14,26,.97); border-top:1px solid rgba(255,107,53,.3); backdrop-filter:blur(8px); transform:translateY(100%); transition:transform .35s cubic-bezier(.4,0,.2,1); padding:1rem 1.5rem; }
     #compare-bar.visible { transform:translateY(0); }
     @media(max-width:1023px){ #compare-bar.visible { bottom:65px; } }
-    .cmp-slot { width:80px; height:80px; border-radius:.875rem; border:2px dashed rgba(255,255,255,.15); display:flex; align-items:center; justify-content:center; position:relative; flex-shrink:0; overflow:hidden; background:rgba(255,255,255,.03); transition:all .2s; }
+    .cmp-slot { width:80px; height:80px; border-radius:.875rem; border:2px dashed rgba(255,255,255,.15); display:flex; align-items:center; justify-content:center; position:relative; flex-shrink:0; overflow:hidden; background:rgba(255,255,255,.03); transition:border-color .2s; }
     .cmp-slot img { width:100%; height:100%; object-fit:cover; }
     .cmp-slot .cmp-rm { position:absolute; top:2px; right:2px; width:18px; height:18px; border-radius:50%; background:rgba(239,68,68,.8); border:none; cursor:pointer; font-size:.6rem; color:white; display:flex; align-items:center; justify-content:center; z-index:2; }
     .cmp-slot.empty { cursor:pointer; }
@@ -527,11 +527,11 @@
     .quiz-step { display:none; }
     .quiz-step.active { display:block; animation:quizIn .3s ease; }
     @keyframes quizIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
-    .quiz-choice { display:flex; align-items:center; gap:.85rem; padding:.9rem 1rem; border:1.5px solid rgba(255,255,255,.1); border-radius:1rem; cursor:pointer; transition:all .2s; margin-bottom:.6rem; background:rgba(255,255,255,.03); }
+    .quiz-choice { display:flex; align-items:center; gap:.85rem; padding:.9rem 1rem; border:1.5px solid rgba(255,255,255,.1); border-radius:1rem; cursor:pointer; transition:border-color .2s, background .2s; margin-bottom:.6rem; background:rgba(255,255,255,.03); }
     .quiz-choice:hover { border-color:rgba(255,107,53,.4); background:rgba(255,107,53,.05); }
     .quiz-choice.selected { border-color:var(--orange); background:rgba(255,107,53,.1); }
     .quiz-choice-icon { width:40px; height:40px; border-radius:.75rem; background:rgba(255,107,53,.1); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:1.2rem; }
-    .quiz-result-card { border:1.5px solid rgba(255,107,53,.3); border-radius:1.25rem; overflow:hidden; cursor:pointer; transition:all .3s; background:rgba(255,107,53,.04); }
+    .quiz-result-card { border:1.5px solid rgba(255,107,53,.3); border-radius:1.25rem; overflow:hidden; cursor:pointer; transition:transform .3s, box-shadow .3s, border-color .2s; background:rgba(255,107,53,.04); }
     .quiz-result-card:hover { border-color:var(--orange); transform:translateY(-3px); box-shadow:0 12px 30px rgba(255,107,53,.2); }
 
     /* ── COOKIE BANNER ────────────────────────────────────── */
@@ -539,11 +539,11 @@
     #cookie-banner.show { transform:translateY(0); }
 
     /* ── WHATSAPP ─────────────────────────────────────────── */
-    .whatsapp-btn { background:#25d366; color:white; border:none; border-radius:50%; width:52px; height:52px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 20px rgba(37,211,102,.4); transition:all .3s; flex-shrink:0; text-decoration:none; }
+    .whatsapp-btn { background:#25d366; color:white; border:none; border-radius:50%; width:52px; height:52px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 20px rgba(37,211,102,.4); transition:transform .3s, box-shadow .3s, background .2s; flex-shrink:0; text-decoration:none; }
     .whatsapp-btn:hover { transform:scale(1.1); box-shadow:0 8px 30px rgba(37,211,102,.6); background:#1fbb5b; }
 
     /* ── BOTTOM MOBILE NAV ────────────────────────────────── */
-    #mobile-bottom-nav { display:none; position:fixed; bottom:0; left:0; right:0; z-index:70; background:rgba(8,14,26,.97); border-top:1px solid rgba(255,255,255,.08); backdrop-filter:blur(20px); padding:.5rem 0 .25rem; }
+    #mobile-bottom-nav { display:none; position:fixed; bottom:0; left:0; right:0; z-index:70; background:rgba(8,14,26,.97); border-top:1px solid rgba(255,255,255,.08); backdrop-filter:blur(8px); padding:.5rem 0 .25rem; }
     @media(max-width:1023px){ #mobile-bottom-nav { display:flex; } }
     .mbn-btn { flex:1; display:flex; flex-direction:column; align-items:center; gap:.2rem; padding:.4rem .2rem; cursor:pointer; background:none; border:none; color:#64748b; font-size:.58rem; font-weight:600; text-transform:uppercase; letter-spacing:.04em; transition:color .2s; font-family:'Exo 2',sans-serif; }
     .mbn-btn.active, .mbn-btn:hover { color:var(--orange); }
@@ -594,7 +594,7 @@
     .fin-badge { display:inline-flex; align-items:center; gap:.3rem; font-size:.65rem; font-weight:700; padding:.2rem .5rem; border-radius:.4rem; background:rgba(16,185,129,.1); border:1px solid rgba(16,185,129,.2); color:#34d399; white-space:nowrap; }
 
     /* ── STOCK ALERT ──────────────────────────────────────── */
-    .stock-alert-btn { display:inline-flex; align-items:center; gap:.4rem; font-size:.7rem; font-weight:600; color:#818cf8; border:1px solid rgba(129,140,248,.25); border-radius:.5rem; padding:.25rem .65rem; cursor:pointer; background:rgba(129,140,248,.07); transition:all .2s; white-space:nowrap; }
+    .stock-alert-btn { display:inline-flex; align-items:center; gap:.4rem; font-size:.7rem; font-weight:600; color:#818cf8; border:1px solid rgba(129,140,248,.25); border-radius:.5rem; padding:.25rem .65rem; cursor:pointer; background:rgba(129,140,248,.07); transition:background .2s, border-color .2s; white-space:nowrap; }
     .stock-alert-btn:hover { background:rgba(129,140,248,.15); border-color:rgba(129,140,248,.5); }
 
     .sep { height:1px; background:linear-gradient(90deg,transparent,rgba(255,107,53,.3),transparent); }
@@ -604,10 +604,10 @@
     .wish-btn.wished { border-color:rgba(239,68,68,.3) !important; background:rgba(239,68,68,.08) !important; }
 
     /* ── ENGAGEMENT CARD ── */
-    .engage-card { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; padding:1.5rem; transition:all .3s; }
+    .engage-card { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; padding:1.5rem; transition:transform .3s, box-shadow .3s, border-color .2s; }
     .engage-card:hover { border-color:rgba(255,107,53,.25); transform:translateY(-3px); }
 
-    .service-card { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; padding:1.75rem; transition:all .3s; position:relative; overflow:hidden; }
+    .service-card { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; padding:1.75rem; transition:transform .3s, box-shadow .3s, border-color .2s; position:relative; overflow:hidden; }
     .service-card.has-photo { padding:0; }
     .service-card.has-photo .svc-body { padding:1.5rem; }
     .svc-photo-wrap { height:150px; overflow:hidden; position:relative; }
@@ -620,12 +620,12 @@
 
     .price-display { font-family:'Rajdhani',sans-serif; font-size:3rem; font-weight:700; color:var(--orange); line-height:1; }
 
-    #back-top { position:fixed; bottom:1.5rem; left:1.5rem; z-index:900; width:44px; height:44px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:0; transition:all .3s; pointer-events:none; }
+    #back-top { position:fixed; bottom:1.5rem; left:1.5rem; z-index:900; width:44px; height:44px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:0; transition:opacity .3s, background .2s, border-color .2s; pointer-events:none; }
     #back-top.visible { opacity:1; pointer-events:all; }
     #back-top:hover { background:var(--orange); border-color:var(--orange); }
     @media(max-width:1023px) { #back-top { bottom:5.5rem; } }
 
-    .brand-label { opacity:.45; filter:grayscale(1); transition:all .3s; font-family:'Rajdhani',sans-serif; font-weight:700; text-transform:uppercase; }
+    .brand-label { opacity:.45; filter:grayscale(1); transition:opacity .3s, filter .3s; font-family:'Rajdhani',sans-serif; font-weight:700; text-transform:uppercase; }
     .brand-label:hover { opacity:1; filter:grayscale(0); }
 
     @media(max-width:768px) {
@@ -643,7 +643,7 @@
     }
 
     /* ── SUSPENSIONS ──────────────────────────────────────── */
-    .susp-damage-card { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; overflow:hidden; transition:all .3s; }
+    .susp-damage-card { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; overflow:hidden; transition:transform .3s, border-color .2s; }
     .susp-damage-card:hover { border-color:rgba(239,68,68,.35); transform:translateY(-4px); }
     .susp-damage-img { height:220px; overflow:hidden; background:#0d1520; display:flex; align-items:center; justify-content:center; }
     .susp-damage-img img { width:100%; height:100%; object-fit:cover; transition:transform .4s; }
@@ -666,7 +666,7 @@
     .fc-chrome { background:rgba(148,163,184,.1); color:#e2e8f0; border-color:rgba(148,163,184,.25); }
     .fc-marbre { background:rgba(244,114,182,.1); color:#f9a8d4; border-color:rgba(244,114,182,.25); }
     .fc-cameleon { background:linear-gradient(90deg,rgba(168,85,247,.15),rgba(59,130,246,.15),rgba(16,185,129,.15)); color:#e2e8f0; border-color:rgba(168,85,247,.3); }
-    .avantage-paint { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; padding:1.75rem; display:flex; gap:1.25rem; align-items:flex-start; transition:all .3s; }
+    .avantage-paint { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; padding:1.75rem; display:flex; gap:1.25rem; align-items:flex-start; transition:border-color .2s; }
     .avantage-paint:hover { border-color:rgba(255,107,53,.3); }
     .avantage-paint .ico { width:48px; height:48px; border-radius:.875rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 
@@ -680,10 +680,10 @@
     .vit-nebula-2 { position:absolute; width:700px; height:700px; border-radius:50%; background:radial-gradient(circle,rgba(255,107,53,.05) 0%,transparent 65%); bottom:-200px; right:-150px; pointer-events:none; animation:vit-nf 18s ease-in-out infinite alternate-reverse; }
     @keyframes vit-nf { 0%{transform:scale(1)} 100%{transform:scale(1.25)} }
 
-    .vit-filter-btn { padding:.35rem 1.1rem; border-radius:2rem; font-size:.78rem; font-weight:700; border:1px solid rgba(0,255,200,.18); background:transparent; color:rgba(0,255,200,.45); cursor:pointer; transition:all .2s; font-family:'Exo 2',sans-serif; letter-spacing:.04em; text-transform:uppercase; }
+    .vit-filter-btn { padding:.35rem 1.1rem; border-radius:2rem; font-size:.78rem; font-weight:700; border:1px solid rgba(0,255,200,.18); background:transparent; color:rgba(0,255,200,.45); cursor:pointer; transition:background .2s, border-color .2s, color .2s, box-shadow .2s; font-family:'Exo 2',sans-serif; letter-spacing:.04em; text-transform:uppercase; }
     .vit-filter-btn:hover,.vit-filter-btn.active { background:rgba(0,255,200,.1); border-color:rgba(0,255,200,.55); color:#00ffcc; box-shadow:0 0 10px rgba(0,255,200,.15); }
 
-    .vit-thumb { flex-shrink:0; width:82px; cursor:pointer; border-radius:.875rem; overflow:hidden; border:1.5px solid rgba(255,255,255,.07); transition:all .25s; background:rgba(255,255,255,.03); }
+    .vit-thumb { flex-shrink:0; width:82px; cursor:pointer; border-radius:.875rem; overflow:hidden; border:1.5px solid rgba(255,255,255,.07); transition:border-color .25s, box-shadow .25s, background .25s; background:rgba(255,255,255,.03); }
     .vit-thumb img { width:100%; height:58px; object-fit:cover; display:block; transition:transform .3s; }
     .vit-thumb:hover img { transform:scale(1.07); }
     .vit-thumb-name { font-size:.52rem; font-weight:700; text-transform:uppercase; color:#6b7280; padding:.3rem .3rem .4rem; text-align:center; line-height:1.2; letter-spacing:.02em; }
@@ -735,17 +735,17 @@
     .vit-spec-value { font-family:'Rajdhani',sans-serif; font-weight:700; font-size:1.05rem; color:#f1f5f9; line-height:1.2; }
 
     .vit-controls { display:flex; align-items:center; gap:.85rem; padding:.7rem 1rem; background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.07); border-radius:1rem; flex-wrap:wrap; }
-    .vit-ctrl-btn { background:rgba(0,255,200,.07); border:1px solid rgba(0,255,200,.2); color:#00ffcc; font-weight:700; font-size:.78rem; padding:.38rem .9rem; border-radius:.75rem; cursor:pointer; transition:all .2s; font-family:'Exo 2',sans-serif; white-space:nowrap; }
+    .vit-ctrl-btn { background:rgba(0,255,200,.07); border:1px solid rgba(0,255,200,.2); color:#00ffcc; font-weight:700; font-size:.78rem; padding:.38rem .9rem; border-radius:.75rem; cursor:pointer; transition:background .2s, border-color .2s; font-family:'Exo 2',sans-serif; white-space:nowrap; }
     .vit-ctrl-btn:hover { background:rgba(0,255,200,.14); border-color:rgba(0,255,200,.45); }
     .vit-speed-wrap { display:flex; flex-direction:column; gap:.18rem; flex:1; min-width:80px; }
     .vit-speed-slider { appearance:none; width:100%; height:3px; background:rgba(0,255,200,.2); border-radius:2px; cursor:pointer; outline:none; }
     .vit-speed-slider::-webkit-slider-thumb { appearance:none; width:12px; height:12px; border-radius:50%; background:#00ffcc; cursor:pointer; }
     .vit-img-counter { font-size:.68rem; color:rgba(0,255,200,.4); font-family:'Rajdhani',sans-serif; white-space:nowrap; }
 
-    .vit-nav-btn { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); color:#9ca3af; font-size:.78rem; font-weight:600; padding:.5rem 1.1rem; border-radius:.75rem; cursor:pointer; transition:all .2s; font-family:'Exo 2',sans-serif; white-space:nowrap; }
+    .vit-nav-btn { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); color:#9ca3af; font-size:.78rem; font-weight:600; padding:.5rem 1.1rem; border-radius:.75rem; cursor:pointer; transition:border-color .2s, color .2s; font-family:'Exo 2',sans-serif; white-space:nowrap; }
     .vit-nav-btn:hover { border-color:rgba(0,255,200,.3); color:#00ffcc; }
     .vit-img-dots { display:flex; gap:.4rem; align-items:center; }
-    .vit-img-dot { width:7px; height:7px; border-radius:50%; background:rgba(0,255,200,.2); cursor:pointer; transition:all .25s; border:none; padding:0; }
+    .vit-img-dot { width:7px; height:7px; border-radius:50%; background:rgba(0,255,200,.2); cursor:pointer; transition:background .25s, box-shadow .25s; border:none; padding:0; }
     .vit-img-dot.active { background:#00ffcc; box-shadow:0 0 8px rgba(0,255,200,.6); }
 
     /* ══ RESPONSIVE MOBILE ══════════════════════════════════════════════ */
@@ -863,7 +863,7 @@
 </div>
 
 <!-- NAVIGATION -->
-<nav id="navbar" class="fixed z-50 w-full" style="top:36px;background:rgba(8,14,26,.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);">
+<nav id="navbar" class="fixed z-50 w-full" style="top:36px;background:rgba(8,14,26,.96);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.06);">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <button onclick="showSection('accueil')" class="flex items-center gap-3 text-left" aria-label="VTT Performance — retour à l'accueil">
@@ -940,7 +940,7 @@
         </div>
         <button onclick="showSection('contact')" class="nav-link text-sm font-medium text-gray-300 hover:text-white" data-section="contact">Contact</button>
         <button onclick="openQuiz()" style="background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.35);color:#c4b5fd;font-weight:700;font-size:.78rem;padding:.3rem .85rem;border-radius:2rem;cursor:pointer;white-space:nowrap;transition:background .2s,border-color .2s;font-family:'Exo 2',sans-serif;display:flex;align-items:center;gap:.35rem;" onmouseover="this.style.background='rgba(139,92,246,.22)'" onmouseout="this.style.background='rgba(139,92,246,.1)'"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>Choisir mon vélo</button>
-        <button onclick="showSection('vitrine')" data-section="vitrine" style="background:rgba(0,255,200,.1);border:1px solid rgba(0,255,200,.4);color:#00ffcc;font-weight:700;font-size:.78rem;padding:.3rem .85rem;border-radius:2rem;cursor:pointer;white-space:nowrap;transition:all .2s;font-family:'Exo 2',sans-serif;letter-spacing:.04em;" onmouseover="this.style.background='rgba(0,255,200,.2)'" onmouseout="this.style.background='rgba(0,255,200,.1)'">↻ 360°</button>
+        <button onclick="showSection('vitrine')" data-section="vitrine" style="background:rgba(0,255,200,.1);border:1px solid rgba(0,255,200,.4);color:#00ffcc;font-weight:700;font-size:.78rem;padding:.3rem .85rem;border-radius:2rem;cursor:pointer;white-space:nowrap;transition:background .2s;font-family:'Exo 2',sans-serif;letter-spacing:.04em;" onmouseover="this.style.background='rgba(0,255,200,.2)'" onmouseout="this.style.background='rgba(0,255,200,.1)'">↻ 360°</button>
       </div>
 
       <div class="flex items-center gap-3">
@@ -1000,7 +1000,7 @@
   <a href="https://calendly.com/vttperformance67/rendez-vous-presentation-ou-test-velo-clone" target="_blank" rel="noopener" class="calendly-btn">
     <i data-lucide="calendar-check" class="w-5 h-5"></i>Réserver un créneau
   </a>
-  <button onclick="openDevisModal()" style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#5b21b6);border:2px solid rgba(124,58,237,.5);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(124,58,237,.4);transition:all .3s;color:white;" title="Devis express" aria-label="Devis express" onmouseover="this.style.transform='scale(1.12)'" onmouseout="this.style.transform=''">
+  <button onclick="openDevisModal()" style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#5b21b6);border:2px solid rgba(124,58,237,.5);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(124,58,237,.4);transition:transform .2s;color:white;" title="Devis express" aria-label="Devis express" onmouseover="this.style.transform='scale(1.12)'" onmouseout="this.style.transform=''">
     <i data-lucide="clipboard-list" class="w-5 h-5"></i>
   </button>
 </div>
@@ -1781,7 +1781,7 @@
             <div class="location-banner-caption">
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Forêts &amp; sentiers sauvages</div>
               <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">Balade chemins · 100+ km balisés autour d'Ingwiller</p>
-              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir les sentiers Trail →</span>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem">Voir les sentiers Trail →</span>
             </div>
           </a>
           <!-- Photo 2 — Puissance → catalogue VTT Électrique -->
@@ -1790,7 +1790,7 @@
             <div class="location-banner-caption">
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Puissance &amp; sensations fortes</div>
               <p style="color:#fb923c;font-size:.78rem;font-weight:700;margin-bottom:.6rem">750 Wh · 100 Nm — le plus puissant du marché ⚡</p>
-              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(251,146,60,.2);border:1px solid rgba(251,146,60,.5);color:#fb923c;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir les VTT Électriques →</span>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(251,146,60,.2);border:1px solid rgba(251,146,60,.5);color:#fb923c;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem">Voir les VTT Électriques →</span>
             </div>
           </a>
           <!-- Photo 3 — Famille → sentiers Famille -->
@@ -1799,7 +1799,7 @@
             <div class="location-banner-caption">
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Famille, amis, débutants &amp; experts</div>
               <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">Loisir · piste cyclable et chemins · tous profils</p>
-              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.4);color:#4ade80;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir les sentiers Famille →</span>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.4);color:#4ade80;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem">Voir les sentiers Famille →</span>
             </div>
           </a>
           <!-- Photo 5 — SUNN Charger en montagne -->
@@ -1808,7 +1808,7 @@
             <div class="location-banner-caption">
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">SUNN Charger — Montagne</div>
               <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">VTTAE 750Wh · Bosch CX · Tout terrain</p>
-              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir le Charger →</span>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem">Voir le Charger →</span>
             </div>
           </a>
           <!-- Photo 6 — SUNN One en forêt -->
@@ -1817,7 +1817,7 @@
             <div class="location-banner-caption">
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">SUNN One — Trail &amp; forêt</div>
               <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">VTTAE · Bosch CX · 625–750 Wh</p>
-              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,107,53,.2);border:1px solid rgba(255,107,53,.5);color:#fb923c;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir le One →</span>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,107,53,.2);border:1px solid rgba(255,107,53,.5);color:#fb923c;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem">Voir le One →</span>
             </div>
           </a>
           <!-- duplication pour boucle infinie -->
@@ -1826,7 +1826,7 @@
             <div class="location-banner-caption">
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Forêts &amp; sentiers sauvages</div>
               <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">Balade chemins · 100+ km balisés autour d'Ingwiller</p>
-              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir les sentiers Trail →</span>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem">Voir les sentiers Trail →</span>
             </div>
           </a>
           <a class="location-banner-item" href="#sec-catalogue" onclick="event.preventDefault();showSection('sec-catalogue');setTimeout(()=>setCat('vttae'),300)" style="cursor:pointer;text-decoration:none">
@@ -1834,7 +1834,7 @@
             <div class="location-banner-caption">
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Puissance &amp; sensations fortes</div>
               <p style="color:#fb923c;font-size:.78rem;font-weight:700;margin-bottom:.6rem">750 Wh · 100 Nm — le plus puissant du marché ⚡</p>
-              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(251,146,60,.2);border:1px solid rgba(251,146,60,.5);color:#fb923c;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir les VTT Électriques →</span>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(251,146,60,.2);border:1px solid rgba(251,146,60,.5);color:#fb923c;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem">Voir les VTT Électriques →</span>
             </div>
           </a>
           <a class="location-banner-item" href="#sec-location" onclick="event.preventDefault();showSection('sec-location');setTimeout(()=>filterTrails('famille'),300)" style="cursor:pointer;text-decoration:none">
@@ -1842,7 +1842,7 @@
             <div class="location-banner-caption">
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">Famille, amis, débutants &amp; experts</div>
               <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">Loisir · piste cyclable et chemins · tous profils</p>
-              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.4);color:#4ade80;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir les sentiers Famille →</span>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.4);color:#4ade80;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem">Voir les sentiers Famille →</span>
             </div>
           </a>
           <a class="location-banner-item" href="#" onclick="event.preventDefault();setCat('vttae');showSection('catalogue')" style="cursor:pointer;text-decoration:none" aria-hidden="true">
@@ -1850,7 +1850,7 @@
             <div class="location-banner-caption">
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">SUNN Charger — Montagne</div>
               <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">VTTAE 750Wh · Bosch CX · Tout terrain</p>
-              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir le Charger →</span>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem">Voir le Charger →</span>
             </div>
           </a>
           <a class="location-banner-item" href="#" onclick="event.preventDefault();setBrand('SUNN');showSection('catalogue')" style="cursor:pointer;text-decoration:none" aria-hidden="true">
@@ -1858,7 +1858,7 @@
             <div class="location-banner-caption">
               <div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:800;color:white;line-height:1.2;margin-bottom:.3rem">SUNN One — Trail &amp; forêt</div>
               <p style="color:#d1d5db;font-size:.78rem;margin-bottom:.6rem">VTTAE · Bosch CX · 625–750 Wh</p>
-              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,107,53,.2);border:1px solid rgba(255,107,53,.5);color:#fb923c;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem;backdrop-filter:blur(4px)">Voir le One →</span>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,107,53,.2);border:1px solid rgba(255,107,53,.5);color:#fb923c;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:2rem">Voir le One →</span>
             </div>
           </a>
         </div>
@@ -4328,11 +4328,11 @@
       <p style="color:rgba(255,255,255,.65);font-size:1rem;margin:.6rem 0 1.5rem;">Vélos électriques haut de gamme — fabriqués en France à Thaon-les-Vosges</p>
       <!-- Gamme tabs -->
       <div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;">
-        <button onclick="filterMoustache('all')" id="mq-all" class="mq-tab active" style="padding:.4rem 1.1rem;border-radius:2rem;font-size:.8rem;font-weight:700;font-family:'Exo 2',sans-serif;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.18);color:white;cursor:pointer;transition:all .2s;">Tous</button>
-        <button onclick="filterMoustache('trail')" id="mq-trail" class="mq-tab" style="padding:.4rem 1.1rem;border-radius:2rem;font-size:.8rem;font-weight:700;font-family:'Exo 2',sans-serif;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.65);cursor:pointer;transition:all .2s;">🏔️ Trail / Game</button>
-        <button onclick="filterMoustache('xroad')" id="mq-xroad" class="mq-tab" style="padding:.4rem 1.1rem;border-radius:2rem;font-size:.8rem;font-weight:700;font-family:'Exo 2',sans-serif;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.65);cursor:pointer;transition:all .2s;">🛤️ Xroad / Allroad</button>
-        <button onclick="filterMoustache('samedi')" id="mq-samedi" class="mq-tab" style="padding:.4rem 1.1rem;border-radius:2rem;font-size:.8rem;font-weight:700;font-family:'Exo 2',sans-serif;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.65);cursor:pointer;transition:all .2s;">🚴 Samedi / Dimanche</button>
-        <button onclick="filterMoustache('cargo')" id="mq-cargo" class="mq-tab" style="padding:.4rem 1.1rem;border-radius:2rem;font-size:.8rem;font-weight:700;font-family:'Exo 2',sans-serif;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.65);cursor:pointer;transition:all .2s;">📦 Cargo / Urbain</button>
+        <button onclick="filterMoustache('all')" id="mq-all" class="mq-tab active" style="padding:.4rem 1.1rem;border-radius:2rem;font-size:.8rem;font-weight:700;font-family:'Exo 2',sans-serif;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.18);color:white;cursor:pointer;transition:background .2s,border-color .2s,color .2s;">Tous</button>
+        <button onclick="filterMoustache('trail')" id="mq-trail" class="mq-tab" style="padding:.4rem 1.1rem;border-radius:2rem;font-size:.8rem;font-weight:700;font-family:'Exo 2',sans-serif;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.65);cursor:pointer;transition:background .2s,border-color .2s,color .2s;">🏔️ Trail / Game</button>
+        <button onclick="filterMoustache('xroad')" id="mq-xroad" class="mq-tab" style="padding:.4rem 1.1rem;border-radius:2rem;font-size:.8rem;font-weight:700;font-family:'Exo 2',sans-serif;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.65);cursor:pointer;transition:background .2s,border-color .2s,color .2s;">🛤️ Xroad / Allroad</button>
+        <button onclick="filterMoustache('samedi')" id="mq-samedi" class="mq-tab" style="padding:.4rem 1.1rem;border-radius:2rem;font-size:.8rem;font-weight:700;font-family:'Exo 2',sans-serif;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.65);cursor:pointer;transition:background .2s,border-color .2s,color .2s;">🚴 Samedi / Dimanche</button>
+        <button onclick="filterMoustache('cargo')" id="mq-cargo" class="mq-tab" style="padding:.4rem 1.1rem;border-radius:2rem;font-size:.8rem;font-weight:700;font-family:'Exo 2',sans-serif;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.65);cursor:pointer;transition:background .2s,border-color .2s,color .2s;">📦 Cargo / Urbain</button>
       </div>
     </div>
   </div>
