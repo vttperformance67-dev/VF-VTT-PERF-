@@ -207,8 +207,9 @@
   <!-- Google Fonts : font-display=swap évite le texte invisible -->
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Exo+2:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Preload de la première image du hero slider -->
-  <link rel="preload" href="images/IMG_3475.JPEG" as="image">
+  <!-- Preload LCP : première slide hero (background-image) + première service card -->
+  <link rel="preload" href="images/location-famille.png" as="image" fetchpriority="high">
+  <link rel="preload" href="images/IMG_5181.JPEG" as="image" fetchpriority="high">
 
   <style>
     :root {
@@ -353,16 +354,14 @@
     .calendly-btn { background:linear-gradient(135deg,#ff6b35,#e85a25); color:white; font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:700; padding:.875rem 1.5rem; border-radius:3rem; border:none; cursor:pointer; display:flex; align-items:center; gap:.5rem; box-shadow:0 4px 20px rgba(255,107,53,.5); transition:transform .2s, box-shadow .2s; text-decoration:none; }
     .calendly-btn:hover { transform:translateY(-3px) scale(1.03); box-shadow:0 8px 30px rgba(255,107,53,.6); }
 
-    .testi-track { display:flex; gap:1.5rem; width:max-content; animation:testi-scroll 110s linear infinite; will-change:transform; }
+    .testi-track { display:flex; gap:1.5rem; width:max-content; animation:flash-scroll 110s linear infinite; will-change:transform; }
     .testi-track:hover { animation-play-state:paused; }
-    @keyframes testi-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-    .histoire-gallery-track { display:flex; gap:1rem; width:max-content; animation:histoire-scroll 60s linear infinite; will-change:transform; }
+    .histoire-gallery-track { display:flex; gap:1rem; width:max-content; animation:flash-scroll 60s linear infinite; will-change:transform; }
     .histoire-gallery-track:hover { animation-play-state:paused; }
-    @keyframes histoire-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
     .histoire-gallery-img { height:220px; width:300px; object-fit:cover; border-radius:1rem; flex-shrink:0; }
 
-    .location-banner-track { display:flex; gap:1.25rem; width:max-content; animation:histoire-scroll 40s linear infinite; will-change:transform; }
+    .location-banner-track { display:flex; gap:1.25rem; width:max-content; animation:flash-scroll 40s linear infinite; will-change:transform; }
     .location-banner-track:hover { animation-play-state:paused; }
     .location-banner-item { position:relative; height:280px; width:460px; flex-shrink:0; border-radius:1.25rem; overflow:hidden; }
     .location-banner-img { height:100%; width:100%; object-fit:cover; border-radius:1.25rem; }
@@ -561,7 +560,6 @@
 
     /* ── SKELETON LOADING ─────────────────────────────────── */
     .skeleton { background:linear-gradient(90deg,rgba(255,255,255,.04) 0%,rgba(255,255,255,.08) 50%,rgba(255,255,255,.04) 100%); background-size:200% 100%; animation:skeleton-shine 1.5s infinite; border-radius:.5rem; }
-    @keyframes skeleton-shine { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
     .skeleton-card { background:var(--surface); border:1px solid rgba(255,255,255,.06); border-radius:1.25rem; overflow:hidden; }
     .skeleton-img { height:220px; border-radius:0; }
     .skeleton-line { display:block; }
