@@ -779,8 +779,9 @@
     }
 
     /* ── Catalogue blur effect ── */
-    .catalogue-blur-content { filter:blur(5px); pointer-events:none; }
-    .maintenance-overlay { position:fixed; top:0; left:0; right:0; bottom:0; z-index:999; display:flex; flex-direction:column; align-items:center; justify-content:center; background:rgba(8,14,26,.88); backdrop-filter:blur(3px); width:100vw; height:100vh; animation:maintenance-fade-in .4s ease-out; }
+    #sec-catalogue { position:relative; }
+    #sec-catalogue > *:not(.maintenance-overlay) { filter:blur(5px); pointer-events:none; }
+    .maintenance-overlay { position:absolute; inset:0; min-height:100vh; z-index:999; display:flex; flex-direction:column; align-items:center; justify-content:center; background:rgba(8,14,26,.88); backdrop-filter:blur(3px); animation:maintenance-fade-in .4s ease-out; }
     @keyframes maintenance-fade-in { from{opacity:0} to{opacity:1} }
     .maintenance-message { background:var(--card); border:1.5px solid rgba(255,107,53,.4); border-radius:1.5rem; padding:2.5rem 2rem; text-align:center; max-width:520px; box-shadow:0 20px 60px rgba(255,107,53,.2); flex-shrink:0; }
     .maintenance-message h2 { font-size:1.75rem; font-weight:700; color:var(--orange); margin-bottom:.75rem; font-family:'Rajdhani',sans-serif; }
@@ -1046,9 +1047,6 @@
 <button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Retour en haut">
   <i data-lucide="chevron-up" class="w-5 h-5"></i>
 </button>
-
-<!-- CATALOGUE BLUR WRAPPER -->
-<div class="catalogue-blur-content">
 
 <!-- ════════════════════ ACCUEIL ════════════════════ -->
 <div id="sec-accueil">
@@ -1597,6 +1595,13 @@
 
 <!-- ════════════════════ CATALOGUE ════════════════════ -->
 <div id="sec-catalogue" class="section-hidden">
+<!-- MAINTENANCE OVERLAY -->
+<div class="maintenance-overlay">
+  <div class="maintenance-message">
+    <h2>🚧 Mise à jour en cours</h2>
+    <p>Le catalogue des produits est actuellement en maintenance et sera mis à jour très bientôt. Nous vous remercions de votre patience !</p>
+  </div>
+</div>
   <section class="py-20 px-4">
     <div class="max-w-7xl mx-auto">
       <nav aria-label="breadcrumb" class="mb-6">
@@ -7382,15 +7387,6 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 </script>
 
-</div><!-- END catalogue-blur-content -->
-
-<!-- MAINTENANCE OVERLAY -->
-<div class="maintenance-overlay">
-  <div class="maintenance-message">
-    <h2>🚧 Mise à jour en cours</h2>
-    <p>Le catalogue des produits est actuellement en maintenance et sera mise à jour très bientôt. Nous vous remercions de votre patience !</p>
-  </div>
-</div>
 
 </body>
 </html>
