@@ -515,6 +515,8 @@
     .faq-item.open { border-color:rgba(255,107,53,.3); }
     .faq-q { display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:1.1rem 1.25rem; cursor:pointer; background:rgba(255,255,255,.03); transition:background .2s; }
     .faq-q:hover { background:rgba(255,255,255,.05); }
+    .faq-q:focus-visible { outline:2px solid var(--orange); outline-offset:-2px; border-radius:inherit; }
+    [role="button"]:focus-visible { outline:2px solid var(--orange); outline-offset:2px; }
     .faq-icon { width:22px; height:22px; border-radius:50%; background:rgba(255,107,53,.12); border:1px solid rgba(255,107,53,.25); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:transform .3s, background .2s; }
     .faq-item.open .faq-icon { transform:rotate(45deg); background:rgba(255,107,53,.25); }
     .faq-a { max-height:0; overflow:hidden; transition:max-height .4s ease, padding .3s; padding:0 1.25rem; }
@@ -2202,28 +2204,28 @@
         <p class="text-gray-400 text-sm">Photos prises avec nos vélos de location — en forêt, sur les sentiers, en montagne</p>
       </div>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3" data-aos="fade-up">
-        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" onclick="setCat('vttae');showSection('catalogue')" title="SUNN Charger — voir le catalogue">
+        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" tabindex="0" role="button" onclick="setCat('vttae');showSection('catalogue')" title="SUNN Charger — voir le catalogue">
           <img src="images/sunn-charger-mountain.jpg" alt="SUNN Charger en montagne" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
         </div>
-        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" onclick="setBrand('SUNN');showSection('catalogue')" title="SUNN One en forêt">
+        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" tabindex="0" role="button" onclick="setBrand('SUNN');showSection('catalogue')" title="SUNN One en forêt">
           <img src="images/sunn-one-forest.jpg" alt="SUNN One en forêt" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
         </div>
-        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" onclick="setBrand('SUNN');showSection('catalogue')" title="SUNN Kern trail">
+        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" tabindex="0" role="button" onclick="setBrand('SUNN');showSection('catalogue')" title="SUNN Kern trail">
           <img src="images/sunn-kern-trail1.jpg" alt="SUNN Kern trail" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
         </div>
-        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" onclick="setBrand('SUNN');showSection('catalogue')" title="SUNN Radical action">
+        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" tabindex="0" role="button" onclick="setBrand('SUNN');showSection('catalogue')" title="SUNN Radical action">
           <img src="images/sunn-radical-trail1.jpg" alt="SUNN Radical en action" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
         </div>
-        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" onclick="showSection('moustache')" title="Moustache Game en trail">
+        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" tabindex="0" role="button" onclick="showSection('moustache')" title="Moustache Game en trail">
           <img src="images/moustache-game-150-action1.jpg" alt="Moustache Game trail" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
         </div>
-        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" onclick="showSection('moustache')" title="Moustache Xroad allroad">
+        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" tabindex="0" role="button" onclick="showSection('moustache')" title="Moustache Xroad allroad">
           <img src="images/moustache-xroad-action.jpg" alt="Moustache Xroad allroad" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
         </div>
-        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" onclick="setBrand('SUNN');showSection('catalogue')" title="SUNN Venture gravel">
+        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" tabindex="0" role="button" onclick="setBrand('SUNN');showSection('catalogue')" title="SUNN Venture gravel">
           <img src="images/sunn-venture-gravel.jpg" alt="SUNN Venture gravel route" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
         </div>
-        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" onclick="showSection('moustache')" title="Moustache Trail 150.2 hiver">
+        <div class="rounded-xl overflow-hidden cursor-pointer" style="aspect-ratio:4/3;" tabindex="0" role="button" onclick="showSection('moustache')" title="Moustache Trail 150.2 hiver">
           <img src="images/moustache-trail-action.jpg" alt="Moustache Trail toutes saisons" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
         </div>
       </div>
@@ -6500,11 +6502,11 @@ function initVitrine() {
 function toggleFaq(el) {
   const item = el.closest('.faq-item');
   const isOpen = item.classList.contains('open');
-  // Fermer tous les items du même groupe
   item.closest('#faq-list').querySelectorAll('.faq-item.open').forEach(function(i) {
     i.classList.remove('open');
+    i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
   });
-  if (!isOpen) item.classList.add('open');
+  if (!isOpen) { item.classList.add('open'); el.setAttribute('aria-expanded', 'true'); }
 }
 
 function filterFaq(cat) {
@@ -7296,6 +7298,24 @@ document.addEventListener('DOMContentLoaded', () => {
   if (defaultActive) defaultActive.classList.add('active');
   // Render recently viewed on load
   renderRecentlyViewed();
+  // FAQ keyboard accessibility
+  document.querySelectorAll('.faq-q').forEach(function(q) {
+    q.setAttribute('tabindex', '0');
+    q.setAttribute('role', 'button');
+    q.setAttribute('aria-expanded', 'false');
+    q.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFaq(q); }
+    });
+  });
+  // Gallery image cards keyboard access
+  document.querySelectorAll('[role="button"][onclick]').forEach(function(el) {
+    if (el.tagName !== 'BUTTON' && !el.dataset.kbinit) {
+      el.dataset.kbinit = '1';
+      el.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+      });
+    }
+  });
   // Support navigation depuis product.html via hash
   const h = location.hash.replace('#','');
   const valid = ['accueil','catalogue','location','atelier','suspensions','peinture','contact','histoire','vitrine','faq','blog','reprise','tarifs'];
