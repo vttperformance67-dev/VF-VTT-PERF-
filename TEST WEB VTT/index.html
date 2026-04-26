@@ -229,9 +229,9 @@
     ::-webkit-scrollbar-track { background:var(--bg); }
     ::-webkit-scrollbar-thumb { background:var(--blue); border-radius:3px; }
 
-    .flash-track        { display:flex; width:max-content; animation:flash-scroll 35s linear infinite; }
-    .flash-track-slow   { display:flex; width:max-content; animation:flash-scroll 55s linear infinite; }
-    .flash-track-rev    { display:flex; width:max-content; animation:flash-scroll-rev 45s linear infinite; }
+    .flash-track        { display:flex; width:max-content; animation:flash-scroll 35s linear infinite; will-change:transform; }
+    .flash-track-slow   { display:flex; width:max-content; animation:flash-scroll 55s linear infinite; will-change:transform; }
+    .flash-track-rev    { display:flex; width:max-content; animation:flash-scroll-rev 45s linear infinite; will-change:transform; }
     @keyframes flash-scroll     { from{transform:translateX(0)} to{transform:translateX(-50%)} }
     @keyframes flash-scroll-rev { from{transform:translateX(-50%)} to{transform:translateX(0)} }
     .flash-track:hover,.flash-track-slow:hover,.flash-track-rev:hover { animation-play-state:paused; }
@@ -260,15 +260,15 @@
     .hero-bg { background:linear-gradient(135deg,#080e1a 0%,#0d1f3c 50%,#0a1628 100%); position:relative; overflow:hidden; }
     .hero-bg::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 50% at 20% 60%,rgba(255,107,53,.08) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 80% 30%,rgba(59,130,246,.1) 0%,transparent 60%); }
 
-    .btn-orange { background:linear-gradient(135deg,#ff6b35,#e85a25); color:white; font-weight:600; border-radius:.75rem; transition:all .3s; padding:.75rem 1.75rem; display:inline-flex; align-items:center; gap:.5rem; border:none; cursor:pointer; text-decoration:none; }
+    .btn-orange { background:linear-gradient(135deg,#ff6b35,#e85a25); color:white; font-weight:600; border-radius:.75rem; transition:transform .2s, box-shadow .2s; padding:.75rem 1.75rem; display:inline-flex; align-items:center; gap:.5rem; border:none; cursor:pointer; text-decoration:none; }
     .btn-orange:hover { transform:translateY(-2px); box-shadow:0 12px 30px rgba(255,107,53,.4); }
-    .btn-outline { border:2px solid rgba(255,255,255,.2); color:white; font-weight:600; border-radius:.75rem; transition:all .3s; padding:.75rem 1.75rem; display:inline-flex; align-items:center; gap:.5rem; background:transparent; cursor:pointer; text-decoration:none; }
+    .btn-outline { border:2px solid rgba(255,255,255,.2); color:white; font-weight:600; border-radius:.75rem; transition:transform .2s, border-color .2s, color .2s; padding:.75rem 1.75rem; display:inline-flex; align-items:center; gap:.5rem; background:transparent; cursor:pointer; text-decoration:none; }
     .btn-outline:hover { border-color:var(--orange); color:var(--orange); transform:translateY(-2px); }
 
-    .card { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; transition:all .3s; }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; transition:transform .3s, box-shadow .3s, border-color .3s; }
     .card:hover { border-color:rgba(255,107,53,.3); transform:translateY(-4px); box-shadow:0 16px 48px rgba(0,0,0,.3); }
 
-    .bike-card { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; overflow:hidden; transition:all .35s cubic-bezier(.4,0,.2,1); cursor:pointer; }
+    .bike-card { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; overflow:hidden; transition:transform .35s cubic-bezier(.4,0,.2,1), box-shadow .35s cubic-bezier(.4,0,.2,1), border-color .25s; cursor:pointer; }
     .bike-card:hover { border-color:rgba(255,107,53,.4); transform:translateY(-6px); box-shadow:0 20px 50px rgba(0,0,0,.4); }
 
     .bike-img-wrap { height:220px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
@@ -306,7 +306,7 @@
     .section-enter { animation:sectionFadeIn .35s ease both; }
     @keyframes sectionFadeIn { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
 
-    .filter-btn { padding:.4rem 1rem; border-radius:2rem; font-size:.85rem; font-weight:500; border:1px solid rgba(255,255,255,.1); background:transparent; color:var(--muted); cursor:pointer; transition:all .2s; white-space:nowrap; }
+    .filter-btn { padding:.4rem 1rem; border-radius:2rem; font-size:.85rem; font-weight:500; border:1px solid rgba(255,255,255,.1); background:transparent; color:var(--muted); cursor:pointer; transition:background .2s, border-color .2s, color .2s; white-space:nowrap; }
     .filter-btn:hover,.filter-btn.active { background:var(--orange); border-color:var(--orange); color:white; }
     .filter-brand.active { background:var(--brand); border-color:var(--brand); color:#0a1628; }
 
@@ -350,20 +350,19 @@
     #toast-container .toast { background:var(--card); border:1px solid rgba(255,255,255,.1); border-radius:.75rem; padding:1rem 1.5rem; display:flex; align-items:center; gap:.75rem; animation:toast-in .3s ease; max-width:340px; pointer-events:all; }
     @keyframes toast-in { from{transform:translateX(120%);opacity:0} to{transform:translateX(0);opacity:1} }
 
-    .calendly-btn { background:linear-gradient(135deg,#ff6b35,#e85a25); color:white; font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:700; padding:.875rem 1.5rem; border-radius:3rem; border:none; cursor:pointer; display:flex; align-items:center; gap:.5rem; box-shadow:0 4px 20px rgba(255,107,53,.5); transition:all .3s; animation:pulse-btn 2.5s ease infinite; text-decoration:none; }
+    .calendly-btn { background:linear-gradient(135deg,#ff6b35,#e85a25); color:white; font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:700; padding:.875rem 1.5rem; border-radius:3rem; border:none; cursor:pointer; display:flex; align-items:center; gap:.5rem; box-shadow:0 4px 20px rgba(255,107,53,.5); transition:transform .2s, box-shadow .2s; text-decoration:none; }
     .calendly-btn:hover { transform:translateY(-3px) scale(1.03); box-shadow:0 8px 30px rgba(255,107,53,.6); }
-    @keyframes pulse-btn { 0%,100%{box-shadow:0 4px 20px rgba(255,107,53,.5)} 50%{box-shadow:0 4px 30px rgba(255,107,53,.8),0 0 0 8px rgba(255,107,53,.1)} }
 
-    .testi-track { display:flex; gap:1.5rem; width:max-content; animation:testi-scroll 110s linear infinite; }
+    .testi-track { display:flex; gap:1.5rem; width:max-content; animation:testi-scroll 110s linear infinite; will-change:transform; }
     .testi-track:hover { animation-play-state:paused; }
     @keyframes testi-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-    .histoire-gallery-track { display:flex; gap:1rem; width:max-content; animation:histoire-scroll 60s linear infinite; }
+    .histoire-gallery-track { display:flex; gap:1rem; width:max-content; animation:histoire-scroll 60s linear infinite; will-change:transform; }
     .histoire-gallery-track:hover { animation-play-state:paused; }
     @keyframes histoire-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
     .histoire-gallery-img { height:220px; width:300px; object-fit:cover; border-radius:1rem; flex-shrink:0; }
 
-    .location-banner-track { display:flex; gap:1.25rem; width:max-content; animation:histoire-scroll 40s linear infinite; }
+    .location-banner-track { display:flex; gap:1.25rem; width:max-content; animation:histoire-scroll 40s linear infinite; will-change:transform; }
     .location-banner-track:hover { animation-play-state:paused; }
     .location-banner-item { position:relative; height:280px; width:460px; flex-shrink:0; border-radius:1.25rem; overflow:hidden; }
     .location-banner-img { height:100%; width:100%; object-fit:cover; border-radius:1.25rem; }
@@ -6027,10 +6026,33 @@ function renderReviews() {
   timer = setInterval(function(){ go(cur + 1); }, 5500);
 })();
 
-// ── SCROLL ────────────────────────────────────────────────────────────
-window.addEventListener('scroll', () => {
-  document.getElementById('back-top').classList.toggle('visible', window.scrollY > 400);
-});
+// ── SCROLL (consolidated throttled handler) ───────────────────────────
+(function() {
+  var ticking = false;
+  var bar = document.getElementById('scroll-progress');
+  var backTop = document.getElementById('back-top');
+  function handleScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function() {
+      var s = document.documentElement.scrollTop || document.body.scrollTop;
+      if (backTop) backTop.classList.toggle('visible', s > 400);
+      if (bar) {
+        var h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        bar.style.width = (h > 0 ? (s / h * 100) : 0) + '%';
+      }
+      if (!counterTriggered) {
+        var stats = document.getElementById('hero-stats');
+        if (stats) {
+          var rect = stats.getBoundingClientRect();
+          if (rect.top < window.innerHeight - 80) { counterTriggered = true; animateHeroCounters(); }
+        }
+      }
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', handleScroll, { passive: true });
+})();
 
 // ── SENTIERS & BALADES ────────────────────────────────────────────────
 const TRAILS = [
@@ -6340,6 +6362,11 @@ function vitTogglePause() {
 }
 
 function vitFrame() {
+  var vitSec = document.getElementById('sec-vitrine');
+  if (vitSec && vitSec.classList.contains('section-hidden')) {
+    vit.raf = requestAnimationFrame(vitFrame);
+    return;
+  }
   if (!vit.paused) {
     vit.angle = (vit.angle + vit.speed) % 360;
     if (vit.imgs.length > 1) {
@@ -6419,7 +6446,13 @@ function vitInitParticles() {
       col: Math.random() > .5 ? '0,255,200' : '255,107,53'
     };
   });
+  var particleRafId;
   (function tick() {
+    var vitSec = document.getElementById('sec-vitrine');
+    if (vitSec && vitSec.classList.contains('section-hidden')) {
+      particleRafId = requestAnimationFrame(tick);
+      return;
+    }
     ctx.clearRect(0, 0, size, size);
     pts.forEach(function(p) {
       p.x = (p.x + p.vx + size) % size;
@@ -6827,16 +6860,7 @@ function closeGuide() {
   if (m) m.classList.remove('open');
 }
 
-// ── PROGRESS BAR ──────────────────────────────────────────────────────
-(function() {
-  var bar = document.getElementById('scroll-progress');
-  if (!bar) return;
-  window.addEventListener('scroll', function() {
-    var s = document.documentElement.scrollTop || document.body.scrollTop;
-    var h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    bar.style.width = (h > 0 ? (s / h * 100) : 0) + '%';
-  }, { passive: true });
-})();
+// ── PROGRESS BAR handled in consolidated scroll handler above ──────────
 
 // ── COUNTDOWN PROMO ────────────────────────────────────────────────────
 function initCountdown() {
@@ -7012,18 +7036,8 @@ function animateHeroCounters() {
     }, 16);
   });
 }
-// Trigger counter on scroll into view
+// Counter trigger handled in consolidated scroll handler above
 var counterTriggered = false;
-window.addEventListener('scroll', function() {
-  if (counterTriggered) return;
-  var stats = document.getElementById('hero-stats');
-  if (!stats) return;
-  var rect = stats.getBoundingClientRect();
-  if (rect.top < window.innerHeight - 80) {
-    counterTriggered = true;
-    animateHeroCounters();
-  }
-});
 
 // ── RIPPLE EFFECT ─────────────────────────────────────────────────────
 document.addEventListener('click', function(e) {
