@@ -6233,7 +6233,8 @@ const vit = {
   bikeIdx:0, imgIdx:0, angle:0, speed:0.4,
   paused:false, dragging:false, dragStartX:0, dragStartAngle:0,
   raf:null, imgs:[], filteredBikes:[], filterBrand:'all',
-  lastSwapZone:-1, _init:false
+  lastSwapZone:-1, _init:false,
+  elStage:null, elAngleVal:null, elImg:null, elSec:null
 };
 
 function vitGetImgs(bike) {
@@ -6348,9 +6349,9 @@ function vitSelectBike(idx) {
   vitUpdateDots();
 
   // Highlight thumb
-  document.querySelectorAll('.vit-thumb').forEach((t, i) => t.classList.toggle('selected', i === idx));
-  const thumb = document.querySelectorAll('.vit-thumb')[idx];
-  if (thumb) thumb.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+  const thumbs = document.querySelectorAll('.vit-thumb');
+  thumbs.forEach((t, i) => t.classList.toggle('selected', i === idx));
+  if (thumbs[idx]) thumbs[idx].scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
 }
 
 function vitNextBike() { vitSelectBike((vit.bikeIdx + 1) % vit.filteredBikes.length); }
@@ -6363,7 +6364,7 @@ function vitTogglePause() {
 }
 
 function vitFrame() {
-  var vitSec = document.getElementById('sec-vitrine');
+  var vitSec = vit.elSec || document.getElementById('sec-vitrine');
   if (vitSec && vitSec.classList.contains('section-hidden')) {
     vit.raf = requestAnimationFrame(vitFrame);
     return;
@@ -6376,15 +6377,13 @@ function vitFrame() {
       if (zone !== vit.lastSwapZone) {
         vit.lastSwapZone = zone;
         vit.imgIdx = zone;
-        const img = document.getElementById('vit-img');
+        const img = vit.elImg || document.getElementById('vit-img');
         if (img) img.src = vit.imgs[zone];
         vitUpdateDots();
       }
     }
-    const stage = document.getElementById('vit-stage');
-    if (stage) stage.style.transform = 'rotateY(' + vit.angle + 'deg)';
-    const av = document.getElementById('vit-angle-val');
-    if (av) av.textContent = Math.round(vit.angle) + '°';
+    if (vit.elStage) vit.elStage.style.transform = 'rotateY(' + vit.angle + 'deg)';
+    if (vit.elAngleVal) vit.elAngleVal.textContent = Math.round(vit.angle) + '°';
   }
   vit.raf = requestAnimationFrame(vitFrame);
 }
@@ -6392,11 +6391,13 @@ function vitFrame() {
 function vitInitDrag() {
   const wrap = document.getElementById('vit-viewer-wrap');
   if (!wrap) return;
+  const vitPlayIcon = document.getElementById('vit-play-icon');
+  const vitPlayText = document.getElementById('vit-play-text');
   const onDown = function(e) {
     vit.dragging = true;
     vit.dragStartX = e.touches ? e.touches[0].clientX : e.clientX;
     vit.dragStartAngle = vit.angle;
-    if (!vit.paused) { vit.paused = true; document.getElementById('vit-play-icon').textContent = '▶'; document.getElementById('vit-play-text').textContent = 'Reprendre'; }
+    if (!vit.paused) { vit.paused = true; if(vitPlayIcon) vitPlayIcon.textContent = '▶'; if(vitPlayText) vitPlayText.textContent = 'Reprendre'; }
   };
   const onMove = function(e) {
     if (!vit.dragging) return;
@@ -6409,15 +6410,12 @@ function vitInitDrag() {
       if (zone !== vit.lastSwapZone) {
         vit.lastSwapZone = zone;
         vit.imgIdx = zone;
-        const img = document.getElementById('vit-img');
-        if (img) img.src = vit.imgs[zone];
+        if (vit.elImg) vit.elImg.src = vit.imgs[zone];
         vitUpdateDots();
       }
     }
-    const stage = document.getElementById('vit-stage');
-    if (stage) stage.style.transform = 'rotateY(' + vit.angle + 'deg)';
-    const av = document.getElementById('vit-angle-val');
-    if (av) av.textContent = Math.round(vit.angle) + '°';
+    if (vit.elStage) vit.elStage.style.transform = 'rotateY(' + vit.angle + 'deg)';
+    if (vit.elAngleVal) vit.elAngleVal.textContent = Math.round(vit.angle) + '°';
   };
   const onUp = function() { vit.dragging = false; };
   wrap.addEventListener('mousedown', onDown);
@@ -6472,6 +6470,10 @@ function vitInitParticles() {
 }
 
 function initVitrine() {
+  vit.elStage = document.getElementById('vit-stage');
+  vit.elAngleVal = document.getElementById('vit-angle-val');
+  vit.elImg = document.getElementById('vit-img');
+  vit.elSec = document.getElementById('sec-vitrine');
   vit.filteredBikes = BIKES.filter(function(b) { return vitGetImgs(b); });
   if (!vit.filteredBikes.length) vit.filteredBikes = BIKES.slice();
   renderVitSelector();
