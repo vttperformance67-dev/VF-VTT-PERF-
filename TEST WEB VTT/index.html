@@ -5144,11 +5144,7 @@ function _doRenderCatalog(searchQ, priceMax, sortVal) {
     const deliveryChip = bike.price >= 600
       ? '<span style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);color:#4ade80;font-size:.6rem;font-weight:700;padding:.12rem .45rem;border-radius:.35rem;letter-spacing:.02em;">🚚 Livraison offerte</span>'
       : '';
-    const repriseBonus = bike.brand === 'Moustache' && bike.price >= 3000 && !bike.oldprice
-      ? (bike.price >= 5000 ? 500 : bike.price >= 4000 ? 400 : 300) : 0;
-    const repriseBadge = repriseBonus > 0
-      ? '<span style="background:linear-gradient(135deg,rgba(236,72,153,.14),rgba(139,92,246,.1));border:1px solid rgba(236,72,153,.35);color:#f9a8d4;font-size:.6rem;font-weight:700;padding:.12rem .45rem;border-radius:.35rem;">🌸 –'+repriseBonus+'€ reprise</span>'
-      : '';
+
     const aggSizes = [...new Set(allSe.flatMap(function(s){ return s.sizes||[]; }))];
     const aggColors = [...new Set(allSe.map(function(s){ return s.color; }).filter(Boolean))];
     const sizesLine = qty > 0 && (aggSizes.length || aggColors.length)
@@ -5174,7 +5170,7 @@ function _doRenderCatalog(searchQ, priceMax, sortVal) {
       +imgHtml+dots
       +coupCoeurBadge
       +'<div class="absolute top-3 left-3 flex gap-1.5 flex-wrap">'
-      +'<span class="badge '+(bb||'')+'" '+brandStyle+'>'+bike.brand+'</span>'+tagHtml+limitedBadge+availBadge+newBadge+deliveryChip+repriseBadge
+      +'<span class="badge '+(bb||'')+'" '+brandStyle+'>'+bike.brand+'</span>'+tagHtml+limitedBadge+availBadge+newBadge+deliveryChip
       +'</div>'
       +'<div class="absolute top-3 right-3"><span class="badge '+(BADGE_CAT[bike.cat]||'badge-vtt')+'">'+(bike.type||bike.cat.toUpperCase())+'</span></div>'
       +'<a href="'+produitUrl+'" class="absolute bottom-3 right-3 flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold" style="background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.2);color:white;backdrop-filter:blur(6px);text-decoration:none;" onclick="event.stopPropagation()">'
