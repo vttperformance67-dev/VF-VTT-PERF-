@@ -4707,20 +4707,20 @@ const BIKE_DETAILS = {
 };
 
 const STOCK = [
-  {brand:'Moustache',name:'Samedi 29 Trail 3',qty:1},                              // Moustache non identifié → Trail 3
-  {brand:'Moustache',name:'Samedi 29 Trail 5',qty:1},                              // Bosch unité 1
-  {brand:'Moustache',name:'Samedi 29 Trail 7',qty:1},                              // Bosch unité 2
-  {brand:'Moustache',name:'Samedi 29 Trail 9',qty:0,avail:'Sur commande'},
-  {brand:'Moustache',name:'Game 140.8',qty:0,avail:'Sur commande'},
-  {brand:'Moustache',name:'Game 150.8',qty:0,avail:'Sur commande'},
-  {brand:'Moustache',name:'Game 160.8',qty:0,avail:'Sur commande'},
+  {brand:'Moustache',name:'Samedi 29 Trail 3',qty:0},                              // Moustache non identifié → Trail 3
+  {brand:'Moustache',name:'Samedi 29 Trail 5',qty:0},                              // Bosch unité 1
+  {brand:'Moustache',name:'Samedi 29 Trail 7',qty:0},                              // Bosch unité 2
+  {brand:'Moustache',name:'Samedi 29 Trail 9',qty:0},
+  {brand:'Moustache',name:'Game 140.8',qty:0},
+  {brand:'Moustache',name:'Game 150.8',qty:0},
+  {brand:'Moustache',name:'Game 160.8',qty:0},
   {brand:'Moustache',name:'Samedi 27 Xroad',qty:0},
   {brand:'Moustache',name:'Samedi 27 Xroad 3',qty:0},
   {brand:'Moustache',name:'Samedi 27 Xroad 5',qty:0},
   {brand:'Moustache',name:'Samedi 28.1',qty:0},
   {brand:'Moustache',name:'Samedi 28.3',qty:0},
   {brand:'Moustache',name:'Dimanche 28',qty:0},
-  {brand:'Moustache',name:'Lundi 20 Cargo',qty:0,avail:'Sur commande'},
+  {brand:'Moustache',name:'Lundi 20 Cargo',qty:0},
   // ── Moustache 2026 arrivées programmées ────────────────────────────
   {brand:'Moustache',name:'Xroad 4',qty:0,color:'Deep Red Metal',sizes:['M'],bat:'600Wh',avail:'Livraison 03/2026'},
   {brand:'Moustache',name:'Xroad 2',qty:0,color:'Titanium',sizes:['S'],bat:'600Wh',avail:'Livraison 03/2026'},
@@ -5686,9 +5686,9 @@ function _doRenderCatalog(searchQ, priceMax, sortVal) {
     const qty = allSe.reduce(function(sum,s){ return sum + (s.qty||0); }, 0) || (se ? se.qty : null);
     const limited = se && se.limited;
     const avail = bike.avail || (allSe.find(function(s){ return s.avail; }) || {}).avail;
-    const stockCls = avail ? 's-avail' : (qty===null ? '' : qty===0 ? 's-low' : limited ? 's-limited' : 's-high');
-    const dotStyle = qty===null && !avail ? ' style="background:#6b7280"' : '';
-    const stockTxt = avail ? ('Dispo. '+avail) : (qty===null ? 'Sur commande' : qty===0 ? 'Indisponible' : limited ? 'Stock limité' : 'En stock');
+    const stockCls = avail ? 's-avail' : (qty > 0 ? (limited ? 's-limited' : 's-high') : '');
+    const dotStyle = (qty <= 0 || qty === null) && !avail ? ' style="background:#6b7280"' : '';
+    const stockTxt = avail ? ('Dispo. '+avail) : (qty > 0 ? (limited ? 'Stock limité' : 'En stock · Retrait 2h') : 'Livré en 10 jours · Retrait 4h en magasin');
     const stockDot = '<span class="stock-dot '+stockCls+'"'+dotStyle+'></span>'+stockTxt;
     const limitedBadge = limited ? '<span class="badge badge-limited" style="font-size:.6rem;padding:.15rem .5rem">STOCK LIMITÉ</span>' : '';
     const availBadge = avail ? '<span class="badge badge-avail" style="font-size:.6rem;padding:.15rem .5rem">'+avail+'</span>' : '';
@@ -5773,7 +5773,7 @@ function _doRenderCatalog(searchQ, priceMax, sortVal) {
       +' style="background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.25);color:#ff6b35;"'
       +' onmouseover="this.style.background=\'rgba(255,107,53,.2)\'"'
       +' onmouseout="this.style.background=\'rgba(255,107,53,.1)\'">'
-      +(avail ? 'Précommander' : qty > 0 ? 'Commander' : 'Sur commande')
+      +(avail ? 'Précommander' : qty > 0 ? 'Commander' : 'Commander')
       +'</button>'
       +'</div>'
       +'<div class="flex gap-2 mt-2">'
@@ -6748,7 +6748,7 @@ function openCmpModal() {
           if (spec.key === 'price') val = b.price ? b.price.toLocaleString('fr-FR') + ' €' : 'Prix magasin';
           else if (spec.key === 'avail') {
             var s = STOCK.find(function(st){ return st.brand === b.brand && st.name === b.name; });
-            val = s ? (s.qty === null ? 'Sur commande' : s.qty === 0 ? 'Indisponible' : s.limited ? 'Stock limité' : 'En stock') : (b.avail || 'Voir magasin');
+            val = s ? (s.qty > 0 ? (s.limited ? 'Stock limité' : 'En stock') : 'Livré en 10 j · Retrait 4h') : (b.avail || 'Voir magasin');
           }
           else val = b[spec.key] || '—';
           return '<div class="cmp-cell text-center">' + val + '</div>';
