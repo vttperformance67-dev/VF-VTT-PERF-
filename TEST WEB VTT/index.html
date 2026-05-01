@@ -317,6 +317,27 @@
     #brand-filter-details summary::-webkit-details-marker { display:none; }
     #brand-filter-details summary::marker { display:none; }
 
+    /* ── PANIER ─────────────────────────────────────────────────── */
+    #cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:490;backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .3s}
+    #cart-overlay.open{opacity:1;pointer-events:all}
+    #cart-drawer{position:fixed;top:0;right:0;height:100vh;width:min(440px,100vw);background:#0f2341;border-left:1px solid rgba(255,255,255,.1);z-index:495;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden}
+    #cart-drawer.open{transform:translateX(0)}
+    .cart-item{display:flex;align-items:center;gap:.75rem;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.06)}
+    .cart-item-img{width:56px;height:56px;border-radius:.5rem;object-fit:cover;background:rgba(255,255,255,.05);flex-shrink:0}
+    .cart-qty-btn{width:26px;height:26px;border-radius:.375rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);color:white;font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+    .cart-qty-btn:hover{background:rgba(255,255,255,.18)}
+    #cart-checkout-btn{width:100%;padding:.875rem;border-radius:.75rem;background:linear-gradient(135deg,#2563eb,#0ea5e9);border:none;color:white;font-weight:700;font-size:1rem;cursor:pointer;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:.5rem}
+    #cart-checkout-btn:hover{opacity:.88}
+    /* ── CHECKOUT MODAL ──────────────────────────────────────────── */
+    #checkout-modal{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:600;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px)}
+    #checkout-modal.open{opacity:1;pointer-events:all}
+    #checkout-modal .co-box{background:#0f2341;border-radius:1.25rem 1.25rem 0 0;width:min(620px,100%);max-height:92vh;overflow-y:auto;padding:1.75rem 1.5rem 2.5rem;border-top:1px solid rgba(255,255,255,.1);transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+    #checkout-modal.open .co-box{transform:translateY(0)}
+    .delivery-opt{display:flex;align-items:center;gap:.75rem;padding:.875rem 1rem;border-radius:.75rem;border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);cursor:pointer;transition:border-color .2s,background .2s;width:100%}
+    .delivery-opt.selected{border-color:#3b82f6;background:rgba(59,130,246,.08)}
+    .delivery-opt input[type=radio]{accent-color:#3b82f6;flex-shrink:0}
+    .rib-box{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:.75rem;padding:1rem 1.25rem}
+
     .prix-table { border-collapse:collapse; width:100%; }
     .prix-table th { background:rgba(255,107,53,.15); color:var(--orange); font-family:'Rajdhani',sans-serif; font-size:.85rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:.9rem .6rem; border:1px solid rgba(255,255,255,.06); text-align:center; }
     .prix-table td { padding:.7rem .6rem; border:1px solid rgba(255,255,255,.06); text-align:center; font-size:.85rem; vertical-align:middle; }
@@ -926,6 +947,10 @@
         <a href="https://calendly.com/vttperformance67/rendez-vous-presentation-ou-test-velo-clone" target="_blank" rel="noopener" class="hidden sm:flex btn-orange text-sm py-2 px-4">
           <i data-lucide="calendar" class="w-4 h-4"></i>Prendre RDV
         </a>
+        <button onclick="openCart()" id="nav-cart-btn" aria-label="Panier" class="relative p-2 rounded-lg hover:bg-white/10 transition-colors text-gray-300 hover:text-white">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span id="cart-badge" style="display:none;position:absolute;top:2px;right:2px;background:#ff6b35;color:white;border-radius:50%;width:16px;height:16px;font-size:10px;font-weight:700;text-align:center;line-height:16px">0</span>
+        </button>
         <button id="menu-btn" onclick="toggleMenu()" class="lg:hidden p-2 rounded-lg hover:bg-white/10 transition-colors" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
@@ -5745,12 +5770,12 @@ function _doRenderCatalog(searchQ, priceMax, sortVal) {
       +sizesLine
       +'<div class="grid grid-cols-2 gap-2 mt-3">'
       +'<a href="'+produitUrl+'" class="py-2 rounded-xl text-sm font-semibold text-center transition-colors" style="background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.25);color:#93c5fd;text-decoration:none;" onclick="event.stopPropagation();trackView('+JSON.stringify(bike.brand)+','+JSON.stringify(bike.name)+')">Voir la fiche</a>'
-      +'<button onclick="openModal('+JSON.stringify(bike.brand+' '+bike.name)+')"'
-      +' class="py-2 rounded-xl text-sm font-semibold transition-colors"'
+      +'<button onclick="event.stopPropagation();addToCart('+JSON.stringify(bike.brand)+','+JSON.stringify(bike.name)+','+(bike.price||0)+','+JSON.stringify((BIKE_IMGS[bike.brand+'_'+bike.name]||[])[0]||'')+')"'
+      +' class="py-2 rounded-xl text-sm font-semibold transition-colors flex items-center justify-center gap-1"'
       +' style="background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.25);color:#ff6b35;"'
       +' onmouseover="this.style.background=\'rgba(255,107,53,.2)\'"'
       +' onmouseout="this.style.background=\'rgba(255,107,53,.1)\'">'
-      +(avail ? 'Précommander' : qty > 0 ? 'Commander' : 'Commander')
+      +'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>Panier'
       +'</button>'
       +'</div>'
       +'<div class="flex gap-2 mt-2">'
@@ -7429,6 +7454,242 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 8000);
 })();
+
+// ── PANIER ────────────────────────────────────────────────────────────────
+var cart = (function(){try{return JSON.parse(localStorage.getItem('vp_cart')||'[]');}catch(e){return[];}})();
+
+function _saveCart(){try{localStorage.setItem('vp_cart',JSON.stringify(cart));}catch(e){}}
+
+function addToCart(brand,name,price,imgUrl){
+  var ex=cart.find(function(i){return i.brand===brand&&i.name===name;});
+  if(ex){ex.qty++;}else{cart.push({brand:brand,name:name,price:price||0,qty:1,img:imgUrl||''});}
+  _saveCart(); updateCartBadge(); _renderCartItems();
+  openCart();
+  toast('Ajouté au panier !','ok');
+}
+
+function removeFromCart(brand,name){
+  cart=cart.filter(function(i){return!(i.brand===brand&&i.name===name);});
+  _saveCart(); updateCartBadge(); _renderCartItems();
+}
+
+function changeQty(brand,name,delta){
+  var item=cart.find(function(i){return i.brand===brand&&i.name===name;});
+  if(!item)return;
+  item.qty=Math.max(0,item.qty+delta);
+  if(item.qty===0)removeFromCart(brand,name);
+  else{_saveCart();updateCartBadge();_renderCartItems();}
+}
+
+function updateCartBadge(){
+  var n=cart.reduce(function(s,i){return s+i.qty;},0);
+  var b=document.getElementById('cart-badge');
+  if(b){b.textContent=n;b.style.display=n>0?'block':'none';}
+}
+
+function openCart(){
+  _renderCartItems();
+  document.getElementById('cart-overlay').classList.add('open');
+  document.getElementById('cart-drawer').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCart(){
+  document.getElementById('cart-overlay').classList.remove('open');
+  document.getElementById('cart-drawer').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function _renderCartItems(){
+  var list=document.getElementById('cart-items-list');
+  var footer=document.getElementById('cart-footer');
+  var ct=document.getElementById('cart-count-title');
+  if(!list)return;
+  var n=cart.reduce(function(s,i){return s+i.qty;},0);
+  if(ct)ct.textContent=n>0?'('+n+' article'+(n>1?'s':'')+')':'';
+  if(cart.length===0){
+    list.innerHTML='<div style="text-align:center;padding:3rem 1rem;color:#64748b"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin:0 auto 1rem;display:block;opacity:.4"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><p style="font-size:.95rem">Votre panier est vide</p><button onclick="closeCart();setBrand(\'all\');setCat(\'all\');showSection(\'catalogue\')" style="margin-top:1rem;background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.3);color:#ff6b35;padding:.5rem 1.25rem;border-radius:.5rem;cursor:pointer;font-size:.85rem">Voir le catalogue</button></div>';
+    footer.innerHTML='';
+    return;
+  }
+  var tot=cart.reduce(function(s,i){return s+i.price*i.qty;},0);
+  list.innerHTML=cart.map(function(item){
+    var img=item.img?'<img src="'+item.img+'" class="cart-item-img" loading="lazy" alt="'+item.name+'">'
+      :'<div class="cart-item-img" style="display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 0 0-1-1h-1l-3 7h9l-1-4"/><path d="M5.5 17.5l3-7 2 4h5"/></svg></div>';
+    return '<div class="cart-item">'+img+'<div style="flex:1;min-width:0">'
+      +'<div style="font-size:.75rem;color:#94a3b8;font-weight:600">'+item.brand+'</div>'
+      +'<div style="font-size:.9rem;color:white;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+item.name+'</div>'
+      +(item.price>0?'<div style="font-size:.85rem;color:#ff6b35;font-weight:600;margin-top:.1rem">'+(item.price*item.qty).toLocaleString('fr-FR')+' €</div>'
+        :'<div style="font-size:.78rem;color:#64748b;margin-top:.1rem">Prix en magasin</div>')
+      +'</div>'
+      +'<div style="display:flex;align-items:center;gap:.3rem;flex-shrink:0">'
+      +'<button class="cart-qty-btn" onclick="changeQty('+JSON.stringify(item.brand)+','+JSON.stringify(item.name)+',-1)" aria-label="Moins">−</button>'
+      +'<span style="min-width:1.25rem;text-align:center;font-size:.9rem;color:white">'+item.qty+'</span>'
+      +'<button class="cart-qty-btn" onclick="changeQty('+JSON.stringify(item.brand)+','+JSON.stringify(item.name)+',1)" aria-label="Plus">+</button>'
+      +'<button onclick="removeFromCart('+JSON.stringify(item.brand)+','+JSON.stringify(item.name)+')" style="margin-left:.2rem;background:none;border:none;color:#64748b;cursor:pointer;padding:.25rem" aria-label="Supprimer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>'
+      +'</div></div>';
+  }).join('');
+  footer.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">'
+    +'<span style="color:#94a3b8;font-size:.9rem">Total estimé</span>'
+    +(tot>0?'<span style="color:white;font-weight:700;font-size:1.1rem">'+tot.toLocaleString('fr-FR')+' €</span>'
+      :'<span style="color:#64748b;font-size:.85rem">Prix en magasin</span>')
+    +'</div>'
+    +'<button id="cart-checkout-btn" onclick="openCheckout()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>Passer commande</button>'
+    +'<p style="text-align:center;font-size:.75rem;color:#475569;margin-top:.75rem">Paiement par virement · Retrait ou livraison à domicile</p>';
+}
+
+function openCheckout(){
+  var s=document.getElementById('co-summary');
+  if(s){
+    var tot=cart.reduce(function(a,i){return a+i.price*i.qty;},0);
+    s.innerHTML='<div style="font-size:.78rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.6rem">Récapitulatif</div>'
+      +cart.map(function(i){
+        return '<div style="display:flex;justify-content:space-between;align-items:center;padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.05)">'
+          +'<span style="font-size:.9rem;color:white">'+i.brand+' '+i.name+(i.qty>1?' ×'+i.qty:'')+'</span>'
+          +(i.price>0?'<span style="color:#ff6b35;font-weight:600;font-size:.9rem">'+(i.price*i.qty).toLocaleString('fr-FR')+' €</span>'
+            :'<span style="color:#64748b;font-size:.8rem">Devis</span>')+'</div>';
+      }).join('')
+      +(tot>0?'<div style="display:flex;justify-content:space-between;padding:.5rem 0 0"><span style="font-weight:600;color:white">Total</span><span style="font-weight:700;color:#ff6b35">'+tot.toLocaleString('fr-FR')+' €</span></div>':'');
+  }
+  closeCart();
+  document.getElementById('checkout-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCheckout(){
+  document.getElementById('checkout-modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function updateDeliveryUI(){
+  var isLiv=document.querySelector('input[name="co-deliv"]:checked').value==='livraison';
+  var ab=document.getElementById('co-address-block');
+  if(ab)ab.style.display=isLiv?'block':'none';
+  ['co-adresse','co-cp','co-ville'].forEach(function(id){var el=document.getElementById(id);if(el)el.required=isLiv;});
+  document.getElementById('deliv-retrait-lbl').classList.toggle('selected',!isLiv);
+  document.getElementById('deliv-livraison-lbl').classList.toggle('selected',isLiv);
+}
+
+function submitCheckout(e){
+  e.preventDefault();
+  var prenom=document.getElementById('co-prenom').value.trim();
+  var nom=document.getElementById('co-nom').value.trim();
+  var email=document.getElementById('co-email').value.trim();
+  var tel=document.getElementById('co-tel').value.trim();
+  var delivVal=document.querySelector('input[name="co-deliv"]:checked').value;
+  var isLiv=delivVal==='livraison';
+  var adresse=isLiv?(document.getElementById('co-adresse').value.trim()+', '+document.getElementById('co-cp').value.trim()+' '+document.getElementById('co-ville').value.trim()):'';
+  var msg=document.getElementById('co-msg').value.trim();
+  var items=cart.map(function(i){return'• '+i.brand+' '+i.name+(i.qty>1?' (×'+i.qty+')':'')+(i.price>0?' — '+(i.price*i.qty).toLocaleString('fr-FR')+' €':'');}).join('\n');
+  var tot=cart.reduce(function(s,i){return s+i.price*i.qty;},0);
+  var body=[
+    '🚴 NOUVELLE COMMANDE — Vélos Performances',
+    '',
+    '══ ARTICLES ══',
+    items,
+    tot>0?'Total estimé : '+tot.toLocaleString('fr-FR')+' €':'',
+    '',
+    '══ CLIENT ══',
+    'Nom : '+prenom+' '+nom,
+    'Email : '+email,
+    'Tél : '+tel,
+    '',
+    '══ LIVRAISON ══',
+    isLiv?'Livraison à domicile':'Retrait en magasin (Ingwiller)',
+    isLiv&&adresse?'Adresse : '+adresse:'',
+    '',
+    msg?'══ MESSAGE ══\n'+msg:'',
+    '',
+    '══ PAIEMENT ══',
+    'Mode : Virement bancaire',
+    'IBAN : FR76 1470 7500 3534 0215 3481 269',
+    'BIC  : CCBPFRPPMTZ',
+  ].filter(function(l){return l!==undefined;}).join('\n');
+  var subj='Commande — '+(cart.length===1?cart[0].brand+' '+cart[0].name:cart.length+' articles')+' — '+prenom+' '+nom;
+  window.location.href='mailto:vttperformance67@gmail.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+  closeCheckout();
+  cart=[];_saveCart();updateCartBadge();
+  setTimeout(function(){toast('Commande envoyée ! Vous recevrez une confirmation sous 24h.','ok');},500);
+}
+
+// init badge on load + auto-open si retour depuis fiche produit
+updateCartBadge();
+if (localStorage.getItem('vp_cart_open')) {
+  localStorage.removeItem('vp_cart_open');
+  setTimeout(openCart, 400);
+}
 </script>
+
+<!-- TIROIR PANIER -->
+<div id="cart-overlay" onclick="closeCart()"></div>
+<div id="cart-drawer" role="dialog" aria-label="Panier">
+  <div style="padding:1.1rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+    <h2 style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.15rem;color:white;display:flex;align-items:center;gap:.5rem">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      Mon panier&nbsp;<span id="cart-count-title" style="font-size:.82rem;color:#94a3b8;font-weight:400"></span>
+    </h2>
+    <button onclick="closeCart()" style="background:none;border:none;color:#94a3b8;cursor:pointer;padding:.4rem;border-radius:.5rem" aria-label="Fermer le panier">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div id="cart-items-list" style="flex:1;overflow-y:auto;padding:0 1.25rem"></div>
+  <div id="cart-footer" style="padding:1.25rem;border-top:1px solid rgba(255,255,255,.08);flex-shrink:0"></div>
+</div>
+
+<!-- MODAL CHECKOUT -->
+<div id="checkout-modal" onclick="if(event.target===this)closeCheckout()" role="dialog" aria-modal="true" aria-label="Finaliser la commande">
+  <div class="co-box">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
+      <h2 style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.4rem;color:white">Finaliser la commande</h2>
+      <button onclick="closeCheckout()" style="background:none;border:none;color:#94a3b8;cursor:pointer;padding:.4rem;border-radius:.5rem" aria-label="Fermer">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div id="co-summary" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:.75rem;padding:.9rem 1rem;margin-bottom:1.25rem"></div>
+    <form id="checkout-form" onsubmit="submitCheckout(event)" style="display:flex;flex-direction:column;gap:1rem">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.9rem">
+        <div><label class="block text-sm font-medium text-gray-300 mb-2">Prénom *</label><input type="text" id="co-prenom" required class="inp" placeholder="Jean"></div>
+        <div><label class="block text-sm font-medium text-gray-300 mb-2">Nom *</label><input type="text" id="co-nom" required class="inp" placeholder="Dupont"></div>
+      </div>
+      <div><label class="block text-sm font-medium text-gray-300 mb-2">Email *</label><input type="email" id="co-email" required class="inp" placeholder="jean@email.com" autocomplete="email"></div>
+      <div><label class="block text-sm font-medium text-gray-300 mb-2">Téléphone *</label><input type="tel" id="co-tel" required class="inp" placeholder="06 12 34 56 78" autocomplete="tel"></div>
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-2">Mode de livraison *</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+          <label class="delivery-opt selected" id="deliv-retrait-lbl">
+            <input type="radio" name="co-deliv" value="retrait" checked onchange="updateDeliveryUI()">
+            <div><div style="font-weight:600;color:white;font-size:.9rem">Retrait en magasin</div><div style="font-size:.75rem;color:#94a3b8">Ingwiller — gratuit</div></div>
+          </label>
+          <label class="delivery-opt" id="deliv-livraison-lbl">
+            <input type="radio" name="co-deliv" value="livraison" onchange="updateDeliveryUI()">
+            <div><div style="font-weight:600;color:white;font-size:.9rem">Livraison à domicile</div><div style="font-size:.75rem;color:#94a3b8">Colissimo / transporteur</div></div>
+          </label>
+        </div>
+      </div>
+      <div id="co-address-block" style="display:none">
+        <label class="block text-sm font-medium text-gray-300 mb-2">Adresse de livraison *</label>
+        <input type="text" id="co-adresse" class="inp" placeholder="Rue et numéro" style="margin-bottom:.5rem">
+        <div style="display:grid;grid-template-columns:130px 1fr;gap:.5rem">
+          <input type="text" id="co-cp" class="inp" placeholder="Code postal">
+          <input type="text" id="co-ville" class="inp" placeholder="Ville">
+        </div>
+      </div>
+      <div><label class="block text-sm font-medium text-gray-300 mb-2">Message (taille, coloris…)</label><textarea id="co-msg" rows="2" class="inp" placeholder="Options, taille souhaitée…"></textarea></div>
+      <div class="rib-box">
+        <div style="font-size:.72rem;font-weight:700;color:#93c5fd;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem">Paiement par virement bancaire</div>
+        <div style="display:flex;flex-direction:column;gap:.3rem;font-size:.84rem">
+          <div style="display:flex;justify-content:space-between;gap:.5rem"><span style="color:#94a3b8;white-space:nowrap">Titulaire</span><span style="color:white;font-weight:600;text-align:right">SARL VTT PERFORMANCE</span></div>
+          <div style="display:flex;justify-content:space-between;gap:.5rem"><span style="color:#94a3b8;white-space:nowrap">IBAN</span><span style="color:white;font-weight:600;font-family:monospace;letter-spacing:.03em;text-align:right">FR76 1470 7500 3534 0215 3481 269</span></div>
+          <div style="display:flex;justify-content:space-between;gap:.5rem"><span style="color:#94a3b8;white-space:nowrap">BIC</span><span style="color:white;font-weight:600;font-family:monospace;text-align:right">CCBPFRPPMTZ</span></div>
+          <div style="display:flex;justify-content:space-between;gap:.5rem"><span style="color:#94a3b8;white-space:nowrap">Banque</span><span style="color:#94a3b8;text-align:right">Banque Populaire ALC — Pfaffenhoffen</span></div>
+        </div>
+        <p style="font-size:.72rem;color:#475569;margin-top:.75rem;line-height:1.5">Le virement sera à effectuer après confirmation de disponibilité par le magasin. Indiquez votre nom en référence.</p>
+      </div>
+      <button type="submit" class="btn-orange w-full justify-center text-base" style="width:100%">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Envoyer ma commande
+      </button>
+    </form>
+  </div>
+</div>
+
 </body>
 </html>
