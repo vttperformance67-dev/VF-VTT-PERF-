@@ -1503,21 +1503,6 @@ function renderHero(bike, stock) {
     delChip.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>Livraison offerte';
     document.getElementById('hero-price-block').appendChild(delChip);
   }
-  // Reprise du Printemps Moustache chip
-  if (bike.brand === 'Moustache' && bike.price >= 3000 && !bike.oldprice) {
-    const repriseBonus = bike.price >= 5000 ? 500 : bike.price >= 4000 ? 400 : 300;
-    const repChip = document.createElement('a');
-    repChip.href = 'https://moustachebikes.com/fr/offre-de-reprise';
-    repChip.target = '_blank';
-    repChip.rel = 'noopener';
-    repChip.style.cssText = 'background:linear-gradient(135deg,rgba(236,72,153,.15),rgba(139,92,246,.12));border:1px solid rgba(236,72,153,.4);color:#f9a8d4;font-size:.75rem;font-weight:700;padding:.2rem .6rem;border-radius:.5rem;display:inline-flex;align-items:center;gap:.3rem;text-decoration:none;cursor:pointer;transition:background .2s;';
-    repChip.innerHTML = '🌸 –' + repriseBonus + '€ Reprise du Printemps';
-    repChip.title = 'Offre valable jusqu\'au 25 avril 2026 — cliquez pour les détails';
-    repChip.onmouseover = function(){ this.style.background = 'linear-gradient(135deg,rgba(236,72,153,.25),rgba(139,92,246,.2))'; };
-    repChip.onmouseout = function(){ this.style.background = 'linear-gradient(135deg,rgba(236,72,153,.15),rgba(139,92,246,.12))'; };
-    document.getElementById('hero-price-block').appendChild(repChip);
-  }
-
   // Stock — enhanced badge
   const stockMeta = (stock && stock.qty > 0 && (stock.sizes || stock.color))
     ? '<div class="flex flex-wrap gap-1.5 mt-2">'
