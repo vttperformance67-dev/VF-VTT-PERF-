@@ -1513,16 +1513,16 @@ function renderHero(bike, stock) {
   let stockHtml = '';
   if (stock) {
     if (stock.qty > 1) {
-      stockHtml = '<div class="flex flex-col gap-1"><div class="stock-badge-wrap instock"><span class="stock-pulse green"></span><span>Disponible en stock</span><span class="text-xs opacity-70 ml-1">(' + stock.qty + ' unités)</span></div>' + stockMeta + '</div>';
+      stockHtml = '<div class="flex flex-col gap-1"><div class="stock-badge-wrap instock"><span class="stock-pulse green"></span><span>En stock · Livraison à domicile ou retrait en 24h en magasin</span><span class="text-xs opacity-70 ml-1">(' + stock.qty + ' unités)</span></div>' + stockMeta + '</div>';
     } else if (stock.qty === 1) {
-      stockHtml = '<div class="flex flex-col gap-1"><div class="stock-badge-wrap limited"><span class="stock-pulse orange"></span><span>Dernier exemplaire !</span></div>' + stockMeta + '</div>';
+      stockHtml = '<div class="flex flex-col gap-1"><div class="stock-badge-wrap limited"><span class="stock-pulse orange"></span><span>Dernier exemplaire · Retrait 24h en magasin</span></div>' + stockMeta + '</div>';
     } else if (stock.limited) {
-      stockHtml = '<div class="stock-badge-wrap limited"><span class="stock-pulse orange"></span><span>Stock limité — dépêchez-vous</span></div>';
+      stockHtml = '<div class="stock-badge-wrap limited"><span class="stock-pulse orange"></span><span>Stock limité · Livraison à domicile ou retrait en 24h</span></div>';
     } else {
-      stockHtml = '<div class="stock-badge-wrap onorder"><span class="stock-pulse blue"></span><span>' + (stock.avail ? 'Disponible ' + stock.avail : 'Livré en 10 jours · Retrait 4h en magasin') + '</span></div>';
+      stockHtml = '<div class="stock-badge-wrap onorder"><span class="stock-pulse blue"></span><span>' + (stock.avail ? 'Disponible ' + stock.avail : 'Livré en 10 jours à domicile') + '</span></div>';
     }
   } else {
-    stockHtml = '<div class="stock-badge-wrap onorder"><span class="stock-pulse blue"></span><span>Livré en 10 jours · Retrait 4h en magasin</span></div>';
+    stockHtml = '<div class="stock-badge-wrap onorder"><span class="stock-pulse blue"></span><span>Livré en 10 jours à domicile</span></div>';
   }
   document.getElementById('hero-stock').innerHTML = stockHtml;
 

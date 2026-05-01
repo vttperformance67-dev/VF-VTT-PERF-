@@ -5677,7 +5677,7 @@ function _doRenderCatalog(searchQ, priceMax, sortVal) {
     const avail = bike.avail || (allSe.find(function(s){ return s.avail; }) || {}).avail;
     const stockCls = avail ? 's-avail' : (qty > 0 ? (limited ? 's-limited' : 's-high') : '');
     const dotStyle = (qty <= 0 || qty === null) && !avail ? ' style="background:#6b7280"' : '';
-    const stockTxt = avail ? ('Dispo. '+avail) : (qty > 0 ? (limited ? 'Stock limité' : 'En stock · Retrait 2h') : 'Livré en 10 jours · Retrait 4h en magasin');
+    const stockTxt = avail ? ('Dispo. '+avail) : (qty > 0 ? (limited ? 'Stock limité' : 'En stock · Retrait 24h') : 'Livré en 10 jours à domicile');
     const stockDot = '<span class="stock-dot '+stockCls+'"'+dotStyle+'></span>'+stockTxt;
     const limitedBadge = limited ? '<span class="badge badge-limited" style="font-size:.6rem;padding:.15rem .5rem">STOCK LIMITÉ</span>' : '';
     const availBadge = avail ? '<span class="badge badge-avail" style="font-size:.6rem;padding:.15rem .5rem">'+avail+'</span>' : '';
@@ -6737,7 +6737,7 @@ function openCmpModal() {
           if (spec.key === 'price') val = b.price ? b.price.toLocaleString('fr-FR') + ' €' : 'Prix magasin';
           else if (spec.key === 'avail') {
             var s = STOCK.find(function(st){ return st.brand === b.brand && st.name === b.name; });
-            val = s ? (s.qty > 0 ? (s.limited ? 'Stock limité' : 'En stock') : 'Livré en 10 j · Retrait 4h') : (b.avail || 'Voir magasin');
+            val = s ? (s.qty > 0 ? (s.limited ? 'Stock limité' : 'En stock · Retrait 24h') : 'Livré 10 j à domicile') : (b.avail || 'Voir magasin');
           }
           else val = b[spec.key] || '—';
           return '<div class="cmp-cell text-center">' + val + '</div>';
@@ -7450,9 +7450,8 @@ function _saveCart(){try{localStorage.setItem('vp_cart',JSON.stringify(cart));}c
 function addToCart(brand,name,price,imgUrl){
   var ex=cart.find(function(i){return i.brand===brand&&i.name===name;});
   if(ex){ex.qty++;}else{cart.push({brand:brand,name:name,price:price||0,qty:1,img:imgUrl||''});}
-  _saveCart(); updateCartBadge(); _renderCartItems();
-  openCart();
-  toast('Ajouté au panier !','ok');
+  _saveCart(); updateCartBadge();
+  toast('Ajouté au panier — <a onclick="openCart()" style="color:#ff6b35;font-weight:700;cursor:pointer;text-decoration:underline">Voir le panier</a>','ok');
 }
 
 function removeFromCart(brand,name){
@@ -7521,7 +7520,7 @@ function _renderCartItems(){
       :'<span style="color:#64748b;font-size:.85rem">Prix en magasin</span>')
     +'</div>'
     +'<button id="cart-checkout-btn" onclick="openCheckout()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>Passer commande</button>'
-    +'<p style="text-align:center;font-size:.75rem;color:#475569;margin-top:.75rem">Paiement par virement · Retrait ou livraison à domicile</p>';
+    +'<p style="text-align:center;font-size:.75rem;color:#475569;margin-top:.75rem">Paiement par virement · Livraison à domicile ou retrait en 24h en magasin</p>';
 }
 
 function openCheckout(){
