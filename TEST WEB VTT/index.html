@@ -879,30 +879,7 @@
 
       <div class="hidden lg:flex items-center gap-6">
         <button onclick="showSection('accueil')" class="nav-link text-sm font-medium text-gray-300 hover:text-white" data-section="accueil">Accueil</button>
-        <!-- Catalogue dropdown -->
-        <div class="nav-dropdown">
-          <button class="nav-dropdown-btn" onclick="setCat('all');showSection('catalogue')" data-section="catalogue" aria-haspopup="true" aria-label="Catalogue — voir le menu">
-            Catalogue
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="nav-dropdown-menu" style="min-width:210px">
-            <button class="nav-dd-item" onclick="setCat('all');showSection('catalogue')">🚲 Tout le catalogue</button>
-            <button class="nav-dd-item" onclick="setBrand('all');setCat('all');document.getElementById('catalog-sort').value='promo';renderCatalog();showSection('catalogue')" style="color:#ff6b35">🔥 Promotions en cours</button>
-            <div class="nav-dd-sep"></div>
-            <button class="nav-dd-item" onclick="setCat('vttae');showSection('catalogue')">⚡ VTT Électrique</button>
-            <button class="nav-dd-item" onclick="setCat('vtcae');showSection('catalogue')">🔋 VTC Électrique</button>
-            <button class="nav-dd-item" onclick="setCat('vtt');showSection('catalogue')">🏔️ VTT</button>
-            <button class="nav-dd-item" onclick="setCat('gravel');showSection('catalogue')">🛤️ Gravel</button>
-            <button class="nav-dd-item" onclick="setCat('bmx');showSection('catalogue')">🎯 BMX</button>
-            <button class="nav-dd-item" onclick="setCat('kids');showSection('catalogue')">👦 Enfants</button>
-            <div class="nav-dd-sep"></div>
-            <button class="nav-dd-item" onclick="setBrand('SUNN');showSection('catalogue')">SUNN</button>
-            <button class="nav-dd-item" onclick="setBrand('Moustache');showSection('catalogue')">Moustache</button>
-            <button class="nav-dd-item" onclick="setBrand('KONA');showSection('catalogue')">KONA</button>
-            <button class="nav-dd-item" onclick="setBrand('NORCO');showSection('catalogue')">NORCO</button>
-            <button class="nav-dd-item" onclick="setBrand('FORBIDDEN');showSection('catalogue')">FORBIDDEN</button>
-          </div>
-        </div>
+        <button class="nav-link text-sm font-medium text-gray-300 hover:text-white" onclick="setBrand('all');setCat('all');showSection('catalogue')" data-section="catalogue">Catalogue</button>
         <!-- Location dropdown -->
         <div class="nav-dropdown">
           <button class="nav-dropdown-btn" onclick="showSection('location')" data-section="location" aria-haspopup="true" aria-label="Location — voir le menu">
@@ -959,7 +936,7 @@
       <div class="flex flex-col gap-1 pt-2 border-t border-white/10">
         <button onclick="showSection('accueil');toggleMenu()" class="text-left px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Accueil</button>
         <!-- Catalogue groupe -->
-        <button onclick="setCat('all');showSection('catalogue');toggleMenu()" class="text-left px-4 py-3 text-sm font-semibold text-white hover:bg-white/5 rounded-lg flex items-center gap-2"><span class="text-orange-400">🚲</span> Catalogue</button>
+        <button onclick="setBrand('all');setCat('all');showSection('catalogue');toggleMenu()" class="text-left px-4 py-3 text-sm font-semibold text-white hover:bg-white/5 rounded-lg flex items-center gap-2"><span class="text-orange-400">🚲</span> Catalogue</button>
         <button onclick="setCat('vttae');showSection('catalogue');toggleMenu()" class="text-left pl-8 pr-4 py-2.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg">⚡ VTT Électrique</button>
         <button onclick="setCat('vtcae');showSection('catalogue');toggleMenu()" class="text-left pl-8 pr-4 py-2.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg">🔋 VTC Électrique</button>
         <button onclick="setCat('vtt');showSection('catalogue');toggleMenu()" class="text-left pl-8 pr-4 py-2.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg">🏔️ VTT</button>
