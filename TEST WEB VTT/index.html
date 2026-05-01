@@ -5739,7 +5739,7 @@ function _doRenderCatalog(searchQ, priceMax, sortVal) {
     const brandStyle = (bb===undefined||bb==='')?'style="background:rgba(255,255,255,.1);color:#e2e8f0;border-color:rgba(255,255,255,.15)"':'';
     const descSnippet = bike.description ? '<p class="text-xs mt-1.5 leading-relaxed" style="color:#64748b;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">'+bike.description+'</p>' : '';
 
-    return '<div class="bike-card">'
+    return '<div class="bike-card" style="cursor:pointer" onclick="window.location.href=\''+produitUrl+'\'">'
       +'<div class="bike-img-wrap" id="'+cid+'" style="'+(GRAD[bike.brand]||GRAD.SUNN)+'">'
       +imgHtml+dots
       +coupCoeurBadge
