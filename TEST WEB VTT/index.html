@@ -4573,49 +4573,6 @@ const BIKES = [
   // ── Moustache SPORT · TANDEM ─────────────────────────────────────────
   {brand:'Moustache',name:'Samedi 27X2 TRK',cat:'vttae',type:'Tandem Elec.',price:7999,motor:'Bosch Perf. CX',bat:'625Wh',url:'https://b2b.moustachebikes.com/bikes/sport/tandem/tandem/samedi-27x2-trk/TATCGU100260',description:'Samedi 27X2 TRK Moustache : tandem électrique trekking — Bosch CX 85Nm, 625Wh, confort pour deux.'},
   {brand:'Moustache',name:'Samedi 27X2 VTT',cat:'vttae',type:'Tandem Elec.',price:7799,motor:'Bosch Perf. CX',bat:'625Wh',url:'https://b2b.moustachebikes.com/bikes/sport/tandem/tandem/samedi-27x2-vtt/TA0CGU100260',description:'Samedi 27X2 VTT Moustache : tandem électrique VTT — Bosch CX 85Nm, 625Wh, tout-terrain à deux.'},
-];
-
-const BIKE_DETAILS = {
-  'Moustache_Samedi 29 Trail 5': {frame:'Alu',fork:'Fox 36 150mm',rearShock:'Fox Float DPS',drivetrain:'Shimano SLX',brakes:'Shimano Deore 4 pistons',wheels:'29"',tires:'Schwalbe Magic Mary',weight:'23.7 kg',range:'60-120 km',highlight:'Trail, Populaire',notes:'Bon équilibre performance / confort.'},
-  'Moustache_Samedi 29 Trail 7': {frame:'Alu',fork:'Fox 36 150mm',rearShock:'Fox Float DPS',drivetrain:'Shimano SLX',brakes:'Shimano SLX 4 pistons',wheels:'29"',tires:'Schwalbe Nobby Nic',weight:'24.1 kg',range:'70-130 km',highlight:'Trail haut de gamme',notes:'Batterie 750Wh.'},
-  'Moustache_Samedi 29 Trail 9': {frame:'Carbone',fork:'Fox 36 160mm',rearShock:'Fox Float X2',drivetrain:'Sram GX',brakes:'Sram Guide',wheels:'29"',tires:'Maxxis Assegai',weight:'23.2 kg',range:'75-140 km',highlight:'Top gamme',notes:'Cadre carbone, meilleur rapport poids/performance.'},
-  'Moustache_Game 150.8': {frame:'Alu',fork:'Fox 36 160mm',rearShock:'Fox Float X2',drivetrain:'Sram GX',brakes:'Shimano SLX',wheels:'29"',tires:'Maxxis Minion',weight:'24.7 kg',range:'70-130 km',highlight:'Enduro',notes:'Design race enduro'},
-  'Moustache_Game 160.8': {frame:'Alu',fork:'Fox 38 170mm',rearShock:'Fox Float X2',drivetrain:'Sram GX',brakes:'Sram Guide',wheels:'29"',tires:'Maxxis Assegai',weight:'25.0 kg',range:'70-130 km',highlight:'Enduro agressif',notes:'Idéal pour grosses descentes'},
-  'Moustache_Samedi 27 Xroad': {frame:'Alu',fork:'Carbone 40mm',drivetrain:'Shimano GRX',brakes:'Shimano GRX',wheels:'27.5"',tires:'Schwalbe G-One',weight:'21.1 kg',range:'80-140 km',highlight:'Gravel',notes:'Utilisation route/chemins.'},
-  'Moustache_Lundi 20 Cargo': {frame:'Cargo Alu longjohn',fork:'Rigide',drivetrain:'Shimano Deore 10 vit.',brakes:'Magura MT4',wheels:'20"/26"',tires:'Schwalbe Big Apple 20×2.35',weight:'35 kg',motorModel:'Bosch Cargo Line Cruise',motorPower:'85Nm',chargeTime:'~5h',range:'70-110 km',colors:['Noir Cargo','Gris Métal'],colorCodes:['#111111','#5a5a5a'],sizes:['Unique'],batteries:['625Wh'],sizeGuide:{'Unique':'Pour adultes 160-200cm'},highlight:'Cargo Elec.',features:['Bosch Cargo Line Cruise','Plateforme avant pour enfants/bagages','Capacité 200 kg total','Batterie 625Wh','Idéal famille et livraison'],notes:'Transport jusqu\'à 200 kg total, idéal familles et professionnels.'},
-  // ── Moustache 2026 nouveaux modèles ──────────────────────────────────
-  'Moustache_Xroad 2': {frame:'Alu allroad',fork:'Suspendue 40mm',drivetrain:'Shimano Deore 10 vit.',brakes:'Shimano hydraulique',wheels:'27.5"',tires:'Schwalbe G-One 38mm',weight:'22.5 kg',motorModel:'Bosch Active Line Plus',motorPower:'50Nm',chargeTime:'~5h',range:'80-150 km',colors:['Titanium'],colorCodes:['#8a8a9a'],sizes:['S','M','L'],batteries:['600Wh'],highlight:'Allroad Elec. entrée gamme',features:['Bosch Active Line+ 50Nm','Batterie 600Wh','Géométrie allroad polyvalente','Guidon plat confortable','Pneus gravel 38mm'],notes:'Arrivée prévue 03/2026. Disponible en pré-commande en magasin.'},
-  'Moustache_Xroad 4': {frame:'Alu allroad renforcé',fork:'Suspendue 60mm',drivetrain:'Shimano SLX 11 vit.',brakes:'Shimano SLX 4 pistons',wheels:'27.5"',tires:'Schwalbe G-One Allround 40mm',weight:'22.8 kg',motorModel:'Bosch Performance CX',motorPower:'85Nm',chargeTime:'~4h',range:'80-160 km',colors:['Deep Red Metal','Titanium'],colorCodes:['#7a1a1a','#8a8a9a'],sizes:['S','M','L'],batteries:['600Wh','800Wh'],highlight:'Allroad Elec. performant',features:['Bosch Performance CX 85Nm','600Wh ou 800Wh au choix','Fourche suspendue 60mm','Transmission SLX 11v.','Pneus allround 40mm'],notes:'Arrivée prévue 03/2026 (600Wh) et 06/2026 (800Wh). Pré-commande possible.'},
-  'Moustache_Xroad E5': {frame:'Alu allroad compact',fork:'Rigide carbone 40mm',drivetrain:'Shimano Deore 11 vit.',brakes:'Shimano hydraulique',wheels:'27.5"',tires:'Schwalbe G-One 40mm',weight:'20.5 kg',motorModel:'Bosch EP5',motorPower:'55Nm',chargeTime:'~4h30',range:'70-130 km',colors:['Dark Blue'],colorCodes:['#1a2a5e'],sizes:['S','M','L'],batteries:['500Wh'],highlight:'Allroad Elec. léger EP5',features:['Moteur Bosch EP5 discret 55Nm','Silhouette légère et épurée','500Wh autonomie suffisante','Géométrie agile','Idéal usage quotidien'],notes:'Arrivée prévue 03/2026. Moteur EP5 discret et léger.'},
-  'Moustache_Xroad FS 4': {frame:'Alu full-suspension allroad',fork:'Suspendue 80mm',rearShock:'Suspendu 60mm',drivetrain:'Shimano SLX 11 vit.',brakes:'Shimano SLX 4 pistons',wheels:'27.5"',tires:'Schwalbe G-One Allround 42mm',weight:'24.5 kg',motorModel:'Bosch Performance CX',motorPower:'85Nm',chargeTime:'~4h',range:'75-140 km',colors:['Green Argile Metal Light'],colorCodes:['#4a5a3a'],sizes:['S','M','L'],batteries:['600Wh'],highlight:'Allroad Full-Suspension Elec.',features:['Double suspension 80mm/60mm','Bosch CX 85Nm','600Wh grande autonomie','Confort maximal sur chemins','Transmission SLX 11v.'],notes:'Arrivée prévue 06/2026. Premier allroad full-suspension de la gamme.'},
-  'Moustache_Trail 150.2': {frame:'Alu trail full-suspension 150mm',fork:'RockShox Lyrik 150mm',rearShock:'RockShox Deluxe',drivetrain:'Shimano XT 12 vit.',brakes:'Shimano XT 4 pistons',wheels:'29"',tires:'Maxxis Minion DHF 2.5 / DHR II 2.4',weight:'24.0 kg',motorModel:'Bosch Performance CX',motorPower:'85Nm',chargeTime:'~4h',range:'80-150 km',colors:['Gris Pierre','Vert Sapin'],colorCodes:['#7a7a7a','#2a4a2a'],sizes:['M','L'],batteries:['750Wh'],highlight:'VTTAE Trail 150mm',features:['Suspension 150mm av/ar','Bosch CX 85Nm','Batterie 750Wh grande autonomie','Transmission XT 12v.','Freins XT 4 pistons'],notes:'Arrivée prévue 04/2026. Disponible en Gris Pierre (M) et Vert Sapin (L).'},
-  'Moustache_Mardi 27.4': {frame:'Alu urbain renforcé',fork:'Suspendue 60mm',drivetrain:'Shimano Deore 10 vit.',brakes:'Shimano hydraulique',wheels:'27.5"',tires:'Schwalbe Marathon 35mm',weight:'22.0 kg',motorModel:'Bosch Performance Line',motorPower:'65Nm',chargeTime:'~4h30',range:'90-170 km',colors:['Silk Grey'],colorCodes:['#9a9a9a'],sizes:['S','M','L'],batteries:['600Wh'],highlight:'Urban Elec. 27.5"',features:['Bosch Performance Line 65Nm','600Wh longue autonomie','Guidon plat agréable','Pneus route/gravel 35mm','Confort urbain et randonnée'],notes:'Arrivée prévue 06/2026. Idéal pour la ville et les voies vertes.'},
-};
-
-const STOCK = [
-  {brand:'Moustache',name:'Samedi 29 Trail 3',qty:1},                              // Moustache non identifié → Trail 3
-  {brand:'Moustache',name:'Samedi 29 Trail 5',qty:1},                              // Bosch unité 1
-  {brand:'Moustache',name:'Samedi 29 Trail 7',qty:1},                              // Bosch unité 2
-  {brand:'Moustache',name:'Samedi 29 Trail 9',qty:0,avail:'Sur commande'},
-  {brand:'Moustache',name:'Game 140.8',qty:0,avail:'Sur commande'},
-  {brand:'Moustache',name:'Game 150.8',qty:0,avail:'Sur commande'},
-  {brand:'Moustache',name:'Game 160.8',qty:0,avail:'Sur commande'},
-  {brand:'Moustache',name:'Samedi 27 Xroad',qty:0},
-  {brand:'Moustache',name:'Samedi 27 Xroad 3',qty:0},
-  {brand:'Moustache',name:'Samedi 27 Xroad 5',qty:0},
-  {brand:'Moustache',name:'Samedi 28.1',qty:0},
-  {brand:'Moustache',name:'Samedi 28.3',qty:0},
-  {brand:'Moustache',name:'Dimanche 28',qty:0},
-  {brand:'Moustache',name:'Lundi 20 Cargo',qty:0,avail:'Sur commande'},
-  // ── Moustache 2026 arrivées programmées ────────────────────────────
-  {brand:'Moustache',name:'Xroad 4',qty:0,color:'Deep Red Metal',sizes:['M'],bat:'600Wh',avail:'Livraison 03/2026'},
-  {brand:'Moustache',name:'Xroad 2',qty:0,color:'Titanium',sizes:['S'],bat:'600Wh',avail:'Livraison 03/2026'},
-  {brand:'Moustache',name:'Xroad E5',qty:0,color:'Dark Blue',sizes:['M'],bat:'500Wh',avail:'Livraison 03/2026'},
-  {brand:'Moustache',name:'Trail 150.2',qty:0,color:'Gris Pierre',sizes:['M'],bat:'750Wh',avail:'Livraison 04/2026'},
-  {brand:'Moustache',name:'Trail 150.2',qty:0,color:'Vert Sapin',sizes:['L'],bat:'750Wh',avail:'Livraison 04/2026'},
-  {brand:'Moustache',name:'Xroad 4',qty:0,color:'Titanium',sizes:['M'],bat:'800Wh',avail:'Livraison 06/2026'},
-  {brand:'Moustache',name:'Xroad FS 4',qty:0,color:'Green Argile Metal Light',sizes:['M'],bat:'600Wh',avail:'Livraison 06/2026'},
-  {brand:'Moustache',name:'Mardi 27.4',qty:0,color:'Silk Grey',sizes:['M'],bat:'600Wh',avail:'Livraison 06/2026'},
   // ── SUNN MY26 ────────────────────────────────────────────────────────
   {brand:'SUNN',name:'TOX 2.6',cat:'kids',type:'VTT Enfant',price:556,url:'https://www.mfdc.fr/sunn/',description:'TOX 2.6 SUNN MY26 — VTT Enfant.'},
   {brand:'SUNN',name:'TOX 2.4',cat:'kids',type:'VTT Enfant',price:486,url:'https://www.mfdc.fr/sunn/',description:'TOX 2.4 SUNN MY26 — VTT Enfant.'},
@@ -4731,6 +4688,50 @@ const STOCK = [
   {brand:'SUNN',name:'KERN EN S1 MY25',cat:'vtt',type:'Trail FS',price:3632,isDestock:true,url:'https://www.mfdc.fr/sunn/',description:'KERN EN S1 MY25 SUNN — Trail FS. Déstockage 2025.'},
   {brand:'SUNN',name:'PRIM FACTORY MY25',cat:'vtt',type:'Trail FS',price:3532,isDestock:true,url:'https://www.mfdc.fr/sunn/',description:'PRIM FACTORY MY25 SUNN — Trail FS. Déstockage 2025.'},
   {brand:'SUNN',name:'ASPHALT S1 MY25 (v.3)',cat:'gravel',type:'Gravel',price:3832,isDestock:true,url:'https://www.mfdc.fr/sunn/',description:'ASPHALT S1 MY25 (v.3) SUNN — Gravel. Déstockage 2025.'},
+
+];
+
+const BIKE_DETAILS = {
+  'Moustache_Samedi 29 Trail 5': {frame:'Alu',fork:'Fox 36 150mm',rearShock:'Fox Float DPS',drivetrain:'Shimano SLX',brakes:'Shimano Deore 4 pistons',wheels:'29"',tires:'Schwalbe Magic Mary',weight:'23.7 kg',range:'60-120 km',highlight:'Trail, Populaire',notes:'Bon équilibre performance / confort.'},
+  'Moustache_Samedi 29 Trail 7': {frame:'Alu',fork:'Fox 36 150mm',rearShock:'Fox Float DPS',drivetrain:'Shimano SLX',brakes:'Shimano SLX 4 pistons',wheels:'29"',tires:'Schwalbe Nobby Nic',weight:'24.1 kg',range:'70-130 km',highlight:'Trail haut de gamme',notes:'Batterie 750Wh.'},
+  'Moustache_Samedi 29 Trail 9': {frame:'Carbone',fork:'Fox 36 160mm',rearShock:'Fox Float X2',drivetrain:'Sram GX',brakes:'Sram Guide',wheels:'29"',tires:'Maxxis Assegai',weight:'23.2 kg',range:'75-140 km',highlight:'Top gamme',notes:'Cadre carbone, meilleur rapport poids/performance.'},
+  'Moustache_Game 150.8': {frame:'Alu',fork:'Fox 36 160mm',rearShock:'Fox Float X2',drivetrain:'Sram GX',brakes:'Shimano SLX',wheels:'29"',tires:'Maxxis Minion',weight:'24.7 kg',range:'70-130 km',highlight:'Enduro',notes:'Design race enduro'},
+  'Moustache_Game 160.8': {frame:'Alu',fork:'Fox 38 170mm',rearShock:'Fox Float X2',drivetrain:'Sram GX',brakes:'Sram Guide',wheels:'29"',tires:'Maxxis Assegai',weight:'25.0 kg',range:'70-130 km',highlight:'Enduro agressif',notes:'Idéal pour grosses descentes'},
+  'Moustache_Samedi 27 Xroad': {frame:'Alu',fork:'Carbone 40mm',drivetrain:'Shimano GRX',brakes:'Shimano GRX',wheels:'27.5"',tires:'Schwalbe G-One',weight:'21.1 kg',range:'80-140 km',highlight:'Gravel',notes:'Utilisation route/chemins.'},
+  'Moustache_Lundi 20 Cargo': {frame:'Cargo Alu longjohn',fork:'Rigide',drivetrain:'Shimano Deore 10 vit.',brakes:'Magura MT4',wheels:'20"/26"',tires:'Schwalbe Big Apple 20×2.35',weight:'35 kg',motorModel:'Bosch Cargo Line Cruise',motorPower:'85Nm',chargeTime:'~5h',range:'70-110 km',colors:['Noir Cargo','Gris Métal'],colorCodes:['#111111','#5a5a5a'],sizes:['Unique'],batteries:['625Wh'],sizeGuide:{'Unique':'Pour adultes 160-200cm'},highlight:'Cargo Elec.',features:['Bosch Cargo Line Cruise','Plateforme avant pour enfants/bagages','Capacité 200 kg total','Batterie 625Wh','Idéal famille et livraison'],notes:'Transport jusqu\'à 200 kg total, idéal familles et professionnels.'},
+  // ── Moustache 2026 nouveaux modèles ──────────────────────────────────
+  'Moustache_Xroad 2': {frame:'Alu allroad',fork:'Suspendue 40mm',drivetrain:'Shimano Deore 10 vit.',brakes:'Shimano hydraulique',wheels:'27.5"',tires:'Schwalbe G-One 38mm',weight:'22.5 kg',motorModel:'Bosch Active Line Plus',motorPower:'50Nm',chargeTime:'~5h',range:'80-150 km',colors:['Titanium'],colorCodes:['#8a8a9a'],sizes:['S','M','L'],batteries:['600Wh'],highlight:'Allroad Elec. entrée gamme',features:['Bosch Active Line+ 50Nm','Batterie 600Wh','Géométrie allroad polyvalente','Guidon plat confortable','Pneus gravel 38mm'],notes:'Arrivée prévue 03/2026. Disponible en pré-commande en magasin.'},
+  'Moustache_Xroad 4': {frame:'Alu allroad renforcé',fork:'Suspendue 60mm',drivetrain:'Shimano SLX 11 vit.',brakes:'Shimano SLX 4 pistons',wheels:'27.5"',tires:'Schwalbe G-One Allround 40mm',weight:'22.8 kg',motorModel:'Bosch Performance CX',motorPower:'85Nm',chargeTime:'~4h',range:'80-160 km',colors:['Deep Red Metal','Titanium'],colorCodes:['#7a1a1a','#8a8a9a'],sizes:['S','M','L'],batteries:['600Wh','800Wh'],highlight:'Allroad Elec. performant',features:['Bosch Performance CX 85Nm','600Wh ou 800Wh au choix','Fourche suspendue 60mm','Transmission SLX 11v.','Pneus allround 40mm'],notes:'Arrivée prévue 03/2026 (600Wh) et 06/2026 (800Wh). Pré-commande possible.'},
+  'Moustache_Xroad E5': {frame:'Alu allroad compact',fork:'Rigide carbone 40mm',drivetrain:'Shimano Deore 11 vit.',brakes:'Shimano hydraulique',wheels:'27.5"',tires:'Schwalbe G-One 40mm',weight:'20.5 kg',motorModel:'Bosch EP5',motorPower:'55Nm',chargeTime:'~4h30',range:'70-130 km',colors:['Dark Blue'],colorCodes:['#1a2a5e'],sizes:['S','M','L'],batteries:['500Wh'],highlight:'Allroad Elec. léger EP5',features:['Moteur Bosch EP5 discret 55Nm','Silhouette légère et épurée','500Wh autonomie suffisante','Géométrie agile','Idéal usage quotidien'],notes:'Arrivée prévue 03/2026. Moteur EP5 discret et léger.'},
+  'Moustache_Xroad FS 4': {frame:'Alu full-suspension allroad',fork:'Suspendue 80mm',rearShock:'Suspendu 60mm',drivetrain:'Shimano SLX 11 vit.',brakes:'Shimano SLX 4 pistons',wheels:'27.5"',tires:'Schwalbe G-One Allround 42mm',weight:'24.5 kg',motorModel:'Bosch Performance CX',motorPower:'85Nm',chargeTime:'~4h',range:'75-140 km',colors:['Green Argile Metal Light'],colorCodes:['#4a5a3a'],sizes:['S','M','L'],batteries:['600Wh'],highlight:'Allroad Full-Suspension Elec.',features:['Double suspension 80mm/60mm','Bosch CX 85Nm','600Wh grande autonomie','Confort maximal sur chemins','Transmission SLX 11v.'],notes:'Arrivée prévue 06/2026. Premier allroad full-suspension de la gamme.'},
+  'Moustache_Trail 150.2': {frame:'Alu trail full-suspension 150mm',fork:'RockShox Lyrik 150mm',rearShock:'RockShox Deluxe',drivetrain:'Shimano XT 12 vit.',brakes:'Shimano XT 4 pistons',wheels:'29"',tires:'Maxxis Minion DHF 2.5 / DHR II 2.4',weight:'24.0 kg',motorModel:'Bosch Performance CX',motorPower:'85Nm',chargeTime:'~4h',range:'80-150 km',colors:['Gris Pierre','Vert Sapin'],colorCodes:['#7a7a7a','#2a4a2a'],sizes:['M','L'],batteries:['750Wh'],highlight:'VTTAE Trail 150mm',features:['Suspension 150mm av/ar','Bosch CX 85Nm','Batterie 750Wh grande autonomie','Transmission XT 12v.','Freins XT 4 pistons'],notes:'Arrivée prévue 04/2026. Disponible en Gris Pierre (M) et Vert Sapin (L).'},
+  'Moustache_Mardi 27.4': {frame:'Alu urbain renforcé',fork:'Suspendue 60mm',drivetrain:'Shimano Deore 10 vit.',brakes:'Shimano hydraulique',wheels:'27.5"',tires:'Schwalbe Marathon 35mm',weight:'22.0 kg',motorModel:'Bosch Performance Line',motorPower:'65Nm',chargeTime:'~4h30',range:'90-170 km',colors:['Silk Grey'],colorCodes:['#9a9a9a'],sizes:['S','M','L'],batteries:['600Wh'],highlight:'Urban Elec. 27.5"',features:['Bosch Performance Line 65Nm','600Wh longue autonomie','Guidon plat agréable','Pneus route/gravel 35mm','Confort urbain et randonnée'],notes:'Arrivée prévue 06/2026. Idéal pour la ville et les voies vertes.'},
+};
+
+const STOCK = [
+  {brand:'Moustache',name:'Samedi 29 Trail 3',qty:1},                              // Moustache non identifié → Trail 3
+  {brand:'Moustache',name:'Samedi 29 Trail 5',qty:1},                              // Bosch unité 1
+  {brand:'Moustache',name:'Samedi 29 Trail 7',qty:1},                              // Bosch unité 2
+  {brand:'Moustache',name:'Samedi 29 Trail 9',qty:0,avail:'Sur commande'},
+  {brand:'Moustache',name:'Game 140.8',qty:0,avail:'Sur commande'},
+  {brand:'Moustache',name:'Game 150.8',qty:0,avail:'Sur commande'},
+  {brand:'Moustache',name:'Game 160.8',qty:0,avail:'Sur commande'},
+  {brand:'Moustache',name:'Samedi 27 Xroad',qty:0},
+  {brand:'Moustache',name:'Samedi 27 Xroad 3',qty:0},
+  {brand:'Moustache',name:'Samedi 27 Xroad 5',qty:0},
+  {brand:'Moustache',name:'Samedi 28.1',qty:0},
+  {brand:'Moustache',name:'Samedi 28.3',qty:0},
+  {brand:'Moustache',name:'Dimanche 28',qty:0},
+  {brand:'Moustache',name:'Lundi 20 Cargo',qty:0,avail:'Sur commande'},
+  // ── Moustache 2026 arrivées programmées ────────────────────────────
+  {brand:'Moustache',name:'Xroad 4',qty:0,color:'Deep Red Metal',sizes:['M'],bat:'600Wh',avail:'Livraison 03/2026'},
+  {brand:'Moustache',name:'Xroad 2',qty:0,color:'Titanium',sizes:['S'],bat:'600Wh',avail:'Livraison 03/2026'},
+  {brand:'Moustache',name:'Xroad E5',qty:0,color:'Dark Blue',sizes:['M'],bat:'500Wh',avail:'Livraison 03/2026'},
+  {brand:'Moustache',name:'Trail 150.2',qty:0,color:'Gris Pierre',sizes:['M'],bat:'750Wh',avail:'Livraison 04/2026'},
+  {brand:'Moustache',name:'Trail 150.2',qty:0,color:'Vert Sapin',sizes:['L'],bat:'750Wh',avail:'Livraison 04/2026'},
+  {brand:'Moustache',name:'Xroad 4',qty:0,color:'Titanium',sizes:['M'],bat:'800Wh',avail:'Livraison 06/2026'},
+  {brand:'Moustache',name:'Xroad FS 4',qty:0,color:'Green Argile Metal Light',sizes:['M'],bat:'600Wh',avail:'Livraison 06/2026'},
+  {brand:'Moustache',name:'Mardi 27.4',qty:0,color:'Silk Grey',sizes:['M'],bat:'600Wh',avail:'Livraison 06/2026'},
 
 ];
 
