@@ -257,11 +257,11 @@
         ✓ Le matériel est remis en parfait état de fonctionnement, sauf observations contraires reportées en section 2.
       </div>
 
-      <!-- Zone photos -->
-      <div>
-        <div class="flex items-center justify-between mb-3">
+      <!-- Zone photos — gérée par le loueur uniquement (affichée après déverrouillage) -->
+      <div id="photo-loueur-zone" style="display:none;">
+        <div class="flex items-center justify-between mb-3 mt-4 pt-4 border-t border-slate-100">
           <div>
-            <span class="field-label">Photos du vélo</span>
+            <span class="field-label">Photos du vélo <span class="normal-case font-normal text-amber-600">— réservé au loueur</span></span>
             <p class="text-xs text-slate-400 mt-0.5" id="photo-bike-label">Sélectionnez un vélo pour charger ses photos</p>
           </div>
           <label class="cursor-pointer flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-white transition-colors" style="background:#0f172a;" onmouseover="this.style.background='#1e293b'" onmouseout="this.style.background='#0f172a'">
@@ -270,8 +270,6 @@
             <input type="file" accept="image/*" multiple class="hidden" onchange="addPhotos(this.files)">
           </label>
         </div>
-
-        <!-- Grille de miniatures -->
         <div id="photo-grid" class="grid grid-cols-3 sm:grid-cols-5 gap-2 min-h-[4rem]">
           <div id="photo-empty" class="col-span-3 sm:col-span-5 flex items-center justify-center py-6 border-2 border-dashed border-slate-200 rounded-xl text-slate-400 text-sm">
             Aucune photo — elles seront sauvegardées pour ce vélo
@@ -342,7 +340,7 @@
     <!-- SUBMIT -->
     <div class="bg-white border border-slate-200 rounded-xl p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
       <div class="text-sm text-slate-600">
-        Le contrat sera généré au format PDF (recto + verso CGL) et envoyé par email aux deux parties.
+        Le contrat PDF (recto + verso CGL) sera généré immédiatement. Une notification est envoyée au magasin.
       </div>
       <div class="flex gap-3">
         <button type="button" onclick="showCGL()" class="btn-secondary">Voir les CGL</button>
@@ -456,6 +454,9 @@ function unlockObs() {
   btn.textContent = '🔓 Modifiable';
   btn.onclick = null;
   btn.style.color = '#16a34a';
+  // Affiche la gestion photos (réservée au loueur)
+  const photoZone = document.getElementById('photo-loueur-zone');
+  if (photoZone) photoZone.style.display = '';
 }
 
 // =======================================================================
@@ -1037,7 +1038,6 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
   try {
     const { doc, numContrat } = await generatePDF(formData);
     const pdfBlob = doc.output('blob');
-    const pdfBase64 = doc.output('datauristring');
     const fileName = 'Contrat_' + numContrat + '_' + (formData.nom || 'client') + '.pdf';
 
     // Stocke le PDF pour le bouton de téléchargement
@@ -1046,53 +1046,39 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
 
     let emailStatus = '';
 
-    // Envoi email via EmailJS
+    // Envoi email via EmailJS — notification récap au loueur uniquement
+    // (le PDF n'est pas joint par email — trop volumineux pour EmailJS gratuit)
     if (CONFIG.emailjs.enabled && window.emailjs) {
       try {
-        emailjs.init(CONFIG.emailjs.publicKey);
+        emailjs.init({ publicKey: CONFIG.emailjs.publicKey });
 
-        const emailParams = {
-          client_nom: (formData.nom || '') + ' ' + (formData.prenom || ''),
-          client_email: formData.email || '—',
-          client_tel: formData.telephone || '—',
-          num_contrat: numContrat,
-          modele: formData.modele_libre || formData.marque || '—',
-          date_debut: formData.date_debut ? new Date(formData.date_debut).toLocaleString('fr-FR') : '—',
-          date_fin: formData.date_fin ? new Date(formData.date_fin).toLocaleString('fr-FR') : '—',
-          montant: (formData.prix_location || '—') + ' €',
-          caution: (formData.caution || '—') + ' €',
-          pdf_base64: pdfBase64.split(',')[1],
-          pdf_filename: fileName
-        };
+        const clientNom = ((formData.nom || '') + ' ' + (formData.prenom || '')).trim();
+        const debutStr = formData.date_debut ? new Date(formData.date_debut).toLocaleString('fr-FR') : '—';
+        const finStr   = formData.date_fin   ? new Date(formData.date_fin).toLocaleString('fr-FR')   : '—';
 
-        // Email loueur — archivage
         await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
-          ...emailParams,
-          to_email: CONFIG.loueurEmail,
-          reply_to: formData.email || CONFIG.loueurEmail,
-          email_subject: 'Contrat location ' + numContrat + ' — ' + emailParams.client_nom,
-          email_intro: "Copie d'archivage du contrat de location signé."
+          to_email:      CONFIG.loueurEmail,
+          reply_to:      formData.email || CONFIG.loueurEmail,
+          email_subject: 'Nouveau contrat ' + numContrat + ' — ' + clientNom,
+          email_intro:   'Un nouveau contrat de location vient d\'être signé en magasin.',
+          client_nom:    clientNom,
+          client_email:  formData.email || '—',
+          client_tel:    formData.telephone || '—',
+          num_contrat:   numContrat,
+          modele:        formData.modele_libre || formData.marque || '—',
+          date_debut:    debutStr,
+          date_fin:      finStr,
+          montant:       (formData.prix_location || '—') + ' €',
+          caution:       (formData.caution || '—') + ' €'
         });
 
-        // Email client — copie
-        if (formData.email) {
-          await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
-            ...emailParams,
-            to_email: formData.email,
-            reply_to: CONFIG.loueurEmail,
-            email_subject: 'Votre contrat de location — Vélos Performances',
-            email_intro: 'Bonjour ' + (formData.prenom || '') + ',\n\nVeuillez trouver ci-joint la copie de votre contrat de location de vélo chez Vélos Performances. Ce document fait foi en cas de litige.\n\nPour toute question, contactez-nous au 09.50.32.08.29.'
-          });
-          emailStatus = '📧 Contrat envoyé par email à ' + CONFIG.loueurEmail + ' et ' + formData.email;
-        } else {
-          emailStatus = '📧 Contrat envoyé par email à ' + CONFIG.loueurEmail;
-        }
+        emailStatus = '📧 Notification envoyée à ' + CONFIG.loueurEmail;
       } catch (emailErr) {
         console.error('EmailJS error:', emailErr);
-        emailStatus = '⚠️ Erreur envoi email — vérifiez la config EmailJS';
+        emailStatus = '⚠️ Erreur envoi email — code : ' + (emailErr.text || emailErr.message || JSON.stringify(emailErr));
       }
     } else {
-      emailStatus = 'Email non configuré — utilisez le bouton ci-dessous pour télécharger.';
+      emailStatus = 'Notification email désactivée.';
     }
 
     // Affiche l'écran de confirmation
@@ -1194,14 +1180,10 @@ window.addEventListener('load', () => {
    <p>—<br>SARL Vélos Performances<br>32 Faubourg du Général Philippot, 67340 Ingwiller<br>09.50.32.08.29</p>
    ─────────────────────────────────────────────
 
-   3. Onglet "Attachments" :
-      - Filename : {{pdf_filename}}
-      - Content (Base64) : {{pdf_base64}}
+   ✅ Aucune pièce jointe — le PDF est téléchargé directement par le client.
+      Le plan gratuit EmailJS (200 envois/mois) suffit.
 
-   4. Save → note le Template ID
-
-   ⚠️ Plan gratuit EmailJS : pièces jointes limitées à 50 KB.
-      Si le PDF est trop lourd → plan Personal (~7€/mois, jusqu'à 2 MB).
+   3. Save → note le Template ID
    ======================================================================= */
 </script>
 </body>
