@@ -181,11 +181,11 @@
           <button type="button" id="obs-unlock-btn" onclick="unlockObs()" class="text-xs text-slate-500 hover:text-slate-900 underline flex items-center gap-1">🔒 Modifier (loueur)</button>
         </div>
         <div class="grid grid-cols-1 gap-2" id="obs-section">
-          <input type="text" name="obs1" class="field-input obs-field" placeholder="1) ..." readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
-          <input type="text" name="obs2" class="field-input obs-field" placeholder="2) ..." readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
-          <input type="text" name="obs3" class="field-input obs-field" placeholder="3) ..." readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
-          <input type="text" name="obs4" class="field-input obs-field" placeholder="4) ..." readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
-          <input type="text" name="obs5" class="field-input obs-field" placeholder="5) ..." readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
+          <input type="text" name="obs1" class="field-input obs-field" value="Aucune" readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
+          <input type="text" name="obs2" class="field-input obs-field" placeholder="2) défaut à noter..." readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
+          <input type="text" name="obs3" class="field-input obs-field" placeholder="3) défaut à noter..." readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
+          <input type="text" name="obs4" class="field-input obs-field" placeholder="4) défaut à noter..." readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
+          <input type="text" name="obs5" class="field-input obs-field" placeholder="5) défaut à noter..." readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
         </div>
       </div>
     </div>
@@ -203,6 +203,9 @@
           <input type="datetime-local" name="date_fin" id="f-date_fin" class="field-input" required>
         </div>
       </div>
+      <p class="text-xs text-slate-400 mt-3 flex items-center gap-1">
+        <span>🕐</span> Horaires pré-remplis selon la formule choisie — modifiables à la demande du client.
+      </p>
     </div>
 
     <!-- ARTICLE 4 - TARIF -->
@@ -212,26 +215,42 @@
         <div>
           <label class="field-label mb-2 block">Durée de location * <span class="normal-case font-normal text-amber-600">— réservé au loueur</span></label>
           <div class="space-y-2">
+            <!-- Demi-journée -->
+            <div class="border border-slate-200 rounded-lg overflow-hidden">
+              <label class="flex items-center gap-3 p-3 cursor-pointer hover:bg-slate-50 transition-colors">
+                <input type="radio" name="prix_location" value="40" id="tarif-demi" required class="accent-slate-900" onchange="onTarifChange('demi')">
+                <span class="flex-1">
+                  <span class="font-semibold text-slate-800">Demi-journée</span>
+                  <span class="text-slate-500 text-sm ml-1">(4h)</span>
+                </span>
+                <span class="font-bold text-slate-900">40 €</span>
+              </label>
+              <!-- Sous-choix matin / après-midi -->
+              <div id="demi-subopt" class="hidden border-t border-slate-100 bg-slate-50 px-4 py-2 flex gap-4">
+                <label class="flex items-center gap-2 text-sm cursor-pointer">
+                  <input type="radio" name="demi_creneau" value="matin" id="demi-matin" class="accent-slate-900" onchange="autoFillDates()">
+                  <span>🌅 Matin <span class="text-slate-400">(8h–12h)</span></span>
+                </label>
+                <label class="flex items-center gap-2 text-sm cursor-pointer">
+                  <input type="radio" name="demi_creneau" value="aprem" id="demi-aprem" class="accent-slate-900" onchange="autoFillDates()">
+                  <span>☀️ Après-midi <span class="text-slate-400">(14h–18h)</span></span>
+                </label>
+              </div>
+            </div>
+            <!-- Journée -->
             <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition-colors">
-              <input type="radio" name="prix_location" value="40" id="tarif-demi" required class="accent-slate-900">
-              <span class="flex-1">
-                <span class="font-semibold text-slate-800">Demi-journée</span>
-                <span class="text-slate-500 text-sm ml-1">(≤ 4h)</span>
-              </span>
-              <span class="font-bold text-slate-900">40 €</span>
-            </label>
-            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition-colors">
-              <input type="radio" name="prix_location" value="65" id="tarif-jour" class="accent-slate-900">
+              <input type="radio" name="prix_location" value="65" id="tarif-jour" class="accent-slate-900" onchange="onTarifChange('jour')">
               <span class="flex-1">
                 <span class="font-semibold text-slate-800">Journée</span>
-                <span class="text-slate-500 text-sm ml-1">(jusqu'à 18h)</span>
+                <span class="text-slate-500 text-sm ml-1">(8h–18h)</span>
               </span>
               <span class="font-bold text-slate-900">65 €</span>
             </label>
+            <!-- Autre -->
             <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition-colors" id="tarif-autre-wrap">
-              <input type="radio" name="prix_location" value="autre" id="tarif-autre" class="accent-slate-900" onchange="toggleCustomPrice()">
+              <input type="radio" name="prix_location" value="autre" id="tarif-autre" class="accent-slate-900" onchange="onTarifChange('autre')">
               <span class="font-semibold text-slate-800">Autre durée</span>
-              <input type="number" id="prix-custom" name="prix_custom" min="1" step="1" placeholder="Montant €" class="ml-auto w-28 px-2 py-1 border border-slate-300 rounded text-sm text-right hidden" oninput="syncCustomPrice()">
+              <input type="number" id="prix-custom" name="prix_custom" min="1" step="1" placeholder="Montant €" class="ml-auto w-28 px-2 py-1 border border-slate-300 rounded text-sm text-right hidden">
             </label>
           </div>
         </div>
@@ -429,15 +448,41 @@ function unlockObs() {
   btn.style.color = '#16a34a';
 }
 
-// Tarif personnalisé
-function toggleCustomPrice() {
-  const customInput = document.getElementById('prix-custom');
-  const isOther = document.getElementById('tarif-autre').checked;
-  customInput.classList.toggle('hidden', !isOther);
-  if (isOther) customInput.focus();
+// Gestion changement de tarif
+function onTarifChange(type) {
+  // Affiche/masque les sous-options demi-journée
+  document.getElementById('demi-subopt').classList.toggle('hidden', type !== 'demi');
+  // Affiche/masque le champ montant custom
+  document.getElementById('prix-custom').classList.toggle('hidden', type !== 'autre');
+  if (type === 'autre') { document.getElementById('prix-custom').focus(); return; }
+  if (type === 'jour') { autoFillDates(); }
 }
-function syncCustomPrice() {
-  // handled in submit
+
+// Auto-remplissage des horaires selon la formule sélectionnée
+function autoFillDates() {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  const base = yyyy + '-' + mm + '-' + dd;
+
+  const debutEl = document.getElementById('f-date_debut');
+  const finEl = document.getElementById('f-date_fin');
+
+  const demiMatin = document.getElementById('demi-matin');
+  const demiAprem = document.getElementById('demi-aprem');
+  const jourSel = document.getElementById('tarif-jour');
+
+  if (jourSel && jourSel.checked) {
+    debutEl.value = base + 'T08:00';
+    finEl.value   = base + 'T18:00';
+  } else if (demiMatin && demiMatin.checked) {
+    debutEl.value = base + 'T08:00';
+    finEl.value   = base + 'T12:00';
+  } else if (demiAprem && demiAprem.checked) {
+    debutEl.value = base + 'T14:00';
+    finEl.value   = base + 'T18:00';
+  }
 }
 
 function autoFillVelo() {
