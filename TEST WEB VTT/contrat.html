@@ -1069,14 +1069,16 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
     // Sans ça, le destinataire reste vide et l'envoi échoue.
     if (CONFIG.emailjs.enabled && window.emailjs) {
       try {
-        emailjs.init({ publicKey: CONFIG.emailjs.publicKey });
-
-        const clientNom = ((formData.nom || '') + ' ' + (formData.prenom || '')).trim();
+        const clientNom   = ((formData.nom || '') + ' ' + (formData.prenom || '')).trim();
         const clientEmail = (formData.email || '').trim();
-        const debutStr = formData.date_debut ? new Date(formData.date_debut).toLocaleString('fr-FR') : '—';
-        const finStr   = formData.date_fin   ? new Date(formData.date_fin).toLocaleString('fr-FR')   : '—';
+        const debutStr    = formData.date_debut ? new Date(formData.date_debut).toLocaleString('fr-FR') : '—';
+        const finStr      = formData.date_fin   ? new Date(formData.date_fin).toLocaleString('fr-FR')   : '—';
 
-        const baseParams = {
+        const loueurParams = {
+          to_email:      CONFIG.loueurEmail,
+          reply_to:      clientEmail || CONFIG.loueurEmail,
+          email_subject: '[' + numContrat + '] ' + clientNom,
+          email_intro:   'Nouveau contrat signé en magasin.',
           client_nom:    clientNom,
           client_email:  clientEmail || '—',
           client_tel:    formData.telephone || '—',
@@ -1085,27 +1087,30 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
           date_debut:    debutStr,
           date_fin:      finStr,
           montant:       (formData.prix_location || '—') + ' €',
-          caution:       (formData.caution || '—') + ' €',
+          caution:       (formData.caution || '—') + ' €'
         };
 
-        // 1️⃣ Email au loueur — toujours envoyé
-        await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
-          ...baseParams,
-          to_email:      CONFIG.loueurEmail,
-          reply_to:      clientEmail || CONFIG.loueurEmail,
-          email_subject: '[Contrat ' + numContrat + '] ' + clientNom,
-          email_intro:   'Nouveau contrat de location signé en magasin. Le client télécharge son exemplaire PDF directement.'
-        });
+        console.log('EmailJS loueur params size:', JSON.stringify(loueurParams).length, 'bytes');
+        await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, loueurParams);
 
-        // 2️⃣ Email au client — si une adresse est renseignée
         if (clientEmail) {
-          await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
-            ...baseParams,
+          const clientParams = {
             to_email:      clientEmail,
             reply_to:      CONFIG.loueurEmail,
-            email_subject: 'Votre réservation — Vélos Performances (' + numContrat + ')',
-            email_intro:   'Bonjour ' + (formData.prenom || '') + ',\n\nVotre contrat de location a bien été enregistré. Vous pouvez télécharger votre exemplaire PDF depuis la page de confirmation.\n\nÀ bientôt chez Vélos Performances !\n09.50.32.08.29'
-          });
+            email_subject: 'Votre location — Vélos Performances',
+            email_intro:   'Bonjour ' + (formData.prenom || '') + ', votre contrat est enregistré.',
+            client_nom:    clientNom,
+            client_email:  clientEmail,
+            client_tel:    formData.telephone || '—',
+            num_contrat:   numContrat,
+            modele:        formData.modele_libre || formData.marque || '—',
+            date_debut:    debutStr,
+            date_fin:      finStr,
+            montant:       (formData.prix_location || '—') + ' €',
+            caution:       (formData.caution || '—') + ' €'
+          };
+          console.log('EmailJS client params size:', JSON.stringify(clientParams).length, 'bytes');
+          await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, clientParams);
           emailStatus = '📧 Confirmation envoyée à ' + clientEmail + ' + copie à ' + CONFIG.loueurEmail;
         } else {
           emailStatus = '📧 Notification envoyée à ' + CONFIG.loueurEmail;
@@ -1185,6 +1190,10 @@ window.addEventListener('load', () => {
   renderCGL();
   buildCalendar();
   prefillFromURL();
+  // Init EmailJS une seule fois au démarrage (requis v4)
+  if (CONFIG.emailjs.enabled && window.emailjs) {
+    emailjs.init({ publicKey: CONFIG.emailjs.publicKey });
+  }
 });
 
 /* =======================================================================
