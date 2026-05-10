@@ -158,8 +158,8 @@
           </select>
         </div>
         <div>
-          <label class="field-label">N° de série *</label>
-          <input type="text" name="serie" class="field-input" required>
+          <label class="field-label">N° de série <span class="normal-case font-normal text-slate-400">(à compléter ultérieurement)</span></label>
+          <input type="text" name="serie" id="serie" class="field-input" placeholder="Non communiqué pour le moment" style="background:#f1f5f9;color:#94a3b8;cursor:not-allowed;" readonly tabindex="-1">
         </div>
         <div class="sm:col-span-2">
           <label class="field-label">Modèle / désignation</label>
@@ -176,13 +176,16 @@
       </div>
 
       <div>
-        <label class="field-label">Observations / anomalies (5 lignes max)</label>
-        <div class="grid grid-cols-1 gap-2">
-          <input type="text" name="obs1" class="field-input" placeholder="1) ...">
-          <input type="text" name="obs2" class="field-input" placeholder="2) ...">
-          <input type="text" name="obs3" class="field-input" placeholder="3) ...">
-          <input type="text" name="obs4" class="field-input" placeholder="4) ...">
-          <input type="text" name="obs5" class="field-input" placeholder="5) ...">
+        <div class="flex items-center justify-between mb-2">
+          <label class="field-label">Observations / anomalies <span class="normal-case font-normal text-amber-600">— réservé au loueur</span></label>
+          <button type="button" id="obs-unlock-btn" onclick="unlockObs()" class="text-xs text-slate-500 hover:text-slate-900 underline flex items-center gap-1">🔒 Modifier (loueur)</button>
+        </div>
+        <div class="grid grid-cols-1 gap-2" id="obs-section">
+          <input type="text" name="obs1" class="field-input obs-field" placeholder="1) ..." readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
+          <input type="text" name="obs2" class="field-input obs-field" placeholder="2) ..." readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
+          <input type="text" name="obs3" class="field-input obs-field" placeholder="3) ..." readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
+          <input type="text" name="obs4" class="field-input obs-field" placeholder="4) ..." readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
+          <input type="text" name="obs5" class="field-input obs-field" placeholder="5) ..." readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
         </div>
       </div>
     </div>
@@ -205,14 +208,40 @@
     <!-- ARTICLE 4 - TARIF -->
     <div class="section-card">
       <h2 class="section-title"><span class="section-num">4</span> Tarif</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
         <div>
-          <label class="field-label">Location (€) *</label>
-          <input type="number" name="prix_location" id="f-prix_location" class="field-input" step="0.01" min="0" required>
+          <label class="field-label mb-2 block">Durée de location * <span class="normal-case font-normal text-amber-600">— réservé au loueur</span></label>
+          <div class="space-y-2">
+            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition-colors">
+              <input type="radio" name="prix_location" value="40" id="tarif-demi" required class="accent-slate-900">
+              <span class="flex-1">
+                <span class="font-semibold text-slate-800">Demi-journée</span>
+                <span class="text-slate-500 text-sm ml-1">(≤ 4h)</span>
+              </span>
+              <span class="font-bold text-slate-900">40 €</span>
+            </label>
+            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition-colors">
+              <input type="radio" name="prix_location" value="65" id="tarif-jour" class="accent-slate-900">
+              <span class="flex-1">
+                <span class="font-semibold text-slate-800">Journée</span>
+                <span class="text-slate-500 text-sm ml-1">(jusqu'à 18h)</span>
+              </span>
+              <span class="font-bold text-slate-900">65 €</span>
+            </label>
+            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition-colors" id="tarif-autre-wrap">
+              <input type="radio" name="prix_location" value="autre" id="tarif-autre" class="accent-slate-900" onchange="toggleCustomPrice()">
+              <span class="font-semibold text-slate-800">Autre durée</span>
+              <input type="number" id="prix-custom" name="prix_custom" min="1" step="1" placeholder="Montant €" class="ml-auto w-28 px-2 py-1 border border-slate-300 rounded text-sm text-right hidden" oninput="syncCustomPrice()">
+            </label>
+          </div>
         </div>
         <div>
-          <label class="field-label">Caution (€) * <span class="text-emerald-600 normal-case font-normal">— auto si vélo sélectionné</span></label>
-          <input type="number" name="caution" id="caution" class="field-input" step="0.01" min="0" required>
+          <label class="field-label mb-2 block">Caution (€) <span class="text-emerald-700 normal-case font-normal">— auto selon vélo sélectionné</span></label>
+          <div class="relative">
+            <input type="number" name="caution" id="caution" class="field-input pr-8" value="2800" readonly style="background:#f0fdf4;border-color:#86efac;cursor:not-allowed;font-weight:700;font-size:1.1rem;">
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-600 text-sm">🔒</span>
+          </div>
+          <p class="text-xs text-slate-400 mt-1">Valeur de remplacement du vélo — non encaissée</p>
         </div>
       </div>
       <div>
@@ -222,10 +251,10 @@
             <input type="radio" name="garantie" value="Chèque" required> Chèque non encaissé
           </label>
           <label class="flex items-center gap-2 p-3 border border-slate-300 rounded cursor-pointer hover:bg-slate-50">
-            <input type="radio" name="garantie" value="CB" required> CB
+            <input type="radio" name="garantie" value="CB"> CB
           </label>
-          <label class="flex items-center gap-2 p-3 border border-slate-300 rounded cursor-pointer hover:bg-slate-50">
-            <input type="radio" name="garantie" value="Empreinte bancaire" required> Empreinte bancaire
+          <label class="flex items-center gap-2 p-3 border border-slate-200 rounded opacity-40 cursor-not-allowed select-none" title="Non disponible actuellement">
+            <input type="radio" name="garantie" value="Empreinte bancaire" disabled> Empreinte bancaire <span class="text-xs ml-1 text-slate-400">(indisponible)</span>
           </label>
         </div>
       </div>
@@ -294,9 +323,9 @@
           <button type="button" onclick="clearSig('sig-client')" class="text-xs text-slate-500 hover:text-slate-900 mt-2 underline">Effacer</button>
         </div>
         <div>
-          <label class="field-label mb-2 block">Signature du loueur *</label>
-          <canvas id="sig-loueur" class="signature-canvas"></canvas>
-          <button type="button" onclick="clearSig('sig-loueur')" class="text-xs text-slate-500 hover:text-slate-900 mt-2 underline">Effacer</button>
+          <label class="field-label mb-2 block">Signature du loueur <span class="normal-case font-normal text-slate-400">— VÉLOS PERFORMANCES</span></label>
+          <canvas id="sig-loueur" class="signature-canvas has-content" style="cursor:not-allowed;pointer-events:none;"></canvas>
+          <p class="text-xs text-slate-400 mt-2">Pré-signée — SARL Vélos Performances</p>
         </div>
       </div>
     </div>
@@ -386,6 +415,31 @@ const VELO_LABEL_MAP = {
   'Dirt / BMX Race': 'dirt_bmx'
 };
 
+// Déverrouillage section anomalies (loueur uniquement)
+function unlockObs() {
+  document.querySelectorAll('.obs-field').forEach(el => {
+    el.removeAttribute('readonly');
+    el.style.background = '';
+    el.style.color = '';
+    el.style.cursor = '';
+  });
+  const btn = document.getElementById('obs-unlock-btn');
+  btn.textContent = '🔓 Modifiable';
+  btn.onclick = null;
+  btn.style.color = '#16a34a';
+}
+
+// Tarif personnalisé
+function toggleCustomPrice() {
+  const customInput = document.getElementById('prix-custom');
+  const isOther = document.getElementById('tarif-autre').checked;
+  customInput.classList.toggle('hidden', !isOther);
+  if (isOther) customInput.focus();
+}
+function syncCustomPrice() {
+  // handled in submit
+}
+
 function autoFillVelo() {
   const code = document.getElementById('velo_select').value;
   if (!code || !VELOS[code]) return;
@@ -462,18 +516,49 @@ const CGL_TEXT = [
 const signatures = {};
 
 function initSignaturePads() {
-  ['sig-client', 'sig-loueur'].forEach(id => {
-    const canvas = document.getElementById(id);
-    resizeCanvas(canvas);
-    const pad = new SignaturePad(canvas, {
-      penColor: '#0f172a',
-      backgroundColor: 'rgba(0,0,0,0)',
-      minWidth: 1,
-      maxWidth: 2.5
-    });
-    pad.addEventListener('endStroke', () => canvas.classList.add('has-content'));
-    signatures[id] = pad;
+  // Signature client (interactive)
+  const clientCanvas = document.getElementById('sig-client');
+  resizeCanvas(clientCanvas);
+  const clientPad = new SignaturePad(clientCanvas, {
+    penColor: '#0f172a',
+    backgroundColor: 'rgba(0,0,0,0)',
+    minWidth: 1,
+    maxWidth: 2.5
   });
+  clientPad.addEventListener('endStroke', () => clientCanvas.classList.add('has-content'));
+  signatures['sig-client'] = clientPad;
+
+  // Signature loueur (pré-remplie, verrouillée)
+  const loueurCanvas = document.getElementById('sig-loueur');
+  resizeCanvas(loueurCanvas);
+  const loueurPad = new SignaturePad(loueurCanvas, { penColor: '#0f172a' });
+  loueurPad.off(); // désactive toute interaction
+  signatures['sig-loueur'] = loueurPad;
+  drawLoueurSignature(loueurCanvas);
+}
+
+function drawLoueurSignature(canvas) {
+  const ctx = canvas.getContext('2d');
+  const w = canvas.offsetWidth;
+  const h = canvas.offsetHeight;
+  ctx.save();
+  ctx.fillStyle = '#0f172a';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = 'bold 14px Inter, sans-serif';
+  ctx.fillText('VÉLOS PERFORMANCES', w / 2, h / 2 - 10);
+  ctx.font = '11px Inter, sans-serif';
+  ctx.fillStyle = '#475569';
+  ctx.fillText('SARL — Ingwiller (67)', w / 2, h / 2 + 10);
+  // Trait de signature stylisé
+  ctx.beginPath();
+  ctx.moveTo(w * 0.2, h / 2 + 26);
+  ctx.bezierCurveTo(w * 0.35, h / 2 + 18, w * 0.5, h / 2 + 32, w * 0.65, h / 2 + 22);
+  ctx.bezierCurveTo(w * 0.75, h / 2 + 16, w * 0.82, h / 2 + 28, w * 0.85, h / 2 + 24);
+  ctx.strokeStyle = '#0f172a';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+  ctx.restore();
 }
 
 function resizeCanvas(canvas) {
@@ -748,17 +833,25 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
   if (signatures['sig-client'].isEmpty()) {
     toast('⚠️ La signature du locataire est requise'); return;
   }
-  if (signatures['sig-loueur'].isEmpty()) {
-    toast('⚠️ La signature du loueur est requise'); return;
-  }
+  // Signature loueur : toujours pré-remplie, pas de vérification nécessaire
 
   submitBtn.disabled = true;
   submitBtn.textContent = 'Génération...';
 
   const formData = {};
   new FormData(e.target).forEach((v, k) => formData[k] = v);
+
+  // Tarif : si "autre", lire le champ personnalisé
+  if (formData.prix_location === 'autre') {
+    const custom = document.getElementById('prix-custom').value;
+    if (!custom) { toast('⚠️ Indiquez le montant pour la durée personnalisée'); submitBtn.disabled = false; submitBtn.textContent = 'Générer le contrat'; return; }
+    formData.prix_location = custom;
+  }
+
+  // Signature client
   formData.sigClient = signatures['sig-client'].toDataURL('image/png');
-  formData.sigLoueur = signatures['sig-loueur'].toDataURL('image/png');
+  // Signature loueur — capturée depuis le canvas pré-dessiné
+  formData.sigLoueur = document.getElementById('sig-loueur').toDataURL('image/png');
 
   try {
     const { doc, numContrat } = await generatePDF(formData);
