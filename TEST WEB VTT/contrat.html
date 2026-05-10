@@ -462,7 +462,8 @@ function unlockObs() {
 // CALENDRIER DE DISPONIBILITÉS
 // Jours fermés : 0 = dimanche, 1 = lundi
 // =======================================================================
-const JOURS_FERMES = [0, 1];
+const JOURS_FERMES = []; // tous les jours disponibles
+const JOURS_SUR_RDV = [0, 1]; // dimanche et lundi sur rendez-vous
 const JOURS_FR = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'];
 const MOIS_FR = ['jan.', 'fév.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sep.', 'oct.', 'nov.', 'déc.'];
 
@@ -476,7 +477,8 @@ function buildCalendar() {
   while (shown < 14) {
     if (!JOURS_FERMES.includes(d.getDay())) { // tous les créneaux du jour affichés sans restriction horaire
       const dateStr = d.toISOString().split('T')[0];
-      const label = JOURS_FR[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS_FR[d.getMonth()];
+      const surRdv = JOURS_SUR_RDV.includes(d.getDay());
+      const label = JOURS_FR[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS_FR[d.getMonth()] + (surRdv ? ' — sur RDV' : '');
       html += `
       <details class="day-slot border border-slate-200 rounded-xl overflow-hidden">
         <summary class="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors select-none">
