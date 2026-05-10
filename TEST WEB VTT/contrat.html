@@ -44,28 +44,10 @@
   .baremee-table td:first-child { color: #475569; }
   .baremee-table td:last-child { text-align: right; font-weight: 600; color: #0f172a; }
   .info-banner { background: linear-gradient(to right, #f0fdf4, #ecfdf5); border-left: 4px solid #22c55e; padding: 0.75rem 1rem; border-radius: 0.375rem; font-size: 0.85rem; color: #14532d; }
-  .setup-banner { background: linear-gradient(135deg, #fef3c7, #fde68a); border: 1.5px solid #f59e0b; border-radius: 0.75rem; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
 </style>
 </head>
 <body class="bg-slate-50 min-h-screen">
 
-<!-- Bandeau configuration EmailJS — masqué si déjà configuré -->
-<div id="setup-banner" class="setup-banner mx-auto max-w-4xl mt-4 px-4" style="display:none">
-  <div class="flex items-start gap-3">
-    <span style="font-size:1.5rem;flex-shrink:0">⚙️</span>
-    <div>
-      <div class="font-bold text-amber-900 text-sm mb-1">EmailJS non configuré — envoi email désactivé</div>
-      <p class="text-amber-800 text-xs mb-2">Le PDF sera téléchargé localement mais pas envoyé par email. Pour activer l'envoi :</p>
-      <ol class="text-xs text-amber-800 space-y-0.5 list-decimal list-inside">
-        <li>Va sur <strong>dashboard.emailjs.com</strong> → crée un compte gratuit</li>
-        <li>"Email Services" → Add → connecte ton Gmail → note le <strong>Service ID</strong></li>
-        <li>"Email Templates" → Create → copie le template fourni dans le code → note le <strong>Template ID</strong></li>
-        <li>"Account" → "General" → copie ta <strong>Public Key</strong></li>
-        <li>Ouvre <code>contrat.html</code>, ligne ~120 : remplis les 3 valeurs et passe <code>enabled: true</code></li>
-      </ol>
-    </div>
-  </div>
-</div>
 
 <div class="max-w-4xl mx-auto px-4 py-8">
 
@@ -861,10 +843,6 @@ window.addEventListener('load', () => {
   renderCGL();
   prefillFromURL();
 
-  // Affiche le bandeau setup si EmailJS non configuré
-  if (!CONFIG.emailjs.enabled) {
-    document.getElementById('setup-banner').style.display = 'block';
-  }
 });
 
 /* =======================================================================
