@@ -44,6 +44,10 @@
   .baremee-table td:first-child { color: #475569; }
   .baremee-table td:last-child { text-align: right; font-weight: 600; color: #0f172a; }
   .info-banner { background: linear-gradient(to right, #f0fdf4, #ecfdf5); border-left: 4px solid #22c55e; padding: 0.75rem 1rem; border-radius: 0.375rem; font-size: 0.85rem; color: #14532d; }
+  .photo-thumb { position: relative; aspect-ratio: 1; border-radius: 0.5rem; overflow: hidden; border: 1px solid #e2e8f0; }
+  .photo-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .photo-thumb .del-btn { position: absolute; top: 3px; right: 3px; background: rgba(15,23,42,.75); color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .photo-thumb .del-btn:hover { background: #dc2626; }
   .slot-option { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0.85rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; cursor: pointer; background: white; transition: all 0.15s; font-size: 0.875rem; }
   .slot-option:hover { border-color: #0f172a; background: #f8fafc; }
   .slot-option input[type=radio] { accent-color: #0f172a; flex-shrink: 0; }
@@ -249,11 +253,30 @@
     <!-- ARTICLE 5 - ÉTAT -->
     <div class="section-card">
       <h2 class="section-title"><span class="section-num">5</span> État du matériel à la remise</h2>
-      <div class="info-banner mb-3">
+      <div class="info-banner mb-4">
         ✓ Le matériel est remis en parfait état de fonctionnement, sauf observations contraires reportées en section 2.
       </div>
-      <div class="bg-amber-50 border border-amber-200 rounded p-3 text-xs text-amber-900">
-        <strong>📸 Recommandé :</strong> photos du vélo (vue d'ensemble + zooms sur défauts) au départ et au retour, à conserver avec le contrat.
+
+      <!-- Zone photos -->
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <span class="field-label">Photos du vélo</span>
+            <p class="text-xs text-slate-400 mt-0.5" id="photo-bike-label">Sélectionnez un vélo pour charger ses photos</p>
+          </div>
+          <label class="cursor-pointer flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-white transition-colors" style="background:#0f172a;" onmouseover="this.style.background='#1e293b'" onmouseout="this.style.background='#0f172a'">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Ajouter des photos
+            <input type="file" accept="image/*" multiple class="hidden" onchange="addPhotos(this.files)">
+          </label>
+        </div>
+
+        <!-- Grille de miniatures -->
+        <div id="photo-grid" class="grid grid-cols-3 sm:grid-cols-5 gap-2 min-h-[4rem]">
+          <div id="photo-empty" class="col-span-3 sm:col-span-5 flex items-center justify-center py-6 border-2 border-dashed border-slate-200 rounded-xl text-slate-400 text-sm">
+            Aucune photo — elles seront sauvegardées pour ce vélo
+          </div>
+        </div>
       </div>
     </div>
 
@@ -505,6 +528,97 @@ function selectSlot(date, debut, fin, prix, creneau, jourLabel) {
   if (selected) selected.classList.add('selected');
 }
 
+// =======================================================================
+// GESTION PHOTOS PAR VÉLO (stockage localStorage)
+// =======================================================================
+let currentVeloKey = null;
+let bikePhotos = []; // tableau de base64 pour le vélo en cours
+
+function loadBikePhotos(veloKey) {
+  currentVeloKey = veloKey;
+  const stored = veloKey ? localStorage.getItem('photos_' + veloKey) : null;
+  bikePhotos = stored ? JSON.parse(stored) : [];
+  renderPhotos();
+  const lbl = document.getElementById('photo-bike-label');
+  if (lbl) {
+    lbl.textContent = veloKey && bikePhotos.length
+      ? bikePhotos.length + ' photo(s) enregistrée(s) pour ce vélo — rechargées automatiquement'
+      : veloKey
+        ? 'Aucune photo enregistrée pour ce vélo'
+        : 'Sélectionnez un vélo pour charger ses photos';
+  }
+}
+
+function saveBikePhotos() {
+  if (!currentVeloKey) return;
+  try {
+    localStorage.setItem('photos_' + currentVeloKey, JSON.stringify(bikePhotos));
+  } catch (e) {
+    toast('⚠️ Stockage photos plein — supprimez des photos');
+  }
+}
+
+function addPhotos(files) {
+  if (!currentVeloKey) { toast('⚠️ Sélectionnez d\'abord un vélo'); return; }
+  const promises = Array.from(files).map(file => new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      // Redimensionne avant stockage (max 900px, qualité 0.75)
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const max = 900;
+        const ratio = Math.min(max / img.width, max / img.height, 1);
+        canvas.width = img.width * ratio;
+        canvas.height = img.height * ratio;
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/jpeg', 0.75));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }));
+
+  Promise.all(promises).then(results => {
+    bikePhotos = bikePhotos.concat(results);
+    saveBikePhotos();
+    renderPhotos();
+    const lbl = document.getElementById('photo-bike-label');
+    if (lbl) lbl.textContent = bikePhotos.length + ' photo(s) enregistrée(s) pour ce vélo — rechargées automatiquement';
+  });
+}
+
+function removePhoto(index) {
+  bikePhotos.splice(index, 1);
+  saveBikePhotos();
+  renderPhotos();
+  const lbl = document.getElementById('photo-bike-label');
+  if (lbl) lbl.textContent = bikePhotos.length
+    ? bikePhotos.length + ' photo(s) enregistrée(s) pour ce vélo — rechargées automatiquement'
+    : 'Aucune photo enregistrée pour ce vélo';
+}
+
+function renderPhotos() {
+  const grid = document.getElementById('photo-grid');
+  const empty = document.getElementById('photo-empty');
+  if (!grid) return;
+  // Supprime les anciennes miniatures
+  grid.querySelectorAll('.photo-thumb').forEach(el => el.remove());
+
+  if (bikePhotos.length === 0) {
+    if (empty) empty.style.display = '';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+
+  bikePhotos.forEach((src, i) => {
+    const div = document.createElement('div');
+    div.className = 'photo-thumb';
+    div.innerHTML = `<img src="${src}" alt="Photo vélo ${i + 1}"><button type="button" class="del-btn" onclick="removePhoto(${i})" title="Supprimer">×</button>`;
+    grid.appendChild(div);
+  });
+}
+
 function autoFillVelo() {
   const code = document.getElementById('velo_select').value;
   if (!code || !VELOS[code]) return;
@@ -518,6 +632,8 @@ function autoFillVelo() {
     cautionInput.classList.add('auto-filled');
     setTimeout(() => cautionInput.classList.remove('auto-filled'), 2000);
   }
+  // Charge les photos enregistrées pour ce vélo
+  loadBikePhotos(code);
 }
 
 // =======================================================================
