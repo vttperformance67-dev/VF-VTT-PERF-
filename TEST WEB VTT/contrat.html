@@ -1053,6 +1053,7 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
   try {
     const { doc, numContrat } = await generatePDF(formData);
     const pdfBlob = doc.output('blob');
+    const pdfBase64 = doc.output('datauristring').split(',')[1];
     const fileName = 'Contrat_' + numContrat + '_' + (formData.nom || 'client') + '.pdf';
 
     // Stocke le PDF pour le bouton de téléchargement
@@ -1077,15 +1078,17 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
         const finStr   = formData.date_fin   ? new Date(formData.date_fin).toLocaleString('fr-FR')   : '—';
 
         const baseParams = {
-          client_nom:   clientNom,
-          client_email: clientEmail || '—',
-          client_tel:   formData.telephone || '—',
-          num_contrat:  numContrat,
-          modele:       formData.modele_libre || formData.marque || '—',
-          date_debut:   debutStr,
-          date_fin:     finStr,
-          montant:      (formData.prix_location || '—') + ' €',
-          caution:      (formData.caution || '—') + ' €'
+          client_nom:    clientNom,
+          client_email:  clientEmail || '—',
+          client_tel:    formData.telephone || '—',
+          num_contrat:   numContrat,
+          modele:        formData.modele_libre || formData.marque || '—',
+          date_debut:    debutStr,
+          date_fin:      finStr,
+          montant:       (formData.prix_location || '—') + ' €',
+          caution:       (formData.caution || '—') + ' €',
+          pdf_content:   pdfBase64,
+          pdf_filename:  fileName
         };
 
         // 1️⃣ Email au loueur — toujours envoyé
@@ -1218,10 +1221,15 @@ window.addEventListener('load', () => {
    <p>—<br>SARL Vélos Performances<br>32 Faubourg du Général Philippot, 67340 Ingwiller<br>09.50.32.08.29</p>
    ─────────────────────────────────────────────
 
-   ✅ Aucune pièce jointe — le PDF est téléchargé directement par le client.
-      Le plan gratuit EmailJS (200 envois/mois) suffit.
+   3. Onglet "Attachments" dans le template (pour joindre le PDF) :
+      Name    : {{pdf_filename}}
+      Content : {{pdf_content}}
+      (Type   : application/pdf)
 
-   3. Save → note le Template ID
+      ⚠️ Le plan gratuit EmailJS bloque les pièces jointes lourdes (~50KB max).
+         Si le PDF est refusé → passe au plan Personal (~10€/mois, jusqu'à 200KB).
+
+   4. Save → note le Template ID
    ======================================================================= */
 </script>
 </body>
