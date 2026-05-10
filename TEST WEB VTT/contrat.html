@@ -44,6 +44,14 @@
   .baremee-table td:first-child { color: #475569; }
   .baremee-table td:last-child { text-align: right; font-weight: 600; color: #0f172a; }
   .info-banner { background: linear-gradient(to right, #f0fdf4, #ecfdf5); border-left: 4px solid #22c55e; padding: 0.75rem 1rem; border-radius: 0.375rem; font-size: 0.85rem; color: #14532d; }
+  .slot-option { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0.85rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; cursor: pointer; background: white; transition: all 0.15s; font-size: 0.875rem; }
+  .slot-option:hover { border-color: #0f172a; background: #f8fafc; }
+  .slot-option input[type=radio] { accent-color: #0f172a; flex-shrink: 0; }
+  .slot-option.selected { border-color: #0f172a; background: #f0fdf4; border-color: #22c55e; }
+  details.day-slot summary { list-style: none; }
+  details.day-slot summary::-webkit-details-marker { display: none; }
+  details.day-slot[open] summary .chevron { transform: rotate(180deg); }
+  .chevron { transition: transform 0.2s; }
 </style>
 </head>
 <body class="bg-slate-50 min-h-screen">
@@ -136,41 +144,25 @@
         </select>
       </div>
 
+      <!-- Champs cachés pour le PDF (auto-remplis par autoFillVelo) -->
+      <input type="hidden" name="type_velo" id="type_velo">
+      <input type="hidden" name="marque" id="marque">
+
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-        <div>
-          <label class="field-label">Type *</label>
-          <select name="type_velo" id="type_velo" class="field-select" required>
-            <option value="">—</option>
-            <option value="VAE">VAE</option>
-            <option value="MÉCA">MÉCA</option>
-          </select>
-        </div>
-        <div>
-          <label class="field-label">Marque *</label>
-          <select name="marque" id="marque" class="field-select" required>
-            <option value="">—</option>
-            <option value="SUNN">SUNN</option>
-            <option value="MOUSTACHE">MOUSTACHE</option>
-            <option value="KONA">KONA</option>
-            <option value="NORCO">NORCO</option>
-            <option value="FORBIDDEN">FORBIDDEN</option>
-            <option value="AUTRE">AUTRE</option>
-          </select>
-        </div>
         <div>
           <label class="field-label">N° de série <span class="normal-case font-normal text-slate-400">(à compléter ultérieurement)</span></label>
           <input type="text" name="serie" id="serie" class="field-input" placeholder="Non communiqué pour le moment" style="background:#f1f5f9;color:#94a3b8;cursor:not-allowed;" readonly tabindex="-1">
         </div>
         <div class="sm:col-span-2">
           <label class="field-label">Modèle / désignation</label>
-          <input type="text" name="modele_libre" id="modele_libre" class="field-input" placeholder="ex : Moustache Trail 150.2 — Taille M">
+          <input type="text" name="modele_libre" id="modele_libre" class="field-input" placeholder="Sélectionnez un vélo ci-dessus">
         </div>
         <div>
-          <label class="field-label">Taille</label>
-          <input type="text" name="taille" id="f-taille" class="field-input" placeholder="S / M / L / XL">
+          <label class="field-label">Taille <span class="normal-case font-normal text-slate-400">— uniquement disponible en L</span></label>
+          <input type="text" name="taille" id="f-taille" class="field-input" value="L" readonly style="background:#f1f5f9;color:#94a3b8;cursor:not-allowed;" tabindex="-1">
         </div>
-        <div class="sm:col-span-3">
-          <label class="field-label">Accessoires</label>
+        <div class="sm:col-span-2">
+          <label class="field-label">Accessoires inclus</label>
           <input type="text" name="accessoires" class="field-input" placeholder="Casque, antivol, sacoche, protections...">
         </div>
       </div>
@@ -190,77 +182,52 @@
       </div>
     </div>
 
-    <!-- ARTICLE 3 - DURÉE -->
+    <!-- ARTICLE 3 - RÉSERVATION -->
     <div class="section-card">
-      <h2 class="section-title"><span class="section-num">3</span> Durée</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <h2 class="section-title"><span class="section-num">3</span> Date &amp; Créneau</h2>
+
+      <!-- Inputs cachés remplis par le calendrier -->
+      <input type="hidden" name="date_debut" id="f-date_debut">
+      <input type="hidden" name="date_fin" id="f-date_fin">
+      <input type="hidden" name="prix_location" id="h-prix_location">
+
+      <!-- Résumé du créneau sélectionné -->
+      <div id="slot-summary" class="hidden mb-4 flex items-center gap-3 p-3 rounded-lg" style="background:#f0fdf4;border:1px solid #86efac;">
+        <span class="text-xl">✅</span>
         <div>
-          <label class="field-label">Début * (date + heure)</label>
-          <input type="datetime-local" name="date_debut" id="f-date_debut" class="field-input" required>
-        </div>
-        <div>
-          <label class="field-label">Fin * (date + heure)</label>
-          <input type="datetime-local" name="date_fin" id="f-date_fin" class="field-input" required>
+          <p class="font-semibold text-emerald-800 text-sm" id="slot-summary-text"></p>
+          <p class="text-xs text-emerald-600">Horaires modifiables à la demande du client</p>
         </div>
       </div>
-      <p class="text-xs text-slate-400 mt-3 flex items-center gap-1">
-        <span>🕐</span> Horaires pré-remplis selon la formule choisie — modifiables à la demande du client.
-      </p>
+
+      <!-- Calendrier des 14 prochains jours ouvrés -->
+      <div id="calendar-list" class="space-y-2"></div>
+
+      <!-- Nous contacter pour durée spéciale -->
+      <div class="mt-3 flex items-center justify-between p-3 border border-dashed border-slate-300 rounded-lg">
+        <span class="text-sm text-slate-500">Durée spéciale ou multi-jours ?</span>
+        <a href="https://wa.me/33767674573?text=Bonjour%20VTT%20Performance%2C%20je%20souhaite%20louer%20un%20v%C3%A9lo%20sur%20une%20dur%C3%A9e%20sp%C3%A9ciale." target="_blank" rel="noopener" class="text-sm font-semibold text-emerald-700 hover:underline flex items-center gap-1">💬 Nous contacter</a>
+      </div>
     </div>
 
     <!-- ARTICLE 4 - TARIF -->
     <div class="section-card">
-      <h2 class="section-title"><span class="section-num">4</span> Tarif</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
+      <h2 class="section-title"><span class="section-num">4</span> Tarif &amp; Caution</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
         <div>
-          <label class="field-label mb-2 block">Durée de location * <span class="normal-case font-normal text-amber-600">— réservé au loueur</span></label>
-          <div class="space-y-2">
-            <!-- Demi-journée -->
-            <div class="border border-slate-200 rounded-lg overflow-hidden">
-              <label class="flex items-center gap-3 p-3 cursor-pointer hover:bg-slate-50 transition-colors">
-                <input type="radio" name="prix_location" value="40" id="tarif-demi" required class="accent-slate-900" onchange="onTarifChange('demi')">
-                <span class="flex-1">
-                  <span class="font-semibold text-slate-800">Demi-journée</span>
-                  <span class="text-slate-500 text-sm ml-1">(4h)</span>
-                </span>
-                <span class="font-bold text-slate-900">40 €</span>
-              </label>
-              <!-- Sous-choix matin / après-midi -->
-              <div id="demi-subopt" class="hidden border-t border-slate-100 bg-slate-50 px-4 py-2 flex gap-4">
-                <label class="flex items-center gap-2 text-sm cursor-pointer">
-                  <input type="radio" name="demi_creneau" value="matin" id="demi-matin" class="accent-slate-900" onchange="autoFillDates()">
-                  <span>🌅 Matin <span class="text-slate-400">(8h–12h)</span></span>
-                </label>
-                <label class="flex items-center gap-2 text-sm cursor-pointer">
-                  <input type="radio" name="demi_creneau" value="aprem" id="demi-aprem" class="accent-slate-900" onchange="autoFillDates()">
-                  <span>☀️ Après-midi <span class="text-slate-400">(14h–18h)</span></span>
-                </label>
-              </div>
-            </div>
-            <!-- Journée -->
-            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition-colors">
-              <input type="radio" name="prix_location" value="65" id="tarif-jour" class="accent-slate-900" onchange="onTarifChange('jour')">
-              <span class="flex-1">
-                <span class="font-semibold text-slate-800">Journée</span>
-                <span class="text-slate-500 text-sm ml-1">(8h–18h)</span>
-              </span>
-              <span class="font-bold text-slate-900">65 €</span>
-            </label>
-            <!-- Autre -->
-            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition-colors" id="tarif-autre-wrap">
-              <input type="radio" name="prix_location" value="autre" id="tarif-autre" class="accent-slate-900" onchange="onTarifChange('autre')">
-              <span class="font-semibold text-slate-800">Autre durée</span>
-              <input type="number" id="prix-custom" name="prix_custom" min="1" step="1" placeholder="Montant €" class="ml-auto w-28 px-2 py-1 border border-slate-300 rounded text-sm text-right hidden">
-            </label>
+          <label class="field-label mb-1 block">Montant location</label>
+          <div class="p-3 rounded-lg flex items-center gap-3" style="background:#f8fafc;border:1px solid #e2e8f0;">
+            <span class="text-slate-400 text-sm">Sélectionnez un créneau (section 3)</span>
+            <span id="tarif-display" class="ml-auto font-bold text-slate-900 text-lg"></span>
           </div>
         </div>
         <div>
-          <label class="field-label mb-2 block">Caution (€) <span class="text-emerald-700 normal-case font-normal">— auto selon vélo sélectionné</span></label>
+          <label class="field-label mb-1 block">Caution <span class="text-emerald-700 normal-case font-normal">— auto selon vélo</span></label>
           <div class="relative">
             <input type="number" name="caution" id="caution" class="field-input pr-8" value="2800" readonly style="background:#f0fdf4;border-color:#86efac;cursor:not-allowed;font-weight:700;font-size:1.1rem;">
             <span class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-600 text-sm">🔒</span>
           </div>
-          <p class="text-xs text-slate-400 mt-1">Valeur de remplacement du vélo — non encaissée</p>
+          <p class="text-xs text-slate-400 mt-1">Valeur de remplacement — non encaissée</p>
         </div>
       </div>
       <div>
@@ -468,41 +435,75 @@ function unlockObs() {
   btn.style.color = '#16a34a';
 }
 
-// Gestion changement de tarif
-function onTarifChange(type) {
-  // Affiche/masque les sous-options demi-journée
-  document.getElementById('demi-subopt').classList.toggle('hidden', type !== 'demi');
-  // Affiche/masque le champ montant custom
-  document.getElementById('prix-custom').classList.toggle('hidden', type !== 'autre');
-  if (type === 'autre') { document.getElementById('prix-custom').focus(); return; }
-  if (type === 'jour') { autoFillDates(); }
+// =======================================================================
+// CALENDRIER DE DISPONIBILITÉS
+// Jours fermés : 0 = dimanche, 1 = lundi
+// =======================================================================
+const JOURS_FERMES = [0, 1];
+const JOURS_FR = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'];
+const MOIS_FR = ['jan.', 'fév.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sep.', 'oct.', 'nov.', 'déc.'];
+
+function buildCalendar() {
+  const list = document.getElementById('calendar-list');
+  let html = '';
+  let shown = 0;
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  d.setDate(d.getDate() + 1); // commence demain
+
+  while (shown < 14) {
+    if (!JOURS_FERMES.includes(d.getDay())) {
+      const dateStr = d.toISOString().split('T')[0];
+      const label = JOURS_FR[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS_FR[d.getMonth()];
+      html += `
+      <details class="day-slot border border-slate-200 rounded-xl overflow-hidden">
+        <summary class="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors select-none">
+          <span class="font-semibold text-slate-800 text-sm">${label}</span>
+          <svg class="chevron w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+        </summary>
+        <div class="px-4 pb-3 pt-2 space-y-2 border-t border-slate-100 bg-slate-50">
+          <label class="slot-option" id="slot-${dateStr}-matin">
+            <input type="radio" name="slot" value="${dateStr}_matin" onchange="selectSlot('${dateStr}','08:00','12:00',40,'Matin (8h–12h)','${label}')">
+            <span class="flex-1">🌅 <strong>Matin</strong> <span class="text-slate-400">(8h–12h)</span></span>
+            <span class="font-bold text-slate-900">40 €</span>
+          </label>
+          <label class="slot-option" id="slot-${dateStr}-aprem">
+            <input type="radio" name="slot" value="${dateStr}_aprem" onchange="selectSlot('${dateStr}','14:00','18:00',40,'Après-midi (14h–18h)','${label}')">
+            <span class="flex-1">☀️ <strong>Après-midi</strong> <span class="text-slate-400">(14h–18h)</span></span>
+            <span class="font-bold text-slate-900">40 €</span>
+          </label>
+          <label class="slot-option" id="slot-${dateStr}-jour">
+            <input type="radio" name="slot" value="${dateStr}_jour" onchange="selectSlot('${dateStr}','08:00','18:00',65,'Journée (8h–18h)','${label}')">
+            <span class="flex-1">📅 <strong>Journée complète</strong> <span class="text-slate-400">(8h–18h)</span></span>
+            <span class="font-bold text-slate-900">65 €</span>
+          </label>
+        </div>
+      </details>`;
+      shown++;
+    }
+    d.setDate(d.getDate() + 1);
+  }
+  list.innerHTML = html;
 }
 
-// Auto-remplissage des horaires selon la formule sélectionnée
-function autoFillDates() {
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  const mm = String(today.getMonth() + 1).padStart(2, '0');
-  const dd = String(today.getDate()).padStart(2, '0');
-  const base = yyyy + '-' + mm + '-' + dd;
+function selectSlot(date, debut, fin, prix, creneau, jourLabel) {
+  document.getElementById('f-date_debut').value = date + 'T' + debut;
+  document.getElementById('f-date_fin').value   = date + 'T' + fin;
+  document.getElementById('h-prix_location').value = prix;
 
-  const debutEl = document.getElementById('f-date_debut');
-  const finEl = document.getElementById('f-date_fin');
+  // Met à jour l'affichage tarif section 4
+  const tarifDisplay = document.getElementById('tarif-display');
+  if (tarifDisplay) tarifDisplay.textContent = prix + ' €';
 
-  const demiMatin = document.getElementById('demi-matin');
-  const demiAprem = document.getElementById('demi-aprem');
-  const jourSel = document.getElementById('tarif-jour');
+  // Résumé visible
+  document.getElementById('slot-summary-text').textContent = jourLabel + ' — ' + creneau + ' — ' + prix + ' €';
+  document.getElementById('slot-summary').classList.remove('hidden');
 
-  if (jourSel && jourSel.checked) {
-    debutEl.value = base + 'T08:00';
-    finEl.value   = base + 'T18:00';
-  } else if (demiMatin && demiMatin.checked) {
-    debutEl.value = base + 'T08:00';
-    finEl.value   = base + 'T12:00';
-  } else if (demiAprem && demiAprem.checked) {
-    debutEl.value = base + 'T14:00';
-    finEl.value   = base + 'T18:00';
-  }
+  // Style "sélectionné" sur le label
+  document.querySelectorAll('.slot-option').forEach(el => el.classList.remove('selected'));
+  const slotKey = date + '-' + (debut === '08:00' && fin === '12:00' ? 'matin' : debut === '14:00' ? 'aprem' : 'jour');
+  const selected = document.getElementById('slot-' + slotKey);
+  if (selected) selected.classList.add('selected');
 }
 
 function autoFillVelo() {
@@ -895,6 +896,11 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
   if (!document.getElementById('accept-cgl').checked) {
     toast('⚠️ Vous devez accepter les CGL pour continuer'); return;
   }
+  if (!document.getElementById('h-prix_location').value) {
+    toast('⚠️ Sélectionnez un créneau de location (section 3)');
+    document.getElementById('calendar-list').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
   if (signatures['sig-client'].isEmpty()) {
     toast('⚠️ La signature du locataire est requise'); return;
   }
@@ -905,13 +911,6 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
 
   const formData = {};
   new FormData(e.target).forEach((v, k) => formData[k] = v);
-
-  // Tarif : si "autre", lire le champ personnalisé
-  if (formData.prix_location === 'autre') {
-    const custom = document.getElementById('prix-custom').value;
-    if (!custom) { toast('⚠️ Indiquez le montant pour la durée personnalisée'); submitBtn.disabled = false; submitBtn.textContent = 'Générer le contrat'; return; }
-    formData.prix_location = custom;
-  }
 
   // Signature client
   formData.sigClient = signatures['sig-client'].toDataURL('image/png');
@@ -1043,8 +1042,8 @@ function resetForm() {
 window.addEventListener('load', () => {
   initSignaturePads();
   renderCGL();
+  buildCalendar();
   prefillFromURL();
-
 });
 
 /* =======================================================================
