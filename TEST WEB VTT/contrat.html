@@ -1061,36 +1061,59 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
 
     let emailStatus = '';
 
-    // Envoi email via EmailJS — notification récap au loueur uniquement
-    // (le PDF n'est pas joint par email — trop volumineux pour EmailJS gratuit)
+    // Envoi email via EmailJS
+    // ⚠️ IMPORTANT — Dans le dashboard EmailJS, template_gavp8b9 :
+    //   • Champ "To Email" doit être : {{to_email}}
+    //   • Champ "Reply To"  doit être : {{reply_to}}
+    //   • Champ "Subject"   doit être : {{email_subject}}
+    // Sans ça, le destinataire reste vide et l'envoi échoue.
     if (CONFIG.emailjs.enabled && window.emailjs) {
       try {
         emailjs.init({ publicKey: CONFIG.emailjs.publicKey });
 
         const clientNom = ((formData.nom || '') + ' ' + (formData.prenom || '')).trim();
+        const clientEmail = (formData.email || '').trim();
         const debutStr = formData.date_debut ? new Date(formData.date_debut).toLocaleString('fr-FR') : '—';
         const finStr   = formData.date_fin   ? new Date(formData.date_fin).toLocaleString('fr-FR')   : '—';
 
+        const baseParams = {
+          client_nom:   clientNom,
+          client_email: clientEmail || '—',
+          client_tel:   formData.telephone || '—',
+          num_contrat:  numContrat,
+          modele:       formData.modele_libre || formData.marque || '—',
+          date_debut:   debutStr,
+          date_fin:     finStr,
+          montant:      (formData.prix_location || '—') + ' €',
+          caution:      (formData.caution || '—') + ' €'
+        };
+
+        // 1️⃣ Email au loueur — toujours envoyé
         await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
+          ...baseParams,
           to_email:      CONFIG.loueurEmail,
-          reply_to:      formData.email || CONFIG.loueurEmail,
-          email_subject: 'Nouveau contrat ' + numContrat + ' — ' + clientNom,
-          email_intro:   'Un nouveau contrat de location vient d\'être signé en magasin.',
-          client_nom:    clientNom,
-          client_email:  formData.email || '—',
-          client_tel:    formData.telephone || '—',
-          num_contrat:   numContrat,
-          modele:        formData.modele_libre || formData.marque || '—',
-          date_debut:    debutStr,
-          date_fin:      finStr,
-          montant:       (formData.prix_location || '—') + ' €',
-          caution:       (formData.caution || '—') + ' €'
+          reply_to:      clientEmail || CONFIG.loueurEmail,
+          email_subject: '[Contrat ' + numContrat + '] ' + clientNom,
+          email_intro:   'Nouveau contrat de location signé en magasin. Le client télécharge son exemplaire PDF directement.'
         });
 
-        emailStatus = '📧 Notification envoyée à ' + CONFIG.loueurEmail;
+        // 2️⃣ Email au client — si une adresse est renseignée
+        if (clientEmail) {
+          await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
+            ...baseParams,
+            to_email:      clientEmail,
+            reply_to:      CONFIG.loueurEmail,
+            email_subject: 'Votre réservation — Vélos Performances (' + numContrat + ')',
+            email_intro:   'Bonjour ' + (formData.prenom || '') + ',\n\nVotre contrat de location a bien été enregistré. Vous pouvez télécharger votre exemplaire PDF depuis la page de confirmation.\n\nÀ bientôt chez Vélos Performances !\n09.50.32.08.29'
+          });
+          emailStatus = '📧 Confirmation envoyée à ' + clientEmail + ' + copie à ' + CONFIG.loueurEmail;
+        } else {
+          emailStatus = '📧 Notification envoyée à ' + CONFIG.loueurEmail;
+        }
+
       } catch (emailErr) {
         console.error('EmailJS error:', emailErr);
-        emailStatus = '⚠️ Erreur envoi email — code : ' + (emailErr.text || emailErr.message || JSON.stringify(emailErr));
+        emailStatus = '⚠️ Erreur email : ' + (emailErr.text || emailErr.message || JSON.stringify(emailErr));
       }
     } else {
       emailStatus = 'Notification email désactivée.';
