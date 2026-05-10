@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contrat de location — Vélos Performances</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { font-family: 'Inter', system-ui, sans-serif; }
+  .field-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; }
+  .field-input, .field-select, .field-textarea {
+    width: 100%; padding: 0.625rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 0.375rem;
+    font-size: 0.9rem; background: white; transition: all 0.15s;
+  }
+  .field-input:focus, .field-select:focus, .field-textarea:focus {
+    outline: none; border-color: #0f172a; box-shadow: 0 0 0 3px rgba(15,23,42,0.1);
+  }
+  .field-input.auto-filled { background: #f0fdf4; border-color: #86efac; }
+  .section-card { background: white; border: 1px solid #e2e8f0; border-radius: 0.75rem; padding: 1.5rem; }
+  .section-title { font-weight: 700; font-size: 1rem; color: #0f172a; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 2px solid #f1f5f9; display: flex; align-items: center; gap: 0.5rem; }
+  .section-num { background: #0f172a; color: white; width: 1.5rem; height: 1.5rem; border-radius: 0.375rem; display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+  canvas.signature-canvas { background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 0.5rem; cursor: crosshair; touch-action: none; width: 100%; height: 160px; }
+  canvas.signature-canvas.has-content { border-style: solid; border-color: #0f172a; background: white; }
+  .btn-primary { background: #0f172a; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; transition: all 0.15s; }
+  .btn-primary:hover { background: #1e293b; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+  .btn-primary:disabled { background: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn-secondary { background: white; color: #0f172a; padding: 0.5rem 1rem; border: 1px solid #cbd5e1; border-radius: 0.5rem; font-weight: 500; font-size: 0.875rem; transition: all 0.15s; }
+  .btn-secondary:hover { background: #f8fafc; border-color: #94a3b8; }
+  .modal-overlay { background: rgba(15,23,42,0.5); backdrop-filter: blur(4px); }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .animate-slide-up { animation: slideUp 0.3s ease-out; }
+  .check-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0; font-size: 0.85rem; color: #334155; }
+  .check-row input[type=checkbox] { width: 1rem; height: 1rem; accent-color: #0f172a; }
+  .baremee-table { width: 100%; font-size: 0.8rem; }
+  .baremee-table tr { border-bottom: 1px solid #f1f5f9; }
+  .baremee-table tr:last-child { border-bottom: none; }
+  .baremee-table td { padding: 0.4rem 0.5rem; }
+  .baremee-table td:first-child { color: #475569; }
+  .baremee-table td:last-child { text-align: right; font-weight: 600; color: #0f172a; }
+  .info-banner { background: linear-gradient(to right, #f0fdf4, #ecfdf5); border-left: 4px solid #22c55e; padding: 0.75rem 1rem; border-radius: 0.375rem; font-size: 0.85rem; color: #14532d; }
+  .setup-banner { background: linear-gradient(135deg, #fef3c7, #fde68a); border: 1.5px solid #f59e0b; border-radius: 0.75rem; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+</style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+
+<!-- Bandeau configuration EmailJS — masqué si déjà configuré -->
+<div id="setup-banner" class="setup-banner mx-auto max-w-4xl mt-4 px-4" style="display:none">
+  <div class="flex items-start gap-3">
+    <span style="font-size:1.5rem;flex-shrink:0">⚙️</span>
+    <div>
+      <div class="font-bold text-amber-900 text-sm mb-1">EmailJS non configuré — envoi email désactivé</div>
+      <p class="text-amber-800 text-xs mb-2">Le PDF sera téléchargé localement mais pas envoyé par email. Pour activer l'envoi :</p>
+      <ol class="text-xs text-amber-800 space-y-0.5 list-decimal list-inside">
+        <li>Va sur <strong>dashboard.emailjs.com</strong> → crée un compte gratuit</li>
+        <li>"Email Services" → Add → connecte ton Gmail → note le <strong>Service ID</strong></li>
+        <li>"Email Templates" → Create → copie le template fourni dans le code → note le <strong>Template ID</strong></li>
+        <li>"Account" → "General" → copie ta <strong>Public Key</strong></li>
+        <li>Ouvre <code>contrat.html</code>, ligne ~120 : remplis les 3 valeurs et passe <code>enabled: true</code></li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="max-w-4xl mx-auto px-4 py-8">
+
+  <!-- Header -->
+  <header class="bg-white border border-slate-200 rounded-xl p-6 mb-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div>
+        <div class="flex items-center gap-3 mb-1">
+          <a href="index.html" class="text-xs text-slate-500 hover:text-slate-800 flex items-center gap-1 transition-colors">
+            ← Retour au site
+          </a>
+        </div>
+        <h1 class="text-2xl font-bold text-slate-900">VÉLOS PERFORMANCES</h1>
+        <p class="text-sm text-slate-600 mt-1">Contrat de location de vélo</p>
+      </div>
+      <div class="text-xs text-slate-500 text-right">
+        <div>SARL au capital de 5 000 €</div>
+        <div>941 614 653 R.C.S. Saverne</div>
+        <div>32 Faubourg du Général Philippot, 67340 Ingwiller</div>
+        <div>09.50.32.08.29 — vttperformance67@gmail.com</div>
+      </div>
+    </div>
+  </header>
+
+  <form id="contract-form" class="space-y-6">
+
+    <!-- LOCATAIRE -->
+    <div class="section-card">
+      <h2 class="section-title"><span class="section-num">1</span> Locataire</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="field-label">Nom *</label>
+          <input type="text" name="nom" id="f-nom" class="field-input" required>
+        </div>
+        <div>
+          <label class="field-label">Prénom *</label>
+          <input type="text" name="prenom" id="f-prenom" class="field-input" required>
+        </div>
+        <div class="sm:col-span-2">
+          <label class="field-label">Adresse *</label>
+          <input type="text" name="adresse" id="f-adresse" class="field-input" placeholder="N° et rue, code postal, ville" required>
+        </div>
+        <div>
+          <label class="field-label">Téléphone *</label>
+          <input type="tel" name="telephone" id="f-telephone" class="field-input" required>
+        </div>
+        <div>
+          <label class="field-label">Email *</label>
+          <input type="email" name="email" id="f-email" class="field-input" required>
+        </div>
+        <div class="sm:col-span-2">
+          <label class="field-label">Pièce d'identité n° *</label>
+          <input type="text" name="piece_identite" class="field-input" placeholder="CNI / Permis / Passeport — n°" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARTICLE 2 - MATÉRIEL -->
+    <div class="section-card">
+      <h2 class="section-title"><span class="section-num">2</span> Matériel</h2>
+
+      <div class="mb-4">
+        <label class="field-label">Vélo loué * <span class="text-emerald-600 normal-case font-normal">— sélectionne pour auto-remplir la caution</span></label>
+        <select name="velo_select" id="velo_select" class="field-select" onchange="autoFillVelo()" required>
+          <option value="">— Sélectionner un vélo —</option>
+          <optgroup label="VAE / VTTAE">
+            <option value="moustache_trail_150_2_750">Moustache Trail 150.2 750Wh — Bosch CX 100Nm</option>
+            <option value="moustache_trail_150_2_625">Moustache Trail 150.2 625Wh — Bosch CX</option>
+            <option value="sunn_rage_500">SUNN Rage 500Wh — Bosch Performance</option>
+            <option value="sunn_charger_750">SUNN Charger 750Wh — Bosch CX</option>
+            <option value="sunn_one_750">SUNN One 750Wh — Bosch CX</option>
+          </optgroup>
+          <optgroup label="VTC Électrique">
+            <option value="sunn_start">SUNN Start — Bosch Active 40Nm 400Wh</option>
+            <option value="sunn_skill">SUNN Skill — Bosch 75Nm 500Wh</option>
+          </optgroup>
+          <optgroup label="VTT mécanique">
+            <option value="vtt_meca_haut">VTT haut de gamme</option>
+            <option value="vtt_meca_milieu">VTT milieu de gamme</option>
+            <option value="vtt_meca_entree">VTT entrée de gamme</option>
+          </optgroup>
+          <optgroup label="Autres">
+            <option value="dirt_bmx">Dirt / BMX Race</option>
+            <option value="autre">Autre (à préciser)</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+        <div>
+          <label class="field-label">Type *</label>
+          <select name="type_velo" id="type_velo" class="field-select" required>
+            <option value="">—</option>
+            <option value="VAE">VAE</option>
+            <option value="MÉCA">MÉCA</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Marque *</label>
+          <select name="marque" id="marque" class="field-select" required>
+            <option value="">—</option>
+            <option value="SUNN">SUNN</option>
+            <option value="MOUSTACHE">MOUSTACHE</option>
+            <option value="KONA">KONA</option>
+            <option value="NORCO">NORCO</option>
+            <option value="FORBIDDEN">FORBIDDEN</option>
+            <option value="AUTRE">AUTRE</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">N° de série *</label>
+          <input type="text" name="serie" class="field-input" required>
+        </div>
+        <div class="sm:col-span-2">
+          <label class="field-label">Modèle / désignation</label>
+          <input type="text" name="modele_libre" id="modele_libre" class="field-input" placeholder="ex : Moustache Trail 150.2 — Taille M">
+        </div>
+        <div>
+          <label class="field-label">Taille</label>
+          <input type="text" name="taille" id="f-taille" class="field-input" placeholder="S / M / L / XL">
+        </div>
+        <div class="sm:col-span-3">
+          <label class="field-label">Accessoires</label>
+          <input type="text" name="accessoires" class="field-input" placeholder="Casque, antivol, sacoche, protections...">
+        </div>
+      </div>
+
+      <div>
+        <label class="field-label">Observations / anomalies (5 lignes max)</label>
+        <div class="grid grid-cols-1 gap-2">
+          <input type="text" name="obs1" class="field-input" placeholder="1) ...">
+          <input type="text" name="obs2" class="field-input" placeholder="2) ...">
+          <input type="text" name="obs3" class="field-input" placeholder="3) ...">
+          <input type="text" name="obs4" class="field-input" placeholder="4) ...">
+          <input type="text" name="obs5" class="field-input" placeholder="5) ...">
+        </div>
+      </div>
+    </div>
+
+    <!-- ARTICLE 3 - DURÉE -->
+    <div class="section-card">
+      <h2 class="section-title"><span class="section-num">3</span> Durée</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="field-label">Début * (date + heure)</label>
+          <input type="datetime-local" name="date_debut" id="f-date_debut" class="field-input" required>
+        </div>
+        <div>
+          <label class="field-label">Fin * (date + heure)</label>
+          <input type="datetime-local" name="date_fin" id="f-date_fin" class="field-input" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARTICLE 4 - TARIF -->
+    <div class="section-card">
+      <h2 class="section-title"><span class="section-num">4</span> Tarif</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="field-label">Location (€) *</label>
+          <input type="number" name="prix_location" id="f-prix_location" class="field-input" step="0.01" min="0" required>
+        </div>
+        <div>
+          <label class="field-label">Caution (€) * <span class="text-emerald-600 normal-case font-normal">— auto si vélo sélectionné</span></label>
+          <input type="number" name="caution" id="caution" class="field-input" step="0.01" min="0" required>
+        </div>
+      </div>
+      <div>
+        <label class="field-label mb-2 block">Mode de garantie *</label>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <label class="flex items-center gap-2 p-3 border border-slate-300 rounded cursor-pointer hover:bg-slate-50">
+            <input type="radio" name="garantie" value="Chèque" required> Chèque non encaissé
+          </label>
+          <label class="flex items-center gap-2 p-3 border border-slate-300 rounded cursor-pointer hover:bg-slate-50">
+            <input type="radio" name="garantie" value="CB" required> CB
+          </label>
+          <label class="flex items-center gap-2 p-3 border border-slate-300 rounded cursor-pointer hover:bg-slate-50">
+            <input type="radio" name="garantie" value="Empreinte bancaire" required> Empreinte bancaire
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARTICLE 5 - ÉTAT -->
+    <div class="section-card">
+      <h2 class="section-title"><span class="section-num">5</span> État du matériel à la remise</h2>
+      <div class="info-banner mb-3">
+        ✓ Le matériel est remis en parfait état de fonctionnement, sauf observations contraires reportées en section 2.
+      </div>
+      <div class="bg-amber-50 border border-amber-200 rounded p-3 text-xs text-amber-900">
+        <strong>📸 Recommandé :</strong> photos du vélo (vue d'ensemble + zooms sur défauts) au départ et au retour, à conserver avec le contrat.
+      </div>
+    </div>
+
+    <!-- SÉCURITÉ & RESPONSABILITÉ -->
+    <div class="section-card">
+      <h2 class="section-title"><span class="section-num">6</span> Sécurité &amp; Responsabilité <span class="text-xs font-normal text-slate-500">— le locataire reconnaît</span></h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-1">
+        <label class="check-row"><input type="checkbox" checked disabled> Casque recommandé</label>
+        <label class="check-row"><input type="checkbox" checked disabled> Respect du code de la route</label>
+        <label class="check-row"><input type="checkbox" checked disabled> Pas d'alcool ni stupéfiants</label>
+        <label class="check-row"><input type="checkbox" checked disabled> Pas de compétition</label>
+        <label class="check-row"><input type="checkbox" checked disabled> Pas de modification du matériel</label>
+        <label class="check-row"><input type="checkbox" checked disabled> Toute casse, perte, vol ou dommage à la charge du locataire</label>
+      </div>
+    </div>
+
+    <!-- BARÈME -->
+    <div class="section-card">
+      <h2 class="section-title"><span class="section-num">7</span> Barème de facturation <span class="text-xs font-normal text-slate-500">— hors main d'œuvre</span></h2>
+      <table class="baremee-table">
+        <tr><td>Chambre à air</td><td>5 – 13 €</td></tr>
+        <tr><td>Pneu</td><td>30 – 85 €</td></tr>
+        <tr><td>Dérailleur</td><td>30 – 80 €</td></tr>
+        <tr><td>Cassette</td><td>30 – 150 €</td></tr>
+        <tr><td>Chaîne</td><td>15 – 85 €</td></tr>
+        <tr><td>Clef batterie</td><td>50 – 100 €</td></tr>
+        <tr><td>Jante</td><td>50 – 380 €</td></tr>
+        <tr><td>Suspension</td><td>700 – 2 500 €</td></tr>
+        <tr><td>Cadre</td><td>Valeur neuve</td></tr>
+        <tr><td>Batterie VAE</td><td>600 – 1 400 €</td></tr>
+      </table>
+    </div>
+
+    <!-- ACCEPTATION + SIGNATURES -->
+    <div class="section-card">
+      <h2 class="section-title"><span class="section-num">8</span> Acceptation et signatures</h2>
+
+      <div class="bg-slate-50 border border-slate-200 rounded-md p-4 mb-5">
+        <label class="flex items-start gap-3 cursor-pointer">
+          <input type="checkbox" id="accept-cgl" class="mt-1 w-4 h-4 accent-slate-900" required>
+          <span class="text-sm text-slate-700">
+            Je reconnais avoir pris connaissance des
+            <button type="button" onclick="showCGL()" class="text-slate-900 font-semibold underline hover:no-underline">conditions générales de location au verso</button>
+            et les accepter sans réserve. Mention « Lu et approuvé ».
+          </span>
+        </label>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="field-label mb-2 block">Signature du locataire *</label>
+          <canvas id="sig-client" class="signature-canvas"></canvas>
+          <button type="button" onclick="clearSig('sig-client')" class="text-xs text-slate-500 hover:text-slate-900 mt-2 underline">Effacer</button>
+        </div>
+        <div>
+          <label class="field-label mb-2 block">Signature du loueur *</label>
+          <canvas id="sig-loueur" class="signature-canvas"></canvas>
+          <button type="button" onclick="clearSig('sig-loueur')" class="text-xs text-slate-500 hover:text-slate-900 mt-2 underline">Effacer</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="bg-white border border-slate-200 rounded-xl p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="text-sm text-slate-600">
+        Le contrat sera généré au format PDF (recto + verso CGL) et envoyé par email aux deux parties.
+      </div>
+      <div class="flex gap-3">
+        <button type="button" onclick="showCGL()" class="btn-secondary">Voir les CGL</button>
+        <button type="submit" class="btn-primary">Générer le contrat</button>
+      </div>
+    </div>
+
+  </form>
+
+  <p class="text-xs text-slate-400 text-center mt-8">
+    Vélos Performances © 2026 — SARL au capital de 5 000 € — 941 614 653 R.C.S. Saverne
+  </p>
+</div>
+
+<!-- Modal CGL -->
+<div id="cgl-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay">
+  <div class="bg-white rounded-xl max-w-3xl w-full max-h-[85vh] overflow-hidden flex flex-col animate-slide-up">
+    <div class="flex justify-between items-center p-5 border-b border-slate-200">
+      <h3 class="font-bold text-slate-900">Conditions Générales de Location</h3>
+      <button onclick="hideCGL()" class="text-slate-400 hover:text-slate-900 text-2xl leading-none">×</button>
+    </div>
+    <div id="cgl-content" class="overflow-y-auto p-6 text-xs text-slate-700 space-y-2"></div>
+    <div class="p-4 border-t border-slate-200 text-right">
+      <button onclick="hideCGL()" class="btn-secondary">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-lg shadow-xl hidden animate-slide-up z-50">
+  <span id="toast-msg"></span>
+</div>
+
+<script>
+// =======================================================================
+// CONFIGURATION — REMPLIS LES 3 LIGNES CI-DESSOUS APRÈS AVOIR CRÉÉ TON COMPTE EMAILJS
+// =======================================================================
+// Étape 1 : https://dashboard.emailjs.com/ → crée un compte gratuit
+// Étape 2 : "Email Services" → Add → connecte Gmail → note le SERVICE ID
+// Étape 3 : "Email Templates" → Create → copie le template fourni en bas → note le TEMPLATE ID
+// Étape 4 : "Account" → "General" → copie ta PUBLIC KEY
+// Étape 5 : Remplis les 3 valeurs ci-dessous et passe enabled: true
+
+const CONFIG = {
+  loueurEmail: 'vttperformance67@gmail.com',
+
+  emailjs: {
+    enabled: false,                        // Passe à true une fois configuré
+    publicKey: 'TA_PUBLIC_KEY_ICI',        // ex: 'aB3cD4eF5gH6iJ7kL'
+    serviceId: 'TON_SERVICE_ID_ICI',       // ex: 'service_abc1234'
+    templateId: 'TON_TEMPLATE_ID_ICI'     // ex: 'template_xyz5678'
+  }
+};
+
+// =======================================================================
+// BASE DE DONNÉES VÉLOS — Valeurs neuves catalogue & cautions
+// =======================================================================
+const VELOS = {
+  moustache_trail_150_2_750: { libelle: 'Moustache Trail 150.2 750Wh', marque: 'MOUSTACHE', type: 'VAE', valeurNeuve: 5500 },
+  moustache_trail_150_2_625: { libelle: 'Moustache Trail 150.2 625Wh', marque: 'MOUSTACHE', type: 'VAE', valeurNeuve: 5000 },
+  sunn_rage_500:             { libelle: 'SUNN Rage 500Wh',             marque: 'SUNN',       type: 'VAE', valeurNeuve: 3000 },
+  sunn_charger_750:          { libelle: 'SUNN Charger 750Wh',          marque: 'SUNN',       type: 'VAE', valeurNeuve: 5000 },
+  sunn_one_750:              { libelle: 'SUNN One 750Wh',              marque: 'SUNN',       type: 'VAE', valeurNeuve: 4500 },
+  sunn_start:                { libelle: 'SUNN Start (VTCAE)',          marque: 'SUNN',       type: 'VAE', valeurNeuve: 2500 },
+  sunn_skill:                { libelle: 'SUNN Skill (VTCAE)',          marque: 'SUNN',       type: 'VAE', valeurNeuve: 3000 },
+  vtt_meca_haut:             { libelle: 'VTT haut de gamme',           marque: 'AUTRE',      type: 'MÉCA', valeurNeuve: 3500 },
+  vtt_meca_milieu:           { libelle: 'VTT milieu de gamme',         marque: 'AUTRE',      type: 'MÉCA', valeurNeuve: 2000 },
+  vtt_meca_entree:           { libelle: "VTT entrée de gamme",         marque: 'AUTRE',      type: 'MÉCA', valeurNeuve: 1000 },
+  dirt_bmx:                  { libelle: 'Dirt / BMX Race',             marque: 'AUTRE',      type: 'MÉCA', valeurNeuve: 800 },
+  autre:                     { libelle: "Autre (à préciser)",          marque: '',           type: '',     valeurNeuve: 0 }
+};
+
+// Mapping depuis les libellés du formulaire de réservation du site principal
+const VELO_LABEL_MAP = {
+  'VTTAE Moustache Trail 150.2 750Wh': 'moustache_trail_150_2_750',
+  'VTTAE SUNN Rage 500Wh': 'sunn_rage_500',
+  'VTCAE SUNN Start / Skill': 'sunn_start',
+  'VTT': 'vtt_meca_milieu',
+  'Dirt / BMX Race': 'dirt_bmx'
+};
+
+function autoFillVelo() {
+  const code = document.getElementById('velo_select').value;
+  if (!code || !VELOS[code]) return;
+  const v = VELOS[code];
+  if (v.type) document.getElementById('type_velo').value = v.type;
+  if (v.marque) document.getElementById('marque').value = v.marque;
+  if (v.libelle) document.getElementById('modele_libre').value = v.libelle;
+  if (v.valeurNeuve > 0) {
+    const cautionInput = document.getElementById('caution');
+    cautionInput.value = v.valeurNeuve;
+    cautionInput.classList.add('auto-filled');
+    setTimeout(() => cautionInput.classList.remove('auto-filled'), 2000);
+  }
+}
+
+// =======================================================================
+// AUTO-REMPLISSAGE VIA PARAMÈTRES URL
+// URL supportée : contrat.html?nom=Dupont&prenom=Marie&email=x@y.com
+//   &telephone=06...&velo=sunn_rage_500&date_debut=2026-05-15T10:00
+//   &date_fin=2026-05-16T18:00&taille=M&prix_location=60
+// =======================================================================
+function prefillFromURL() {
+  const p = new URLSearchParams(window.location.search);
+
+  const fill = (id, val) => {
+    const el = document.getElementById(id);
+    if (el && val) { el.value = val; el.classList.add('auto-filled'); }
+  };
+
+  fill('f-nom', p.get('nom'));
+  fill('f-prenom', p.get('prenom'));
+  fill('f-email', p.get('email'));
+  fill('f-telephone', p.get('telephone'));
+  fill('f-adresse', p.get('adresse'));
+  fill('f-date_debut', p.get('date_debut'));
+  fill('f-date_fin', p.get('date_fin'));
+  fill('f-taille', p.get('taille'));
+  fill('f-prix_location', p.get('prix_location'));
+
+  // Vélo : accepte la clé directe (sunn_rage_500) OU le libellé du formulaire principal
+  let veloKey = p.get('velo');
+  if (veloKey && !VELOS[veloKey]) {
+    veloKey = VELO_LABEL_MAP[veloKey] || null;
+  }
+  if (veloKey && VELOS[veloKey]) {
+    document.getElementById('velo_select').value = veloKey;
+    autoFillVelo();
+  }
+}
+
+// =======================================================================
+// CGL — Texte intégral
+// Remplace [Nom du médiateur...] dans Art. 11 une fois inscrit à CM2C
+// =======================================================================
+const CGL_TEXT = [
+  { t: 'Art. 1 — Objet.', c: "Le présent document fixe les modalités de location des vélos proposés par la SARL VELOS PERFORMANCES. Le souscripteur est ci-après dénommé « l'utilisateur »." },
+  { t: 'Art. 2 — Utilisateur.', c: "L'utilisateur déclare être apte à la pratique du vélo et n'avoir aucune contre-indication médicale. Pour les mineurs, le contrat doit être signé par le représentant légal, qui se porte caution solidaire des obligations financières découlant de la location. Le loueur ne peut être tenu responsable des dommages dus à l'inaptitude de l'utilisateur." },
+  { t: 'Art. 3 — Responsabilité et engagements.', c: "Les vélos, équipements et accessoires sont conformes à la réglementation en vigueur. Un état des lieux contradictoire (incluant photographies) est établi à la remise et à la restitution du vélo, annexé au contrat et fait foi en cas de litige sur l'état du matériel. L'utilisateur doit être couvert par une assurance responsabilité civile et dégage la SARL VELOS PERFORMANCES de toute responsabilité liée à l'utilisation du matériel (accidents, dommages causés à des tiers du fait de l'usage du vélo). Le matériel reste la propriété exclusive du loueur ; la sous-location est interdite. L'utilisateur est responsable des dégâts causés au matériel par son usage non conforme, sa négligence ou sa faute, dans les limites du droit commun. Il s'engage à utiliser le matériel avec soin, dans la limite de ses capacités, à respecter les consignes de sécurité et le code de la route, et à le restituer dans son état d'origine aux dates convenues. À chaque stationnement, le vélo doit être attaché à un point fixe avec un antivol homologué fourni ou agréé par le loueur. En cas de défaillance technique, l'utilisateur informe le loueur sans engager de réparation de sa propre initiative ; le vélo est alors remplacé par un modèle équivalent sous réserve de disponibilité, pour la période restant à courir. Les présentes stipulations s'appliquent sans préjudice des garanties légales de conformité (art. L217-3 et suivants du Code de la consommation) et contre les vices cachés (art. 1641 du Code civil)." },
+  { t: 'Art. 4 — Assistance.', c: "En cas de panne, l'utilisateur contacte le loueur au 09.50.32.08.29 (horaires d'ouverture) ou au 07.67.67.45.73 en dehors. L'assistance est prévue dans un rayon maximal de 20 km au départ du siège. Elle ne couvre pas la mauvaise gestion du matériel, notamment de l'autonomie de la batterie." },
+  { t: 'Art. 5 — Souscription, durée, tarifs.', c: "La souscription requiert la présentation d'un justificatif d'identité en cours de validité (CNI, permis, passeport) — vérifié et non conservé en original — et la constitution d'une garantie financière (cf. art. 6). Toute location est due dans son intégralité. Le retour s'effectue au plus tard 30 minutes avant la fermeture ; un renouvellement est possible sur présentation du vélo. Pour les formules demi-journée et journée, le vélo est rendu le jour même. À défaut, l'art. 7 s'applique. Les tarifs en vigueur au jour de la location sont affichés ; le loueur peut les modifier avec un préavis d'un mois par voie d'affichage, applicables aux nouvelles périodes. Moyens de paiement : carte bancaire, espèces, virement instantané ; chèques pour la caution uniquement. Les locations étant des prestations de services à date d'exécution déterminée, le droit de rétractation prévu à l'article L221-18 du Code de la consommation ne s'applique pas, conformément à l'article L221-28 12° du même code." },
+  { t: 'Art. 6 — Garantie financière (caution).', c: "Préalablement à la remise, l'utilisateur constitue une garantie sous forme de chèque non encaissé à l'ordre de la SARL VELOS PERFORMANCES ou d'empreinte bancaire, d'un montant correspondant à la valeur de remplacement du vélo. La pièce d'identité est uniquement présentée et photocopiée pour vérification (la copie est conservée pendant la durée de la location et détruite à sa restitution, sauf litige en cours). Montants de garantie : VAE de 2 000 € à 6 000 € selon le modèle ; vélo mécanique (route, VTT, VTC, gravel) de 300 € à 4 000 € selon le modèle ; chargeur VAE 100 €. Le montant exact figure au contrat. La garantie est restituée à l'utilisateur à la fin de la location, déduction faite, le cas échéant et sur facture, des sommes dues au titre des art. 7 et 8." },
+  { t: 'Art. 7 — Restitution, retard, vol.', c: "Le vélo doit être restitué au jour et à l'heure indiqués au contrat. Tout retard est facturé 20 € par demi-heure entamée, dans la limite d'un montant non manifestement excessif au sens de l'art. 1231-5 du Code civil. En cas de vol, l'utilisateur prévient immédiatement le loueur et lui transmet, dans un délai de 48 heures, un récépissé de dépôt de plainte (commissariat ou gendarmerie). Une attestation peut être délivrée pour son assurance. Si le vélo est retrouvé et restitué en bon état, la garantie est libérée, déduction faite des frais éventuels de remise en état. À défaut de dépôt de plainte ou en cas de faute caractérisée de l'utilisateur (négligence dans le stationnement, absence d'antivol, etc.), une indemnité correspondant à la valeur de remplacement du vélo, déduction faite de sa vétusté, est due au loueur, sans préjudice du droit pour l'utilisateur de contester ce montant devant la juridiction compétente." },
+  { t: 'Art. 8 — Facturation.', c: "En cas de non-respect du contrat ou de dégradation, sont facturées : (i) en cas de non-restitution, la valeur de remplacement du vélo ; (ii) en cas de dégradation ou de pièces manquantes, le coût des réparations sur facture, conformément au barème de facturation figurant au recto ; (iii) les pénalités de retard (cf. art. 7). Toute somme due donne lieu à l'émission d'une facture détaillée." },
+  { t: 'Art. 9 — Horaires et lieu.', c: "Mardi-vendredi : 9h–12h / 14h–18h30. Samedi : 9h–18h. Adresse : 32 Faubourg du Général Philippot, 67340 Ingwiller. Rappel : retour du vélo au plus tard 30 minutes avant la fermeture." },
+  { t: 'Art. 10 — Données personnelles (RGPD).', c: "Les données personnelles collectées (identité, coordonnées, copie de pièce d'identité) sont nécessaires à l'exécution du contrat et à la gestion de la relation commerciale. Elles sont conservées pendant la durée du contrat puis archivées 5 ans à des fins probatoires. L'utilisateur dispose des droits d'accès, de rectification, d'effacement, de limitation, de portabilité et d'opposition (articles 15 à 22 du RGPD), exerçables auprès de vttperformance67@gmail.com. Il peut introduire une réclamation auprès de la CNIL (www.cnil.fr)." },
+  { t: 'Art. 11 — Réclamation et médiation.', c: "En cas de litige, l'utilisateur adresse une réclamation écrite préalable au loueur. À défaut de solution amiable dans un délai de deux mois, l'utilisateur peut, conformément à l'art. L612-1 du Code de la consommation, recourir gratuitement au médiateur de la consommation : [Nom du médiateur référencé — adresse postale — site web], dans un délai d'un an à compter de la réclamation écrite initiale." },
+  { t: 'Art. 12 — Loi applicable et juridictions.', c: "Le présent contrat est soumis au droit français. En cas de litige et conformément aux articles R631-3 et R631-4 du Code de la consommation, le consommateur peut saisir, à son choix, la juridiction du lieu où il demeurait au moment de la conclusion du contrat ou de la survenance du fait dommageable, ou la juridiction du lieu d'exécution de la prestation." },
+  { t: 'Art. 13 — Modification.', c: "La SARL VELOS PERFORMANCES se réserve le droit de modifier à tout moment le présent contrat. Les modifications s'appliquent aux locations conclues postérieurement à leur entrée en vigueur." }
+];
+
+// =======================================================================
+// SIGNATURE PAD
+// =======================================================================
+const signatures = {};
+
+function initSignaturePads() {
+  ['sig-client', 'sig-loueur'].forEach(id => {
+    const canvas = document.getElementById(id);
+    resizeCanvas(canvas);
+    const pad = new SignaturePad(canvas, {
+      penColor: '#0f172a',
+      backgroundColor: 'rgba(0,0,0,0)',
+      minWidth: 1,
+      maxWidth: 2.5
+    });
+    pad.addEventListener('endStroke', () => canvas.classList.add('has-content'));
+    signatures[id] = pad;
+  });
+}
+
+function resizeCanvas(canvas) {
+  const ratio = Math.max(window.devicePixelRatio || 1, 1);
+  canvas.width = canvas.offsetWidth * ratio;
+  canvas.height = canvas.offsetHeight * ratio;
+  canvas.getContext('2d').scale(ratio, ratio);
+}
+
+function clearSig(id) {
+  signatures[id].clear();
+  document.getElementById(id).classList.remove('has-content');
+}
+
+window.addEventListener('resize', () => {
+  Object.entries(signatures).forEach(([id, pad]) => {
+    const data = pad.toData();
+    resizeCanvas(document.getElementById(id));
+    pad.fromData(data);
+  });
+});
+
+// =======================================================================
+// MODAL CGL
+// =======================================================================
+function renderCGL() {
+  const html = CGL_TEXT.map(a => `<p><strong class="text-slate-900">${a.t}</strong> ${a.c}</p>`).join('');
+  document.getElementById('cgl-content').innerHTML = html;
+}
+function showCGL() {
+  document.getElementById('cgl-modal').classList.remove('hidden');
+  document.getElementById('cgl-modal').classList.add('flex');
+}
+function hideCGL() {
+  document.getElementById('cgl-modal').classList.add('hidden');
+  document.getElementById('cgl-modal').classList.remove('flex');
+}
+
+function toast(msg, duration = 5000) {
+  const el = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  el.classList.remove('hidden');
+  setTimeout(() => el.classList.add('hidden'), duration);
+}
+
+// =======================================================================
+// GÉNÉRATION PDF
+// =======================================================================
+async function generatePDF(formData) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const W = 210, H = 297, M = 10;
+  const numContrat = 'VP-' + Date.now().toString().slice(-8);
+
+  // PAGE 1 — RECTO
+  doc.setFillColor(15, 23, 42);
+  doc.rect(0, 0, W, 22, 'F');
+  doc.setTextColor(255);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(15);
+  doc.text('CONTRAT DE LOCATION DE VÉLO', M, 10);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7);
+  doc.text('VELOS PERFORMANCES — SIRET : 941 614 653 00017 — Capital 5 000 € — 941 614 653 R.C.S. Saverne', M, 15);
+  doc.text('32 Faubourg du Général Philippot, 67340 Ingwiller — 09.50.32.08.29 — vttperformance67@gmail.com', M, 19);
+
+  doc.setTextColor(15, 23, 42);
+  let y = 27;
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.text('N° ' + numContrat, M, y);
+  doc.text('Édité le : ' + new Date().toLocaleString('fr-FR'), W - M, y, { align: 'right' });
+  y += 5;
+
+  function sectionHeader(title) {
+    doc.setFillColor(241, 245, 249);
+    doc.rect(M, y, W - 2*M, 5, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.setTextColor(15, 23, 42);
+    doc.text(title, M + 1.5, y + 3.5);
+    y += 6;
+  }
+
+  function field(label, value, x, w) {
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(6.5);
+    doc.setTextColor(100, 116, 139);
+    doc.text(label.toUpperCase(), x, y);
+    doc.setFontSize(8);
+    doc.setTextColor(15, 23, 42);
+    doc.text(value || '—', x, y + 3.5);
+    doc.setDrawColor(203, 213, 225);
+    doc.setLineWidth(0.15);
+    doc.line(x, y + 4.5, x + w - 2, y + 4.5);
+  }
+
+  sectionHeader('LOCATAIRE');
+  const colW = (W - 2*M) / 2;
+  field('Nom / Prénom', ((formData.nom || '') + ' ' + (formData.prenom || '')).trim(), M, colW);
+  field('Téléphone', formData.telephone, M + colW, colW);
+  y += 6;
+  field('Adresse', formData.adresse, M, W - 2*M);
+  y += 6;
+  field('Email', formData.email, M, colW);
+  field('Pièce identité', formData.piece_identite, M + colW, colW);
+  y += 7;
+
+  sectionHeader('ARTICLE 2 — MATÉRIEL');
+  field('Type', formData.type_velo, M, 22);
+  field('Marque', formData.marque, M + 22, 35);
+  field('Modèle / désignation', formData.modele_libre, M + 57, W - 2*M - 57);
+  y += 6;
+  field('N° série', formData.serie, M, 60);
+  field('Taille', formData.taille, M + 60, 30);
+  field('Accessoires', formData.accessoires, M + 90, W - 2*M - 90);
+  y += 6;
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(6.5);
+  doc.setTextColor(100, 116, 139);
+  doc.text('OBSERVATIONS / ANOMALIES', M, y);
+  y += 3;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7.5);
+  doc.setTextColor(15, 23, 42);
+  for (let i = 1; i <= 5; i++) {
+    const obs = formData['obs' + i];
+    if (obs) {
+      doc.text(i + ') ' + obs, M + 2, y);
+    } else {
+      doc.setTextColor(203, 213, 225);
+      doc.text(i + ')', M + 2, y);
+      doc.setTextColor(15, 23, 42);
+    }
+    doc.setDrawColor(241, 245, 249);
+    doc.line(M, y + 1, W - M, y + 1);
+    y += 3.5;
+  }
+  y += 2;
+
+  sectionHeader('ARTICLE 3 — DURÉE   |   ARTICLE 4 — TARIF');
+  field('Début', formData.date_debut ? new Date(formData.date_debut).toLocaleString('fr-FR') : '', M, 50);
+  field('Fin', formData.date_fin ? new Date(formData.date_fin).toLocaleString('fr-FR') : '', M + 50, 50);
+  field('Location', formData.prix_location ? formData.prix_location + ' €' : '', M + 100, 35);
+  field('Caution', formData.caution ? formData.caution + ' €' : '', M + 135, 35);
+  field('Garantie', formData.garantie, M + 170, 25);
+  y += 7;
+
+  sectionHeader('ARTICLE 5 — ÉTAT');
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7.5);
+  doc.setTextColor(15, 23, 42);
+  doc.text("Le matériel est remis en parfait état de fonctionnement, sauf observations contraires reportées en article 2.", M + 1, y + 2);
+  y += 8;
+
+  const colSep = M + (W - 2*M) / 2 + 2;
+  const sectY = y;
+
+  doc.setFillColor(241, 245, 249);
+  doc.rect(M, y, (W - 2*M) / 2 - 2, 5, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.setTextColor(15, 23, 42);
+  doc.text('SÉCURITÉ & RESPONSABILITÉ', M + 1.5, y + 3.5);
+  let yL = y + 8;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7.5);
+  ['Casque recommandé', 'Respect du code de la route', "Pas d'alcool ni stupéfiants", 'Pas de compétition', 'Pas de modification du matériel', 'Casse / perte / vol à charge du locataire'].forEach(item => {
+    doc.text('☑ ' + item, M + 2, yL);
+    yL += 3.5;
+  });
+
+  doc.setFillColor(241, 245, 249);
+  doc.rect(colSep, sectY, (W - 2*M) / 2 - 2, 5, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.text("BARÈME (hors main d'œuvre)", colSep + 1.5, sectY + 3.5);
+  let yR = sectY + 8;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7);
+  const bareme = [
+    ['Chambre à air', '5–13 €'], ['Pneu', '30–85 €'],
+    ['Dérailleur', '30–80 €'], ['Cassette', '30–150 €'],
+    ['Chaîne', '15–85 €'], ['Clef batterie', '50–100 €'],
+    ['Jante', '50–380 €'], ['Suspension', '700–2 500 €'],
+    ['Cadre', 'Valeur neuve'], ['Batterie VAE', '600–1 400 €']
+  ];
+  bareme.forEach(([k, v]) => {
+    doc.text(k, colSep + 2, yR);
+    doc.text(v, colSep + (W - 2*M) / 2 - 4, yR, { align: 'right' });
+    yR += 3.2;
+  });
+
+  y = Math.max(yL, yR) + 2;
+
+  doc.setFillColor(254, 243, 199);
+  doc.rect(M, y, W - 2*M, 7, 'F');
+  doc.setFont('helvetica', 'italic');
+  doc.setFontSize(7);
+  doc.setTextColor(120, 53, 15);
+  doc.text("Le locataire reconnaît avoir pris connaissance des conditions générales de location au verso et les accepter sans réserve. « Lu et approuvé ».", M + 2, y + 4.5, { maxWidth: W - 2*M - 4 });
+  y += 10;
+
+  doc.setTextColor(15, 23, 42);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(7.5);
+  const sigW = (W - 2*M - 6) / 2;
+  doc.text('SIGNATURE LOCATAIRE', M, y);
+  doc.text('SIGNATURE LOUEUR', M + sigW + 6, y);
+  y += 1.5;
+
+  doc.setDrawColor(15, 23, 42);
+  doc.setLineWidth(0.3);
+  doc.rect(M, y, sigW, 28);
+  doc.rect(M + sigW + 6, y, sigW, 28);
+
+  if (formData.sigClient) doc.addImage(formData.sigClient, 'PNG', M + 1, y + 1, sigW - 2, 26);
+  if (formData.sigLoueur) doc.addImage(formData.sigLoueur, 'PNG', M + sigW + 7, y + 1, sigW - 2, 26);
+
+  y += 31;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(6.5);
+  doc.setTextColor(100, 116, 139);
+  doc.text('Signé électroniquement le ' + new Date().toLocaleString('fr-FR') + ' — Contrat ' + numContrat, W/2, y, { align: 'center' });
+
+  // PAGE 2 — VERSO (CGL)
+  doc.addPage();
+  doc.setTextColor(15, 23, 42);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(13);
+  doc.text('CONDITIONS GÉNÉRALES DE LOCATION', W/2, 14, { align: 'center' });
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7);
+  doc.setTextColor(100, 116, 139);
+  doc.text('SARL VELOS PERFORMANCES — Capital social : 5 000 € — 941 614 653 R.C.S. Saverne', W/2, 19, { align: 'center' });
+  doc.text('32 Faubourg du Général Philippot, 67340 Ingwiller — 09.50.32.08.29 — vttperformance67@gmail.com', W/2, 22.5, { align: 'center' });
+
+  doc.setTextColor(15, 23, 42);
+  doc.setFontSize(7);
+  let yC = 30;
+  const lineH = 2.6;
+  CGL_TEXT.forEach(art => {
+    doc.setFont('helvetica', 'bold');
+    doc.text(art.t, M, yC);
+    const xOffset = doc.getTextWidth(art.t) + 1;
+    doc.setFont('helvetica', 'normal');
+    const textLines = doc.splitTextToSize(' ' + art.c, W - 2*M - xOffset);
+    if (textLines.length > 0) {
+      doc.text(textLines[0], M + xOffset, yC);
+      for (let i = 1; i < textLines.length; i++) {
+        yC += lineH;
+        doc.text(textLines[i], M, yC);
+      }
+    }
+    yC += lineH + 1;
+  });
+
+  return { doc, numContrat };
+}
+
+// =======================================================================
+// SOUMISSION DU FORMULAIRE
+// =======================================================================
+document.getElementById('contract-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const submitBtn = e.target.querySelector('button[type=submit]');
+
+  if (!document.getElementById('accept-cgl').checked) {
+    toast('⚠️ Vous devez accepter les CGL pour continuer'); return;
+  }
+  if (signatures['sig-client'].isEmpty()) {
+    toast('⚠️ La signature du locataire est requise'); return;
+  }
+  if (signatures['sig-loueur'].isEmpty()) {
+    toast('⚠️ La signature du loueur est requise'); return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Génération...';
+
+  const formData = {};
+  new FormData(e.target).forEach((v, k) => formData[k] = v);
+  formData.sigClient = signatures['sig-client'].toDataURL('image/png');
+  formData.sigLoueur = signatures['sig-loueur'].toDataURL('image/png');
+
+  try {
+    const { doc, numContrat } = await generatePDF(formData);
+    const pdfBlob = doc.output('blob');
+    const pdfBase64 = doc.output('datauristring');
+    const fileName = 'Contrat_' + numContrat + '_' + (formData.nom || 'client') + '.pdf';
+
+    // Téléchargement local (toujours)
+    const url = URL.createObjectURL(pdfBlob);
+    const a = document.createElement('a');
+    a.href = url; a.download = fileName; a.click();
+    URL.revokeObjectURL(url);
+
+    // Envoi email via EmailJS (si configuré)
+    if (CONFIG.emailjs.enabled && window.emailjs) {
+      try {
+        emailjs.init(CONFIG.emailjs.publicKey);
+
+        // Email au loueur — copie d'archivage
+        await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
+          to_email: CONFIG.loueurEmail,
+          reply_to: formData.email || CONFIG.loueurEmail,
+          email_subject: 'Contrat location ' + numContrat + ' — ' + (formData.nom || '') + ' ' + (formData.prenom || ''),
+          email_intro: "Copie d'archivage du contrat de location signé.",
+          client_nom: (formData.nom || '') + ' ' + (formData.prenom || ''),
+          client_email: formData.email || '—',
+          client_tel: formData.telephone || '—',
+          num_contrat: numContrat,
+          modele: formData.modele_libre || formData.marque || '—',
+          date_debut: formData.date_debut ? new Date(formData.date_debut).toLocaleString('fr-FR') : '—',
+          date_fin: formData.date_fin ? new Date(formData.date_fin).toLocaleString('fr-FR') : '—',
+          montant: (formData.prix_location || '—') + ' €',
+          caution: (formData.caution || '—') + ' €',
+          pdf_base64: pdfBase64.split(',')[1],
+          pdf_filename: fileName
+        });
+
+        // Email au client — copie avec message explicatif
+        if (formData.email) {
+          await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
+            to_email: formData.email,
+            reply_to: CONFIG.loueurEmail,
+            email_subject: 'Votre contrat de location — Vélos Performances',
+            email_intro: "Bonjour " + (formData.prenom || '') + ",\n\nVeuillez trouver ci-joint la copie de votre contrat de location de vélo chez Vélos Performances. Ce document fait foi en cas de litige.\n\nPour toute question, contactez-nous au 09.50.32.08.29.",
+            client_nom: (formData.nom || '') + ' ' + (formData.prenom || ''),
+            client_email: formData.email,
+            client_tel: formData.telephone || '—',
+            num_contrat: numContrat,
+            modele: formData.modele_libre || formData.marque || '—',
+            date_debut: formData.date_debut ? new Date(formData.date_debut).toLocaleString('fr-FR') : '—',
+            date_fin: formData.date_fin ? new Date(formData.date_fin).toLocaleString('fr-FR') : '—',
+            montant: (formData.prix_location || '—') + ' €',
+            caution: (formData.caution || '—') + ' €',
+            pdf_base64: pdfBase64.split(',')[1],
+            pdf_filename: fileName
+          });
+        }
+
+        toast('✅ Contrat généré et envoyé par email au magasin et au client');
+      } catch (emailErr) {
+        console.error('EmailJS error:', emailErr);
+        toast('⚠️ PDF téléchargé mais erreur envoi email — vérifie ta config EmailJS');
+      }
+    } else {
+      toast('✅ Contrat téléchargé. Pour l\'envoi email auto, configure EmailJS (voir bandeau en haut).');
+    }
+
+  } catch (err) {
+    console.error(err);
+    toast('❌ Erreur lors de la génération');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Générer le contrat';
+  }
+});
+
+// =======================================================================
+// INITIALISATION
+// =======================================================================
+window.addEventListener('load', () => {
+  initSignaturePads();
+  renderCGL();
+  prefillFromURL();
+
+  // Affiche le bandeau setup si EmailJS non configuré
+  if (!CONFIG.emailjs.enabled) {
+    document.getElementById('setup-banner').style.display = 'block';
+  }
+});
+
+/* =======================================================================
+   TEMPLATE EMAIL À COPIER-COLLER DANS EMAILJS
+   =======================================================================
+
+   Dans ton dashboard EmailJS :
+   1. "Email Templates" → "Create New Template"
+   2. Configure les champs :
+
+   To Email:   {{to_email}}
+   From Name:  Vélos Performances
+   Reply To:   {{reply_to}}
+   Subject:    {{email_subject}}
+
+   Content (HTML) :
+   ─────────────────────────────────────────────
+   <p>{{email_intro}}</p>
+
+   <h3>Récapitulatif du contrat {{num_contrat}}</h3>
+   <ul>
+     <li><strong>Locataire :</strong> {{client_nom}}</li>
+     <li><strong>Email :</strong> {{client_email}}</li>
+     <li><strong>Téléphone :</strong> {{client_tel}}</li>
+     <li><strong>Vélo :</strong> {{modele}}</li>
+     <li><strong>Période :</strong> du {{date_debut}} au {{date_fin}}</li>
+     <li><strong>Montant location :</strong> {{montant}}</li>
+     <li><strong>Caution :</strong> {{caution}}</li>
+   </ul>
+
+   <p>—<br>SARL Vélos Performances<br>32 Faubourg du Général Philippot, 67340 Ingwiller<br>09.50.32.08.29</p>
+   ─────────────────────────────────────────────
+
+   3. Onglet "Attachments" :
+      - Filename : {{pdf_filename}}
+      - Content (Base64) : {{pdf_base64}}
+
+   4. Save → note le Template ID
+
+   ⚠️ Plan gratuit EmailJS : pièces jointes limitées à 50 KB.
+      Si le PDF est trop lourd → plan Personal (~7€/mois, jusqu'à 2 MB).
+   ======================================================================= */
+</script>
+</body>
+</html>
