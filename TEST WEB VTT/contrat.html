@@ -448,11 +448,10 @@ function buildCalendar() {
   let html = '';
   let shown = 0;
   const d = new Date();
-  d.setHours(0, 0, 0, 0);
-  d.setDate(d.getDate() + 1); // commence demain
+  d.setHours(0, 0, 0, 0); // commence aujourd'hui
 
   while (shown < 14) {
-    if (!JOURS_FERMES.includes(d.getDay())) {
+    if (!JOURS_FERMES.includes(d.getDay())) { // tous les créneaux du jour affichés sans restriction horaire
       const dateStr = d.toISOString().split('T')[0];
       const label = JOURS_FR[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS_FR[d.getMonth()];
       html += `
