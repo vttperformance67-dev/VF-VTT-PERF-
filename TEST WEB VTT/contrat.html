@@ -362,6 +362,26 @@
 
   </form>
 
+  <!-- ÉCRAN DE CONFIRMATION -->
+  <div id="success-panel" class="hidden mt-6 animate-slide-up">
+    <div class="bg-white border-2 border-emerald-200 rounded-2xl p-8 text-center shadow-lg">
+      <div class="text-6xl mb-4">✅</div>
+      <h2 class="font-bold text-2xl text-slate-900 mb-2">Contrat généré</h2>
+      <p id="success-email-msg" class="text-slate-600 mb-1"></p>
+      <p id="success-ref" class="text-xs text-slate-400 mb-8"></p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <button id="btn-download" onclick="downloadPDF()" class="btn-primary flex items-center gap-2 justify-center text-base px-8">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Télécharger le contrat PDF
+        </button>
+        <button onclick="resetForm()" class="btn-secondary flex items-center gap-2 justify-center">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          Nouveau contrat
+        </button>
+      </div>
+    </div>
+  </div>
+
   <p class="text-xs text-slate-400 text-center mt-8">
     Vélos Performances © 2026 — SARL au capital de 5 000 € — 941 614 653 R.C.S. Saverne
   </p>
@@ -904,23 +924,18 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
     const pdfBase64 = doc.output('datauristring');
     const fileName = 'Contrat_' + numContrat + '_' + (formData.nom || 'client') + '.pdf';
 
-    // Téléchargement local (toujours)
-    const url = URL.createObjectURL(pdfBlob);
-    const a = document.createElement('a');
-    a.href = url; a.download = fileName; a.click();
-    URL.revokeObjectURL(url);
+    // Stocke le PDF pour le bouton de téléchargement
+    window._lastPdfBlob = pdfBlob;
+    window._lastPdfFileName = fileName;
 
-    // Envoi email via EmailJS (si configuré)
+    let emailStatus = '';
+
+    // Envoi email via EmailJS
     if (CONFIG.emailjs.enabled && window.emailjs) {
       try {
         emailjs.init(CONFIG.emailjs.publicKey);
 
-        // Email au loueur — copie d'archivage
-        await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
-          to_email: CONFIG.loueurEmail,
-          reply_to: formData.email || CONFIG.loueurEmail,
-          email_subject: 'Contrat location ' + numContrat + ' — ' + (formData.nom || '') + ' ' + (formData.prenom || ''),
-          email_intro: "Copie d'archivage du contrat de location signé.",
+        const emailParams = {
           client_nom: (formData.nom || '') + ' ' + (formData.prenom || ''),
           client_email: formData.email || '—',
           client_tel: formData.telephone || '—',
@@ -932,46 +947,95 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
           caution: (formData.caution || '—') + ' €',
           pdf_base64: pdfBase64.split(',')[1],
           pdf_filename: fileName
+        };
+
+        // Email loueur — archivage
+        await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
+          ...emailParams,
+          to_email: CONFIG.loueurEmail,
+          reply_to: formData.email || CONFIG.loueurEmail,
+          email_subject: 'Contrat location ' + numContrat + ' — ' + emailParams.client_nom,
+          email_intro: "Copie d'archivage du contrat de location signé."
         });
 
-        // Email au client — copie avec message explicatif
+        // Email client — copie
         if (formData.email) {
           await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
+            ...emailParams,
             to_email: formData.email,
             reply_to: CONFIG.loueurEmail,
             email_subject: 'Votre contrat de location — Vélos Performances',
-            email_intro: "Bonjour " + (formData.prenom || '') + ",\n\nVeuillez trouver ci-joint la copie de votre contrat de location de vélo chez Vélos Performances. Ce document fait foi en cas de litige.\n\nPour toute question, contactez-nous au 09.50.32.08.29.",
-            client_nom: (formData.nom || '') + ' ' + (formData.prenom || ''),
-            client_email: formData.email,
-            client_tel: formData.telephone || '—',
-            num_contrat: numContrat,
-            modele: formData.modele_libre || formData.marque || '—',
-            date_debut: formData.date_debut ? new Date(formData.date_debut).toLocaleString('fr-FR') : '—',
-            date_fin: formData.date_fin ? new Date(formData.date_fin).toLocaleString('fr-FR') : '—',
-            montant: (formData.prix_location || '—') + ' €',
-            caution: (formData.caution || '—') + ' €',
-            pdf_base64: pdfBase64.split(',')[1],
-            pdf_filename: fileName
+            email_intro: 'Bonjour ' + (formData.prenom || '') + ',\n\nVeuillez trouver ci-joint la copie de votre contrat de location de vélo chez Vélos Performances. Ce document fait foi en cas de litige.\n\nPour toute question, contactez-nous au 09.50.32.08.29.'
           });
+          emailStatus = '📧 Contrat envoyé par email à ' + CONFIG.loueurEmail + ' et ' + formData.email;
+        } else {
+          emailStatus = '📧 Contrat envoyé par email à ' + CONFIG.loueurEmail;
         }
-
-        toast('✅ Contrat généré et envoyé par email au magasin et au client');
       } catch (emailErr) {
         console.error('EmailJS error:', emailErr);
-        toast('⚠️ PDF téléchargé mais erreur envoi email — vérifie ta config EmailJS');
+        emailStatus = '⚠️ Erreur envoi email — vérifiez la config EmailJS';
       }
     } else {
-      toast('✅ Contrat téléchargé. Pour l\'envoi email auto, configure EmailJS (voir bandeau en haut).');
+      emailStatus = 'Email non configuré — utilisez le bouton ci-dessous pour télécharger.';
     }
+
+    // Affiche l'écran de confirmation
+    showSuccess(numContrat, formData, emailStatus);
 
   } catch (err) {
     console.error(err);
-    toast('❌ Erreur lors de la génération');
-  } finally {
+    toast('❌ Erreur lors de la génération du contrat');
     submitBtn.disabled = false;
     submitBtn.textContent = 'Générer le contrat';
   }
 });
+
+function showSuccess(numContrat, formData, emailStatus) {
+  // Cache le formulaire
+  document.getElementById('contract-form').style.display = 'none';
+  // Remplit le panneau
+  document.getElementById('success-email-msg').textContent = emailStatus;
+  document.getElementById('success-ref').textContent = 'N° ' + numContrat + ' — ' + (formData.nom || '') + ' ' + (formData.prenom || '');
+  // Affiche le panneau
+  const panel = document.getElementById('success-panel');
+  panel.classList.remove('hidden');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function downloadPDF() {
+  if (!window._lastPdfBlob) return;
+  const url = URL.createObjectURL(window._lastPdfBlob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = window._lastPdfFileName;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function resetForm() {
+  window._lastPdfBlob = null;
+  window._lastPdfFileName = null;
+  document.getElementById('success-panel').classList.add('hidden');
+  const form = document.getElementById('contract-form');
+  form.reset();
+  form.style.display = '';
+  // Réinitialise la signature client
+  if (signatures['sig-client']) { signatures['sig-client'].clear(); document.getElementById('sig-client').classList.remove('has-content'); }
+  // Redessine la signature loueur
+  drawLoueurSignature(document.getElementById('sig-loueur'));
+  // Réinitialise les anomalies
+  document.querySelectorAll('.obs-field').forEach(el => {
+    el.setAttribute('readonly', '');
+    el.style.background = '#f8fafc';
+    el.style.color = '#475569';
+    el.style.cursor = 'not-allowed';
+  });
+  document.getElementById('obs-unlock-btn').textContent = '🔒 Modifier (loueur)';
+  document.getElementById('obs-unlock-btn').onclick = unlockObs;
+  document.getElementById('obs-unlock-btn').style.color = '';
+  // Remonte en haut
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 // =======================================================================
 // INITIALISATION
