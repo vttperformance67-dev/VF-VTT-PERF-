@@ -7,7 +7,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://smtpjs.com/v3/smtp.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -422,11 +422,9 @@
 const CONFIG = {
   loueurEmail: 'vttperformance67@gmail.com',
 
-  emailjs: {
-    enabled: true,
-    publicKey: 'SPHncdaqv8QRLzhkk',
-    serviceId: 'service_igihusv',
-    templateId: 'template_gavp8b9'
+  smtp: {
+    enabled: false, // ← passe à true après avoir renseigné le secureToken
+    secureToken: 'COLLE_TON_SECURE_TOKEN_ICI' // ← depuis smtpjs.com → Encrypt credentials
   }
 };
 
@@ -1061,67 +1059,60 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
 
     let emailStatus = '';
 
-    // Envoi email via EmailJS
-    // ⚠️ IMPORTANT — Dans le dashboard EmailJS, template_gavp8b9 :
-    //   • Champ "To Email" doit être : {{to_email}}
-    //   • Champ "Reply To"  doit être : {{reply_to}}
-    //   • Champ "Subject"   doit être : {{email_subject}}
-    // Sans ça, le destinataire reste vide et l'envoi échoue.
-    if (CONFIG.emailjs.enabled && window.emailjs) {
+    // Envoi email via SMTP.js + Gmail (SecureToken chiffré sur smtpjs.com)
+    if (CONFIG.smtp.enabled && window.Email) {
       try {
         const clientNom   = ((formData.nom || '') + ' ' + (formData.prenom || '')).trim();
         const clientEmail = (formData.email || '').trim();
         const debutStr    = formData.date_debut ? new Date(formData.date_debut).toLocaleString('fr-FR') : '—';
         const finStr      = formData.date_fin   ? new Date(formData.date_fin).toLocaleString('fr-FR')   : '—';
+        const pdfBase64   = doc.output('datauristring').split(',')[1];
 
-        const loueurParams = {
-          to_email:      CONFIG.loueurEmail,
-          reply_to:      clientEmail || CONFIG.loueurEmail,
-          email_subject: '[' + numContrat + '] ' + clientNom,
-          email_intro:   'Nouveau contrat signé en magasin.',
-          client_nom:    clientNom,
-          client_email:  clientEmail || '—',
-          client_tel:    formData.telephone || '—',
-          num_contrat:   numContrat,
-          modele:        formData.modele_libre || formData.marque || '—',
-          date_debut:    debutStr,
-          date_fin:      finStr,
-          montant:       (formData.prix_location || '—') + ' €',
-          caution:       (formData.caution || '—') + ' €'
-        };
+        const htmlBody = buildEmailHTML({
+          clientNom, clientEmail, clientTel: formData.telephone || '—',
+          numContrat, modele: formData.modele_libre || formData.marque || '—',
+          debutStr, finStr,
+          montant: (formData.prix_location || '—') + ' €',
+          caution: (formData.caution || '—') + ' €',
+          prenom: formData.prenom || ''
+        });
 
-        console.log('EmailJS loueur params size:', JSON.stringify(loueurParams).length, 'bytes');
-        await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, loueurParams);
+        // Email loueur — avec PDF en pièce jointe
+        const resPro = await Email.send({
+          SecureToken: CONFIG.smtp.secureToken,
+          To:          CONFIG.loueurEmail,
+          From:        CONFIG.loueurEmail,
+          ReplyTo:     clientEmail || CONFIG.loueurEmail,
+          Subject:     '[Contrat ' + numContrat + '] ' + clientNom,
+          Body:        htmlBody.loueur,
+          Attachments: [{ name: fileName, data: pdfBase64 }]
+        });
 
+        if (resPro !== 'OK') throw new Error(resPro);
+
+        // Email client — avec PDF en pièce jointe si email fourni
         if (clientEmail) {
-          const clientParams = {
-            to_email:      clientEmail,
-            reply_to:      CONFIG.loueurEmail,
-            email_subject: 'Votre location — Vélos Performances',
-            email_intro:   'Bonjour ' + (formData.prenom || '') + ', votre contrat est enregistré.',
-            client_nom:    clientNom,
-            client_email:  clientEmail,
-            client_tel:    formData.telephone || '—',
-            num_contrat:   numContrat,
-            modele:        formData.modele_libre || formData.marque || '—',
-            date_debut:    debutStr,
-            date_fin:      finStr,
-            montant:       (formData.prix_location || '—') + ' €',
-            caution:       (formData.caution || '—') + ' €'
-          };
-          console.log('EmailJS client params size:', JSON.stringify(clientParams).length, 'bytes');
-          await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, clientParams);
-          emailStatus = '📧 Confirmation envoyée à ' + clientEmail + ' + copie à ' + CONFIG.loueurEmail;
+          const resCli = await Email.send({
+            SecureToken: CONFIG.smtp.secureToken,
+            To:          clientEmail,
+            From:        CONFIG.loueurEmail,
+            ReplyTo:     CONFIG.loueurEmail,
+            Subject:     'Votre contrat de location — Vélos Performances',
+            Body:        htmlBody.client,
+            Attachments: [{ name: fileName, data: pdfBase64 }]
+          });
+          if (resCli !== 'OK') throw new Error(resCli);
+          emailStatus = '📧 Contrat envoyé à ' + clientEmail + ' + copie à ' + CONFIG.loueurEmail;
         } else {
-          emailStatus = '📧 Notification envoyée à ' + CONFIG.loueurEmail;
+          emailStatus = '📧 Contrat envoyé à ' + CONFIG.loueurEmail;
         }
 
       } catch (emailErr) {
-        console.error('EmailJS error:', emailErr);
-        emailStatus = '⚠️ Erreur email : ' + (emailErr.text || emailErr.message || JSON.stringify(emailErr));
+        console.error('SMTP error:', emailErr);
+        emailStatus = '⚠️ Erreur email : ' + (emailErr.message || emailErr);
       }
     } else {
-      emailStatus = 'Notification email désactivée.';
+      emailStatus = CONFIG.smtp.enabled ? '⚠️ SMTP.js non chargé' : 'Email non configuré — téléchargez le PDF ci-dessous.';
     }
 
     // Affiche l'écran de confirmation
@@ -1183,6 +1174,78 @@ function resetForm() {
 }
 
 // =======================================================================
+// TEMPLATE HTML EMAIL
+// =======================================================================
+function buildEmailHTML({ clientNom, clientEmail, clientTel, numContrat, modele, debutStr, finStr, montant, caution, prenom }) {
+  const base = (intro) => `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#f1f5f9;font-family:Arial,Helvetica,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f1f5f9;padding:28px 0;">
+<tr><td align="center">
+<table width="580" cellpadding="0" cellspacing="0" border="0" style="max-width:580px;width:100%;">
+  <tr><td style="background:#0f172a;border-radius:10px 10px 0 0;padding:24px 28px;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td><p style="margin:0;font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.08em;">Contrat de location</p>
+          <p style="margin:4px 0 0;font-size:20px;font-weight:700;color:#fff;">VÉLOS PERFORMANCES</p></td>
+      <td align="right"><span style="background:#1e3a5f;color:#7dd3fc;font-size:11px;font-weight:700;padding:5px 11px;border-radius:20px;">${numContrat}</span></td>
+    </tr></table>
+  </td></tr>
+  <tr><td style="background:#fff;padding:24px 28px;">
+    <p style="margin:0 0 18px;font-size:14px;color:#334155;line-height:1.6;">${intro}</p>
+    <p style="margin:0 0 6px;font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;border-bottom:2px solid #f1f5f9;padding-bottom:6px;">Locataire</p>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:16px;margin-top:10px;">
+      <tr>
+        <td width="50%" style="padding-bottom:8px;vertical-align:top;"><p style="margin:0;font-size:10px;color:#94a3b8;text-transform:uppercase;">Nom</p><p style="margin:3px 0 0;font-size:14px;font-weight:600;color:#0f172a;">${clientNom}</p></td>
+        <td width="50%" style="padding-bottom:8px;vertical-align:top;"><p style="margin:0;font-size:10px;color:#94a3b8;text-transform:uppercase;">Téléphone</p><p style="margin:3px 0 0;font-size:14px;font-weight:600;color:#0f172a;">${clientTel}</p></td>
+      </tr>
+      <tr><td colspan="2"><p style="margin:0;font-size:10px;color:#94a3b8;text-transform:uppercase;">Email</p><p style="margin:3px 0 0;font-size:13px;color:#0f172a;">${clientEmail || '—'}</p></td></tr>
+    </table>
+    <p style="margin:0 0 6px;font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;border-bottom:2px solid #f1f5f9;padding-bottom:6px;">Location</p>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:16px;margin-top:10px;">
+      <tr><td colspan="2" style="padding-bottom:8px;"><p style="margin:0;font-size:10px;color:#94a3b8;text-transform:uppercase;">Vélo</p><p style="margin:3px 0 0;font-size:14px;font-weight:600;color:#0f172a;">${modele}</p></td></tr>
+      <tr>
+        <td width="50%" style="vertical-align:top;"><p style="margin:0;font-size:10px;color:#94a3b8;text-transform:uppercase;">Début</p><p style="margin:3px 0 0;font-size:14px;font-weight:600;color:#0f172a;">${debutStr}</p></td>
+        <td width="50%" style="vertical-align:top;"><p style="margin:0;font-size:10px;color:#94a3b8;text-transform:uppercase;">Fin</p><p style="margin:3px 0 0;font-size:14px;font-weight:600;color:#0f172a;">${finStr}</p></td>
+      </tr>
+    </table>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td width="48%" style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px 14px;">
+          <p style="margin:0;font-size:10px;color:#16a34a;text-transform:uppercase;font-weight:700;">Montant location</p>
+          <p style="margin:5px 0 0;font-size:24px;font-weight:800;color:#15803d;">${montant}</p>
+        </td>
+        <td width="4%"></td>
+        <td width="48%" style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px 14px;">
+          <p style="margin:0;font-size:10px;color:#2563eb;text-transform:uppercase;font-weight:700;">Caution</p>
+          <p style="margin:5px 0 0;font-size:24px;font-weight:800;color:#1d4ed8;">${caution}</p>
+          <p style="margin:4px 0 0;font-size:10px;color:#60a5fa;">non encaissée — restituée au retour</p>
+        </td>
+      </tr>
+    </table>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr><td style="background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 6px 6px 0;padding:10px 14px;">
+        <p style="margin:0;font-size:12px;font-weight:700;color:#92400e;">À apporter en magasin :</p>
+        <p style="margin:5px 0 0;font-size:12px;color:#78350f;line-height:1.6;">&#x2022; Pièce d'identité valide (CNI, permis ou passeport)<br>&#x2022; Chèque de caution à l'ordre de VELOS PERFORMANCES</p>
+      </td></tr>
+    </table>
+  </td></tr>
+  <tr><td style="background:#0f172a;border-radius:0 0 10px 10px;padding:16px 28px;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td><p style="margin:0;font-size:12px;font-weight:700;color:#e2e8f0;">SARL Vélos Performances</p>
+          <p style="margin:3px 0 0;font-size:11px;color:#64748b;">32 Faubourg du Général Philippot — 67340 Ingwiller &nbsp;|&nbsp; 09.50.32.08.29</p></td>
+      <td align="right"><p style="margin:0;font-size:10px;color:#475569;">941 614 653 R.C.S. Saverne</p></td>
+    </tr></table>
+  </td></tr>
+</table>
+</td></tr></table>
+</body></html>`;
+
+  return {
+    loueur: base('Nouveau contrat de location signé en magasin. Le contrat PDF est joint à cet email.'),
+    client: base('Bonjour ' + prenom + ',<br><br>Votre contrat de location est confirmé. Le contrat PDF est joint à cet email. Conservez-le comme justificatif.<br><br>À bientôt chez Vélos Performances !')
+  };
+}
+
+// =======================================================================
 // INITIALISATION
 // =======================================================================
 window.addEventListener('load', () => {
@@ -1190,10 +1253,6 @@ window.addEventListener('load', () => {
   renderCGL();
   buildCalendar();
   prefillFromURL();
-  // Init EmailJS une seule fois au démarrage (requis v4)
-  if (CONFIG.emailjs.enabled && window.emailjs) {
-    emailjs.init({ publicKey: CONFIG.emailjs.publicKey });
-  }
 });
 
 /* =======================================================================
