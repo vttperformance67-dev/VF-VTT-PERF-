@@ -7,7 +7,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
-<script src="https://smtpjs.com/v3/smtp.js"></script>
+<!-- SMTP.js retiré — remplacé par Brevo API (fetch natif, pas de dépendance externe) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -70,6 +70,10 @@
         <div class="flex items-center gap-3 mb-1">
           <a href="index.html" class="text-xs text-slate-500 hover:text-slate-800 flex items-center gap-1 transition-colors">
             ← Retour au site
+          </a>
+          <a href="admin.html" id="admin-header-btn" title="Administration" style="position:relative;display:inline-flex;align-items:center;padding:.25rem .5rem;border-radius:.5rem;transition:.2s;color:#94a3b8;" onmouseover="this.style.color='#0f172a'" onmouseleave="this.style.color='#94a3b8'">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span id="admin-hdr-dot" style="display:none;position:absolute;top:2px;right:2px;width:6px;height:6px;border-radius:50%;background:#22c55e;border:1.5px solid white;"></span>
           </a>
         </div>
         <h1 class="text-2xl font-bold text-slate-900">VÉLOS PERFORMANCES</h1>
@@ -304,10 +308,10 @@
     </div>
 
     <!-- ACCEPTATION + SIGNATURES -->
-    <div class="section-card">
+    <div class="section-card" id="sig-section">
       <h2 class="section-title"><span class="section-num">8</span> Acceptation et signatures</h2>
 
-      <div class="bg-slate-50 border border-slate-200 rounded-md p-4 mb-5">
+      <div id="cgl-check-row" class="bg-slate-50 border border-slate-200 rounded-md p-4 mb-5">
         <label class="flex items-start gap-3 cursor-pointer">
           <input type="checkbox" id="accept-cgl" class="mt-1 w-4 h-4 accent-slate-900" required>
           <span class="text-sm text-slate-700">
@@ -349,12 +353,12 @@
 
     <!-- SUBMIT -->
     <div class="bg-white border border-slate-200 rounded-xl p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-      <div class="text-sm text-slate-600">
-        Le contrat PDF (recto + verso CGL) sera généré immédiatement. Une notification est envoyée au magasin.
+      <div class="text-sm text-slate-600" id="submit-hint">
+        Votre demande sera transmise au magasin pour confirmation sous 24h.
       </div>
       <div class="flex gap-3">
         <button type="button" onclick="showCGL()" class="btn-secondary">Voir les CGL</button>
-        <button type="submit" class="btn-primary">Générer le contrat</button>
+        <button type="submit" class="btn-primary" id="submit-btn-label">Envoyer ma demande</button>
       </div>
     </div>
 
@@ -376,6 +380,28 @@
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
           Nouveau contrat
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉCRAN CONFIRMATION DEMANDE CLIENT (mode public) -->
+  <div id="pending-panel" class="hidden mt-6 animate-slide-up">
+    <div class="bg-white border-2 border-blue-200 rounded-2xl p-8 text-center shadow-lg">
+      <div class="text-6xl mb-4">📬</div>
+      <h2 class="font-bold text-2xl text-slate-900 mb-2">Demande envoyée !</h2>
+      <p class="text-slate-600 mb-1">Votre demande de réservation a bien été transmise au magasin.</p>
+      <p class="text-slate-500 text-sm mb-4">Nous vous contacterons sous 24h par téléphone ou email pour confirmer votre réservation.</p>
+      <p id="pending-ref" class="text-xs text-slate-400 mb-8"></p>
+      <div class="rounded-xl p-4 mb-6 text-left" style="background:#fffbeb;border:1px solid #fcd34d;">
+        <p class="font-bold text-amber-900 text-sm mb-1">Pensez à préparer pour votre venue :</p>
+        <ul class="text-sm text-amber-800 space-y-1">
+          <li>📄 Une pièce d'identité valide (CNI, permis ou passeport)</li>
+          <li>💳 Un chèque de caution à l'ordre de VELOS PERFORMANCES (non encaissé)</li>
+        </ul>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="index.html" class="btn-secondary flex items-center gap-2 justify-center">← Retour au site</a>
+        <button onclick="resetPendingForm()" class="btn-secondary flex items-center gap-2 justify-center">Nouvelle demande</button>
       </div>
     </div>
   </div>
@@ -417,13 +443,45 @@
 const CONFIG = {
   loueurEmail: 'vttperformance67@gmail.com',
 
-  smtp: {
+  // ─── Brevo (ex-Sendinblue) — REMPLACEZ la valeur ci-dessous ───
+  // 1. brevo.com → compte gratuit → Settings → API Keys → Créer une clé
+  // 2. Vérifiez vttperformance67@gmail.com comme expéditeur dans Senders
+  // 3. Collez la clé (commence par xkeysib-...) à la place de VOTRE_CLE_ICI
+  brevo: {
     enabled: true,
-    host: 'smtp.gmail.com',
-    user: 'vttperformance67@gmail.com',
-    pass: 'mdze whnm vpwy wxpa'
+    apiKey: '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',
+    senderName: 'Vélos Performances'
   }
 };
+
+const isAdmin = () => sessionStorage.getItem('vp_admin_session') === 'ok';
+
+// ─── Envoi email via Brevo (PDF en pièce jointe) ───────────────
+async function brevoSend({ to, subject, html, pdfBase64, pdfName, replyTo }) {
+  const body = {
+    sender: { name: CONFIG.brevo.senderName, email: CONFIG.loueurEmail },
+    to: [{ email: to }],
+    subject,
+    htmlContent: html
+  };
+  if (replyTo) body.replyTo = { email: replyTo };
+  if (pdfBase64 && pdfName) body.attachment = [{ name: pdfName, content: pdfBase64 }];
+
+  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'api-key': CONFIG.brevo.apiKey,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+
+  if (!res.ok) {
+    const txt = await res.text();
+    throw new Error('Brevo ' + res.status + ' — ' + txt);
+  }
+  return true;
+}
 
 // =======================================================================
 // FLOTTE — catalogue synchronisé avec velos.html
@@ -745,11 +803,21 @@ function autoFillVelo() { /* remplacé par multi-vélos */ }
 // =======================================================================
 // AUTO-REMPLISSAGE VIA PARAMÈTRES URL
 // URL supportée : contrat.html?nom=Dupont&prenom=Marie&email=x@y.com
-//   &telephone=06...&velo=sunn_rage_500&date_debut=2026-05-15T10:00
-//   &date_fin=2026-05-16T18:00&taille=M&prix_location=60
+//   &telephone=06...&velo=V001&date_debut=2026-05-15T10:00&prix_location=40
+// URL admin confirm : contrat.html?confirm=PEND-XXXXXXXX
 // =======================================================================
 function prefillFromURL() {
   const p = new URLSearchParams(window.location.search);
+
+  // Mode confirmation admin : charge une demande en attente
+  const confirmId = p.get('confirm');
+  if (confirmId) {
+    try {
+      const allPending = JSON.parse(localStorage.getItem('vp_pending') || '[]');
+      const entry = allPending.find(r => r.id === confirmId);
+      if (entry) { prefillFromPending(entry); return; }
+    } catch(ex) {}
+  }
 
   const fill = (id, val) => {
     const el = document.getElementById(id);
@@ -763,17 +831,90 @@ function prefillFromURL() {
   fill('f-adresse', p.get('adresse'));
   fill('f-date_debut', p.get('date_debut'));
   fill('f-date_fin', p.get('date_fin'));
-  fill('f-taille', p.get('taille'));
-  fill('f-prix_location', p.get('prix_location'));
 
-  // Vélo : accepte la clé directe (sunn_rage_500) OU le libellé du formulaire principal
-  let veloKey = p.get('velo');
-  if (veloKey && !VELOS[veloKey]) {
-    veloKey = VELO_LABEL_MAP[veloKey] || null;
+  // ?velo=V001 : pré-sélectionne le premier vélo
+  const veloParam = p.get('velo');
+  if (veloParam && VELOS[veloParam]) {
+    const firstSelect = document.querySelector('#velos-list select');
+    if (firstSelect) {
+      firstSelect.value = veloParam;
+      onVeloChange(0, veloParam);
+    }
   }
-  if (veloKey && VELOS[veloKey]) {
-    document.getElementById('velo_select').value = veloKey;
-    autoFillVelo();
+}
+
+function prefillFromPending(entry) {
+  const fill = (id, val) => {
+    const el = document.getElementById(id);
+    if (el && val) { el.value = val; el.classList.add('auto-filled'); }
+  };
+  fill('f-nom', entry.nom);
+  fill('f-prenom', entry.prenom);
+  fill('f-email', entry.email);
+  fill('f-telephone', entry.telephone);
+  fill('f-adresse', entry.adresse);
+  fill('f-date_debut', entry.date_debut);
+  fill('f-date_fin', entry.date_fin);
+  fill('h-prix_location', entry.prix_location);
+
+  // Pré-sélectionne les vélos
+  if (entry.velos_json) {
+    try {
+      const velos = JSON.parse(entry.velos_json);
+      velosSelectionnes = [];
+      document.getElementById('velos-list').innerHTML = '';
+      velos.forEach((v, i) => {
+        ajouterLigneVelo();
+        if (v.id && VELOS[v.id]) {
+          const row = document.getElementById('velo-row-' + i);
+          if (row) { row.querySelector('select').value = v.id; onVeloChange(i, v.id); }
+        }
+      });
+    } catch(ex) {}
+  }
+
+  // Résumé créneau
+  if (entry.date_debut && entry.date_fin) {
+    const d = new Date(entry.date_debut);
+    const hF = d.getHours();
+    const hT = new Date(entry.date_fin).getHours();
+    const creneau = (hF === 8 && hT === 12) ? 'Matin (8h–12h)' : hF === 14 ? 'Après-midi (14h–18h)' : 'Journée (8h–18h)';
+    document.getElementById('slot-summary-text').textContent =
+      d.toLocaleDateString('fr-FR', { weekday:'short', day:'numeric', month:'short' }) + ' — ' + creneau + (entry.prix_location ? ' — ' + entry.prix_location + ' €' : '');
+    document.getElementById('slot-summary').classList.remove('hidden');
+    const tarifDisplay = document.getElementById('tarif-display');
+    if (tarifDisplay && entry.prix_location) tarifDisplay.textContent = entry.prix_location + ' €';
+  }
+
+  toast('📋 Demande ' + entry.id + ' pré-chargée — vérifiez, signez puis générez le contrat', 7000);
+}
+
+// =======================================================================
+// ADAPTATION UI SELON MODE (admin ou public)
+// =======================================================================
+function adaptFormToMode() {
+  if (isAdmin()) {
+    document.getElementById('submit-hint').textContent = 'Le contrat PDF (recto + verso CGL) sera généré immédiatement. Une notification est envoyée au magasin.';
+    document.getElementById('submit-btn-label').textContent = 'Générer le contrat';
+  } else {
+    // Cache la section signatures
+    const sigSec = document.getElementById('sig-section');
+    if (sigSec) sigSec.style.display = 'none';
+    // Rend le CGL non obligatoire (juste lecture)
+    const acceptCgl = document.getElementById('accept-cgl');
+    if (acceptCgl) acceptCgl.required = false;
+    // Cache la case CGL
+    const cglRow = document.getElementById('cgl-check-row');
+    if (cglRow) cglRow.style.display = 'none';
+    // Cache le bouton déverrouillage anomalies
+    const obsBtn = document.getElementById('obs-unlock-btn');
+    if (obsBtn) obsBtn.style.display = 'none';
+    // Cache le lien gestion parc
+    const parkLink = document.querySelector('a[href="velos.html"]');
+    if (parkLink) parkLink.style.display = 'none';
+    // Met à jour l'aide et le bouton submit
+    document.getElementById('submit-hint').textContent = 'Votre demande sera transmise au magasin pour confirmation sous 24h. Nous vous contacterons par téléphone ou email.';
+    document.getElementById('submit-btn-label').textContent = 'Envoyer ma demande';
   }
 }
 
@@ -1108,15 +1249,13 @@ async function generatePDF(formData) {
 }
 
 // =======================================================================
-// SOUMISSION DU FORMULAIRE
+// SOUMISSION DU FORMULAIRE — mode dual (admin PDF / public demande)
 // =======================================================================
 document.getElementById('contract-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const submitBtn = e.target.querySelector('button[type=submit]');
 
-  if (!document.getElementById('accept-cgl').checked) {
-    toast('⚠️ Vous devez accepter les CGL pour continuer'); return;
-  }
+  // Validations communes
   if (!velosSelectionnes.some(v => v.id)) {
     toast('⚠️ Sélectionnez au moins un vélo (section 2)'); return;
   }
@@ -1125,10 +1264,76 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
     document.getElementById('calendar-list').scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   }
+
+  // ──────────────────────────────────────────────────────────────
+  // MODE PUBLIC — Demande de réservation (enregistrée, pas de PDF)
+  // ──────────────────────────────────────────────────────────────
+  if (!isAdmin()) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Envoi en cours...';
+
+    const formData = {};
+    new FormData(e.target).forEach((v, k) => formData[k] = v);
+    const velosOk = velosSelectionnes.filter(v => v.id);
+    formData.velos_json   = JSON.stringify(velosOk);
+    formData.modele_libre = velosOk.map(v => '[' + v.id + '] ' + v.libelle).join(' + ');
+    formData.type_velo    = velosOk.map(v => v.type).join(', ');
+    formData.marque       = velosOk.map(v => v.marque).join(', ');
+    formData.taille       = velosOk.map(v => v.taille).join(', ');
+    formData.caution      = document.getElementById('caution-total-hidden').value;
+
+    const pendingId = 'PEND-' + Date.now().toString().slice(-8);
+    const pendingEntry = {
+      id: pendingId, ts: Date.now(), status: 'pending',
+      nom: formData.nom || '', prenom: formData.prenom || '',
+      email: formData.email || '', telephone: formData.telephone || '',
+      adresse: formData.adresse || '', piece_identite: formData.piece_identite || '',
+      velos_json: formData.velos_json, modele_libre: formData.modele_libre,
+      type_velo: formData.type_velo, marque: formData.marque, taille: formData.taille,
+      date_debut: formData.date_debut || '', date_fin: formData.date_fin || '',
+      prix_location: formData.prix_location || '', caution: formData.caution || '',
+      garantie: formData.garantie || ''
+    };
+
+    try {
+      const allPending = JSON.parse(localStorage.getItem('vp_pending') || '[]');
+      allPending.push(pendingEntry);
+      localStorage.setItem('vp_pending', JSON.stringify(allPending));
+    } catch(ex) { console.error('localStorage error:', ex); }
+
+    // Notification email au loueur (Brevo)
+    if (CONFIG.brevo.enabled) {
+      try {
+        const clientNom = ((formData.nom||'') + ' ' + (formData.prenom||'')).trim();
+        const debutStr  = formData.date_debut ? new Date(formData.date_debut).toLocaleString('fr-FR') : '—';
+        const finStr    = formData.date_fin   ? new Date(formData.date_fin).toLocaleString('fr-FR')   : '—';
+        await brevoSend({
+          to: CONFIG.loueurEmail,
+          replyTo: formData.email || CONFIG.loueurEmail,
+          subject: '[Demande ' + pendingId + '] ' + clientNom,
+          html: buildNotifHTML({
+            clientNom, clientEmail: formData.email||'', clientTel: formData.telephone||'',
+            modele: formData.modele_libre, debutStr, finStr,
+            montant: (formData.prix_location||'—') + ' €',
+            caution: (formData.caution||'—') + ' €', pendingId
+          })
+        });
+      } catch(emailErr) { console.error('Notification email error:', emailErr); }
+    }
+
+    showPendingSuccess(pendingId, formData);
+    return;
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // MODE ADMIN — Génération contrat PDF immédiate
+  // ──────────────────────────────────────────────────────────────
+  if (!document.getElementById('accept-cgl').checked) {
+    toast('⚠️ Vous devez accepter les CGL pour continuer'); return;
+  }
   if (signatures['sig-client'].isEmpty()) {
     toast('⚠️ La signature du locataire est requise'); return;
   }
-  // Signature loueur : toujours pré-remplie, pas de vérification nécessaire
 
   submitBtn.disabled = true;
   submitBtn.textContent = 'Génération...';
@@ -1136,12 +1341,9 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
   const formData = {};
   new FormData(e.target).forEach((v, k) => formData[k] = v);
 
-  // Signature client
   formData.sigClient = signatures['sig-client'].toDataURL('image/png');
-  // Signature loueur — capturée depuis le canvas pré-dessiné
   formData.sigLoueur = document.getElementById('sig-loueur').toDataURL('image/png');
 
-  // Enrichit formData avec les vélos sélectionnés
   const velosOk = velosSelectionnes.filter(v => v.id);
   formData.velos_json   = JSON.stringify(velosOk);
   formData.modele_libre = velosOk.map(v => '[' + v.id + '] ' + v.libelle).join(' + ');
@@ -1155,11 +1357,9 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
     const pdfBlob = doc.output('blob');
     const fileName = 'Contrat_' + numContrat + '_' + (formData.nom || 'client') + '.pdf';
 
-    // Stocke le PDF pour le bouton de téléchargement
     window._lastPdfBlob = pdfBlob;
     window._lastPdfFileName = fileName;
 
-    // Enregistre l'historique dans localStorage pour chaque vélo
     const clientNomHisto = ((formData.nom||'') + ' ' + (formData.prenom||'')).trim();
     const debutH = formData.date_debut ? new Date(formData.date_debut).toLocaleDateString('fr-FR') : '—';
     const finH   = formData.date_fin   ? new Date(formData.date_fin).toLocaleDateString('fr-FR')   : '—';
@@ -1169,13 +1369,23 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
         histo.push({ numContrat, client: clientNomHisto, debut: debutH, fin: finH, montant: Number(formData.prix_location)||0 });
         localStorage.setItem('vp_histo_'+v.id, JSON.stringify(histo));
         localStorage.setItem('vp_statut_'+v.id, 'loué');
-      } catch(e) {}
+      } catch(ex) {}
     });
+
+    // Si confirmé depuis admin (?confirm=PEND-XXX), marquer la demande comme confirmée
+    const confirmId = new URLSearchParams(window.location.search).get('confirm');
+    if (confirmId) {
+      try {
+        const allPending = JSON.parse(localStorage.getItem('vp_pending') || '[]');
+        const idx = allPending.findIndex(r => r.id === confirmId);
+        if (idx !== -1) { allPending[idx].status = 'confirmed'; allPending[idx].numContrat = numContrat; }
+        localStorage.setItem('vp_pending', JSON.stringify(allPending));
+      } catch(ex) {}
+    }
 
     let emailStatus = '';
 
-    // Envoi email via SMTP.js + Gmail (SecureToken chiffré sur smtpjs.com)
-    if (CONFIG.smtp.enabled && window.Email) {
+    if (CONFIG.brevo.enabled) {
       try {
         const clientNom   = ((formData.nom || '') + ' ' + (formData.prenom || '')).trim();
         const clientEmail = (formData.email || '').trim();
@@ -1192,47 +1402,37 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
           prenom: formData.prenom || ''
         });
 
-        const smtpBase = {
-          Host:     CONFIG.smtp.host,
-          Username: CONFIG.smtp.user,
-          Password: CONFIG.smtp.pass,
-          From:     CONFIG.smtp.user
-        };
-
         // Email loueur — avec PDF en pièce jointe
-        const resPro = await Email.send({
-          ...smtpBase,
-          To:          CONFIG.loueurEmail,
-          ReplyTo:     clientEmail || CONFIG.loueurEmail,
-          Subject:     '[Contrat ' + numContrat + '] ' + clientNom,
-          Body:        htmlBody.loueur,
-          Attachments: [{ name: fileName, data: pdfBase64 }]
+        await brevoSend({
+          to:        CONFIG.loueurEmail,
+          replyTo:   clientEmail || CONFIG.loueurEmail,
+          subject:   '[Contrat ' + numContrat + '] ' + clientNom,
+          html:      htmlBody.loueur,
+          pdfBase64,
+          pdfName:   fileName
         });
-
-        if (resPro !== 'OK') throw new Error(resPro);
 
         // Email client — avec PDF en pièce jointe si email fourni
         if (clientEmail) {
-          const resCli = await Email.send({
-            ...smtpBase,
-            To:          clientEmail,
-            ReplyTo:     CONFIG.loueurEmail,
-            Subject:     'Votre contrat de location — Vélos Performances',
-            Body:        htmlBody.client,
-            Attachments: [{ name: fileName, data: pdfBase64 }]
+          await brevoSend({
+            to:        clientEmail,
+            replyTo:   CONFIG.loueurEmail,
+            subject:   'Votre contrat de location — Vélos Performances',
+            html:      htmlBody.client,
+            pdfBase64,
+            pdfName:   fileName
           });
-          if (resCli !== 'OK') throw new Error(resCli);
           emailStatus = '📧 Contrat envoyé à ' + clientEmail + ' + copie à ' + CONFIG.loueurEmail;
         } else {
           emailStatus = '📧 Contrat envoyé à ' + CONFIG.loueurEmail;
         }
 
       } catch (emailErr) {
-        console.error('SMTP error:', emailErr);
+        console.error('Brevo error:', emailErr);
         emailStatus = '⚠️ Erreur email : ' + (emailErr.message || emailErr);
       }
     } else {
-      emailStatus = CONFIG.smtp.enabled ? '⚠️ SMTP.js non chargé' : 'Email non configuré — téléchargez le PDF ci-dessous.';
+      emailStatus = 'Email non configuré — téléchargez le PDF ci-dessous.';
     }
 
     // Affiche l'écran de confirmation
@@ -1294,7 +1494,93 @@ function resetForm() {
 }
 
 // =======================================================================
-// TEMPLATE HTML EMAIL
+// PANNEAUX DE CONFIRMATION
+// =======================================================================
+function showPendingSuccess(pendingId, formData) {
+  document.getElementById('contract-form').style.display = 'none';
+  document.getElementById('pending-ref').textContent = 'Référence : ' + pendingId + ' — ' + (formData.nom||'') + ' ' + (formData.prenom||'');
+  const panel = document.getElementById('pending-panel');
+  panel.classList.remove('hidden');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetPendingForm() {
+  document.getElementById('pending-panel').classList.add('hidden');
+  const form = document.getElementById('contract-form');
+  form.reset();
+  form.style.display = '';
+  velosSelectionnes = [];
+  document.getElementById('velos-list').innerHTML = '';
+  ajouterLigneVelo();
+  updateCautionTotale();
+  document.getElementById('slot-summary').classList.add('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// =======================================================================
+// TEMPLATE HTML EMAIL NOTIFICATION (demande client → loueur)
+// =======================================================================
+function buildNotifHTML({ clientNom, clientEmail, clientTel, modele, debutStr, finStr, montant, caution, pendingId }) {
+  return `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#f1f5f9;font-family:Arial,Helvetica,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f1f5f9;padding:28px 0;">
+<tr><td align="center"><table width="580" cellpadding="0" cellspacing="0" border="0" style="max-width:580px;width:100%;">
+  <tr><td style="background:#0f172a;border-radius:10px 10px 0 0;padding:24px 28px;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td><p style="margin:0;font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.08em;">Nouvelle demande de réservation</p>
+          <p style="margin:4px 0 0;font-size:20px;font-weight:700;color:#fff;">VÉLOS PERFORMANCES</p></td>
+      <td align="right"><span style="background:#7c3aed;color:#ede9fe;font-size:11px;font-weight:700;padding:5px 11px;border-radius:20px;">${pendingId}</span></td>
+    </tr></table>
+  </td></tr>
+  <tr><td style="background:#fff;padding:24px 28px;">
+    <p style="margin:0 0 18px;font-size:14px;color:#334155;line-height:1.6;">Un client a soumis une demande de réservation depuis le site. Connectez-vous à l'espace admin pour confirmer ou rejeter.</p>
+    <p style="margin:0 0 6px;font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;border-bottom:2px solid #f1f5f9;padding-bottom:6px;">Demandeur</p>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:16px;margin-top:10px;">
+      <tr>
+        <td width="50%" style="padding-bottom:8px;vertical-align:top;"><p style="margin:0;font-size:10px;color:#94a3b8;text-transform:uppercase;">Nom</p><p style="margin:3px 0 0;font-size:14px;font-weight:600;color:#0f172a;">${clientNom}</p></td>
+        <td width="50%" style="padding-bottom:8px;vertical-align:top;"><p style="margin:0;font-size:10px;color:#94a3b8;text-transform:uppercase;">Téléphone</p><p style="margin:3px 0 0;font-size:14px;font-weight:600;color:#0f172a;">${clientTel}</p></td>
+      </tr>
+      <tr><td colspan="2"><p style="margin:0;font-size:10px;color:#94a3b8;text-transform:uppercase;">Email</p><p style="margin:3px 0 0;font-size:13px;color:#0f172a;">${clientEmail||'—'}</p></td></tr>
+    </table>
+    <p style="margin:0 0 6px;font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;border-bottom:2px solid #f1f5f9;padding-bottom:6px;">Demande</p>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:16px;margin-top:10px;">
+      <tr><td colspan="2" style="padding-bottom:8px;"><p style="margin:0;font-size:10px;color:#94a3b8;text-transform:uppercase;">Vélo(s)</p><p style="margin:3px 0 0;font-size:14px;font-weight:600;color:#0f172a;">${modele}</p></td></tr>
+      <tr>
+        <td width="50%" style="vertical-align:top;"><p style="margin:0;font-size:10px;color:#94a3b8;text-transform:uppercase;">Début souhaité</p><p style="margin:3px 0 0;font-size:14px;font-weight:600;color:#0f172a;">${debutStr}</p></td>
+        <td width="50%" style="vertical-align:top;"><p style="margin:0;font-size:10px;color:#94a3b8;text-transform:uppercase;">Fin souhaitée</p><p style="margin:3px 0 0;font-size:14px;font-weight:600;color:#0f172a;">${finStr}</p></td>
+      </tr>
+    </table>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;"><tr>
+      <td width="48%" style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px 14px;">
+        <p style="margin:0;font-size:10px;color:#16a34a;text-transform:uppercase;font-weight:700;">Montant estimé</p>
+        <p style="margin:5px 0 0;font-size:24px;font-weight:800;color:#15803d;">${montant}</p>
+      </td>
+      <td width="4%"></td>
+      <td width="48%" style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px 14px;">
+        <p style="margin:0;font-size:10px;color:#2563eb;text-transform:uppercase;font-weight:700;">Caution requise</p>
+        <p style="margin:5px 0 0;font-size:24px;font-weight:800;color:#1d4ed8;">${caution}</p>
+      </td>
+    </tr></table>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td style="background:#f0f9ff;border-left:4px solid #0ea5e9;border-radius:0 6px 6px 0;padding:10px 14px;">
+        <p style="margin:0;font-size:12px;font-weight:700;color:#075985;">Action requise :</p>
+        <p style="margin:5px 0 0;font-size:12px;color:#0c4a6e;line-height:1.6;">Connectez-vous à <strong>admin.html</strong> pour confirmer ou rejeter cette demande.<br>Référence : <strong>${pendingId}</strong></p>
+      </td>
+    </tr></table>
+  </td></tr>
+  <tr><td style="background:#0f172a;border-radius:0 0 10px 10px;padding:16px 28px;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td><p style="margin:0;font-size:12px;font-weight:700;color:#e2e8f0;">SARL Vélos Performances</p>
+          <p style="margin:3px 0 0;font-size:11px;color:#64748b;">32 Faubourg du Général Philippot — 67340 Ingwiller &nbsp;|&nbsp; 09.50.32.08.29</p></td>
+      <td align="right"><p style="margin:0;font-size:10px;color:#475569;">941 614 653 R.C.S. Saverne</p></td>
+    </tr></table>
+  </td></tr>
+</table></td></tr></table>
+</body></html>`;
+}
+
+// =======================================================================
+// TEMPLATE HTML EMAIL CONTRAT (admin → client + loueur)
 // =======================================================================
 function buildEmailHTML({ clientNom, clientEmail, clientTel, numContrat, modele, debutStr, finStr, montant, caution, prenom }) {
   const base = (intro) => `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"></head>
@@ -1369,11 +1655,17 @@ function buildEmailHTML({ clientNom, clientEmail, clientTel, numContrat, modele,
 // INITIALISATION
 // =======================================================================
 window.addEventListener('load', () => {
+  // Indicateur connexion admin
+  if (sessionStorage.getItem('vp_admin_session') === 'ok') {
+    const dot = document.getElementById('admin-hdr-dot');
+    if (dot) dot.style.display = 'block';
+  }
   initSignaturePads();
   renderCGL();
   buildCalendar();
+  ajouterLigneVelo(); // première ligne vélo — doit être avant prefillFromURL pour que ?velo= fonctionne
+  adaptFormToMode();
   prefillFromURL();
-  ajouterLigneVelo(); // première ligne vélo
 });
 
 /* =======================================================================

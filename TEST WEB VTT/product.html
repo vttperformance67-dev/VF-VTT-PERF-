@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <title id="page-title">Fiche produit — Vélos Performances</title>
   <meta name="description" id="meta-desc" content="Fiche produit détaillée — Vélos Performances, concessionnaire officiel SUNN & Moustache Bikes à Ingwiller.">
   <meta property="og:title" id="og-title" content="Fiche produit — Vélos Performances">
@@ -22,6 +25,9 @@
 
   <!-- Tailwind CDN : doit rester synchrone (JIT runtime scanne le DOM) -->
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <!-- TOTP 2FA -->
+  <script src="https://cdn.jsdelivr.net/npm/otpauth@9.3.4/dist/otpauth.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
 
   <!-- AOS CSS : preload pour éviter le FOUC -->
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -362,13 +368,18 @@
         <a href="tel:0950320829" class="hidden sm:flex items-center gap-2 text-sm text-gray-300 hover:text-white transition-colors">
           <i data-lucide="phone" class="w-4 h-4 text-orange-400"></i>09 50 32 08 29
         </a>
-        <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="hidden sm:flex btn-orange text-sm py-2 px-4">
+        <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener noreferrer" class="hidden sm:flex btn-orange text-sm py-2 px-4">
           <i data-lucide="calendar" class="w-4 h-4"></i>Prendre RDV
         </a>
         <a href="index.html" id="prod-cart-btn" aria-label="Voir le panier" class="relative p-2 rounded-lg hover:bg-white/10 transition-colors text-gray-300 hover:text-white" style="display:inline-flex;align-items:center">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           <span id="prod-cart-badge" style="display:none;position:absolute;top:2px;right:2px;background:#ff6b35;color:white;border-radius:50%;width:16px;height:16px;font-size:10px;font-weight:700;text-align:center;line-height:16px">0</span>
         </a>
+        <button onclick="openAdminModal()" id="admin-nav-btn" aria-label="Espace administration" title="Connexion administrateur" style="position:relative;display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .85rem;border-radius:.5rem;border:1px solid rgba(175,213,235,.25);background:rgba(175,213,235,.07);color:#afd5eb;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .15s;letter-spacing:.02em;" onmouseover="this.style.background='rgba(175,213,235,.15)';this.style.borderColor='rgba(175,213,235,.5)'" onmouseout="this.style.background='rgba(175,213,235,.07)';this.style.borderColor='rgba(175,213,235,.25)'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span id="admin-nav-label">Connexion</span>
+          <span id="admin-nav-dot" style="display:none;width:6px;height:6px;border-radius:50%;background:#22c55e;flex-shrink:0;"></span>
+        </button>
         <button id="menu-btn" onclick="toggleMenu()" class="lg:hidden p-2 rounded-lg hover:bg-white/10 transition-colors">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
@@ -384,7 +395,11 @@
         <a href="index.html#peinture" class="text-left px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg pl-8">🎨 Peinture</a>
         <a href="index.html#reprise" class="text-left px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg pl-8">🔄 Reprise</a>
         <a href="index.html#contact" class="text-left px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Contact</a>
-        <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="btn-orange mx-4 mt-2 justify-center text-sm">
+        <button onclick="openAdminModal()" id="mobile-admin-link" class="text-left px-4 py-3 text-sm rounded-lg flex items-center gap-2 w-full" style="background:rgba(175,213,235,.07);border:1px solid rgba(175,213,235,.2);color:#afd5eb;font-weight:600;cursor:pointer;margin-top:.25rem;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Connexion administrateur
+        </button>
+        <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener noreferrer" class="btn-orange mx-4 mt-2 justify-center text-sm">
           <i data-lucide="calendar" class="w-4 h-4"></i>Prendre RDV
         </a>
       </div>
@@ -453,10 +468,10 @@
             <button onclick="addToCartFromPage()" class="btn-orange text-base" id="hero-cart-btn" aria-label="Ajouter au panier">
               <i data-lucide="shopping-cart" class="w-5 h-5"></i>Ajouter au panier
             </button>
-            <a id="hero-official" href="#" target="_blank" rel="noopener" class="btn-outline text-base hidden">
+            <a id="hero-official" href="#" target="_blank" rel="noopener noreferrer"class="btn-outline text-base hidden">
               <i data-lucide="external-link" class="w-4 h-4"></i>Fiche officielle
             </a>
-            <a id="hero-whatsapp" href="#" target="_blank" rel="noopener" class="btn-outline text-base" style="border-color:rgba(37,211,102,.3);color:#25d366;" title="Partager sur WhatsApp">
+            <a id="hero-whatsapp" href="#" target="_blank" rel="noopener noreferrer"class="btn-outline text-base" style="border-color:rgba(37,211,102,.3);color:#25d366;" title="Partager sur WhatsApp">
               <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             </a>
             <button id="hero-copy" onclick="copyPageLink()" class="btn-outline text-base" style="border-color:rgba(255,255,255,.15);" title="Copier le lien">
@@ -555,7 +570,7 @@
           <h3 class="font-bold text-lg mb-4" style="font-family:'Rajdhani',sans-serif;">Points clés</h3>
           <div id="specs-sidebar" class="space-y-3"></div>
           <div class="mt-5 pt-5" style="border-top:1px solid rgba(255,255,255,.07);">
-            <a id="official-link-sidebar" href="#" target="_blank" rel="noopener" class="btn-outline w-full justify-center text-sm hidden">
+            <a id="official-link-sidebar" href="#" target="_blank" rel="noopener noreferrer"class="btn-outline w-full justify-center text-sm hidden">
               <i data-lucide="external-link" class="w-4 h-4"></i>Fiche fabricant
             </a>
           </div>
@@ -580,7 +595,7 @@
       <!-- Populated by JS -->
     </div>
     <div class="mt-8 flex justify-center gap-4 flex-wrap" id="spec-official-wrap">
-      <a id="spec-official-link" href="#" target="_blank" rel="noopener" class="btn-outline hidden">
+      <a id="spec-official-link" href="#" target="_blank" rel="noopener noreferrer"class="btn-outline hidden">
         <i data-lucide="external-link" class="w-4 h-4"></i>Fiche officielle du fabricant
       </a>
       <button onclick="window.print()" class="btn-outline hidden" id="spec-print-btn">
@@ -919,7 +934,7 @@
           <div class="p-3 rounded-xl" style="background:rgba(255,255,255,.04)"><div class="text-xs text-gray-500 mb-1">Coût total</div><div class="text-sm font-bold text-white" id="fin-total">—</div></div>
           <div class="p-3 rounded-xl" style="background:rgba(255,255,255,.04)"><div class="text-xs text-gray-500 mb-1">Coût du crédit</div><div class="text-sm font-bold text-orange-400" id="fin-cout">—</div></div>
         </div>
-        <a href="https://calendly.com/vttperformance67/30min" target="_blank" class="btn-orange w-full justify-center text-sm">Demander un financement →</a>
+        <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener noreferrer" class="btn-orange w-full justify-center text-sm">Demander un financement →</a>
         <p class="text-xs text-gray-600 mt-3">Simulation non contractuelle — sous réserve d'acceptation du dossier</p>
       </div>
     </div>
@@ -1012,7 +1027,7 @@
           <a href="tel:0950320829" class="flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl" style="background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.25);color:#ff8c5a;">
             <i data-lucide="phone" class="w-4 h-4"></i>09 50 32 08 29
           </a>
-          <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="btn-orange text-sm">
+          <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener noreferrer"class="btn-orange text-sm">
             <i data-lucide="calendar" class="w-4 h-4"></i>Prendre RDV SAV
           </a>
         </div>
@@ -1083,9 +1098,9 @@
         </div>
         <p class="text-sm text-gray-500 leading-relaxed mb-5">Atelier et magasin de cycles spécialisé. Concessionnaire officiel SUNN &amp; Moustache Bikes. Vente, location, réparation à Ingwiller depuis 2019.</p>
         <div class="flex gap-2">
-          <a href="https://www.instagram.com/vttperformance67/" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/10 transition-colors" style="border:1px solid rgba(255,255,255,.08)" title="Instagram"><i data-lucide="instagram" class="w-4 h-4"></i></a>
-          <a href="https://www.facebook.com/61577356443323/" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/10 transition-colors" style="border:1px solid rgba(255,255,255,.08)" title="Facebook"><i data-lucide="facebook" class="w-4 h-4"></i></a>
-          <a href="https://wa.me/33767674573" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:text-white transition-colors" style="border:1px solid rgba(255,255,255,.08);background:rgba(37,211,102,.08)" title="WhatsApp">
+          <a href="https://www.instagram.com/vttperformance67/" target="_blank" rel="noopener noreferrer"class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/10 transition-colors" style="border:1px solid rgba(255,255,255,.08)" title="Instagram"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+          <a href="https://www.facebook.com/61577356443323/" target="_blank" rel="noopener noreferrer"class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/10 transition-colors" style="border:1px solid rgba(255,255,255,.08)" title="Facebook"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+          <a href="https://wa.me/33767674573" target="_blank" rel="noopener noreferrer"class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:text-white transition-colors" style="border:1px solid rgba(255,255,255,.08);background:rgba(37,211,102,.08)" title="WhatsApp">
             <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-green-500"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           </a>
         </div>
@@ -1187,7 +1202,7 @@
   <a href="tel:0950320829" class="flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-full shadow-2xl" style="background:#064e3b;border:1px solid rgba(52,211,153,.3);color:#34d399;" title="Appeler Vélos Performances">
     <i data-lucide="phone" class="w-4 h-4"></i><span class="hidden md:inline">09 50 32 08 29</span>
   </a>
-  <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener" class="btn-orange shadow-2xl text-sm">
+  <a href="https://calendly.com/vttperformance67/30min" target="_blank" rel="noopener noreferrer"class="btn-orange shadow-2xl text-sm">
     <i data-lucide="calendar-check" class="w-5 h-5"></i><span class="hidden md:inline">Réserver un créneau</span>
   </a>
 </div>
@@ -1761,7 +1776,7 @@ function renderSpecs(bike, details) {
     html = '<div class="card p-8 md:col-span-2 text-center" style="color:var(--muted);">' +
     '<i data-lucide="clipboard-list" class="w-8 h-8 mx-auto mb-3" style="color:var(--muted);"></i>' +
     '<p class="text-sm">Fiche technique complète disponible en magasin ou sur le site officiel.</p>' +
-    (bike.url ? '<a href="' + bike.url + '" target="_blank" class="inline-flex items-center gap-2 mt-3 text-sm font-semibold" style="color:var(--blue);">Voir la fiche officielle <i data-lucide="external-link" class="w-3.5 h-3.5"></i></a>' : '') +
+    (bike.url ? '<a href="' + bike.url + '" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 mt-3 text-sm font-semibold" style="color:var(--blue);">Voir la fiche officielle <i data-lucide="external-link" class="w-3.5 h-3.5"></i></a>' : '') +
     '</div>';
   }
 
@@ -2155,6 +2170,9 @@ function prod360InitDrag() {
   };
   var onMove = function(e) {
     if (!prod360.dragging) return;
+    var now = Date.now();
+    if (now - (prod360._lastMove||0) < 16) return; // throttle ~60fps
+    prod360._lastMove = now;
     var x = e.touches ? e.touches[0].clientX : e.clientX;
     prod360.angle = ((prod360.dragStartAngle + (x - prod360.dragStartX) * 0.55) % 360 + 360) % 360;
     if (prod360.imgs.length > 1) {
@@ -2198,19 +2216,27 @@ function prod360InitParticles() {
       rad:Math.random()*1.8+.4, alpha:Math.random()*.5+.1,
       da:(Math.random()-.5)*.008, col:Math.random()>.5?'0,255,200':'255,107,53' };
   });
-  (function tick() {
-    ctx.clearRect(0,0,size,size);
-    pts.forEach(function(p) {
-      p.x=(p.x+p.vx+size)%size; p.y=(p.y+p.vy+size)%size;
-      p.alpha=Math.max(.05,Math.min(.75,p.alpha+p.da));
-      if(p.alpha>=.75||p.alpha<=.05) p.da*=-1;
-      var dx=p.x-cx, dy=p.y-cy;
-      if(dx*dx+dy*dy<(r*.35)*(r*.35)) return;
-      ctx.beginPath(); ctx.arc(p.x,p.y,p.rad,0,Math.PI*2);
-      ctx.fillStyle='rgba('+p.col+','+p.alpha+')'; ctx.fill();
-    });
-    requestAnimationFrame(tick);
-  })();
+  var _360raf;
+  function tick() {
+    if (!document.hidden) {
+      ctx.clearRect(0,0,size,size);
+      pts.forEach(function(p) {
+        p.x=(p.x+p.vx+size)%size; p.y=(p.y+p.vy+size)%size;
+        p.alpha=Math.max(.05,Math.min(.75,p.alpha+p.da));
+        if(p.alpha>=.75||p.alpha<=.05) p.da*=-1;
+        var dx=p.x-cx, dy=p.y-cy;
+        if(dx*dx+dy*dy<(r*.35)*(r*.35)) return;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.rad,0,Math.PI*2);
+        ctx.fillStyle='rgba('+p.col+','+p.alpha+')'; ctx.fill();
+      });
+    }
+    _360raf = requestAnimationFrame(tick);
+  }
+  tick();
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) { cancelAnimationFrame(_360raf); _360raf = null; }
+    else if (!_360raf) tick();
+  });
 }
 
 // ── CATALOG CACHE ─────────────────────────────────────────────────────
@@ -2277,6 +2303,115 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </div><!-- END product-blur-content -->
 
+<!-- ═══════════════════════════════════════════════════════
+     FOOTER LÉGAL
+     ═══════════════════════════════════════════════════════ -->
+<footer style="background:rgba(8,14,26,.99);border-top:1px solid rgba(255,255,255,.07);padding:2.5rem 1rem 2rem;">
+  <div style="max-width:1120px;margin:0 auto;">
+    <!-- Infos société + contact -->
+    <div style="display:flex;flex-wrap:wrap;gap:2rem;justify-content:space-between;margin-bottom:1.5rem;">
+      <div>
+        <p style="font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:#f1f5f9;margin:0 0 .4rem;">SARL Vélos Performances</p>
+        <p style="font-size:.8rem;color:#64748b;margin:0 0 .25rem;">32 Faubourg du Général Philippot — 67340 Ingwiller (Alsace)</p>
+        <p style="font-size:.8rem;color:#64748b;margin:0;">
+          <a href="tel:0950320829" style="color:#94a3b8;text-decoration:none;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'">09 50 32 08 29</a>
+          &nbsp;·&nbsp;
+          <a href="mailto:vttperformance67@gmail.com" style="color:#94a3b8;text-decoration:none;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'">vttperformance67@gmail.com</a>
+        </p>
+      </div>
+      <div style="display:flex;gap:2rem;flex-wrap:wrap;">
+        <div>
+          <p style="font-size:.72rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.06em;margin:0 0 .35rem;">Identifiants légaux</p>
+          <p style="font-size:.8rem;color:#64748b;margin:0 0 .2rem;">SIRET : 941 614 653 00017</p>
+          <p style="font-size:.8rem;color:#64748b;margin:0 0 .2rem;">R.C.S. Saverne · Capital 5 000 €</p>
+          <p style="font-size:.8rem;color:#64748b;margin:0;">TVA : FR 52 941 614 653</p>
+        </div>
+        <div>
+          <p style="font-size:.72rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.06em;margin:0 0 .35rem;">Horaires</p>
+          <p style="font-size:.8rem;color:#64748b;margin:0 0 .2rem;">Mar–Ven : 9h–12h / 14h–18h30</p>
+          <p style="font-size:.8rem;color:#64748b;margin:0;">Samedi : 9h–18h</p>
+        </div>
+      </div>
+    </div>
+    <!-- Séparateur -->
+    <div style="height:1px;background:rgba(255,255,255,.06);margin-bottom:1rem;"></div>
+    <!-- Liens légaux + copyright -->
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;">
+      <p style="font-size:.75rem;color:#334155;margin:0;">© 2026 SARL Vélos Performances — Tous droits réservés</p>
+      <div style="display:flex;flex-wrap:wrap;gap:1.25rem;">
+        <button onclick="document.getElementById('modal-mentions').style.display='flex'" style="background:none;border:none;color:#475569;font-size:.75rem;cursor:pointer;padding:0;font-family:'Exo 2',sans-serif;" onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#475569'">Mentions légales</button>
+        <button onclick="document.getElementById('modal-cgv').style.display='flex'" style="background:none;border:none;color:#475569;font-size:.75rem;cursor:pointer;padding:0;font-family:'Exo 2',sans-serif;" onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#475569'">CGV</button>
+        <button onclick="document.getElementById('modal-rgpd').style.display='flex'" style="background:none;border:none;color:#475569;font-size:.75rem;cursor:pointer;padding:0;font-family:'Exo 2',sans-serif;" onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#475569'">Données personnelles</button>
+        <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" style="color:#475569;font-size:.75rem;text-decoration:none;" onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#475569'">CNIL</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ MODAL MENTIONS LÉGALES ═══ -->
+<div id="modal-mentions" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.85);align-items:center;justify-content:center;padding:1rem;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#0f1b2d;border:1px solid rgba(255,255,255,.1);border-radius:1.25rem;max-width:640px;width:100%;max-height:85vh;overflow:hidden;display:flex;flex-direction:column;">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:1.25rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.08);">
+      <h3 style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.15rem;color:#f1f5f9;margin:0;">Mentions légales</h3>
+      <button onclick="document.getElementById('modal-mentions').style.display='none'" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:.5rem;padding:.4rem .6rem;color:#94a3b8;cursor:pointer;font-size:1rem;line-height:1;">×</button>
+    </div>
+    <div style="overflow-y:auto;padding:1.5rem;font-size:.85rem;color:#94a3b8;line-height:1.7;">
+      <p><strong style="color:#f1f5f9;">Éditeur du site</strong><br>SARL Vélos Performances — Capital social : 5 000 €<br>32 Faubourg du Général Philippot, 67340 Ingwiller<br>SIRET : 941 614 653 00017 · R.C.S. Saverne<br>TVA intracommunautaire : FR 52 941 614 653<br>Tél. : 09 50 32 08 29 · vttperformance67@gmail.com</p>
+      <p style="margin-top:.75rem;"><strong style="color:#f1f5f9;">Hébergement</strong><br>GitHub Pages — GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA</p>
+      <p style="margin-top:.75rem;"><strong style="color:#f1f5f9;">Directeur de publication</strong><br>Gérant de la SARL Vélos Performances</p>
+      <p style="margin-top:.75rem;"><strong style="color:#f1f5f9;">Propriété intellectuelle</strong><br>Le contenu de ce site (textes, images, logos) est protégé par le droit d'auteur. Toute reproduction sans autorisation est interdite.</p>
+      <p style="margin-top:.75rem;"><strong style="color:#f1f5f9;">Médiation</strong><br>En cas de litige non résolu à l'amiable, vous pouvez recourir à un médiateur de la consommation (art. L612-1 C. conso.).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL CGV ═══ -->
+<div id="modal-cgv" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.85);align-items:center;justify-content:center;padding:1rem;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#0f1b2d;border:1px solid rgba(255,255,255,.1);border-radius:1.25rem;max-width:640px;width:100%;max-height:85vh;overflow:hidden;display:flex;flex-direction:column;">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:1.25rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.08);">
+      <h3 style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.15rem;color:#f1f5f9;margin:0;">Conditions Générales de Vente</h3>
+      <button onclick="document.getElementById('modal-cgv').style.display='none'" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:.5rem;padding:.4rem .6rem;color:#94a3b8;cursor:pointer;font-size:1rem;line-height:1;">×</button>
+    </div>
+    <div style="overflow-y:auto;padding:1.5rem;font-size:.85rem;color:#94a3b8;line-height:1.7;">
+      <p><strong style="color:#f1f5f9;">Art. 1 — Objet.</strong> Les présentes CGV régissent la vente de vélos, accessoires et prestations par la SARL Vélos Performances.</p>
+      <p style="margin-top:.65rem;"><strong style="color:#f1f5f9;">Art. 2 — Prix.</strong> Les prix affichés sont en euros TTC. Ils peuvent être modifiés sans préavis. Le prix applicable est celui en vigueur à la date de la commande confirmée.</p>
+      <p style="margin-top:.65rem;"><strong style="color:#f1f5f9;">Art. 3 — Commandes.</strong> Les commandes via ce site sont transmises par email et ne sont définitives qu'après confirmation écrite du vendeur et versement d'un acompte si requis.</p>
+      <p style="margin-top:.65rem;"><strong style="color:#f1f5f9;">Art. 4 — Disponibilité.</strong> Les produits sont proposés sous réserve de disponibilité. En cas d'indisponibilité, le client est informé et peut annuler ou modifier sa commande.</p>
+      <p style="margin-top:.65rem;"><strong style="color:#f1f5f9;">Art. 5 — Livraison.</strong> Livraison gratuite en France métropolitaine dès 600 €. Délai indicatif : 5–15 jours ouvrés selon disponibilité et fournisseur.</p>
+      <p style="margin-top:.65rem;"><strong style="color:#f1f5f9;">Art. 6 — Rétractation.</strong> Conformément à l'art. L221-18 du Code de la consommation, le consommateur dispose d'un délai de 14 jours pour exercer son droit de rétractation (hors produits commandés sur mesure ou livrés en magasin avec inspection).</p>
+      <p style="margin-top:.65rem;"><strong style="color:#f1f5f9;">Art. 7 — Garanties.</strong> Les produits bénéficient de la garantie légale de conformité (2 ans, art. L217-3 C. conso.) et de la garantie contre les vices cachés (art. 1641 C. civil).</p>
+      <p style="margin-top:.65rem;"><strong style="color:#f1f5f9;">Art. 8 — Litiges.</strong> En cas de litige, compétence du Tribunal de Commerce de Saverne (67). Médiation consommateur disponible sur demande.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL RGPD ═══ -->
+<div id="modal-rgpd" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.85);align-items:center;justify-content:center;padding:1rem;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#0f1b2d;border:1px solid rgba(255,255,255,.1);border-radius:1.25rem;max-width:640px;width:100%;max-height:85vh;overflow:hidden;display:flex;flex-direction:column;">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:1.25rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.08);">
+      <h3 style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.15rem;color:#f1f5f9;margin:0;">Données personnelles (RGPD)</h3>
+      <button onclick="document.getElementById('modal-rgpd').style.display='none'" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:.5rem;padding:.4rem .6rem;color:#94a3b8;cursor:pointer;font-size:1rem;line-height:1;">×</button>
+    </div>
+    <div style="overflow-y:auto;padding:1.5rem;font-size:.85rem;color:#94a3b8;line-height:1.7;">
+      <p><strong style="color:#f1f5f9;">Responsable du traitement</strong><br>SARL Vélos Performances · vttperformance67@gmail.com</p>
+      <p style="margin-top:.65rem;"><strong style="color:#f1f5f9;">Données collectées</strong><br>Ce site n'utilise pas de cookies de traçage ou de publicité. Les seules données stockées localement (localStorage) sont : le contenu de votre panier (temporaire) et les préférences de navigation — aucune transmission à un serveur tiers.</p>
+      <p style="margin-top:.65rem;"><strong style="color:#f1f5f9;">Formulaires de commande / location</strong><br>Les informations saisies (nom, email, téléphone) sont transmises uniquement à vttperformance67@gmail.com pour traitement de votre demande. Elles ne sont ni cédées ni revendues. Durée de conservation : 5 ans à des fins probatoires.</p>
+      <p style="margin-top:.65rem;"><strong style="color:#f1f5f9;">Vos droits (RGPD art. 15–22)</strong><br>Accès, rectification, effacement, limitation, portabilité, opposition. Exercez vos droits à : vttperformance67@gmail.com. Réclamation possible auprès de la <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" style="color:#3b82f6;">CNIL</a>.</p>
+      <p style="margin-top:.65rem;"><strong style="color:#f1f5f9;">Hébergement & CDN</strong><br>GitHub Pages (USA) + Google Fonts (Google LLC, USA). Ces services peuvent déposer des cookies tiers ou collecter votre adresse IP selon leurs propres politiques de confidentialité.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BANDEAU COOKIES (information légère CNIL) ═══ -->
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:2500;background:rgba(10,16,28,.97);border-top:1px solid rgba(255,255,255,.1);padding:.85rem 1.25rem;backdrop-filter:blur(12px);">
+  <div style="max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;justify-content:space-between;">
+    <p style="margin:0;font-size:.8rem;color:#94a3b8;flex:1;min-width:200px;">Ce site utilise uniquement <strong style="color:#f1f5f9;">localStorage</strong> pour le panier et vos préférences — aucun cookie de traçage. Des CDN tiers (Google Fonts, jsDelivr) peuvent enregistrer votre IP.</p>
+    <div style="display:flex;gap:.6rem;flex-shrink:0;">
+      <button onclick="document.getElementById('modal-rgpd').style.display='flex'" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:.65rem;padding:.45rem .9rem;color:#94a3b8;font-size:.78rem;cursor:pointer;font-family:'Exo 2',sans-serif;">En savoir plus</button>
+      <button onclick="localStorage.setItem('vp_cookie_ok','1');document.getElementById('cookie-banner').style.display='none'" style="background:#3b82f6;border:none;border-radius:.65rem;padding:.45rem 1rem;color:white;font-size:.78rem;font-weight:600;cursor:pointer;font-family:'Exo 2',sans-serif;">Compris ✓</button>
+    </div>
+  </div>
+</div>
 
 <style>
 @keyframes toast-in { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
@@ -2313,6 +2448,362 @@ function addToCartFromPage(){
 }
 
 _updateProdCartBadge();
+
+// Indicateur connexion admin (point vert si session active)
+(function() {
+  var dot = document.getElementById('admin-nav-dot');
+  if (dot && sessionStorage.getItem('vp_admin_session') === 'ok') {
+    dot.style.display = 'block';
+    var btn = document.getElementById('admin-nav-btn');
+    if (btn) btn.title = 'Administration (connecté)';
+  }
+})();
+
+// Bandeau cookies : affiche seulement si pas encore accepté
+(function() {
+  if (!localStorage.getItem('vp_cookie_ok')) {
+    setTimeout(function() {
+      var b = document.getElementById('cookie-banner');
+      if (b) b.style.display = 'block';
+    }, 1800);
+  }
+})();
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL CONNEXION ADMIN + TOTP 2FA (Google Authenticator)
+════════════════════════════════════════════════════════════ -->
+<div id="admin-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,22,40,.88);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem;">
+  <div style="background:#0f2341;border:1px solid rgba(175,213,235,.15);border-radius:1rem;padding:2rem;width:100%;max-width:380px;box-shadow:0 25px 60px rgba(0,0,0,.6);position:relative;">
+
+    <!-- Bouton fermer -->
+    <button onclick="amClose()" style="position:absolute;top:.75rem;right:.75rem;background:none;border:none;color:#64748b;cursor:pointer;font-size:1.25rem;line-height:1;padding:.25rem;" aria-label="Fermer">✕</button>
+
+    <!-- Logo -->
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="font-size:2rem;margin-bottom:.4rem;">🚵</div>
+      <h2 style="color:white;font-weight:700;font-size:1.1rem;margin:0;">Vélos Performances</h2>
+      <p style="color:#64748b;font-size:.8rem;margin:.25rem 0 0;">Espace administrateur</p>
+    </div>
+
+    <!-- VUE 1 : Login -->
+    <div id="am-view-login">
+      <div style="margin-bottom:1rem;">
+        <label style="display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;margin-bottom:.35rem;">Identifiant</label>
+        <input type="text" id="am-user" autocomplete="username" placeholder="Identifiant admin"
+          style="width:100%;padding:.7rem 1rem;border-radius:.5rem;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:white;font-size:.9rem;outline:none;box-sizing:border-box;"
+          onfocus="this.style.borderColor='#afd5eb'" onblur="this.style.borderColor='rgba(255,255,255,.12)'"
+          onkeydown="if(event.key==='Enter')document.getElementById('am-pwd').focus()">
+      </div>
+      <div style="margin-bottom:1.25rem;">
+        <label style="display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;margin-bottom:.35rem;">Mot de passe</label>
+        <input type="password" id="am-pwd" autocomplete="current-password" placeholder="••••••••"
+          style="width:100%;padding:.7rem 1rem;border-radius:.5rem;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:white;font-size:.9rem;outline:none;box-sizing:border-box;"
+          onfocus="this.style.borderColor='#afd5eb'" onblur="this.style.borderColor='rgba(255,255,255,.12)'"
+          onkeydown="if(event.key==='Enter')amLogin()">
+      </div>
+      <div id="am-login-err" style="display:none;color:#f87171;font-size:.82rem;margin-bottom:.75rem;text-align:center;"></div>
+      <button id="am-login-btn" onclick="amLogin()"
+        style="width:100%;padding:.8rem;border-radius:.5rem;font-weight:700;font-size:.95rem;background:linear-gradient(135deg,#2563eb,#0ea5e9);color:white;border:none;cursor:pointer;transition:opacity .15s;"
+        onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+        Connexion →
+      </button>
+    </div>
+
+    <!-- VUE 2 : Configuration TOTP (1ère fois) -->
+    <div id="am-view-setup" style="display:none;">
+      <div style="background:rgba(37,99,235,.12);border:1px solid rgba(37,99,235,.3);border-radius:.6rem;padding:.85rem 1rem;margin-bottom:1.25rem;font-size:.82rem;color:#93c5fd;line-height:1.5;">
+        <strong style="display:block;margin-bottom:.3rem;">📱 Configuration unique</strong>
+        Scannez ce QR code avec <strong>Google Authenticator</strong>, <strong>Authy</strong> ou toute app TOTP.
+      </div>
+      <div style="text-align:center;margin-bottom:1rem;background:white;border-radius:.75rem;padding:1rem;display:inline-block;width:100%;box-sizing:border-box;">
+        <canvas id="am-qr-canvas" style="max-width:200px;width:100%;"></canvas>
+      </div>
+      <p style="color:#94a3b8;font-size:.78rem;text-align:center;margin:0 0 1rem;">Entrez le code à 6 chiffres affiché dans l'application pour confirmer :</p>
+      <input type="text" id="am-setup-code" inputmode="numeric" maxlength="7" placeholder="000 000"
+        style="width:100%;padding:.8rem 1rem;border-radius:.5rem;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:white;font-size:1.4rem;font-weight:700;letter-spacing:.3em;text-align:center;outline:none;box-sizing:border-box;"
+        onfocus="this.style.borderColor='#afd5eb'" onblur="this.style.borderColor='rgba(255,255,255,.15)'"
+        onkeydown="if(event.key==='Enter')amConfirmSetup()" oninput="this.value=this.value.replace(/[^0-9 ]/g,'')">
+      <div id="am-setup-err" style="display:none;color:#f87171;font-size:.82rem;margin:.6rem 0;text-align:center;"></div>
+      <button onclick="amConfirmSetup()"
+        style="width:100%;margin-top:.75rem;padding:.8rem;border-radius:.5rem;font-weight:700;font-size:.95rem;background:linear-gradient(135deg,#16a34a,#22c55e);color:white;border:none;cursor:pointer;">
+        Activer l'authentification →
+      </button>
+      <div style="text-align:center;margin-top:.75rem;">
+        <button onclick="amShowView('login')" style="background:none;border:none;color:#64748b;font-size:.78rem;cursor:pointer;text-decoration:underline;">← Retour</button>
+      </div>
+    </div>
+
+    <!-- VUE 3 : Vérification TOTP -->
+    <div id="am-view-totp" style="display:none;">
+      <div style="text-align:center;margin-bottom:1.25rem;">
+        <div style="font-size:2.5rem;margin-bottom:.5rem;">🔐</div>
+        <p style="color:#cbd5e1;font-size:.9rem;margin:0;">Ouvrez <strong style="color:white;">Google Authenticator</strong><br>et entrez le code :</p>
+      </div>
+      <input type="text" id="am-totp-code" inputmode="numeric" maxlength="7" placeholder="000 000"
+        style="width:100%;padding:.9rem 1rem;border-radius:.5rem;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:white;font-size:1.6rem;font-weight:700;letter-spacing:.35em;text-align:center;outline:none;box-sizing:border-box;margin-bottom:.25rem;"
+        onfocus="this.style.borderColor='#afd5eb'" onblur="this.style.borderColor='rgba(255,255,255,.15)'"
+        onkeydown="if(event.key==='Enter')amVerifyTotp()" oninput="this.value=this.value.replace(/[^0-9 ]/g,'')">
+      <!-- Timer 30s -->
+      <div style="text-align:center;margin-bottom:.85rem;">
+        <canvas id="am-timer-ring" width="36" height="36" style="vertical-align:middle;margin-right:.4rem;"></canvas>
+        <span id="am-timer-txt" style="color:#64748b;font-size:.78rem;vertical-align:middle;">Valide <span id="am-timer-sec">30</span>s</span>
+      </div>
+      <div id="am-totp-err" style="display:none;color:#f87171;font-size:.82rem;margin-bottom:.6rem;text-align:center;"></div>
+      <div id="am-totp-lock" style="display:none;color:#fbbf24;font-size:.82rem;margin-bottom:.6rem;text-align:center;"></div>
+      <button id="am-totp-btn" onclick="amVerifyTotp()"
+        style="width:100%;padding:.8rem;border-radius:.5rem;font-weight:700;font-size:.95rem;background:linear-gradient(135deg,#2563eb,#0ea5e9);color:white;border:none;cursor:pointer;">
+        Vérifier le code →
+      </button>
+      <div style="text-align:center;margin-top:.75rem;">
+        <button onclick="amShowView('login')" style="background:none;border:none;color:#64748b;font-size:.78rem;cursor:pointer;text-decoration:underline;">← Changer de compte</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ─── TOTP 2FA — constantes ──────────────────────────────────────
+var AM_TOTP_KEY    = 'vp_totp_secret';
+var AM_SESSION_KEY = 'vp_admin_session';
+// SHA-256 de velosperformances | Jenemeferaisplushacker555*
+var AM_DEFAULT_USER = '20274b291147c49533aa4151ec8e979ea38b3a1ea4837366bed9a0d59e81f15d';
+var AM_DEFAULT_PWD  = '5111bded20784dba41bbf454e697c5136f3c0987a9e598bb5d77a6b9056c2f8b';
+
+var _amTotpAttempts = 0;
+var _amLockUntil    = 0;
+var _amTimerRaf     = null;
+
+async function _amSha256(str) {
+  var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+}
+
+function openAdminModal() {
+  if (sessionStorage.getItem(AM_SESSION_KEY) === 'ok') {
+    location.href = 'admin.html';
+    return;
+  }
+  var m = document.getElementById('admin-modal');
+  m.style.display = 'flex';
+  amShowView('login');
+  setTimeout(function(){ var u=document.getElementById('am-user'); if(u)u.focus(); }, 80);
+}
+
+function amClose() {
+  document.getElementById('admin-modal').style.display = 'none';
+  _amStopTimer();
+  document.getElementById('am-user').value  = '';
+  document.getElementById('am-pwd').value   = '';
+  if(document.getElementById('am-totp-code')) document.getElementById('am-totp-code').value = '';
+  if(document.getElementById('am-setup-code')) document.getElementById('am-setup-code').value = '';
+  _amHideErr('am-login-err');
+  _amHideErr('am-totp-err');
+  _amHideErr('am-setup-err');
+}
+
+function amShowView(name) {
+  ['login','setup','totp'].forEach(function(v){
+    document.getElementById('am-view-'+v).style.display = 'none';
+  });
+  document.getElementById('am-view-'+name).style.display = 'block';
+  if (name === 'totp') {
+    _amTotpAttempts = 0;
+    _amStartTimer();
+    setTimeout(function(){ var c=document.getElementById('am-totp-code'); if(c)c.focus(); }, 80);
+  }
+  if (name === 'setup') {
+    setTimeout(function(){ var c=document.getElementById('am-setup-code'); if(c)c.focus(); }, 80);
+  }
+}
+
+function _amShowErr(id, msg) {
+  var el = document.getElementById(id);
+  if (el) { el.textContent = msg; el.style.display = 'block'; }
+}
+function _amHideErr(id) {
+  var el = document.getElementById(id);
+  if (el) { el.style.display = 'none'; el.textContent = ''; }
+}
+
+// ─── Étape 1 : Vérification des credentials ─────────────────────
+async function amLogin() {
+  _amHideErr('am-login-err');
+  var btn  = document.getElementById('am-login-btn');
+  btn.disabled = true;
+  var user = (document.getElementById('am-user').value || '').trim().toLowerCase();
+  var pwd  = document.getElementById('am-pwd').value || '';
+  if (!user || !pwd) {
+    _amShowErr('am-login-err', 'Identifiant et mot de passe requis');
+    btn.disabled = false;
+    return;
+  }
+  var uHash = await _amSha256(user);
+  var pHash = await _amSha256(pwd);
+  if (uHash !== AM_DEFAULT_USER || pHash !== AM_DEFAULT_PWD) {
+    _amShowErr('am-login-err', 'Identifiant ou mot de passe incorrect');
+    document.getElementById('am-pwd').value = '';
+    document.getElementById('am-pwd').focus();
+    btn.disabled = false;
+    return;
+  }
+  btn.disabled = false;
+  // Credentials OK → TOTP
+  var secret = localStorage.getItem(AM_TOTP_KEY);
+  if (!secret) {
+    _amGenerateQR();
+    amShowView('setup');
+  } else {
+    amShowView('totp');
+  }
+}
+
+// ─── Génération QR (1ère fois) ───────────────────────────────────
+function _amGenerateQR() {
+  var secret = new OTPAuth.Secret();
+  var totp = new OTPAuth.TOTP({
+    issuer: 'Vélos Performances',
+    label:  'VTT Admin',
+    algorithm: 'SHA1',
+    digits: 6,
+    period: 30,
+    secret: secret
+  });
+  window._amPendingSecret = secret.base32;
+  var canvas = document.getElementById('am-qr-canvas');
+  QRCode.toCanvas(canvas, totp.toString(), { width: 200, margin: 1 }, function(err){
+    if (err) console.error('QR error', err);
+  });
+}
+
+// ─── Étape 2a : Confirmation setup (scan + premier code) ─────────
+function amConfirmSetup() {
+  _amHideErr('am-setup-err');
+  var code = (document.getElementById('am-setup-code').value || '').replace(/\s/g,'');
+  if (code.length !== 6) {
+    _amShowErr('am-setup-err', 'Le code doit comporter 6 chiffres');
+    return;
+  }
+  if (!window._amPendingSecret) {
+    _amShowErr('am-setup-err', 'Erreur interne — rechargez la page');
+    return;
+  }
+  var totp = new OTPAuth.TOTP({
+    issuer: 'Vélos Performances',
+    label:  'VTT Admin',
+    algorithm: 'SHA1',
+    digits: 6,
+    period: 30,
+    secret: OTPAuth.Secret.fromBase32(window._amPendingSecret)
+  });
+  var delta = totp.validate({ token: code, window: 1 });
+  if (delta === null) {
+    _amShowErr('am-setup-err', 'Code incorrect — vérifiez l\'heure de votre téléphone');
+    document.getElementById('am-setup-code').value = '';
+    document.getElementById('am-setup-code').focus();
+    return;
+  }
+  localStorage.setItem(AM_TOTP_KEY, window._amPendingSecret);
+  window._amPendingSecret = null;
+  _amSuccess();
+}
+
+// ─── Étape 2b : Vérification TOTP (connexions suivantes) ─────────
+function amVerifyTotp() {
+  _amHideErr('am-totp-err');
+  var lockEl = document.getElementById('am-totp-lock');
+  if (Date.now() < _amLockUntil) {
+    var secs = Math.ceil((_amLockUntil - Date.now()) / 1000);
+    if (lockEl) { lockEl.textContent = '⏳ Trop de tentatives — réessayez dans ' + secs + 's'; lockEl.style.display = 'block'; }
+    return;
+  }
+  if (lockEl) lockEl.style.display = 'none';
+
+  var code = (document.getElementById('am-totp-code').value || '').replace(/\s/g,'');
+  if (code.length !== 6) {
+    _amShowErr('am-totp-err', 'Le code doit comporter 6 chiffres');
+    return;
+  }
+  var storedSecret = localStorage.getItem(AM_TOTP_KEY);
+  if (!storedSecret) {
+    _amShowErr('am-totp-err', 'TOTP non configuré — rechargez');
+    return;
+  }
+  var totp = new OTPAuth.TOTP({
+    issuer: 'Vélos Performances',
+    label:  'VTT Admin',
+    algorithm: 'SHA1',
+    digits: 6,
+    period: 30,
+    secret: OTPAuth.Secret.fromBase32(storedSecret)
+  });
+  var delta = totp.validate({ token: code, window: 1 });
+  if (delta === null) {
+    _amTotpAttempts++;
+    document.getElementById('am-totp-code').value = '';
+    document.getElementById('am-totp-code').focus();
+    if (_amTotpAttempts >= 3) {
+      _amLockUntil = Date.now() + 30000;
+      _amTotpAttempts = 0;
+      if (lockEl) { lockEl.textContent = '⏳ 3 tentatives échouées — attendez 30s'; lockEl.style.display = 'block'; }
+    } else {
+      _amShowErr('am-totp-err', 'Code incorrect (' + (3 - _amTotpAttempts) + ' essai(s) restant)');
+    }
+    return;
+  }
+  _amSuccess();
+}
+
+// ─── Succès — ouvre admin.html ────────────────────────────────────
+function _amSuccess() {
+  _amStopTimer();
+  sessionStorage.setItem(AM_SESSION_KEY, 'ok');
+  // Affiche le point vert avant de rediriger
+  var dot = document.getElementById('admin-nav-dot');
+  if (dot) dot.style.display = 'block';
+  location.href = 'admin.html';
+}
+
+// ─── Timer anneau 30s ─────────────────────────────────────────────
+function _amStartTimer() {
+  _amStopTimer();
+  var canvas = document.getElementById('am-timer-ring');
+  var secEl  = document.getElementById('am-timer-sec');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var R = 14, CX = 18, CY = 18;
+
+  function draw() {
+    var now  = Date.now() / 1000;
+    var frac = 1 - ((now % 30) / 30);
+    var secs = Math.ceil(frac * 30);
+    if (secEl) secEl.textContent = secs;
+    ctx.clearRect(0, 0, 36, 36);
+    // Fond
+    ctx.beginPath(); ctx.arc(CX,CY,R,0,Math.PI*2);
+    ctx.strokeStyle = 'rgba(255,255,255,.12)'; ctx.lineWidth = 3; ctx.stroke();
+    // Arc
+    ctx.beginPath();
+    ctx.arc(CX,CY,R,-Math.PI/2,-Math.PI/2 + Math.PI*2*frac);
+    ctx.strokeStyle = frac > .25 ? '#38bdf8' : '#f87171';
+    ctx.lineWidth = 3; ctx.stroke();
+    _amTimerRaf = requestAnimationFrame(draw);
+  }
+  draw();
+}
+function _amStopTimer() {
+  if (_amTimerRaf) { cancelAnimationFrame(_amTimerRaf); _amTimerRaf = null; }
+}
+
+// Fermer le modal en cliquant le fond
+document.getElementById('admin-modal').addEventListener('click', function(e) {
+  if (e.target === this) amClose();
+});
+// Fermer avec Escape
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && document.getElementById('admin-modal').style.display !== 'none') amClose();
+});
 </script>
 </body>
 </html>

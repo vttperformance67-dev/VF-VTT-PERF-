@@ -197,6 +197,9 @@
 
   <!-- Tailwind CDN : doit rester synchrone (JIT runtime scanne le DOM) -->
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <!-- TOTP 2FA -->
+  <script src="https://cdn.jsdelivr.net/npm/otpauth@9.3.4/dist/otpauth.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
 
   <!-- AOS CSS : preload pour éviter le FOUC -->
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -947,6 +950,11 @@
         <a href="https://calendly.com/vttperformance67/rendez-vous-presentation-ou-test-velo-clone" target="_blank" rel="noopener" class="hidden sm:flex btn-orange text-sm py-2 px-4">
           <i data-lucide="calendar" class="w-4 h-4"></i>Prendre RDV
         </a>
+        <button onclick="openAdminModal()" id="admin-nav-btn" aria-label="Connexion administrateur" title="Connexion administrateur" style="position:relative;display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .85rem;border-radius:.5rem;border:1px solid rgba(175,213,235,.25);background:rgba(175,213,235,.07);color:#afd5eb;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .15s;letter-spacing:.02em;" onmouseover="this.style.background='rgba(175,213,235,.15)';this.style.borderColor='rgba(175,213,235,.5)'" onmouseout="this.style.background='rgba(175,213,235,.07)';this.style.borderColor='rgba(175,213,235,.25)'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span id="admin-nav-label">Connexion</span>
+          <span id="admin-nav-dot" style="display:none;width:6px;height:6px;border-radius:50%;background:#22c55e;flex-shrink:0;"></span>
+        </button>
         <button onclick="openCart()" id="nav-cart-btn" aria-label="Panier" class="relative p-2 rounded-lg hover:bg-white/10 transition-colors text-gray-300 hover:text-white">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           <span id="cart-badge" style="display:none;position:absolute;top:2px;right:2px;background:#ff6b35;color:white;border-radius:50%;width:16px;height:16px;font-size:10px;font-weight:700;text-align:center;line-height:16px">0</span>
@@ -984,6 +992,10 @@
         <button onclick="showSection('faq');toggleMenu()" class="text-left pl-8 pr-4 py-2.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg">❓ FAQ</button>
         <button onclick="showSection('blog');toggleMenu()" class="text-left pl-8 pr-4 py-2.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg">📰 Blog</button>
         <button onclick="showSection('contact');toggleMenu()" class="text-left px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Contact</button>
+        <button onclick="openAdminModal();toggleMenu()" id="mobile-admin-link" class="text-left px-4 py-3 text-sm rounded-lg flex items-center gap-2 w-full" style="background:rgba(175,213,235,.07);border:1px solid rgba(175,213,235,.2);color:#afd5eb;font-weight:600;cursor:pointer;margin-top:.25rem;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Connexion administrateur
+        </button>
         <a href="https://calendly.com/vttperformance67/rendez-vous-presentation-ou-test-velo-clone" target="_blank" rel="noopener" class="btn-orange mx-4 mt-2 justify-center text-sm">
           <i data-lucide="calendar" class="w-4 h-4"></i>Prendre RDV
         </a>
@@ -8204,6 +8216,212 @@ function closeLegalModal() {
   modal.style.pointerEvents = 'none';
   document.body.style.overflow = '';
 }
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL CONNEXION ADMIN + TOTP 2FA (Google Authenticator)
+════════════════════════════════════════════════════════════ -->
+<div id="admin-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,22,40,.88);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem;">
+  <div style="background:#0f2341;border:1px solid rgba(175,213,235,.15);border-radius:1rem;padding:2rem;width:100%;max-width:380px;box-shadow:0 25px 60px rgba(0,0,0,.6);position:relative;">
+    <button onclick="amClose()" style="position:absolute;top:.75rem;right:.75rem;background:none;border:none;color:#64748b;cursor:pointer;font-size:1.25rem;line-height:1;padding:.25rem;" aria-label="Fermer">✕</button>
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="font-size:2rem;margin-bottom:.4rem;">🚵</div>
+      <h2 style="color:white;font-weight:700;font-size:1.1rem;margin:0;">Vélos Performances</h2>
+      <p style="color:#64748b;font-size:.8rem;margin:.25rem 0 0;">Espace administrateur</p>
+    </div>
+    <!-- VUE login -->
+    <div id="am-view-login">
+      <div style="margin-bottom:1rem;">
+        <label style="display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;margin-bottom:.35rem;">Identifiant</label>
+        <input type="text" id="am-user" autocomplete="username" placeholder="Identifiant admin"
+          style="width:100%;padding:.7rem 1rem;border-radius:.5rem;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:white;font-size:.9rem;outline:none;box-sizing:border-box;"
+          onfocus="this.style.borderColor='#afd5eb'" onblur="this.style.borderColor='rgba(255,255,255,.12)'"
+          onkeydown="if(event.key==='Enter')document.getElementById('am-pwd').focus()">
+      </div>
+      <div style="margin-bottom:1.25rem;">
+        <label style="display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;margin-bottom:.35rem;">Mot de passe</label>
+        <input type="password" id="am-pwd" autocomplete="current-password" placeholder="••••••••"
+          style="width:100%;padding:.7rem 1rem;border-radius:.5rem;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:white;font-size:.9rem;outline:none;box-sizing:border-box;"
+          onfocus="this.style.borderColor='#afd5eb'" onblur="this.style.borderColor='rgba(255,255,255,.12)'"
+          onkeydown="if(event.key==='Enter')amLogin()">
+      </div>
+      <div id="am-login-err" style="display:none;color:#f87171;font-size:.82rem;margin-bottom:.75rem;text-align:center;"></div>
+      <button id="am-login-btn" onclick="amLogin()"
+        style="width:100%;padding:.8rem;border-radius:.5rem;font-weight:700;font-size:.95rem;background:linear-gradient(135deg,#2563eb,#0ea5e9);color:white;border:none;cursor:pointer;"
+        onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">Connexion →</button>
+    </div>
+    <!-- VUE setup QR -->
+    <div id="am-view-setup" style="display:none;">
+      <div style="background:rgba(37,99,235,.12);border:1px solid rgba(37,99,235,.3);border-radius:.6rem;padding:.85rem 1rem;margin-bottom:1.25rem;font-size:.82rem;color:#93c5fd;line-height:1.5;">
+        <strong style="display:block;margin-bottom:.3rem;">📱 Configuration unique</strong>
+        Scannez ce QR code avec <strong>Google Authenticator</strong>, <strong>Authy</strong> ou toute app TOTP.
+      </div>
+      <div style="text-align:center;margin-bottom:1rem;background:white;border-radius:.75rem;padding:1rem;box-sizing:border-box;">
+        <canvas id="am-qr-canvas" style="max-width:200px;width:100%;"></canvas>
+      </div>
+      <p style="color:#94a3b8;font-size:.78rem;text-align:center;margin:0 0 1rem;">Entrez le code à 6 chiffres affiché dans l'application pour confirmer :</p>
+      <input type="text" id="am-setup-code" inputmode="numeric" maxlength="7" placeholder="000 000"
+        style="width:100%;padding:.8rem 1rem;border-radius:.5rem;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:white;font-size:1.4rem;font-weight:700;letter-spacing:.3em;text-align:center;outline:none;box-sizing:border-box;"
+        onfocus="this.style.borderColor='#afd5eb'" onblur="this.style.borderColor='rgba(255,255,255,.15)'"
+        onkeydown="if(event.key==='Enter')amConfirmSetup()" oninput="this.value=this.value.replace(/[^0-9 ]/g,'')">
+      <div id="am-setup-err" style="display:none;color:#f87171;font-size:.82rem;margin:.6rem 0;text-align:center;"></div>
+      <button onclick="amConfirmSetup()" style="width:100%;margin-top:.75rem;padding:.8rem;border-radius:.5rem;font-weight:700;font-size:.95rem;background:linear-gradient(135deg,#16a34a,#22c55e);color:white;border:none;cursor:pointer;">Activer l'authentification →</button>
+      <div style="text-align:center;margin-top:.75rem;">
+        <button onclick="amShowView('login')" style="background:none;border:none;color:#64748b;font-size:.78rem;cursor:pointer;text-decoration:underline;">← Retour</button>
+      </div>
+    </div>
+    <!-- VUE TOTP -->
+    <div id="am-view-totp" style="display:none;">
+      <div style="text-align:center;margin-bottom:1.25rem;">
+        <div style="font-size:2.5rem;margin-bottom:.5rem;">🔐</div>
+        <p style="color:#cbd5e1;font-size:.9rem;margin:0;">Ouvrez <strong style="color:white;">Google Authenticator</strong><br>et entrez le code :</p>
+      </div>
+      <input type="text" id="am-totp-code" inputmode="numeric" maxlength="7" placeholder="000 000"
+        style="width:100%;padding:.9rem 1rem;border-radius:.5rem;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:white;font-size:1.6rem;font-weight:700;letter-spacing:.35em;text-align:center;outline:none;box-sizing:border-box;margin-bottom:.25rem;"
+        onfocus="this.style.borderColor='#afd5eb'" onblur="this.style.borderColor='rgba(255,255,255,.15)'"
+        onkeydown="if(event.key==='Enter')amVerifyTotp()" oninput="this.value=this.value.replace(/[^0-9 ]/g,'')">
+      <div style="text-align:center;margin-bottom:.85rem;">
+        <canvas id="am-timer-ring" width="36" height="36" style="vertical-align:middle;margin-right:.4rem;"></canvas>
+        <span id="am-timer-txt" style="color:#64748b;font-size:.78rem;vertical-align:middle;">Valide <span id="am-timer-sec">30</span>s</span>
+      </div>
+      <div id="am-totp-err" style="display:none;color:#f87171;font-size:.82rem;margin-bottom:.6rem;text-align:center;"></div>
+      <div id="am-totp-lock" style="display:none;color:#fbbf24;font-size:.82rem;margin-bottom:.6rem;text-align:center;"></div>
+      <button id="am-totp-btn" onclick="amVerifyTotp()" style="width:100%;padding:.8rem;border-radius:.5rem;font-weight:700;font-size:.95rem;background:linear-gradient(135deg,#2563eb,#0ea5e9);color:white;border:none;cursor:pointer;">Vérifier le code →</button>
+      <div style="text-align:center;margin-top:.75rem;">
+        <button onclick="amShowView('login')" style="background:none;border:none;color:#64748b;font-size:.78rem;cursor:pointer;text-decoration:underline;">← Changer de compte</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var AM_TOTP_KEY    = 'vp_totp_secret';
+var AM_SESSION_KEY = 'vp_admin_session';
+var AM_DEFAULT_USER = '20274b291147c49533aa4151ec8e979ea38b3a1ea4837366bed9a0d59e81f15d';
+var AM_DEFAULT_PWD  = '5111bded20784dba41bbf454e697c5136f3c0987a9e598bb5d77a6b9056c2f8b';
+var _amTotpAttempts = 0, _amLockUntil = 0, _amTimerRaf = null;
+
+async function _amSha256(str) {
+  var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+}
+
+function openAdminModal() {
+  if (sessionStorage.getItem(AM_SESSION_KEY) === 'ok') { location.href = 'admin.html'; return; }
+  var m = document.getElementById('admin-modal');
+  m.style.display = 'flex';
+  amShowView('login');
+  setTimeout(function(){ var u=document.getElementById('am-user'); if(u)u.focus(); }, 80);
+}
+
+function amClose() {
+  document.getElementById('admin-modal').style.display = 'none';
+  _amStopTimer();
+  ['am-user','am-pwd','am-totp-code','am-setup-code'].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
+  ['am-login-err','am-totp-err','am-setup-err'].forEach(function(id){ var el=document.getElementById(id); if(el){el.style.display='none';el.textContent='';} });
+}
+
+function amShowView(name) {
+  ['login','setup','totp'].forEach(function(v){ document.getElementById('am-view-'+v).style.display='none'; });
+  document.getElementById('am-view-'+name).style.display = 'block';
+  if (name==='totp') { _amTotpAttempts=0; _amStartTimer(); setTimeout(function(){ var c=document.getElementById('am-totp-code'); if(c)c.focus(); },80); }
+  if (name==='setup') { setTimeout(function(){ var c=document.getElementById('am-setup-code'); if(c)c.focus(); },80); }
+}
+
+function _amShowErr(id,msg){ var el=document.getElementById(id); if(el){el.textContent=msg;el.style.display='block';} }
+function _amHideErr(id){ var el=document.getElementById(id); if(el){el.style.display='none';el.textContent='';} }
+
+async function amLogin() {
+  _amHideErr('am-login-err');
+  var btn=document.getElementById('am-login-btn'); btn.disabled=true;
+  var user=(document.getElementById('am-user').value||'').trim().toLowerCase();
+  var pwd=document.getElementById('am-pwd').value||'';
+  if(!user||!pwd){ _amShowErr('am-login-err','Identifiant et mot de passe requis'); btn.disabled=false; return; }
+  var uHash=await _amSha256(user), pHash=await _amSha256(pwd);
+  if(uHash!==AM_DEFAULT_USER||pHash!==AM_DEFAULT_PWD){
+    _amShowErr('am-login-err','Identifiant ou mot de passe incorrect');
+    document.getElementById('am-pwd').value=''; document.getElementById('am-pwd').focus();
+    btn.disabled=false; return;
+  }
+  btn.disabled=false;
+  var secret=localStorage.getItem(AM_TOTP_KEY);
+  if(!secret){ _amGenerateQR(); amShowView('setup'); } else { amShowView('totp'); }
+}
+
+function _amGenerateQR() {
+  var secret=new OTPAuth.Secret();
+  var totp=new OTPAuth.TOTP({ issuer:'Vélos Performances', label:'VTT Admin', algorithm:'SHA1', digits:6, period:30, secret:secret });
+  window._amPendingSecret=secret.base32;
+  QRCode.toCanvas(document.getElementById('am-qr-canvas'), totp.toString(), {width:200,margin:1}, function(err){ if(err) console.error(err); });
+}
+
+function amConfirmSetup() {
+  _amHideErr('am-setup-err');
+  var code=(document.getElementById('am-setup-code').value||'').replace(/\s/g,'');
+  if(code.length!==6){ _amShowErr('am-setup-err','Le code doit comporter 6 chiffres'); return; }
+  if(!window._amPendingSecret){ _amShowErr('am-setup-err','Erreur interne — rechargez la page'); return; }
+  var totp=new OTPAuth.TOTP({ issuer:'Vélos Performances', label:'VTT Admin', algorithm:'SHA1', digits:6, period:30, secret:OTPAuth.Secret.fromBase32(window._amPendingSecret) });
+  if(totp.validate({token:code,window:1})===null){ _amShowErr('am-setup-err','Code incorrect — vérifiez l\'heure de votre téléphone'); document.getElementById('am-setup-code').value=''; return; }
+  localStorage.setItem(AM_TOTP_KEY, window._amPendingSecret);
+  window._amPendingSecret=null;
+  _amSuccess();
+}
+
+function amVerifyTotp() {
+  _amHideErr('am-totp-err');
+  var lockEl=document.getElementById('am-totp-lock');
+  if(Date.now()<_amLockUntil){ var s=Math.ceil((_amLockUntil-Date.now())/1000); if(lockEl){lockEl.textContent='⏳ Trop de tentatives — réessayez dans '+s+'s';lockEl.style.display='block';} return; }
+  if(lockEl) lockEl.style.display='none';
+  var code=(document.getElementById('am-totp-code').value||'').replace(/\s/g,'');
+  if(code.length!==6){ _amShowErr('am-totp-err','Le code doit comporter 6 chiffres'); return; }
+  var storedSecret=localStorage.getItem(AM_TOTP_KEY);
+  if(!storedSecret){ _amShowErr('am-totp-err','TOTP non configuré'); return; }
+  var totp=new OTPAuth.TOTP({ issuer:'Vélos Performances', label:'VTT Admin', algorithm:'SHA1', digits:6, period:30, secret:OTPAuth.Secret.fromBase32(storedSecret) });
+  if(totp.validate({token:code,window:1})===null){
+    _amTotpAttempts++;
+    document.getElementById('am-totp-code').value=''; document.getElementById('am-totp-code').focus();
+    if(_amTotpAttempts>=3){ _amLockUntil=Date.now()+30000; _amTotpAttempts=0; if(lockEl){lockEl.textContent='⏳ 3 tentatives échouées — attendez 30s';lockEl.style.display='block';} }
+    else { _amShowErr('am-totp-err','Code incorrect ('+(3-_amTotpAttempts)+' essai(s) restant)'); }
+    return;
+  }
+  _amSuccess();
+}
+
+function _amSuccess() {
+  _amStopTimer();
+  sessionStorage.setItem(AM_SESSION_KEY,'ok');
+  var dot=document.getElementById('admin-nav-dot'); if(dot) dot.style.display='block';
+  var lbl=document.getElementById('admin-nav-label'); if(lbl) lbl.textContent='Admin ✓';
+  location.href='admin.html';
+}
+
+function _amStartTimer() {
+  _amStopTimer();
+  var canvas=document.getElementById('am-timer-ring'), secEl=document.getElementById('am-timer-sec');
+  if(!canvas) return;
+  var ctx=canvas.getContext('2d'), R=14, CX=18, CY=18;
+  function draw() {
+    var frac=1-((Date.now()/1000%30)/30), secs=Math.ceil(frac*30);
+    if(secEl) secEl.textContent=secs;
+    ctx.clearRect(0,0,36,36);
+    ctx.beginPath(); ctx.arc(CX,CY,R,0,Math.PI*2); ctx.strokeStyle='rgba(255,255,255,.12)'; ctx.lineWidth=3; ctx.stroke();
+    ctx.beginPath(); ctx.arc(CX,CY,R,-Math.PI/2,-Math.PI/2+Math.PI*2*frac); ctx.strokeStyle=frac>.25?'#38bdf8':'#f87171'; ctx.lineWidth=3; ctx.stroke();
+    _amTimerRaf=requestAnimationFrame(draw);
+  }
+  draw();
+}
+function _amStopTimer(){ if(_amTimerRaf){cancelAnimationFrame(_amTimerRaf);_amTimerRaf=null;} }
+
+// Indicateur session active au chargement
+(function(){
+  if(sessionStorage.getItem(AM_SESSION_KEY)==='ok'){
+    var dot=document.getElementById('admin-nav-dot'); if(dot) dot.style.display='block';
+    var lbl=document.getElementById('admin-nav-label'); if(lbl) lbl.textContent='Admin ✓';
+  }
+})();
+
+document.getElementById('admin-modal').addEventListener('click', function(e){ if(e.target===this) amClose(); });
+document.addEventListener('keydown', function(e){ if(e.key==='Escape'&&document.getElementById('admin-modal').style.display!=='none') amClose(); });
 </script>
 </body>
 </html>

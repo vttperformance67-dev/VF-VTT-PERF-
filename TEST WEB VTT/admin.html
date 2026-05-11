@@ -33,25 +33,6 @@ body { background: #0a1628; min-height: 100vh; display: flex; align-items: cente
     <p class="text-slate-400 text-sm mt-1">Espace administrateur</p>
   </div>
 
-  <!-- SETUP (premier lancement) -->
-  <div id="view-setup" class="hidden space-y-4">
-    <p class="text-slate-300 text-sm text-center">Première connexion — définissez vos identifiants admin.</p>
-    <div>
-      <label class="text-xs text-slate-400 uppercase tracking-wider mb-1 block">Identifiant</label>
-      <input type="text" id="setup-user" class="field" placeholder="Choisir un identifiant">
-    </div>
-    <div>
-      <label class="text-xs text-slate-400 uppercase tracking-wider mb-1 block">Mot de passe</label>
-      <input type="password" id="setup-pwd1" class="field" placeholder="Choisir un mot de passe (6 car. min.)">
-    </div>
-    <div>
-      <label class="text-xs text-slate-400 uppercase tracking-wider mb-1 block">Confirmer le mot de passe</label>
-      <input type="password" id="setup-pwd2" class="field" placeholder="Répéter le mot de passe">
-    </div>
-    <div id="setup-err" class="err hidden"></div>
-    <button class="btn-main" onclick="setupPassword()">Créer mes identifiants</button>
-  </div>
-
   <!-- LOGIN -->
   <div id="view-login" class="hidden space-y-4">
     <div>
@@ -85,42 +66,42 @@ body { background: #0a1628; min-height: 100vh; display: flex; align-items: cente
 
   <!-- MENU ADMIN (après connexion) -->
   <div id="view-menu" class="hidden space-y-3">
-    <p class="text-slate-300 text-sm text-center mb-4">Connecté en tant qu'administrateur</p>
-    <a href="velos.html" class="btn-main flex items-center justify-center gap-2 no-underline" style="display:flex;">
+    <p class="text-slate-300 text-sm text-center mb-1">Connecté en tant qu'administrateur</p>
+    <div id="pending-badge" class="hidden text-center">
+      <span id="pending-count-badge" class="inline-block bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full"></span>
+    </div>
+    <button onclick="showPending()" class="btn-main w-full text-left flex items-center justify-between">
+      <span>📋 Réservations en attente</span>
+      <span id="pending-num" class="bg-white text-slate-900 text-xs font-bold px-2 py-0.5 rounded-full"></span>
+    </button>
+    <a href="velos.html" class="flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-semibold text-sm border border-slate-600 text-slate-300 hover:border-slate-400 hover:text-white transition-colors no-underline" style="display:flex;">
       🚲 Parc vélos & historique
     </a>
     <a href="contrat.html" class="flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-semibold text-sm border border-slate-600 text-slate-300 hover:border-slate-400 hover:text-white transition-colors no-underline" style="display:flex;">
-      📄 Nouveau contrat de location
+      📄 Contrat en magasin
     </a>
-    <div class="pt-4 border-t border-slate-700 flex justify-between items-center">
-      <button class="link-btn" onclick="showChangePwd()">Changer le mot de passe</button>
+    <div class="pt-4 border-t border-slate-700 flex justify-end items-center">
       <button class="link-btn text-red-400 hover:text-red-300" onclick="logout()">Déconnexion</button>
     </div>
   </div>
 
-  <!-- CHANGER MOT DE PASSE -->
-  <div id="view-changepwd" class="hidden space-y-4">
-    <p class="text-slate-300 text-sm text-center">Nouveau mot de passe</p>
-    <input type="password" id="chg-pwd1" class="field" placeholder="Nouveau mot de passe">
-    <input type="password" id="chg-pwd2" class="field" placeholder="Confirmer">
-    <div id="chg-err" class="err hidden"></div>
-    <button class="btn-main" onclick="changePassword()">Enregistrer</button>
-    <div class="text-center">
-      <button class="link-btn" onclick="showMenu()">← Annuler</button>
+  <!-- RÉSERVATIONS EN ATTENTE -->
+  <div id="view-pending" class="hidden space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="text-white font-bold text-base">Réservations en attente</h2>
+      <button class="link-btn" onclick="showMenu()">← Retour</button>
     </div>
+    <div id="pending-list" class="space-y-3 max-h-96 overflow-y-auto"></div>
   </div>
+
 
 </div>
 
 <script>
-// ============================================================
-// Code de réinitialisation d'urgence (à ne pas partager)
-// Pour réinitialiser le mot de passe si oublié
-// ============================================================
-const RESET_CODE = 'VTTPERF67RESET';
-
-const HASH_KEY    = 'vp_admin_hash';
-const USER_KEY    = 'vp_admin_user';
+// Credentials fixes (SHA-256 — non modifiables depuis l'interface)
+// velosperformances | Jenemeferaisplushacker555*
+const ADMIN_USER_HASH = '20274b291147c49533aa4151ec8e979ea38b3a1ea4837366bed9a0d59e81f15d';
+const ADMIN_PWD_HASH  = '5111bded20784dba41bbf454e697c5136f3c0987a9e598bb5d77a6b9056c2f8b';
 const SESSION_KEY = 'vp_admin_session';
 
 // ============================================================
@@ -134,15 +115,14 @@ async function sha256(str) {
 // ============================================================
 // Navigation entre vues
 // ============================================================
-const views = ['setup','login','reset','menu','changepwd'];
+const views = ['login','reset','menu','pending'];
 function show(v) {
-  views.forEach(n => document.getElementById('view-'+n).classList.add('hidden'));
+  views.forEach(n => { var el=document.getElementById('view-'+n); if(el) el.classList.add('hidden'); });
   document.getElementById('view-'+v).classList.remove('hidden');
 }
-function showLogin()     { clearErrors(); show('login'); setTimeout(()=>document.getElementById('login-pwd').focus(),50); }
-function showReset()     { clearErrors(); show('reset'); }
-function showMenu()      { show('menu'); }
-function showChangePwd() { show('changepwd'); }
+function showLogin() { clearErrors(); show('login'); setTimeout(()=>document.getElementById('login-user').focus(),50); }
+function showReset() { clearErrors(); show('reset'); }
+function showMenu()  { show('menu'); updatePendingBadge(); }
 
 function clearErrors() {
   ['setup-err','login-err','reset-err','chg-err'].forEach(id => {
@@ -158,30 +138,91 @@ function err(id, msg) {
 // ============================================================
 // Initialisation
 // ============================================================
+function showPending() {
+  show('pending');
+  renderPending();
+}
+
+function renderPending() {
+  const list  = document.getElementById('pending-list');
+  const all   = JSON.parse(localStorage.getItem('vp_pending') || '[]');
+  const pend  = all.filter(r => r.status === 'pending');
+  if (pend.length === 0) {
+    list.innerHTML = '<p style="color:#94a3b8;font-size:.85rem;text-align:center;">Aucune réservation en attente.</p>';
+    return;
+  }
+  list.innerHTML = pend.map(r => `
+    <div style="background:#1e3a5f;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;margin-bottom:.75rem;">
+        <div>
+          <p style="color:#7dd3fc;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin:0;">${r.id}</p>
+          <p style="color:white;font-weight:700;font-size:.95rem;margin:.2rem 0 0;">${r.nom || ''} ${r.prenom || ''}</p>
+          <p style="color:#94a3b8;font-size:.8rem;margin:.1rem 0 0;">${r.email || ''} · ${r.telephone || ''}</p>
+        </div>
+        <p style="color:#64748b;font-size:.7rem;white-space:nowrap;">${new Date(r.ts).toLocaleDateString('fr-FR')}</p>
+      </div>
+      <div style="background:rgba(0,0,0,.2);border-radius:.5rem;padding:.6rem .75rem;margin-bottom:.75rem;font-size:.8rem;color:#cbd5e1;">
+        <strong style="color:white;">Vélo :</strong> ${r.modele_libre || '—'}<br>
+        <strong style="color:white;">Créneau :</strong> ${r.date_debut ? new Date(r.date_debut).toLocaleString('fr-FR') : '—'} → ${r.date_fin ? new Date(r.date_fin).toLocaleString('fr-FR') : '—'}<br>
+        <strong style="color:white;">Montant :</strong> ${r.prix_location || '—'} € · <strong style="color:white;">Caution :</strong> ${r.caution || '—'} €
+      </div>
+      <div style="display:flex;gap:.5rem;">
+        <button onclick="confirmerResa('${r.id}')" style="flex:1;background:#16a34a;color:white;border:none;border-radius:.5rem;padding:.5rem;font-weight:700;font-size:.8rem;cursor:pointer;">✅ Confirmer</button>
+        <button onclick="rejeterResa('${r.id}')" style="flex:1;background:#dc2626;color:white;border:none;border-radius:.5rem;padding:.5rem;font-weight:700;font-size:.8rem;cursor:pointer;">❌ Rejeter</button>
+        <a href="contrat.html?confirm=${r.id}" style="flex:1;background:#1e293b;color:#7dd3fc;border:1px solid #334155;border-radius:.5rem;padding:.5rem;font-weight:700;font-size:.8rem;cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center;">📄 Contrat</a>
+      </div>
+    </div>`).join('');
+}
+
+function confirmerResa(id) {
+  const all = JSON.parse(localStorage.getItem('vp_pending') || '[]');
+  const idx = all.findIndex(r => r.id === id);
+  if (idx === -1) return;
+  all[idx].status = 'confirmed';
+  localStorage.setItem('vp_pending', JSON.stringify(all));
+  // Envoie email de confirmation au client si email fourni
+  const r = all[idx];
+  if (r.formData.email) {
+    fetch('').catch(()=>{}); // no-op, email via contrat.html
+    alert('Réservation confirmée.\n\nOuvre "Contrat" pour générer le PDF et envoyer la confirmation par email.');
+  } else {
+    alert('Réservation confirmée (pas d\'email client renseigné).');
+  }
+  renderPending();
+  updatePendingBadge();
+}
+
+function rejeterResa(id) {
+  if (!confirm('Rejeter cette réservation ?')) return;
+  const all = JSON.parse(localStorage.getItem('vp_pending') || '[]');
+  const idx = all.findIndex(r => r.id === id);
+  if (idx === -1) return;
+  all[idx].status = 'rejected';
+  localStorage.setItem('vp_pending', JSON.stringify(all));
+  renderPending();
+  updatePendingBadge();
+}
+
+function updatePendingBadge() {
+  const all  = JSON.parse(localStorage.getItem('vp_pending') || '[]');
+  const n    = all.filter(r => r.status === 'pending').length;
+  const num  = document.getElementById('pending-num');
+  const badge = document.getElementById('pending-badge');
+  if (num) num.textContent = n > 0 ? n : '';
+  if (badge) { if(n>0) badge.classList.remove('hidden'); else badge.classList.add('hidden'); }
+  const countBadge = document.getElementById('pending-count-badge');
+  if (countBadge) countBadge.textContent = n + ' réservation(s) en attente de confirmation';
+}
+
 window.addEventListener('load', () => {
-  // Déjà connecté ?
-  if (sessionStorage.getItem(SESSION_KEY) === 'ok') { showMenu(); return; }
-  // Mot de passe défini ?
-  if (localStorage.getItem(HASH_KEY)) { showLogin(); }
-  else { show('setup'); document.getElementById('setup-pwd1').focus(); }
+  if (sessionStorage.getItem(SESSION_KEY) === 'ok') { showMenu(); updatePendingBadge(); return; }
+  showLogin();
+  document.getElementById('login-user').focus();
 });
 
 // ============================================================
 // Actions
 // ============================================================
-async function setupPassword() {
-  const user = document.getElementById('setup-user').value.trim();
-  const p1   = document.getElementById('setup-pwd1').value;
-  const p2   = document.getElementById('setup-pwd2').value;
-  if (!user)         { err('setup-err', 'L\'identifiant est requis'); return; }
-  if (p1.length < 6) { err('setup-err', 'Mot de passe trop court (6 caractères minimum)'); return; }
-  if (p1 !== p2)     { err('setup-err', 'Les deux mots de passe ne correspondent pas'); return; }
-  localStorage.setItem(USER_KEY,  await sha256(user.toLowerCase()));
-  localStorage.setItem(HASH_KEY,  await sha256(p1));
-  sessionStorage.setItem(SESSION_KEY, 'ok');
-  showMenu();
-}
-
 async function login() {
   const btn  = document.getElementById('login-btn');
   btn.disabled = true;
@@ -189,11 +230,10 @@ async function login() {
   const pwd  = document.getElementById('login-pwd').value;
   const userHash = await sha256(user);
   const pwdHash  = await sha256(pwd);
-  const okUser   = userHash === localStorage.getItem(USER_KEY);
-  const okPwd    = pwdHash  === localStorage.getItem(HASH_KEY);
-  if (okUser && okPwd) {
+  if (userHash === ADMIN_USER_HASH && pwdHash === ADMIN_PWD_HASH) {
     sessionStorage.setItem(SESSION_KEY, 'ok');
     showMenu();
+    updatePendingBadge();
   } else {
     err('login-err', 'Identifiant ou mot de passe incorrect');
     document.getElementById('login-pwd').value = '';
@@ -203,26 +243,15 @@ async function login() {
 }
 
 function checkReset() {
-  if (document.getElementById('reset-code').value.trim() === RESET_CODE) {
-    localStorage.removeItem(HASH_KEY);
+  // Le code reset efface uniquement le secret TOTP (utile si perte du téléphone)
+  if (document.getElementById('reset-code').value.trim() === 'VTTPERF67RESET') {
+    localStorage.removeItem('vp_totp_secret');
     sessionStorage.removeItem(SESSION_KEY);
-    show('setup');
-    document.getElementById('setup-pwd1').focus();
+    err('reset-err', '✓ Secret TOTP effacé — reconnectez-vous depuis le site');
+    setTimeout(showLogin, 2000);
   } else {
     err('reset-err', 'Code de réinitialisation incorrect');
   }
-}
-
-async function changePassword() {
-  const p1 = document.getElementById('chg-pwd1').value;
-  const p2 = document.getElementById('chg-pwd2').value;
-  if (p1.length < 6) { err('chg-err', 'Mot de passe trop court (6 caractères minimum)'); return; }
-  if (p1 !== p2)     { err('chg-err', 'Les deux mots de passe ne correspondent pas'); return; }
-  localStorage.setItem(HASH_KEY, await sha256(p1));
-  showMenu();
-  // Bref message OK
-  const el = document.getElementById('chg-err');
-  if (el) { el.textContent = '✓ Mot de passe mis à jour'; el.classList.remove('hidden'); el.style.color = '#4ade80'; }
 }
 
 function logout() {
