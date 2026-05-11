@@ -423,8 +423,10 @@ const CONFIG = {
   loueurEmail: 'vttperformance67@gmail.com',
 
   smtp: {
-    enabled: false, // ← passe à true après avoir renseigné le secureToken
-    secureToken: 'COLLE_TON_SECURE_TOKEN_ICI' // ← depuis smtpjs.com → Encrypt credentials
+    enabled: true,
+    host: 'smtp.gmail.com',
+    user: 'vttperformance67@gmail.com',
+    pass: 'mdze whnm vpwy wxpa'
   }
 };
 
@@ -1077,11 +1079,17 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
           prenom: formData.prenom || ''
         });
 
+        const smtpBase = {
+          Host:     CONFIG.smtp.host,
+          Username: CONFIG.smtp.user,
+          Password: CONFIG.smtp.pass,
+          From:     CONFIG.smtp.user
+        };
+
         // Email loueur — avec PDF en pièce jointe
         const resPro = await Email.send({
-          SecureToken: CONFIG.smtp.secureToken,
+          ...smtpBase,
           To:          CONFIG.loueurEmail,
-          From:        CONFIG.loueurEmail,
           ReplyTo:     clientEmail || CONFIG.loueurEmail,
           Subject:     '[Contrat ' + numContrat + '] ' + clientNom,
           Body:        htmlBody.loueur,
@@ -1093,9 +1101,8 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
         // Email client — avec PDF en pièce jointe si email fourni
         if (clientEmail) {
           const resCli = await Email.send({
-            SecureToken: CONFIG.smtp.secureToken,
+            ...smtpBase,
             To:          clientEmail,
-            From:        CONFIG.loueurEmail,
             ReplyTo:     CONFIG.loueurEmail,
             Subject:     'Votre contrat de location — Vélos Performances',
             Body:        htmlBody.client,
