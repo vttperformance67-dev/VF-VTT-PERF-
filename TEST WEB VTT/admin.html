@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espace admin — Vélos Performances</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { font-family: 'Inter', system-ui, sans-serif; }
+body { background: #0a1628; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+.card { background: #0f2341; border: 1px solid rgba(255,255,255,.08); border-radius: 1rem; padding: 2.5rem; width: 100%; max-width: 400px; }
+.field { width: 100%; padding: .75rem 1rem; border-radius: .5rem; font-size: .95rem; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.05); color: white; outline: none; transition: border-color .15s; }
+.field:focus { border-color: #afd5eb; }
+.field::placeholder { color: rgba(255,255,255,.3); }
+.btn-main { width: 100%; padding: .8rem; border-radius: .5rem; font-weight: 700; font-size: .95rem; background: linear-gradient(135deg, #2563eb, #0ea5e9); color: white; border: none; cursor: pointer; transition: opacity .15s; }
+.btn-main:hover { opacity: .9; }
+.btn-main:disabled { opacity: .5; cursor: not-allowed; }
+.err { color: #f87171; font-size: .85rem; margin-top: .5rem; text-align: center; }
+.ok  { color: #4ade80; font-size: .85rem; margin-top: .5rem; text-align: center; }
+.link-btn { background: none; border: none; color: #64748b; font-size: .78rem; cursor: pointer; text-decoration: underline; }
+.link-btn:hover { color: #94a3b8; }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- LOGO -->
+  <div class="text-center mb-8">
+    <div class="text-3xl mb-2">🚵</div>
+    <h1 class="text-white font-bold text-xl">Vélos Performances</h1>
+    <p class="text-slate-400 text-sm mt-1">Espace administrateur</p>
+  </div>
+
+  <!-- SETUP (premier lancement) -->
+  <div id="view-setup" class="hidden space-y-4">
+    <p class="text-slate-300 text-sm text-center">Première connexion — définissez vos identifiants admin.</p>
+    <div>
+      <label class="text-xs text-slate-400 uppercase tracking-wider mb-1 block">Identifiant</label>
+      <input type="text" id="setup-user" class="field" placeholder="Choisir un identifiant">
+    </div>
+    <div>
+      <label class="text-xs text-slate-400 uppercase tracking-wider mb-1 block">Mot de passe</label>
+      <input type="password" id="setup-pwd1" class="field" placeholder="Choisir un mot de passe (6 car. min.)">
+    </div>
+    <div>
+      <label class="text-xs text-slate-400 uppercase tracking-wider mb-1 block">Confirmer le mot de passe</label>
+      <input type="password" id="setup-pwd2" class="field" placeholder="Répéter le mot de passe">
+    </div>
+    <div id="setup-err" class="err hidden"></div>
+    <button class="btn-main" onclick="setupPassword()">Créer mes identifiants</button>
+  </div>
+
+  <!-- LOGIN -->
+  <div id="view-login" class="hidden space-y-4">
+    <div>
+      <label class="text-xs text-slate-400 uppercase tracking-wider mb-1 block">Identifiant</label>
+      <input type="text" id="login-user" class="field" placeholder="Identifiant admin" onkeydown="if(event.key==='Enter')document.getElementById('login-pwd').focus()">
+    </div>
+    <div>
+      <label class="text-xs text-slate-400 uppercase tracking-wider mb-1 block">Mot de passe</label>
+      <input type="password" id="login-pwd" class="field" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()">
+    </div>
+    <div id="login-err" class="err hidden"></div>
+    <button class="btn-main" id="login-btn" onclick="login()">Accéder à l'espace admin</button>
+    <div class="text-center mt-2">
+      <button class="link-btn" onclick="showReset()">Mot de passe oublié</button>
+    </div>
+  </div>
+
+  <!-- RESET -->
+  <div id="view-reset" class="hidden space-y-4">
+    <p class="text-slate-300 text-sm text-center">Entrez le code de réinitialisation pour créer un nouveau mot de passe.</p>
+    <div>
+      <label class="text-xs text-slate-400 uppercase tracking-wider mb-1 block">Code de réinitialisation</label>
+      <input type="text" id="reset-code" class="field" placeholder="Code reset">
+    </div>
+    <div id="reset-err" class="err hidden"></div>
+    <button class="btn-main" onclick="checkReset()">Valider</button>
+    <div class="text-center">
+      <button class="link-btn" onclick="showLogin()">← Retour</button>
+    </div>
+  </div>
+
+  <!-- MENU ADMIN (après connexion) -->
+  <div id="view-menu" class="hidden space-y-3">
+    <p class="text-slate-300 text-sm text-center mb-4">Connecté en tant qu'administrateur</p>
+    <a href="velos.html" class="btn-main flex items-center justify-center gap-2 no-underline" style="display:flex;">
+      🚲 Parc vélos & historique
+    </a>
+    <a href="contrat.html" class="flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-semibold text-sm border border-slate-600 text-slate-300 hover:border-slate-400 hover:text-white transition-colors no-underline" style="display:flex;">
+      📄 Nouveau contrat de location
+    </a>
+    <div class="pt-4 border-t border-slate-700 flex justify-between items-center">
+      <button class="link-btn" onclick="showChangePwd()">Changer le mot de passe</button>
+      <button class="link-btn text-red-400 hover:text-red-300" onclick="logout()">Déconnexion</button>
+    </div>
+  </div>
+
+  <!-- CHANGER MOT DE PASSE -->
+  <div id="view-changepwd" class="hidden space-y-4">
+    <p class="text-slate-300 text-sm text-center">Nouveau mot de passe</p>
+    <input type="password" id="chg-pwd1" class="field" placeholder="Nouveau mot de passe">
+    <input type="password" id="chg-pwd2" class="field" placeholder="Confirmer">
+    <div id="chg-err" class="err hidden"></div>
+    <button class="btn-main" onclick="changePassword()">Enregistrer</button>
+    <div class="text-center">
+      <button class="link-btn" onclick="showMenu()">← Annuler</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// Code de réinitialisation d'urgence (à ne pas partager)
+// Pour réinitialiser le mot de passe si oublié
+// ============================================================
+const RESET_CODE = 'VTTPERF67RESET';
+
+const HASH_KEY    = 'vp_admin_hash';
+const USER_KEY    = 'vp_admin_user';
+const SESSION_KEY = 'vp_admin_session';
+
+// ============================================================
+// Crypto — SHA-256 via Web Crypto API
+// ============================================================
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+// ============================================================
+// Navigation entre vues
+// ============================================================
+const views = ['setup','login','reset','menu','changepwd'];
+function show(v) {
+  views.forEach(n => document.getElementById('view-'+n).classList.add('hidden'));
+  document.getElementById('view-'+v).classList.remove('hidden');
+}
+function showLogin()     { clearErrors(); show('login'); setTimeout(()=>document.getElementById('login-pwd').focus(),50); }
+function showReset()     { clearErrors(); show('reset'); }
+function showMenu()      { show('menu'); }
+function showChangePwd() { show('changepwd'); }
+
+function clearErrors() {
+  ['setup-err','login-err','reset-err','chg-err'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.classList.add('hidden'); el.textContent = ''; }
+  });
+}
+function err(id, msg) {
+  const el = document.getElementById(id);
+  if (el) { el.textContent = msg; el.classList.remove('hidden'); }
+}
+
+// ============================================================
+// Initialisation
+// ============================================================
+window.addEventListener('load', () => {
+  // Déjà connecté ?
+  if (sessionStorage.getItem(SESSION_KEY) === 'ok') { showMenu(); return; }
+  // Mot de passe défini ?
+  if (localStorage.getItem(HASH_KEY)) { showLogin(); }
+  else { show('setup'); document.getElementById('setup-pwd1').focus(); }
+});
+
+// ============================================================
+// Actions
+// ============================================================
+async function setupPassword() {
+  const user = document.getElementById('setup-user').value.trim();
+  const p1   = document.getElementById('setup-pwd1').value;
+  const p2   = document.getElementById('setup-pwd2').value;
+  if (!user)         { err('setup-err', 'L\'identifiant est requis'); return; }
+  if (p1.length < 6) { err('setup-err', 'Mot de passe trop court (6 caractères minimum)'); return; }
+  if (p1 !== p2)     { err('setup-err', 'Les deux mots de passe ne correspondent pas'); return; }
+  localStorage.setItem(USER_KEY,  await sha256(user.toLowerCase()));
+  localStorage.setItem(HASH_KEY,  await sha256(p1));
+  sessionStorage.setItem(SESSION_KEY, 'ok');
+  showMenu();
+}
+
+async function login() {
+  const btn  = document.getElementById('login-btn');
+  btn.disabled = true;
+  const user = document.getElementById('login-user').value.trim().toLowerCase();
+  const pwd  = document.getElementById('login-pwd').value;
+  const userHash = await sha256(user);
+  const pwdHash  = await sha256(pwd);
+  const okUser   = userHash === localStorage.getItem(USER_KEY);
+  const okPwd    = pwdHash  === localStorage.getItem(HASH_KEY);
+  if (okUser && okPwd) {
+    sessionStorage.setItem(SESSION_KEY, 'ok');
+    showMenu();
+  } else {
+    err('login-err', 'Identifiant ou mot de passe incorrect');
+    document.getElementById('login-pwd').value = '';
+    document.getElementById('login-pwd').focus();
+  }
+  btn.disabled = false;
+}
+
+function checkReset() {
+  if (document.getElementById('reset-code').value.trim() === RESET_CODE) {
+    localStorage.removeItem(HASH_KEY);
+    sessionStorage.removeItem(SESSION_KEY);
+    show('setup');
+    document.getElementById('setup-pwd1').focus();
+  } else {
+    err('reset-err', 'Code de réinitialisation incorrect');
+  }
+}
+
+async function changePassword() {
+  const p1 = document.getElementById('chg-pwd1').value;
+  const p2 = document.getElementById('chg-pwd2').value;
+  if (p1.length < 6) { err('chg-err', 'Mot de passe trop court (6 caractères minimum)'); return; }
+  if (p1 !== p2)     { err('chg-err', 'Les deux mots de passe ne correspondent pas'); return; }
+  localStorage.setItem(HASH_KEY, await sha256(p1));
+  showMenu();
+  // Bref message OK
+  const el = document.getElementById('chg-err');
+  if (el) { el.textContent = '✓ Mot de passe mis à jour'; el.classList.remove('hidden'); el.style.color = '#4ade80'; }
+}
+
+function logout() {
+  sessionStorage.removeItem(SESSION_KEY);
+  showLogin();
+}
+</script>
+
+</body>
+</html>

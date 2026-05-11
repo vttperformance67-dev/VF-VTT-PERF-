@@ -45,10 +45,15 @@ details[open] .chevron { transform:rotate(180deg); }
       <a href="index.html" class="text-xs text-slate-400 hover:text-slate-700">← Retour au site</a>
       <h1 class="text-xl font-bold text-slate-900 mt-1">Parc vélos <span class="text-slate-400 font-normal">— Vélos Performances</span></h1>
     </div>
-    <a href="contrat.html" class="btn btn-dark text-sm flex items-center gap-2">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      Nouveau contrat
-    </a>
+    <div class="flex items-center gap-2">
+      <a href="contrat.html" class="btn btn-dark text-sm flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Nouveau contrat
+      </a>
+      <button onclick="sessionStorage.removeItem('vp_admin_session');window.location.href='admin.html';" class="btn text-sm border border-slate-300 text-slate-500 hover:text-slate-700 hover:border-slate-400 bg-white">
+        Déconnexion
+      </button>
+    </div>
   </div>
 
   <!-- Stats -->
@@ -60,6 +65,11 @@ details[open] .chevron { transform:rotate(180deg); }
 </div>
 
 <script>
+// Protection admin — redirige si non connecté
+if (sessionStorage.getItem('vp_admin_session') !== 'ok') {
+  window.location.replace('admin.html');
+}
+
 // ============================================================
 // FLOTTE — données fixes (modifiables ici)
 // Les valeurNeuve avec ? sont à renseigner
