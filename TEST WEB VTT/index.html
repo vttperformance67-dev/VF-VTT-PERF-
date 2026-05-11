@@ -8334,25 +8334,37 @@ function _amHideErr(id){ var el=document.getElementById(id); if(el){el.style.dis
 async function amLogin() {
   _amHideErr('am-login-err');
   var btn=document.getElementById('am-login-btn'); btn.disabled=true;
+  // Vérification que les librairies TOTP sont chargées
+  if(typeof OTPAuth==='undefined'||typeof QRCode==='undefined'){
+    _amShowErr('am-login-err','⚠️ Erreur de chargement — rechargez la page (Ctrl+F5)');
+    btn.disabled=false; return;
+  }
   var user=(document.getElementById('am-user').value||'').trim().toLowerCase();
   var pwd=document.getElementById('am-pwd').value||'';
   if(!user||!pwd){ _amShowErr('am-login-err','Identifiant et mot de passe requis'); btn.disabled=false; return; }
-  var uHash=await _amSha256(user), pHash=await _amSha256(pwd);
-  if(uHash!==AM_DEFAULT_USER||pHash!==AM_DEFAULT_PWD){
-    _amShowErr('am-login-err','Identifiant ou mot de passe incorrect');
-    document.getElementById('am-pwd').value=''; document.getElementById('am-pwd').focus();
-    btn.disabled=false; return;
+  try {
+    var uHash=await _amSha256(user), pHash=await _amSha256(pwd);
+    if(uHash!==AM_DEFAULT_USER||pHash!==AM_DEFAULT_PWD){
+      _amShowErr('am-login-err','Identifiant ou mot de passe incorrect');
+      document.getElementById('am-pwd').value=''; document.getElementById('am-pwd').focus();
+      btn.disabled=false; return;
+    }
+    btn.disabled=false;
+    var secret=localStorage.getItem(AM_TOTP_KEY);
+    if(!secret){ _amGenerateQR(); amShowView('setup'); } else { amShowView('totp'); }
+  } catch(e) {
+    _amShowErr('am-login-err','Erreur : '+e.message);
+    btn.disabled=false;
   }
-  btn.disabled=false;
-  var secret=localStorage.getItem(AM_TOTP_KEY);
-  if(!secret){ _amGenerateQR(); amShowView('setup'); } else { amShowView('totp'); }
 }
 
 function _amGenerateQR() {
   var secret=new OTPAuth.Secret();
   var totp=new OTPAuth.TOTP({ issuer:'Vélos Performances', label:'VTT Admin', algorithm:'SHA1', digits:6, period:30, secret:secret });
   window._amPendingSecret=secret.base32;
-  QRCode.toCanvas(document.getElementById('am-qr-canvas'), totp.toString(), {width:200,margin:1}, function(err){ if(err) console.error(err); });
+  try {
+    QRCode.toCanvas(document.getElementById('am-qr-canvas'), totp.toString(), {width:200,margin:1}, function(err){ if(err) console.error('QR:', err); });
+  } catch(e) { console.error('QRCode error:', e); }
 }
 
 function amConfirmSetup() {

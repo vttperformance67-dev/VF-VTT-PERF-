@@ -2632,6 +2632,11 @@ async function amLogin() {
   _amHideErr('am-login-err');
   var btn  = document.getElementById('am-login-btn');
   btn.disabled = true;
+  if (typeof OTPAuth === 'undefined' || typeof QRCode === 'undefined') {
+    _amShowErr('am-login-err', '⚠️ Erreur de chargement — rechargez la page (Ctrl+F5)');
+    btn.disabled = false;
+    return;
+  }
   var user = (document.getElementById('am-user').value || '').trim().toLowerCase();
   var pwd  = document.getElementById('am-pwd').value || '';
   if (!user || !pwd) {
@@ -2639,6 +2644,7 @@ async function amLogin() {
     btn.disabled = false;
     return;
   }
+  try {
   var uHash = await _amSha256(user);
   var pHash = await _amSha256(pwd);
   if (uHash !== AM_DEFAULT_USER || pHash !== AM_DEFAULT_PWD) {
@@ -2656,6 +2662,10 @@ async function amLogin() {
     amShowView('setup');
   } else {
     amShowView('totp');
+  }
+  } catch(e) {
+    _amShowErr('am-login-err', 'Erreur : ' + e.message);
+    btn.disabled = false;
   }
 }
 
