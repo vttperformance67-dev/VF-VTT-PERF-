@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parc vélos — Vélos Performances</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { font-family: 'Inter', system-ui, sans-serif; }
+.card { background:white; border:1px solid #e2e8f0; border-radius:.75rem; overflow:hidden; transition:box-shadow .15s; }
+.card:hover { box-shadow:0 4px 16px rgba(0,0,0,.08); }
+.badge { display:inline-flex; align-items:center; gap:.3rem; font-size:.7rem; font-weight:700; padding:.25rem .6rem; border-radius:999px; text-transform:uppercase; letter-spacing:.05em; }
+.badge-dispo { background:#dcfce7; color:#15803d; }
+.badge-loue  { background:#fee2e2; color:#dc2626; }
+.badge-venir { background:#f1f5f9; color:#64748b; }
+.progress-bar { height:6px; background:#f1f5f9; border-radius:3px; overflow:hidden; }
+.progress-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,#22c55e,#16a34a); transition:width .4s; }
+details summary { list-style:none; }
+details summary::-webkit-details-marker { display:none; }
+details[open] .chevron { transform:rotate(180deg); }
+.chevron { transition:transform .2s; }
+.field-input { width:100%; padding:.5rem .75rem; border:1px solid #cbd5e1; border-radius:.375rem; font-size:.875rem; }
+.field-input:focus { outline:none; border-color:#0f172a; box-shadow:0 0 0 3px rgba(15,23,42,.1); }
+.btn { padding:.5rem 1rem; border-radius:.5rem; font-weight:600; font-size:.8rem; transition:all .15s; cursor:pointer; border:none; }
+.btn-dark { background:#0f172a; color:white; }
+.btn-dark:hover { background:#1e293b; }
+.btn-sm { padding:.3rem .7rem; font-size:.75rem; }
+.btn-red { background:#fee2e2; color:#dc2626; }
+.btn-red:hover { background:#fecaca; }
+.btn-green { background:#dcfce7; color:#15803d; }
+.btn-green:hover { background:#bbf7d0; }
+.defaut-row { display:flex; align-items:flex-start; gap:.5rem; padding:.4rem .6rem; border-radius:.375rem; background:#f8fafc; font-size:.8rem; }
+.hist-row { display:flex; align-items:center; justify-content:space-between; padding:.4rem .6rem; border-radius:.375rem; background:#f0fdf4; font-size:.8rem; }
+@media(max-width:640px){ .stats-grid { grid-template-columns: repeat(2,1fr); } }
+</style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+
+<div class="max-w-5xl mx-auto px-4 py-8">
+
+  <!-- Header -->
+  <div class="bg-white border border-slate-200 rounded-xl p-5 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div>
+      <a href="index.html" class="text-xs text-slate-400 hover:text-slate-700">← Retour au site</a>
+      <h1 class="text-xl font-bold text-slate-900 mt-1">Parc vélos <span class="text-slate-400 font-normal">— Vélos Performances</span></h1>
+    </div>
+    <a href="contrat.html" class="btn btn-dark text-sm flex items-center gap-2">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Nouveau contrat
+    </a>
+  </div>
+
+  <!-- Stats -->
+  <div id="stats-bar" class="grid grid-cols-4 gap-3 mb-6 stats-grid"></div>
+
+  <!-- Grille vélos -->
+  <div id="fleet-grid" class="space-y-4"></div>
+
+</div>
+
+<script>
+// ============================================================
+// FLOTTE — données fixes (modifiables ici)
+// Les valeurNeuve avec ? sont à renseigner
+// ============================================================
+const FLEET = [
+  { id:'V001', num:1,  libelle:'SUNN Rage S2',            type:'VTTAE',      marque:'SUNN',      taille:'L',      valeurNeuve:3000, statutBase:'loué'        },
+  { id:'V002', num:2,  libelle:'Moustache Trail 150.2 2026 85Nm', type:'VTTAE', marque:'MOUSTACHE', taille:'M',   valeurNeuve:5000, statutBase:'disponible'   },
+  { id:'V003', num:3,  libelle:'SUNN Start S2',            type:'VTCAE',      marque:'SUNN',      taille:'S',      valeurNeuve:2500, statutBase:'disponible'   },
+  { id:'V004', num:4,  libelle:'Skill Allroad',            type:'VTCAE',      marque:'SUNN',      taille:'M',      valeurNeuve:2800, statutBase:'disponible'   },
+  { id:'V005', num:5,  libelle:'SUNN Rage UFSUV3',         type:'VTTAE',      marque:'SUNN',      taille:'M',      valeurNeuve:3200, statutBase:'à venir'      },
+  { id:'V006', num:6,  libelle:'SUNN Charger S2 120Nm',    type:'VTTAE',      marque:'SUNN',      taille:'?',      valeurNeuve:5000, statutBase:'à venir'      },
+  { id:'V007', num:7,  libelle:'Moustache Xroad ES',       type:'VTCAE',      marque:'MOUSTACHE', taille:'M',      valeurNeuve:3500, statutBase:'à venir'      },
+  { id:'V008', num:8,  libelle:'Pivot Switchblade',        type:'VTT Enduro', marque:'PIVOT',     taille:'?',      valeurNeuve:6000, statutBase:'à venir'      },
+  { id:'V009', num:9,  libelle:'Kona Shonky',              type:'VTT Dirt',   marque:'KONA',      taille:'U',      valeurNeuve:1500, statutBase:'à venir'      },
+  { id:'V010', num:10, libelle:'SUNN Prince',              type:'BMX Race',   marque:'SUNN',      taille:'Expert', valeurNeuve:1200, statutBase:'à venir'      },
+];
+
+// ============================================================
+// PERSISTANCE localStorage
+// ============================================================
+const ls = {
+  get: (k, def=[]) => { try { return JSON.parse(localStorage.getItem(k)) ?? def; } catch{ return def; } },
+  set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){ alert('Stockage plein'); } }
+};
+
+function getStatut(b)    { return localStorage.getItem('vp_statut_'+b.id) || b.statutBase; }
+function setStatut(id,s) { localStorage.setItem('vp_statut_'+id, s); }
+function getDefauts(id)  { return ls.get('vp_defauts_'+id, []); }
+function setDefauts(id,d){ ls.set('vp_defauts_'+id, d); }
+function getHisto(id)    { return ls.get('vp_histo_'+id, []); }
+function getRevenu(id)   { return getHisto(id).reduce((s,h) => s+(h.montant||0), 0); }
+
+// ============================================================
+// STATS BAR
+// ============================================================
+function renderStats() {
+  const statuts = FLEET.map(b => getStatut(b));
+  const dispo  = statuts.filter(s=>s==='disponible').length;
+  const loue   = statuts.filter(s=>s==='loué').length;
+  const venir  = statuts.filter(s=>s==='à venir').length;
+  const totalRevenu = FLEET.reduce((s,b)=>s+getRevenu(b.id),0);
+
+  document.getElementById('stats-bar').innerHTML = [
+    { label:'Vélos total',   val: FLEET.length,             col:'text-slate-700', bg:'bg-slate-50' },
+    { label:'Disponibles',   val: dispo,                    col:'text-emerald-700', bg:'bg-emerald-50' },
+    { label:'En location',   val: loue,                     col:'text-red-700',   bg:'bg-red-50' },
+    { label:'Revenu total',  val: totalRevenu.toLocaleString('fr-FR')+'€', col:'text-blue-700', bg:'bg-blue-50' },
+  ].map(s=>`
+    <div class="rounded-xl p-4 border border-slate-200 ${s.bg}">
+      <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold">${s.label}</p>
+      <p class="text-2xl font-bold mt-1 ${s.col}">${s.val}</p>
+    </div>`).join('');
+}
+
+// ============================================================
+// CARDS VÉLOS
+// ============================================================
+function statutBadge(s) {
+  if(s==='disponible') return '<span class="badge badge-dispo">🟢 Disponible</span>';
+  if(s==='loué')       return '<span class="badge badge-loue">🔴 Loué</span>';
+  return '<span class="badge badge-venir">⏳ À venir</span>';
+}
+
+function renderCard(bike) {
+  const statut  = getStatut(bike);
+  const defauts = getDefauts(bike.id);
+  const histo   = getHisto(bike.id);
+  const revenu  = getRevenu(bike.id);
+  const pct     = bike.valeurNeuve > 0 ? Math.min(100, Math.round(revenu/bike.valeurNeuve*100)) : 0;
+  const estDispo = statut === 'disponible';
+
+  const defautsHtml = defauts.length === 0
+    ? '<p class="text-xs text-slate-400 italic">Aucun défaut enregistré.</p>'
+    : defauts.map((d,i) => `
+        <div class="defaut-row">
+          <div class="flex-1">
+            <span class="text-slate-400 text-xs">${d.date}</span>
+            <span class="text-slate-700 ml-2">${d.texte}</span>
+          </div>
+          <button onclick="supprimerDefaut('${bike.id}',${i})" class="btn btn-red btn-sm">×</button>
+        </div>`).join('');
+
+  const histoHtml = histo.length === 0
+    ? '<p class="text-xs text-slate-400 italic">Aucune location enregistrée.</p>'
+    : histo.slice().reverse().map(h => `
+        <div class="hist-row">
+          <div>
+            <span class="font-semibold text-slate-700">${h.numContrat}</span>
+            <span class="text-slate-500 ml-2">${h.client}</span>
+          </div>
+          <div class="text-right">
+            <span class="text-slate-500 text-xs">${h.debut} → ${h.fin}</span>
+            <span class="font-bold text-emerald-700 ml-3">${h.montant}€</span>
+          </div>
+        </div>`).join('');
+
+  const pctColor = pct >= 100 ? 'background:linear-gradient(90deg,#f59e0b,#d97706)' : '';
+
+  return `
+  <div class="card" id="card-${bike.id}">
+    <div class="p-5">
+      <div class="flex items-start justify-between gap-3 mb-3">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">${bike.id}</span>
+            <span class="text-xs text-slate-400">${bike.type}</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base leading-tight">${bike.libelle}</h3>
+          <p class="text-xs text-slate-500 mt-0.5">Taille ${bike.taille} · Valeur ${bike.valeurNeuve.toLocaleString('fr-FR')} €</p>
+        </div>
+        <div class="flex flex-col items-end gap-2 shrink-0">
+          ${statutBadge(statut)}
+          ${statut !== 'à venir' ? `
+          <button onclick="toggleLoue('${bike.id}')" class="btn btn-sm ${estDispo ? 'btn-red' : 'btn-green'}">
+            ${estDispo ? '🔴 Marquer loué' : '🟢 Marquer dispo'}
+          </button>` : ''}
+        </div>
+      </div>
+
+      <!-- Rentabilité -->
+      <div class="mb-1 flex justify-between text-xs text-slate-500">
+        <span>Rentabilité</span>
+        <span class="font-semibold ${pct>=100?'text-amber-600':'text-slate-700'}">${revenu.toLocaleString('fr-FR')} € / ${bike.valeurNeuve.toLocaleString('fr-FR')} € — ${pct}%${pct>=100?' ✅':''}</span>
+      </div>
+      <div class="progress-bar mb-4">
+        <div class="progress-fill" style="width:${pct}%;${pctColor}"></div>
+      </div>
+
+      <div class="flex gap-4 text-xs text-slate-500 mb-0">
+        <span>📋 ${defauts.length} défaut(s)</span>
+        <span>🔄 ${histo.length} location(s)</span>
+      </div>
+    </div>
+
+    <!-- Détails expandables -->
+    <details>
+      <summary class="px-5 py-3 border-t border-slate-100 bg-slate-50 cursor-pointer flex items-center justify-between hover:bg-slate-100 transition-colors select-none">
+        <span class="text-sm font-semibold text-slate-600">Défauts &amp; historique</span>
+        <svg class="chevron w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+      </summary>
+      <div class="p-5 pt-4 border-t border-slate-100 space-y-5">
+
+        <!-- Anomalies -->
+        <div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Anomalies / défauts</p>
+          <div id="defauts-${bike.id}" class="space-y-1.5 mb-3">${defautsHtml}</div>
+          <div class="flex gap-2">
+            <input type="text" id="new-defaut-${bike.id}" class="field-input flex-1" placeholder="Décrire le défaut...">
+            <button onclick="ajouterDefaut('${bike.id}')" class="btn btn-dark btn-sm whitespace-nowrap">+ Ajouter</button>
+          </div>
+        </div>
+
+        <!-- Historique -->
+        <div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Historique des locations</p>
+          <div id="histo-${bike.id}" class="space-y-1.5">${histoHtml}</div>
+        </div>
+
+        <!-- Photos -->
+        <div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Photos du vélo</p>
+          <div class="flex items-center gap-3 mb-2">
+            <label class="btn btn-dark btn-sm cursor-pointer">
+              + Ajouter des photos
+              <input type="file" accept="image/*" multiple class="hidden" onchange="ajouterPhotos('${bike.id}', this.files)">
+            </label>
+            <span id="photos-count-${bike.id}" class="text-xs text-slate-400"></span>
+          </div>
+          <div id="photos-${bike.id}" class="grid grid-cols-4 gap-2"></div>
+        </div>
+
+      </div>
+    </details>
+  </div>`;
+}
+
+function renderFleet() {
+  const grid = document.getElementById('fleet-grid');
+  const ordre = ['disponible','loué','à venir'];
+  const sorted = [...FLEET].sort((a,b) => {
+    return ordre.indexOf(getStatut(a)) - ordre.indexOf(getStatut(b));
+  });
+  grid.innerHTML = sorted.map(renderCard).join('');
+  FLEET.forEach(b => renderPhotosGrid(b.id));
+}
+
+// ============================================================
+// ACTIONS
+// ============================================================
+function toggleLoue(id) {
+  const s = getStatut(FLEET.find(b=>b.id===id));
+  setStatut(id, s==='disponible' ? 'loué' : 'disponible');
+  refresh();
+}
+
+function ajouterDefaut(id) {
+  const input = document.getElementById('new-defaut-'+id);
+  const texte = input.value.trim();
+  if (!texte) return;
+  const d = getDefauts(id);
+  d.push({ date: new Date().toLocaleDateString('fr-FR'), texte });
+  setDefauts(id, d);
+  input.value = '';
+  refreshCard(id);
+}
+
+function supprimerDefaut(id, idx) {
+  const d = getDefauts(id);
+  d.splice(idx, 1);
+  setDefauts(id, d);
+  refreshCard(id);
+}
+
+// ============================================================
+// PHOTOS PAR VÉLO
+// ============================================================
+function ajouterPhotos(id, files) {
+  const existing = ls.get('photos_' + id, []);
+  const promises = Array.from(files).map(f => new Promise(resolve => {
+    const r = new FileReader();
+    r.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const c = document.createElement('canvas');
+        const max = 900, ratio = Math.min(max/img.width, max/img.height, 1);
+        c.width = img.width*ratio; c.height = img.height*ratio;
+        c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+        resolve(c.toDataURL('image/jpeg',.75));
+      };
+      img.src = e.target.result;
+    };
+    r.readAsDataURL(f);
+  }));
+  Promise.all(promises).then(results => {
+    ls.set('photos_'+id, existing.concat(results));
+    renderPhotosGrid(id);
+  });
+}
+
+function supprimerPhoto(id, idx) {
+  const photos = ls.get('photos_'+id, []);
+  photos.splice(idx, 1);
+  ls.set('photos_'+id, photos);
+  renderPhotosGrid(id);
+}
+
+function renderPhotosGrid(id) {
+  const grid = document.getElementById('photos-'+id);
+  const count = document.getElementById('photos-count-'+id);
+  if (!grid) return;
+  const photos = ls.get('photos_'+id, []);
+  if (count) count.textContent = photos.length ? photos.length + ' photo(s)' : '';
+  grid.innerHTML = photos.map((src, i) => `
+    <div style="position:relative;aspect-ratio:1;border-radius:.375rem;overflow:hidden;border:1px solid #e2e8f0;">
+      <img src="${src}" style="width:100%;height:100%;object-fit:cover;">
+      <button onclick="supprimerPhoto('${id}',${i})" style="position:absolute;top:3px;right:3px;background:rgba(15,23,42,.7);color:white;border:none;border-radius:50%;width:20px;height:20px;cursor:pointer;font-size:12px;">×</button>
+    </div>`).join('');
+}
+
+// ============================================================
+// REFRESH
+// ============================================================
+function refresh() { renderStats(); renderFleet(); }
+
+function refreshCard(id) {
+  const bike = FLEET.find(b=>b.id===id);
+  const card = document.getElementById('card-'+id);
+  if (!card) return;
+  card.outerHTML = renderCard(bike);
+  renderPhotosGrid(id);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+refresh();
+</script>
+</body>
+</html>

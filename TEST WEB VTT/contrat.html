@@ -119,53 +119,35 @@
 
     <!-- ARTICLE 2 - MATÉRIEL -->
     <div class="section-card">
-      <h2 class="section-title"><span class="section-num">2</span> Matériel</h2>
+      <h2 class="section-title">
+        <span class="section-num">2</span> Matériel
+        <a href="velos.html" class="ml-auto text-xs font-normal text-slate-400 hover:text-slate-700 underline">→ Gérer le parc</a>
+      </h2>
 
+      <!-- Sélecteur multi-vélos -->
       <div class="mb-4">
-        <label class="field-label">Vélo loué * <span class="text-emerald-600 normal-case font-normal">— sélectionne pour auto-remplir la caution</span></label>
-        <select name="velo_select" id="velo_select" class="field-select" onchange="autoFillVelo()" required>
-          <option value="">— Sélectionner un vélo —</option>
-          <optgroup label="VAE / VTTAE">
-            <option value="moustache_trail_150_2_750">Moustache Trail 150.2 750Wh — Bosch CX 100Nm</option>
-            <option value="moustache_trail_150_2_625">Moustache Trail 150.2 625Wh — Bosch CX</option>
-            <option value="sunn_rage_500">SUNN Rage 500Wh — Bosch Performance</option>
-            <option value="sunn_charger_750">SUNN Charger 750Wh — Bosch CX</option>
-            <option value="sunn_one_750">SUNN One 750Wh — Bosch CX</option>
-          </optgroup>
-          <optgroup label="VTC Électrique">
-            <option value="sunn_start">SUNN Start — Bosch Active 40Nm 400Wh</option>
-            <option value="sunn_skill">SUNN Skill — Bosch 75Nm 500Wh</option>
-          </optgroup>
-          <optgroup label="VTT mécanique">
-            <option value="vtt_meca_haut">VTT haut de gamme</option>
-            <option value="vtt_meca_milieu">VTT milieu de gamme</option>
-            <option value="vtt_meca_entree">VTT entrée de gamme</option>
-          </optgroup>
-          <optgroup label="Autres">
-            <option value="dirt_bmx">Dirt / BMX Race</option>
-            <option value="autre">Autre (à préciser)</option>
-          </optgroup>
-        </select>
+        <div class="flex items-center justify-between mb-2">
+          <label class="field-label">Vélos loués * <span class="text-emerald-600 normal-case font-normal">— caution auto selon sélection</span></label>
+          <button type="button" onclick="ajouterLigneVelo()" class="text-xs text-slate-600 border border-slate-300 rounded px-2 py-1 hover:bg-slate-50">+ Ajouter un vélo</button>
+        </div>
+        <div id="velos-list" class="space-y-2"></div>
       </div>
 
-      <!-- Champs cachés pour le PDF (auto-remplis par autoFillVelo) -->
-      <input type="hidden" name="type_velo" id="type_velo">
-      <input type="hidden" name="marque" id="marque">
+      <!-- Résumé caution totale -->
+      <div id="caution-recap" class="hidden mb-4 p-3 rounded-lg border border-emerald-200" style="background:#f0fdf4;">
+        <div class="flex justify-between text-sm">
+          <span class="text-emerald-800 font-medium">Caution totale (non encaissée)</span>
+          <span id="caution-total-display" class="font-bold text-emerald-900 text-base"></span>
+        </div>
+      </div>
+      <input type="hidden" id="caution-total-hidden" name="caution">
 
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
         <div>
-          <label class="field-label">N° de série <span class="normal-case font-normal text-slate-400">(à compléter ultérieurement)</span></label>
+          <label class="field-label">N° de série <span class="normal-case font-normal text-slate-400">(à compléter)</span></label>
           <input type="text" name="serie" id="serie" class="field-input" placeholder="Non communiqué pour le moment" style="background:#f1f5f9;color:#94a3b8;cursor:not-allowed;" readonly tabindex="-1">
         </div>
-        <div class="sm:col-span-2">
-          <label class="field-label">Modèle / désignation</label>
-          <input type="text" name="modele_libre" id="modele_libre" class="field-input" placeholder="Sélectionnez un vélo ci-dessus">
-        </div>
         <div>
-          <label class="field-label">Taille <span class="normal-case font-normal text-slate-400">— uniquement disponible en L</span></label>
-          <input type="text" name="taille" id="f-taille" class="field-input" value="L" readonly style="background:#f1f5f9;color:#94a3b8;cursor:not-allowed;" tabindex="-1">
-        </div>
-        <div class="sm:col-span-2">
           <label class="field-label">Accessoires inclus</label>
           <input type="text" name="accessoires" class="field-input" placeholder="Casque, antivol, sacoche, protections...">
         </div>
@@ -182,6 +164,19 @@
           <input type="text" name="obs3" class="field-input obs-field" placeholder="3) défaut à noter..." readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
           <input type="text" name="obs4" class="field-input obs-field" placeholder="4) défaut à noter..." readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
           <input type="text" name="obs5" class="field-input obs-field" placeholder="5) défaut à noter..." readonly style="background:#f8fafc;color:#475569;cursor:not-allowed;">
+        </div>
+        <!-- Photos (loueur uniquement, visible après déverrouillage) -->
+        <div id="photo-loueur-zone" style="display:none;" class="mt-4 pt-4 border-t border-slate-100">
+          <div class="flex items-center justify-between mb-2">
+            <span class="field-label">Photos <span class="normal-case font-normal text-amber-600">— loueur</span></span>
+            <p class="text-xs text-slate-400" id="photo-bike-label"></p>
+            <label class="cursor-pointer text-xs font-semibold text-white px-3 py-1.5 rounded-lg" style="background:#0f172a;">
+              + Photos <input type="file" accept="image/*" multiple class="hidden" onchange="addPhotos(this.files)">
+            </label>
+          </div>
+          <div id="photo-grid" class="grid grid-cols-4 gap-2">
+            <div id="photo-empty" class="col-span-4 text-center py-4 text-slate-400 text-sm border-2 border-dashed border-slate-200 rounded-xl">Aucune photo</div>
+          </div>
         </div>
       </div>
     </div>
@@ -226,12 +221,12 @@
           </div>
         </div>
         <div>
-          <label class="field-label mb-1 block">Caution <span class="text-emerald-700 normal-case font-normal">— auto selon vélo</span></label>
-          <div class="relative">
-            <input type="number" name="caution" id="caution" class="field-input pr-8" value="2800" readonly style="background:#f0fdf4;border-color:#86efac;cursor:not-allowed;font-weight:700;font-size:1.1rem;">
-            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-600 text-sm">🔒</span>
+          <label class="field-label mb-1 block">Caution <span class="text-emerald-700 normal-case font-normal">— calculée depuis section 2</span></label>
+          <div class="p-3 rounded-lg flex items-center gap-2" style="background:#f0fdf4;border:1px solid #86efac;">
+            <span class="text-emerald-600 text-sm">🔒</span>
+            <span id="caution-tarif-display" class="font-bold text-emerald-900 text-lg">—</span>
+            <span class="text-xs text-emerald-700 ml-1">€ — non encaissée</span>
           </div>
-          <p class="text-xs text-slate-400 mt-1">Valeur de remplacement — non encaissée</p>
         </div>
       </div>
       <div>
@@ -431,31 +426,139 @@ const CONFIG = {
 };
 
 // =======================================================================
-// BASE DE DONNÉES VÉLOS — Valeurs neuves catalogue & cautions
+// FLOTTE — catalogue synchronisé avec velos.html
 // =======================================================================
 const VELOS = {
-  moustache_trail_150_2_750: { libelle: 'Moustache Trail 150.2 750Wh', marque: 'MOUSTACHE', type: 'VAE', valeurNeuve: 5500 },
-  moustache_trail_150_2_625: { libelle: 'Moustache Trail 150.2 625Wh', marque: 'MOUSTACHE', type: 'VAE', valeurNeuve: 5000 },
-  sunn_rage_500:             { libelle: 'SUNN Rage 500Wh',             marque: 'SUNN',       type: 'VAE', valeurNeuve: 3000 },
-  sunn_charger_750:          { libelle: 'SUNN Charger 750Wh',          marque: 'SUNN',       type: 'VAE', valeurNeuve: 5000 },
-  sunn_one_750:              { libelle: 'SUNN One 750Wh',              marque: 'SUNN',       type: 'VAE', valeurNeuve: 4500 },
-  sunn_start:                { libelle: 'SUNN Start (VTCAE)',          marque: 'SUNN',       type: 'VAE', valeurNeuve: 2500 },
-  sunn_skill:                { libelle: 'SUNN Skill (VTCAE)',          marque: 'SUNN',       type: 'VAE', valeurNeuve: 3000 },
-  vtt_meca_haut:             { libelle: 'VTT haut de gamme',           marque: 'AUTRE',      type: 'MÉCA', valeurNeuve: 3500 },
-  vtt_meca_milieu:           { libelle: 'VTT milieu de gamme',         marque: 'AUTRE',      type: 'MÉCA', valeurNeuve: 2000 },
-  vtt_meca_entree:           { libelle: "VTT entrée de gamme",         marque: 'AUTRE',      type: 'MÉCA', valeurNeuve: 1000 },
-  dirt_bmx:                  { libelle: 'Dirt / BMX Race',             marque: 'AUTRE',      type: 'MÉCA', valeurNeuve: 800 },
-  autre:                     { libelle: "Autre (à préciser)",          marque: '',           type: '',     valeurNeuve: 0 }
+  V001: { libelle: 'SUNN Rage S2',                    marque: 'SUNN',      type: 'VTTAE',     taille: 'L',      valeurNeuve: 3000, dispo: true  },
+  V002: { libelle: 'Moustache Trail 150.2 2026 85Nm', marque: 'MOUSTACHE', type: 'VTTAE',     taille: 'M',      valeurNeuve: 5000, dispo: true  },
+  V003: { libelle: 'SUNN Start S2',                   marque: 'SUNN',      type: 'VTCAE',     taille: 'S',      valeurNeuve: 2500, dispo: true  },
+  V004: { libelle: 'Skill Allroad',                   marque: 'SUNN',      type: 'VTCAE',     taille: 'M',      valeurNeuve: 2800, dispo: true  },
+  V005: { libelle: 'SUNN Rage UFSUV3',                marque: 'SUNN',      type: 'VTTAE',     taille: 'M',      valeurNeuve: 3200, dispo: false },
+  V006: { libelle: 'SUNN Charger S2 120Nm',           marque: 'SUNN',      type: 'VTTAE',     taille: '?',      valeurNeuve: 5000, dispo: false },
+  V007: { libelle: 'Moustache Xroad ES',              marque: 'MOUSTACHE', type: 'VTCAE',     taille: 'M',      valeurNeuve: 3500, dispo: false },
+  V008: { libelle: 'Pivot Switchblade',               marque: 'PIVOT',     type: 'VTT Enduro',taille: '?',      valeurNeuve: 6000, dispo: false },
+  V009: { libelle: 'Kona Shonky',                     marque: 'KONA',      type: 'VTT Dirt',  taille: 'U',      valeurNeuve: 1500, dispo: false },
+  V010: { libelle: 'SUNN Prince',                     marque: 'SUNN',      type: 'BMX Race',  taille: 'Expert', valeurNeuve: 1200, dispo: false },
 };
 
-// Mapping depuis les libellés du formulaire de réservation du site principal
-const VELO_LABEL_MAP = {
-  'VTTAE Moustache Trail 150.2 750Wh': 'moustache_trail_150_2_750',
-  'VTTAE SUNN Rage 500Wh': 'sunn_rage_500',
-  'VTCAE SUNN Start / Skill': 'sunn_start',
-  'VTT': 'vtt_meca_milieu',
-  'Dirt / BMX Race': 'dirt_bmx'
-};
+// Lit le statut depuis localStorage (synchronisé avec velos.html)
+function veloDisponible(id) {
+  const s = localStorage.getItem('vp_statut_' + id);
+  return s ? s === 'disponible' : VELOS[id].dispo;
+}
+
+// =======================================================================
+// MULTI-VÉLOS — sélecteur dynamique
+// =======================================================================
+let velosSelectionnes = []; // [{id, libelle, taille, valeurNeuve}]
+
+function buildVeloOptions(excludeIds = []) {
+  const disponibles = Object.entries(VELOS).filter(([id, v]) => v.dispo && !excludeIds.includes(id));
+  const indispos    = Object.entries(VELOS).filter(([id, v]) => !v.dispo && !excludeIds.includes(id));
+  let html = '<option value="">— Sélectionner un vélo —</option>';
+  if (disponibles.length) {
+    html += '<optgroup label="✅ Disponibles">';
+    disponibles.forEach(([id, v]) => {
+      html += `<option value="${id}">[${id}] ${v.libelle} — T.${v.taille}</option>`;
+    });
+    html += '</optgroup>';
+  }
+  if (indispos.length) {
+    html += '<optgroup label="⏳ À venir / indisponibles" disabled>';
+    indispos.forEach(([id, v]) => {
+      html += `<option value="${id}" disabled>[${id}] ${v.libelle} — À venir</option>`;
+    });
+    html += '</optgroup>';
+  }
+  return html;
+}
+
+function ajouterLigneVelo() {
+  const idx = velosSelectionnes.length;
+  const row = document.createElement('div');
+  row.id = 'velo-row-' + idx;
+  row.className = 'flex gap-2 items-center';
+  const excludes = velosSelectionnes.map(v => v.id);
+  row.innerHTML = `
+    <select class="field-select flex-1" onchange="onVeloChange(${idx}, this.value)">
+      ${buildVeloOptions(excludes)}
+    </select>
+    ${idx > 0 ? `<button type="button" onclick="supprimerLigneVelo(${idx})" class="text-red-400 hover:text-red-600 text-xl leading-none px-1">×</button>` : ''}`;
+  document.getElementById('velos-list').appendChild(row);
+  velosSelectionnes.push({ id: '', libelle: '', taille: '', valeurNeuve: 0 });
+}
+
+function supprimerLigneVelo(idx) {
+  velosSelectionnes.splice(idx, 1);
+  renderVelosList();
+  updateCautionTotale();
+}
+
+function renderVelosList() {
+  const list = document.getElementById('velos-list');
+  list.innerHTML = '';
+  velosSelectionnes = velosSelectionnes.filter(v => v !== undefined);
+  velosSelectionnes.forEach((sel, idx) => {
+    const excludes = velosSelectionnes.map((v,i) => i!==idx ? v.id : '').filter(Boolean);
+    const row = document.createElement('div');
+    row.id = 'velo-row-' + idx;
+    row.className = 'flex gap-2 items-center';
+    row.innerHTML = `
+      <select class="field-select flex-1" onchange="onVeloChange(${idx}, this.value)">
+        ${buildVeloOptions(excludes)}
+      </select>
+      ${idx > 0 ? `<button type="button" onclick="supprimerLigneVelo(${idx})" class="text-red-400 hover:text-red-600 text-xl leading-none px-1">×</button>` : ''}`;
+    list.appendChild(row);
+    if (sel.id) row.querySelector('select').value = sel.id;
+  });
+}
+
+function onVeloChange(idx, id) {
+  if (!id || !VELOS[id]) { velosSelectionnes[idx] = { id:'', libelle:'', taille:'', valeurNeuve:0 }; }
+  else {
+    const v = VELOS[id];
+    velosSelectionnes[idx] = { id, libelle: v.libelle, taille: v.taille, valeurNeuve: v.valeurNeuve, marque: v.marque, type: v.type };
+    // Charge les photos et défauts du premier vélo sélectionné
+    if (idx === 0) {
+      loadBikePhotos(id);
+      chargerDefautsVelo(id);
+    }
+  }
+  updateCautionTotale();
+  // Met à jour le champ modele_libre (premier vélo)
+  const premier = velosSelectionnes.find(v => v.id);
+  if (document.getElementById('modele_libre')) {
+    // compatibilité PDF
+  }
+}
+
+function updateCautionTotale() {
+  const total = velosSelectionnes.reduce((s, v) => s + (v.valeurNeuve || 0), 0);
+  document.getElementById('caution-total-hidden').value = total;
+  const recap = document.getElementById('caution-recap');
+  const display = document.getElementById('caution-total-display');
+  const sec4 = document.getElementById('caution-tarif-display');
+  if (total > 0) {
+    recap.classList.remove('hidden');
+    display.textContent = total.toLocaleString('fr-FR') + ' €';
+    if (sec4) sec4.textContent = total.toLocaleString('fr-FR');
+  } else {
+    recap.classList.add('hidden');
+    if (sec4) sec4.textContent = '—';
+  }
+}
+
+function chargerDefautsVelo(id) {
+  try {
+    const defauts = JSON.parse(localStorage.getItem('vp_defauts_' + id) || '[]');
+    const fields = document.querySelectorAll('.obs-field');
+    fields.forEach((f, i) => {
+      if (defauts[i]) f.value = defauts[i].texte || defauts[i];
+      else if (i === 0) f.value = 'Aucune';
+      else f.value = '';
+    });
+  } catch(e) {}
+}
 
 // Déverrouillage section anomalies (loueur uniquement)
 function unlockObs() {
@@ -637,22 +740,7 @@ function renderPhotos() {
   });
 }
 
-function autoFillVelo() {
-  const code = document.getElementById('velo_select').value;
-  if (!code || !VELOS[code]) return;
-  const v = VELOS[code];
-  if (v.type) document.getElementById('type_velo').value = v.type;
-  if (v.marque) document.getElementById('marque').value = v.marque;
-  if (v.libelle) document.getElementById('modele_libre').value = v.libelle;
-  if (v.valeurNeuve > 0) {
-    const cautionInput = document.getElementById('caution');
-    cautionInput.value = v.valeurNeuve;
-    cautionInput.classList.add('auto-filled');
-    setTimeout(() => cautionInput.classList.remove('auto-filled'), 2000);
-  }
-  // Charge les photos enregistrées pour ce vélo
-  loadBikePhotos(code);
-}
+function autoFillVelo() { /* remplacé par multi-vélos */ }
 
 // =======================================================================
 // AUTO-REMPLISSAGE VIA PARAMÈTRES URL
@@ -1029,6 +1117,9 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
   if (!document.getElementById('accept-cgl').checked) {
     toast('⚠️ Vous devez accepter les CGL pour continuer'); return;
   }
+  if (!velosSelectionnes.some(v => v.id)) {
+    toast('⚠️ Sélectionnez au moins un vélo (section 2)'); return;
+  }
   if (!document.getElementById('h-prix_location').value) {
     toast('⚠️ Sélectionnez un créneau de location (section 3)');
     document.getElementById('calendar-list').scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1050,6 +1141,15 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
   // Signature loueur — capturée depuis le canvas pré-dessiné
   formData.sigLoueur = document.getElementById('sig-loueur').toDataURL('image/png');
 
+  // Enrichit formData avec les vélos sélectionnés
+  const velosOk = velosSelectionnes.filter(v => v.id);
+  formData.velos_json   = JSON.stringify(velosOk);
+  formData.modele_libre = velosOk.map(v => '[' + v.id + '] ' + v.libelle).join(' + ');
+  formData.type_velo    = velosOk.map(v => v.type).join(', ');
+  formData.marque       = velosOk.map(v => v.marque).join(', ');
+  formData.taille       = velosOk.map(v => v.taille).join(', ');
+  formData.caution      = document.getElementById('caution-total-hidden').value;
+
   try {
     const { doc, numContrat } = await generatePDF(formData);
     const pdfBlob = doc.output('blob');
@@ -1058,6 +1158,19 @@ document.getElementById('contract-form').addEventListener('submit', async (e) =>
     // Stocke le PDF pour le bouton de téléchargement
     window._lastPdfBlob = pdfBlob;
     window._lastPdfFileName = fileName;
+
+    // Enregistre l'historique dans localStorage pour chaque vélo
+    const clientNomHisto = ((formData.nom||'') + ' ' + (formData.prenom||'')).trim();
+    const debutH = formData.date_debut ? new Date(formData.date_debut).toLocaleDateString('fr-FR') : '—';
+    const finH   = formData.date_fin   ? new Date(formData.date_fin).toLocaleDateString('fr-FR')   : '—';
+    velosOk.forEach(v => {
+      try {
+        const histo = JSON.parse(localStorage.getItem('vp_histo_'+v.id)||'[]');
+        histo.push({ numContrat, client: clientNomHisto, debut: debutH, fin: finH, montant: Number(formData.prix_location)||0 });
+        localStorage.setItem('vp_histo_'+v.id, JSON.stringify(histo));
+        localStorage.setItem('vp_statut_'+v.id, 'loué');
+      } catch(e) {}
+    });
 
     let emailStatus = '';
 
@@ -1260,6 +1373,7 @@ window.addEventListener('load', () => {
   renderCGL();
   buildCalendar();
   prefillFromURL();
+  ajouterLigneVelo(); // première ligne vélo
 });
 
 /* =======================================================================
